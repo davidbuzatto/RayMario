@@ -1,0 +1,28 @@
+# Map file
+# Lines that starts with '#' are comments
+#
+#   Tiles:
+#   <space>  Empty tile
+#   /        Invisible tile
+#   A..Z     Tiles A through Z
+#
+#   Items:
+#   o        Coin
+#   !        Mushroom
+#   f        Fire Flower
+#   u        One Up
+#   *        Goal
+#
+#   Baddies:
+#   1        Goomba
+#   2        Fly Goomba
+#   3        Green Koopa
+#   4        Red Koopa
+#   5        Blue Koopa
+#   6        Yellow Koopa
+#   7        Bomb
+#   8        Bullet
+#   9        Bat
+#   @        Turtle
+#   $        Mummy Turtle
+#   %        Blue Dragon

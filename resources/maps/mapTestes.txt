@@ -1,0 +1,21 @@
+///////////////////////////////////////////////
+/                                             /
+/                                          I E/
+/                                         I  C/
+/                         1              I   C/
+/                      IIII             I    C/
+/                                      I     C/
+/                  IIIIIIII           I      C/
+/                                    I       C/
+/              IIIIIIIIIIII         I        C/
+/                                  I         C/
+/           IIIIIIIIIIIIIII       I          C/
+/                                I           C/
+/      I            I           I            C/
+/      I        1   I          I             C/
+/      IIIIIIIIIIIIII         I              C/
+/                                            C/
+/   I                                        C/
+/         o o 1 o o                          C/
+/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
