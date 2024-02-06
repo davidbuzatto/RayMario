@@ -7,12 +7,12 @@
  */
 #pragma once
 
-#include "raylib.h"
-#include "PlayerState.h"
 #include "CollisionProbe.h"
+#include "CollisionType.h"
+#include "Direction.h"
+#include "raylib.h"
 #include "Sprite.h"
 #include "Tile.h"
-#include "Direction.h"
 
 class Player : public virtual Sprite {
 
@@ -20,7 +20,6 @@ class Player : public virtual Sprite {
     float maxSpeedX;
     float jumpSpeed;
 
-    PlayerState state;
     Direction facingDirection;
     bool crouched;
 
@@ -38,21 +37,23 @@ class Player : public virtual Sprite {
     CollisionProbe cpW;
     
 public:
+
     Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed );
     ~Player();
+
     virtual void update();
     virtual void draw();
-    virtual bool checkCollision( Sprite &sprite );
-    bool checkCollisionTile( Sprite &sprite );
-    bool checkCollisionGoomba( Sprite &sprite );
-    void setState( PlayerState state );
-    PlayerState getState() const;
+    virtual CollisionType checkCollision( Sprite& sprite );
+
+    CollisionType checkCollisionTile( Sprite& sprite );
+    CollisionType checkCollisionGoomba( Sprite& sprite );
     void updateCollisionProbes();
 
+    void setActivationWidth( float activationWidth );
+    
     float getSpeedX();
     float getMaxSpeedX();
     float getJumpSpeed();
     float getActivationWidth();
-    void setActivationWidth( float activationWidth );
 
 };

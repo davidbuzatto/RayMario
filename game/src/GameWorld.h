@@ -8,10 +8,10 @@
  */
 #pragma once
 
-#include "raylib.h"
-#include "Player.h"
-#include "Map.h"
 #include "Drawable.h"
+#include "Map.h"
+#include "Player.h"
+#include "raylib.h"
 
 class GameWorld : public virtual Drawable {
 

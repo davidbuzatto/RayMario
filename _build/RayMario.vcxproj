@@ -285,9 +285,9 @@
     <ClCompile Include="..\game\src\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\game\src\BaddieState.h" />
     <ClInclude Include="..\game\src\Coin.h" />
     <ClInclude Include="..\game\src\CollisionProbe.h" />
+    <ClInclude Include="..\game\src\CollisionType.h" />
     <ClInclude Include="..\game\src\Direction.h" />
     <ClInclude Include="..\game\src\Drawable.h" />
     <ClInclude Include="..\game\src\GameWindow.h" />
@@ -295,16 +295,13 @@
     <ClInclude Include="..\game\src\Goomba.h" />
     <ClInclude Include="..\game\src\Map.h" />
     <ClInclude Include="..\game\src\Player.h" />
-    <ClInclude Include="..\game\src\PlayerState.h" />
+    <ClInclude Include="..\game\src\SpriteState.h" />
     <ClInclude Include="..\game\src\raygui.h" />
     <ClInclude Include="..\game\src\raymath.h" />
     <ClInclude Include="..\game\src\ResourceManager.h" />
     <ClInclude Include="..\game\src\Sprite.h" />
     <ClInclude Include="..\game\src\Tile.h" />
     <ClInclude Include="..\game\src\utils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\game\TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

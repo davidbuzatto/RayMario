@@ -7,10 +7,10 @@
  */
 #pragma once
 
-#include <vector>
+#include "raylib.h"
 #include <map>
 #include <string>
-#include "raylib.h"
+#include <vector>
 
 class ResourceManager {
 

@@ -26,20 +26,6 @@ void CollisionProbe::draw() {
     DrawRectangle( pos.x, pos.y, dim.x, dim.y, color );
 }
 
-bool CollisionProbe::checkCollision( Sprite &sprite ) {
-
-    /*try {
-
-        Tile &tile = dynamic_cast<Tile&>(sprite);
-        return CheckCollisionRecs( 
-            Rectangle( pos.x, pos.y, dim.x, dim.y ), 
-            Rectangle( tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight() )
-        );
-
-    } catch ( std::bad_cast ) {
-    }
-
-    return false;*/
-    return false;
-
+CollisionType CollisionProbe::checkCollision( Sprite &sprite ) {
+    return CollisionType::NONE;
 }

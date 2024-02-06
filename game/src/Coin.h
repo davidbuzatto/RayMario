@@ -7,9 +7,9 @@
  */
 #pragma once
 
-#include <vector>
 #include "raylib.h"
 #include "Sprite.h"
+#include <vector>
 
 class Coin : public virtual Sprite {
 
@@ -19,13 +19,12 @@ class Coin : public virtual Sprite {
     int maxFrames;
     
 public:
+
     Coin( Vector2 pos, Vector2 dim, Color color );
     ~Coin();
+
     virtual void update();
     virtual void draw();
-    virtual bool checkCollision( Sprite &sprite );
-
-    static void loadResources();
-    static void unloadResources();
+    virtual CollisionType checkCollision( Sprite &sprite );
 
 };

@@ -7,8 +7,10 @@
  */
 #pragma once
 
-#include "raylib.h"
+#include "CollisionType.h"
 #include "Drawable.h"
+#include "raylib.h"
+#include "SpriteState.h"
 
 class Sprite : public virtual Drawable {
 
@@ -17,14 +19,17 @@ protected:
     Vector2 dim;
     Vector2 vel;
     Color color;
+    SpriteState state;
 
 public:
+
     Sprite( Vector2 pos, Vector2 dim, Color color );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
     ~Sprite();
+
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual bool checkCollision( Sprite &sprite ) = 0;
+    virtual CollisionType checkCollision( Sprite &sprite ) = 0;
 
     void setPos( Vector2 pos );
     void setPos( float x, float y );
@@ -42,6 +47,7 @@ public:
     void setVelY( float velY );
 
     void setColor( Color color );
+    void setState( SpriteState state );
 
     Vector2 &getPos();
     float getX();
@@ -56,5 +62,8 @@ public:
     float getVelY();
     
     Color &getColor();
+    SpriteState getState();
+
+    Rectangle getRect();
 
 };

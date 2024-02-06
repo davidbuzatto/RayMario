@@ -6,10 +6,9 @@
  * @copyright Copyright (c) 2024
  */
 #include "GameWindow.h"
-
+#include "raylib.h"
 #include <iostream>
 #include <string>
-#include "raylib.h"
 
 /**
  * @brief Construct a new GameWindow object

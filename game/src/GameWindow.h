@@ -10,9 +10,8 @@
 #pragma once
 
 #include <string>
-
-#include "raylib.h"
 #include "GameWorld.h"
+#include "raylib.h"
 
 class GameWindow {
     

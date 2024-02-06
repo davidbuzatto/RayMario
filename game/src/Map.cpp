@@ -7,14 +7,13 @@
  */
 #include "Map.h"
 #include "ResourceManager.h"
-
-#include <vector>
-#include <string>
-#include <iostream>
-#include "raylib.h"
 #include "Coin.h"
 #include "Goomba.h"
+#include "raylib.h"
 #include "Sprite.h"
+#include <iostream>
+#include <string>
+#include <vector>
 
 int Map::tileWidth = 32;
 

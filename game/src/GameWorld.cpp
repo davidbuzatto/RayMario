@@ -6,22 +6,22 @@
  * @copyright Copyright (c) 2024
  */
 #include "GameWorld.h"
+#include "raylib.h"
 #include "ResourceManager.h"
-
-#include <iostream>
+#include <cassert>
 #include <cmath>
-#include <string>
 #include <cstring>
 #include <ctime>
-#include <cassert>
+#include <iostream>
+#include <string>
 #include <vector>
-#include "raylib.h"
 //#include "raymath.h"
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 #undef RAYGUI_IMPLEMENTATION
 
 #include "Player.h"
+#include "SpriteState.h"
 #include "Tile.h"
 
 bool GameWorld::debug = true;
@@ -57,11 +57,15 @@ GameWorld::~GameWorld() {
 void GameWorld::inputAndUpdate() {
 
     map.parseMap( 1, true );
-    map.playMusic();
+    if ( player.getState() != SpriteState::DYING ) {
+        map.playMusic();
+    }
     player.setActivationWidth( GetScreenWidth() * 2 );
 
     std::vector<Coin> &coins = map.getCoins();
     std::vector<Goomba> &goombas = map.getGoombas();
+    std::vector<Tile>& tiles = map.getTiles();
+    std::vector<int> collectedIndexes;
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
 
     player.update();
@@ -70,22 +74,64 @@ void GameWorld::inputAndUpdate() {
     }
 
     // player x tiles collision resolution
-    std::vector<Tile> &tiles = map.getTiles();
+    player.updateCollisionProbes();
     for ( size_t i = 0; i < tiles.size(); i++ ) {
-        player.checkCollisionTile( tiles[i] );
+        Tile &tile = tiles[i];
+        switch ( player.checkCollisionTile( tile ) ) {
+            case CollisionType::NORTH:
+                player.setY( tile.getY() + tile.getHeight() );
+                player.setVelY( 0 );
+                break;
+            case CollisionType::SOUTH:
+                player.setY( tile.getY() - player.getHeight() );
+                player.setVelY( 0 );
+                player.setState( SpriteState::ON_GROUND );
+                break;
+            case CollisionType::EAST:
+                player.setX( tile.getX() - player.getWidth() );
+                player.setVelX( 0 );                
+                break;
+            case CollisionType::WEST:
+                player.setX( tile.getX() + tile.getWidth() );
+                player.setVelX( 0 );
+                break;
+            case CollisionType::NONE:
+                break;
+        }
     }
+    player.updateCollisionProbes();
 
     // goombas x tiles collision resolution
     for ( size_t i = 0; i < tiles.size(); i++ ) {
+        Tile &tile = tiles[i];
         for ( size_t j = 0; j < goombas.size(); j++ ) {
-            goombas[j].checkCollision( tiles[i] );
+            Goomba &goomba = goombas[j];
+            goomba.updateCollisionProbes();
+            switch ( goomba.checkCollision( tile ) ) {
+                case CollisionType::NORTH:
+                    goomba.setY( tile.getY() + tile.getHeight() );
+                    goomba.setVelY( 0 );
+                    break;
+                case CollisionType::SOUTH:
+                    goomba.setY( tile.getY() - goomba.getHeight() );
+                    goomba.setVelY( 0 );
+                    break;
+                case CollisionType::EAST:
+                    goomba.setX( tile.getX() - goomba.getWidth() );
+                    goomba.setVelX( -goomba.getVelX() );
+                    break;
+                case CollisionType::WEST:
+                    goomba.setX( tile.getX() + tile.getWidth() );
+                    goomba.setVelX( -goomba.getVelX() );
+                    break;
+            }
+            goomba.updateCollisionProbes();
         }
     }
 
     // player x coins collision resolution
-    std::vector<int> collectedIndexes;
     for ( size_t i = 0; i < coins.size(); i++ ) {
-        if ( coins[i].checkCollision( player ) ) {
+        if ( coins[i].checkCollision( player ) == CollisionType::COLLIDED ) {
             collectedIndexes.push_back(i);
             PlaySound( sounds[ "coin" ] );
         }
@@ -97,19 +143,43 @@ void GameWorld::inputAndUpdate() {
     // baddies activation
     for ( size_t i = 0; i < goombas.size(); i++ ) {
         Goomba *g = &goombas[i];
-        if ( g->getState() == BaddieState::IDLE ) {
+        if ( g->getState() == SpriteState::IDLE ) {
             g->activateWithPlayerProximity( player );
         }
     }
 
     // player x baddies collision resolution
     collectedIndexes.clear();
-    for ( size_t i = 0; i < goombas.size(); i++ ) {
-        if ( player.checkCollisionGoomba( goombas[i] ) ) {
-            collectedIndexes.push_back(i);
-            PlaySound( sounds[ "stomp" ] );
+    if ( player.getState() != SpriteState::DYING ) {
+
+        player.updateCollisionProbes();
+        for ( size_t i = 0; i < goombas.size(); i++ ) {
+            Goomba& goomba = goombas[i];
+            switch ( player.checkCollisionGoomba( goomba ) ) {
+                case CollisionType::NORTH:
+                case CollisionType::EAST:
+                case CollisionType::WEST:
+                    player.setState( SpriteState::DYING );
+                    PlaySound( sounds["lostLife"] );
+                    break;
+                case CollisionType::SOUTH:
+                    if ( player.getState() == SpriteState::JUMPING || player.getVelY() > 0 ) {
+                        player.setY( goomba.getY() - player.getHeight() );
+                        player.setVelY( player.getJumpSpeed() );
+                        player.setState( SpriteState::JUMPING );
+                        collectedIndexes.push_back( i );
+                        PlaySound( sounds["stomp"] );
+                    } else {
+                        player.setState( SpriteState::DYING );
+                        PlaySound( sounds["lostLife"] );
+                    }
+                    break;
+            }
         }
+        player.updateCollisionProbes();
+
     }
+
     for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
         goombas.erase( goombas.begin() + collectedIndexes[i] );
     }

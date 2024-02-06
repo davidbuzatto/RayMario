@@ -6,12 +6,11 @@
  * @copyright Copyright (c) 2024
  */
 #include "Tile.h"
-#include "ResourceManager.h"
 #include "GameWorld.h"
-
+#include "ResourceManager.h"
+#include "raylib.h"
 #include <iostream>
 #include <string>
-#include "raylib.h"
 
 Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible ) :
     Sprite( pos, dim, color ),
@@ -45,6 +44,6 @@ void Tile::draw() {
 
 }
 
-bool Tile::checkCollision( Sprite &sprite ) {
-    return false;
+CollisionType Tile::checkCollision( Sprite &sprite ) {
+    return CollisionType::NONE;
 }

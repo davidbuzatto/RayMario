@@ -6,23 +6,23 @@
  * @copyright Copyright (c) 2024
  */
 #include "Goomba.h"
-#include "ResourceManager.h"
-#include "GameWorld.h"
-#include "Direction.h"
 #include "CollisionProbe.h"
+#include "Direction.h"
+#include "GameWorld.h"
 #include "Player.h"
-#include <vector>
-#include <map>
-#include <iostream>
 #include "raylib.h"
+#include "ResourceManager.h"
+#include "SpriteState.h"
+#include <iostream>
+#include <map>
+#include <vector>
 
 Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color ),
     frameTime( 0.2 ),
     frameAcum( 0 ),
     currentFrame( 0 ),
-    facingDirection( Direction::LEFT ),
-    state( BaddieState::IDLE ) {
+    facingDirection( Direction::LEFT ) {
 
     Color c = ColorFromHSV( GetRandomValue( 0, 360 ), 1 , 0.9 );
     /*Color c( GetRandomValue( 100, 255 ),
@@ -30,6 +30,7 @@ Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
              GetRandomValue( 100, 255 ),
              255 );*/
 
+    setState( SpriteState::IDLE );
     cpN.setColor( c );
     cpS.setColor( c );
     cpE.setColor( c );
@@ -42,7 +43,7 @@ Goomba::~Goomba() {
 
 void Goomba::update() {
     
-    if ( state == BaddieState::ACTIVE ) {
+    if ( state == SpriteState::ACTIVE ) {
 
         float delta = GetFrameTime();
 
@@ -89,57 +90,39 @@ void Goomba::draw() {
 
 }
 
-bool Goomba::checkCollision( Sprite &sprite ) {
+CollisionType Goomba::checkCollision( Sprite &sprite ) {
 
     try {
 
-        updateCollisionProbes();
         Tile &tile = dynamic_cast<Tile&>(sprite);
         Rectangle tileRect( tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight() );
 
-        Rectangle cpNRect( cpN.getX(), cpN.getY(), cpN.getWidth(), cpN.getHeight() );
-        Rectangle cpSRect( cpS.getX(), cpS.getY(), cpS.getWidth(), cpS.getHeight() );
-        Rectangle cpERect( cpE.getX(), cpE.getY(), cpE.getWidth(), cpE.getHeight() );
-        Rectangle cpWRect( cpW.getX(), cpW.getY(), cpW.getWidth(), cpW.getHeight() );
-
-        if ( CheckCollisionRecs( cpNRect, tileRect ) ) {
+        if ( CheckCollisionRecs( cpN.getRect(), tileRect) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpN.getColor() );
             }
-            pos.y = tile.getY() + tile.getHeight();
-            vel.y = 0;
-            updateCollisionProbes();
-            return true;
-        } else if ( CheckCollisionRecs( cpSRect, tileRect ) ) {
+            return CollisionType::NORTH;
+        } else if ( CheckCollisionRecs( cpS.getRect(), tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpS.getColor() );
             }
-            pos.y = tile.getY() - dim.y;
-            vel.y = 0;
-            updateCollisionProbes();
-            return true;
-        } else if ( CheckCollisionRecs( cpERect, tileRect ) ) {
+            return CollisionType::SOUTH;
+        } else if ( CheckCollisionRecs( cpE.getRect(), tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpE.getColor() );
             }
-            pos.x = tile.getX() - dim.x;
-            vel.x = -vel.x;
-            updateCollisionProbes();
-            return true;
-        } else if ( CheckCollisionRecs( cpWRect, tileRect ) ) {
+            return CollisionType::EAST;
+        } else if ( CheckCollisionRecs( cpW.getRect(), tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpW.getColor() );
             }
-            pos.x = tile.getX() + tile.getWidth();
-            vel.x = -vel.x;
-            updateCollisionProbes();
-            return true;
+            return CollisionType::WEST;
         }
 
     } catch ( std::bad_cast const& ) {
     }
 
-    return false;
+    return CollisionType::NONE;
 
 }
 
@@ -167,10 +150,6 @@ void Goomba::activateWithPlayerProximity( Player &player ) {
             player.getY() + player.getHeight() / 2 - player.getActivationWidth() / 2,
             player.getActivationWidth(),
             player.getActivationWidth() ) ) ) {
-        state = BaddieState::ACTIVE;
+        state = SpriteState::ACTIVE;
     }
-}
-
-BaddieState Goomba::getState() {
-    return state;
 }

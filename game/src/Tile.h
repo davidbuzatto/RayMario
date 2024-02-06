@@ -7,9 +7,9 @@
  */
 #pragma once
 
-#include <string>
 #include "raylib.h"
 #include "Sprite.h"
+#include <string>
 
 class Tile : public virtual Sprite {
 
@@ -17,10 +17,12 @@ class Tile : public virtual Sprite {
     bool visible;
 
 public:
+
     Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible );
     ~Tile();
+
     virtual void update();
     virtual void draw();
-    virtual bool checkCollision( Sprite &sprite );
+    virtual CollisionType checkCollision( Sprite &sprite );
 
 };

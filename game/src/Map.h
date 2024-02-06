@@ -7,14 +7,14 @@
  */
 #pragma once
 
-#include <vector>
-#include <map>
-#include "raylib.h"
-#include "Drawable.h"
 #include "Coin.h"
-#include "Tile.h"
-#include "Sprite.h"
+#include "Drawable.h"
 #include "Goomba.h"
+#include "raylib.h"
+#include "Sprite.h"
+#include "Tile.h"
+#include <map>
+#include <vector>
 
 class Map : public virtual Drawable {
 

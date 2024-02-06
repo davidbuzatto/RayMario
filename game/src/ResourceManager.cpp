@@ -6,11 +6,11 @@
  * @copyright Copyright (c) 2024
  */
 #include "ResourceManager.h"
-#include <vector>
+#include "raylib.h"
+#include <iostream>
 #include <map>
 #include <string>
-#include <iostream>
-#include "raylib.h"
+#include <vector>
 
 std::map<std::string, Texture2D> ResourceManager::textures;
 std::map<std::string, Sound> ResourceManager::sounds;
@@ -69,6 +69,7 @@ void ResourceManager::loadSounds() {
         sounds["pause"] = LoadSound( "resources/sfx/smw_pause.wav" );
         sounds["powerUp"] = LoadSound( "resources/sfx/smw_power-up.wav" );
         sounds["stomp"] = LoadSound( "resources/sfx/smw_stomp.wav" );
+        sounds["lostLife"] = LoadSound( "resources/sfx/lostLife.wav" );
     }
 }
 

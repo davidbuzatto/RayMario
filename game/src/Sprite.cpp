@@ -7,6 +7,7 @@
  */
 #include "Sprite.h"
 #include "raylib.h"
+#include "SpriteState.h"
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color ) :
     Sprite( pos, Vector2( 0, 0 ), dim, color ) {
@@ -77,6 +78,10 @@ void Sprite::setColor( Color color ) {
     this->color = color;
 }
 
+void Sprite::setState( SpriteState state ) {
+    this->state = state;
+}
+
 Vector2 &Sprite::getPos() {
     return pos;
 }
@@ -115,4 +120,12 @@ float Sprite::getVelY() {
 
 Color &Sprite::getColor() {
     return color;
+}
+
+SpriteState Sprite::getState() {
+    return state;
+}
+
+Rectangle Sprite::getRect() {
+    return Rectangle( pos.x, pos.y, dim.x, dim.y );
 }

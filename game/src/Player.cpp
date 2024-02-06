@@ -6,22 +6,20 @@
  * @copyright Copyright (c) 2024
  */
 #include "Player.h"
-#include "ResourceManager.h"
-#include "PlayerState.h"
 #include "Direction.h"
 #include "GameWorld.h"
 #include "Goomba.h"
-#include "Tile.h"
-#include <typeinfo>
-#include <iostream>
 #include "raylib.h"
+#include "ResourceManager.h"
+#include "Tile.h"
+#include <iostream>
+#include <typeinfo>
 
 Player::Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed ) :
     Sprite( pos, dim, vel, color ),
     speedX( speedX ),
     maxSpeedX( maxSpeedX ),
     jumpSpeed( jumpSpeed ),
-    state( PlayerState::ON_GROUND ),
     facingDirection( Direction::RIGHT ),
     crouched( false ),
     frameTimeWalking( 0.1 ),
@@ -30,6 +28,8 @@ Player::Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX
     currentFrame( 0 ),
     maxFrames( 2 ),
     activationWidth( 0 ) {
+
+    setState( SpriteState::ON_GROUND );
 
     cpN.setColor( PINK );
     cpS.setColor( VIOLET );
@@ -45,13 +45,13 @@ Player::~Player() {
 
 void Player::update() {
     
-    std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
+    std::map<std::string, Sound>& sounds = ResourceManager::getSounds();
     float delta = GetFrameTime();
     bool running = IsKeyDown( KEY_LEFT_CONTROL ) || IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT );
     float currentSpeedX = running ? maxSpeedX : speedX;
-    float currentFrameTime = running ? frameTimeRunning : frameTimeWalking;
+    float currentFrameTime = running && state != SpriteState::DYING ? frameTimeRunning : frameTimeWalking;
 
-    if ( vel.x != 0 ) {
+    if ( vel.x != 0 || state == SpriteState::DYING ) {
         frameAcum += delta;
         if ( frameAcum >= currentFrameTime ) {
             frameAcum = 0;
@@ -62,39 +62,43 @@ void Player::update() {
         currentFrame = 0;
     }
 
-    if ( IsKeyDown( KEY_RIGHT ) || 
-         IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT ) ||
-         GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) > 0 ) {
-        facingDirection = Direction::RIGHT;
-        vel.x = currentSpeedX;
-    } else if ( IsKeyDown( KEY_LEFT ) || 
-                IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_LEFT ) ||
-                GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) < 0 ) {
-        facingDirection = Direction::LEFT;
-        vel.x = -currentSpeedX;
-    } else {
-        vel.x = 0;
+    if ( state != SpriteState::DYING ) {
+
+        if ( IsKeyDown( KEY_RIGHT ) ||
+             IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT ) ||
+             GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) > 0 ) {
+            facingDirection = Direction::RIGHT;
+            vel.x = currentSpeedX;
+        } else if ( IsKeyDown( KEY_LEFT ) ||
+                    IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_LEFT ) ||
+                    GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) < 0 ) {
+            facingDirection = Direction::LEFT;
+            vel.x = -currentSpeedX;
+        } else {
+            vel.x = 0;
+        }
+
+        /*if ( IsKeyDown( KEY_DOWN ) ||
+             IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
+             GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
+            crouched = true;
+        } else {
+            crouched = false;
+        }*/
+
+        if ( ( IsKeyPressed( KEY_SPACE ) ||
+               IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN ) ) && state != SpriteState::JUMPING ) {
+            vel.y = jumpSpeed;
+            state = SpriteState::JUMPING;
+            PlaySound( sounds["jump"] );
+        }
+
+        pos.x = pos.x + vel.x * delta;
+        pos.y = pos.y + vel.y * delta;
+
+        vel.y += GameWorld::gravity;
+
     }
-
-    /*if ( IsKeyDown( KEY_DOWN ) || 
-         IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
-         GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
-        crouched = true;
-    } else {
-        crouched = false;
-    }*/
-
-    if ( ( IsKeyPressed( KEY_SPACE ) || 
-           IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN ) ) && state != PlayerState::JUMPING ) {
-        vel.y = jumpSpeed;
-        state = PlayerState::JUMPING;
-        PlaySound( sounds["jump"] );
-    }
-
-    pos.x = pos.x + vel.x * delta;
-    pos.y = pos.y + vel.y * delta;
-
-    vel.y += GameWorld::gravity;
 
 }
 
@@ -102,42 +106,52 @@ void Player::draw() {
 
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
     
-    if ( facingDirection == Direction::RIGHT ) {
-        if ( state == PlayerState::ON_GROUND ) {
-            if ( crouched ) {
-                DrawTexture( textures["marioDR"], pos.x, pos.y, WHITE );
-            } else {
-                if ( currentFrame == 0 ) {
-                    DrawTexture( textures["mario1R"], pos.x, pos.y, WHITE );
-                } else if ( currentFrame == 1 ) {
-                    DrawTexture( textures["mario2R"], pos.x, pos.y, WHITE );
-                }
-            }
-        } else if ( state == PlayerState::JUMPING ) {
-            if ( vel.y < 0 ) {
-                DrawTexture( textures["mario1JR"], pos.x, pos.y, WHITE );
-            } else {
-                DrawTexture( textures["mario2JR"], pos.x, pos.y, WHITE );
-            }
+    if ( state == SpriteState::DYING ) {
+        if ( currentFrame == 0 ) {
+            DrawTexture( textures["mario1Dy"], pos.x, pos.y, WHITE );
+        } else if ( currentFrame == 1 ) {
+            DrawTexture( textures["mario2Dy"], pos.x, pos.y, WHITE );
         }
     } else {
-        if ( state == PlayerState::ON_GROUND ) {
-            if ( crouched ) {
-                DrawTexture( textures["marioDL"], pos.x, pos.y, WHITE );
-            } else {
-                if ( currentFrame == 0 ) {
-                    DrawTexture( textures["mario1L"], pos.x, pos.y, WHITE );
-                } else if ( currentFrame == 1 ) {
-                    DrawTexture( textures["mario2L"], pos.x, pos.y, WHITE );
+
+        if ( facingDirection == Direction::RIGHT ) {
+            if ( state == SpriteState::ON_GROUND ) {
+                if ( crouched ) {
+                    DrawTexture( textures["marioDR"], pos.x, pos.y, WHITE );
+                } else {
+                    if ( currentFrame == 0 ) {
+                        DrawTexture( textures["mario1R"], pos.x, pos.y, WHITE );
+                    } else if ( currentFrame == 1 ) {
+                        DrawTexture( textures["mario2R"], pos.x, pos.y, WHITE );
+                    }
+                }
+            } else if ( state == SpriteState::JUMPING ) {
+                if ( vel.y < 0 ) {
+                    DrawTexture( textures["mario1JR"], pos.x, pos.y, WHITE );
+                } else {
+                    DrawTexture( textures["mario2JR"], pos.x, pos.y, WHITE );
                 }
             }
-        } else if ( state == PlayerState::JUMPING ) {
-            if ( vel.y < 0 ) {
-                DrawTexture( textures["mario1JL"], pos.x, pos.y, WHITE );
-            } else {
-                DrawTexture( textures["mario2JL"], pos.x, pos.y, WHITE );
+        } else {
+            if ( state == SpriteState::ON_GROUND ) {
+                if ( crouched ) {
+                    DrawTexture( textures["marioDL"], pos.x, pos.y, WHITE );
+                } else {
+                    if ( currentFrame == 0 ) {
+                        DrawTexture( textures["mario1L"], pos.x, pos.y, WHITE );
+                    } else if ( currentFrame == 1 ) {
+                        DrawTexture( textures["mario2L"], pos.x, pos.y, WHITE );
+                    }
+                }
+            } else if ( state == SpriteState::JUMPING ) {
+                if ( vel.y < 0 ) {
+                    DrawTexture( textures["mario1JL"], pos.x, pos.y, WHITE );
+                } else {
+                    DrawTexture( textures["mario2JL"], pos.x, pos.y, WHITE );
+                }
             }
         }
+
     }
 
     if ( GameWorld::debug ) {
@@ -153,114 +167,70 @@ void Player::draw() {
 
 }
 
-bool Player::checkCollision( Sprite &sprite ) {
-    return false;
+CollisionType Player::checkCollision( Sprite &sprite ) {
+    return CollisionType::NONE;
 }
 
-bool Player::checkCollisionTile( Sprite &sprite ) {
-
+CollisionType Player::checkCollisionTile( Sprite& sprite ) {
+    
     try {
 
-        updateCollisionProbes();
-        Tile &tile = dynamic_cast<Tile&>(sprite);
+        Tile& tile = dynamic_cast<Tile&>( sprite );
         Rectangle tileRect( tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight() );
 
-        Rectangle cpNRect( cpN.getX(), cpN.getY(), cpN.getWidth(), cpN.getHeight() );
-        Rectangle cpSRect( cpS.getX(), cpS.getY(), cpS.getWidth(), cpS.getHeight() );
-        Rectangle cpERect( cpE.getX(), cpE.getY(), cpE.getWidth(), cpE.getHeight() );
-        Rectangle cpWRect( cpW.getX(), cpW.getY(), cpW.getWidth(), cpW.getHeight() );
-
-        if ( CheckCollisionRecs( cpNRect, tileRect ) ) {
+        if ( CheckCollisionRecs( cpN.getRect(), tileRect) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpN.getColor() );
             }
-            pos.y = tile.getY() + tile.getHeight();
-            vel.y = 0;
-            updateCollisionProbes();
-            return true;
-        } else if ( CheckCollisionRecs( cpSRect, tileRect ) ) {
+            return CollisionType::NORTH;
+        } else if ( CheckCollisionRecs( cpS.getRect(), tileRect) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpS.getColor() );
             }
-            pos.y = tile.getY() - dim.y;
-            vel.y = 0;
-            updateCollisionProbes();
-            state = PlayerState::ON_GROUND;
-            return true;
-        } else if ( CheckCollisionRecs( cpERect, tileRect ) ) {
+            return CollisionType::SOUTH;
+        } else if ( CheckCollisionRecs( cpE.getRect(), tileRect) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpE.getColor() );
             }
-            pos.x = tile.getX() - dim.x;
-            vel.x = 0;
-            updateCollisionProbes();
-            return true;
-        } else if ( CheckCollisionRecs( cpWRect, tileRect ) ) {
+            return CollisionType::EAST;
+        } else if ( CheckCollisionRecs( cpW.getRect(), tileRect) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpW.getColor() );
             }
-            pos.x = tile.getX() + tile.getWidth();
-            vel.x = 0;
-            updateCollisionProbes();
-            return true;
+            return CollisionType::WEST;
         }
 
     } catch ( std::bad_cast const& ) {
     }
 
-    return false;
+    return CollisionType::NONE;
 
 }
 
-bool Player::checkCollisionGoomba( Sprite &sprite ) {
+CollisionType Player::checkCollisionGoomba( Sprite &sprite ) {
 
     try {
         
-        updateCollisionProbes();
         Goomba &goomba = dynamic_cast<Goomba&>(sprite);
-        Rectangle goombaRect( goomba.getX(), goomba.getY(), goomba.getWidth(), goomba.getHeight() );
-
-        Rectangle cpNRect( cpN.getX(), cpN.getY(), cpN.getWidth(), cpN.getHeight() );
-        Rectangle cpSRect( cpS.getX(), cpS.getY(), cpS.getWidth(), cpS.getHeight() );
-        Rectangle cpERect( cpE.getX(), cpE.getY(), cpE.getWidth(), cpE.getHeight() );
-        Rectangle cpWRect( cpW.getX(), cpW.getY(), cpW.getWidth(), cpW.getHeight() );
+        Rectangle goombaRect = goomba.getRect();
         
-        if ( state == PlayerState::JUMPING || vel.y > 0 ) {
-            if ( CheckCollisionRecs( cpNRect, goombaRect ) ||
-                 CheckCollisionRecs( cpERect, goombaRect ) ||
-                 CheckCollisionRecs( cpWRect, goombaRect ) ) {
-                // die
-                updateCollisionProbes();
-                return false;
-            } else if ( CheckCollisionRecs( cpSRect, goombaRect ) ) {
-                pos.y = goomba.getY() - dim.y;
-                vel.y = jumpSpeed;
-                updateCollisionProbes();
-                state = PlayerState::JUMPING;
-                return true;
+        if ( state == SpriteState::JUMPING || vel.y > 0 ) {
+            if ( CheckCollisionRecs( cpN.getRect(), goombaRect ) ) {
+                return CollisionType::NORTH;
+            } else if ( CheckCollisionRecs( cpS.getRect(), goombaRect ) ) {
+                return CollisionType::SOUTH;
+            } else if ( CheckCollisionRecs( cpE.getRect(), goombaRect ) ) {
+                return CollisionType::EAST;
+            } else if ( CheckCollisionRecs( cpW.getRect(), goombaRect ) ) {
+                return CollisionType::WEST;
             }
-        } else if ( CheckCollisionRecs( cpNRect, goombaRect ) ||
-                    CheckCollisionRecs( cpSRect, goombaRect ) ||
-                    CheckCollisionRecs( cpERect, goombaRect ) ||
-                    CheckCollisionRecs( cpWRect, goombaRect ) ) {
-            // die
-            updateCollisionProbes();
-            return false;
         }
 
     } catch ( std::bad_cast const& ) {
     }
 
-    return false;
+    return CollisionType::NONE;
 
-}
-
-void Player::setState( PlayerState state ) {
-    this->state = state;
-}
-
-PlayerState Player::getState() const {
-    return state;
 }
 
 void Player::updateCollisionProbes() {

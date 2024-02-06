@@ -7,8 +7,16 @@
  */
 #pragma once
 
-enum PlayerState {
+enum SpriteState {
+
+    IDLE,
+    ACTIVE,
+
     ON_GROUND,
     JUMPING,
-    CROUCHED
+    CROUCHED,
+    
+    DYING,
+    DEAD
+
 };

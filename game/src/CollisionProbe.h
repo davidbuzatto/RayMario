@@ -7,18 +7,20 @@
  */
 #pragma once
 
+#include "CollisionType.h"
 #include "raylib.h"
-#include "PlayerState.h"
 #include "Sprite.h"
 
 class CollisionProbe : public virtual Sprite {
     
 public:
+
     CollisionProbe();
     CollisionProbe( Vector2 pos, Vector2 dim, Color color );
     ~CollisionProbe();
+
     virtual void update();
     virtual void draw();
-    virtual bool checkCollision( Sprite &sprite );
+    virtual CollisionType checkCollision( Sprite &sprite );
 
 };
