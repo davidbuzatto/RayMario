@@ -96,118 +96,133 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
 
         int currentColumn = 0;
         int currentLine = 0;
+        bool ignoreLine = false;
 
         while ( *mapData != '\0' ) {
 
             float x = currentColumn*tileWidth;
             float y = currentLine*tileWidth;
 
-            if ( *mapData != '/' ) {
-                if ( maxWidth < x ) {
-                    maxWidth = x;
-                }
-                if ( maxHeight < y ) {
-                    maxHeight = y;
-                }
+            if ( *mapData == '#' ) {
+                ignoreLine = true;
             }
 
-            switch ( *mapData ) {
-                case 'a':
-                    tiles.push_back( 
-                        Tile( 
-                            Vector2( x, y ), 
-                            Vector2( tileWidth, tileWidth ), 
-                            GREEN,
-                            "",
-                            true
-                        )
-                    );
-                    break;
-                case 'b':
-                    tiles.push_back( 
-                        Tile( 
-                            Vector2( x, y ), 
-                            Vector2( tileWidth, tileWidth ), 
-                            BLUE,
-                            "",
-                            true
-                        )
-                    );
-                    break;
-                case 'c':
-                    tiles.push_back( 
-                        Tile( 
-                            Vector2( x, y ), 
-                            Vector2( tileWidth, tileWidth ), 
-                            RED,
-                            "",
-                            true
-                        )
-                    );
-                    break;
-                case 'd':
-                    tiles.push_back( 
-                        Tile( 
-                            Vector2( x, y ), 
-                            Vector2( tileWidth, tileWidth ), 
-                            ORANGE,
-                            "",
-                            true
-                        )
-                    );
-                    break;
-                case '/':
-                    tiles.push_back( 
-                        Tile( 
-                            Vector2( x, y ), 
-                            Vector2( tileWidth, tileWidth ), 
-                            WHITE,
-                            "",
-                            false
-                        )
-                    );
-                    break;
-                case '|':
-                    tiles.push_back( 
-                        Tile( 
-                            Vector2( x, y ), 
-                            Vector2( tileWidth, tileWidth ), 
-                            WHITE,
-                            "",
-                            false,
-                            true
-                        )
-                    );
-                    break;
-                case 'o':
-                    coins.push_back( Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
-                    break;
-                case '1':
-                    goombas.push_back( Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), YELLOW ) );
-                    break;
-                case '\n':
-                    currentLine++;
-                    currentColumn = -1;
-                    break;
-                case ' ':
-                    break;
-                case 'p':
-                    player.setPos( Vector2( x, y ) );
-                    break;
-                default:
-                    int index = (*mapData)-'A';
-                    if ( index >= 0 && index <= 26 ) {
-                        tiles.push_back( 
-                            Tile( 
-                                Vector2( x, y ), 
-                                Vector2( tileWidth, tileWidth ), 
-                                BLACK,
-                                std::string(1, *mapData),
+            if ( !ignoreLine ) {
+
+                if ( *mapData != '/' ) {
+                    if ( maxWidth < x ) {
+                        maxWidth = x;
+                    }
+                    if ( maxHeight < y ) {
+                        maxHeight = y;
+                    }
+                }
+
+                switch ( *mapData ) {
+                    case 'a':
+                        tiles.push_back(
+                            Tile(
+                                Vector2( x, y ),
+                                Vector2( tileWidth, tileWidth ),
+                                GREEN,
+                                "",
                                 true
                             )
                         );
-                    }
-                    break;
+                        break;
+                    case 'b':
+                        tiles.push_back(
+                            Tile(
+                                Vector2( x, y ),
+                                Vector2( tileWidth, tileWidth ),
+                                BLUE,
+                                "",
+                                true
+                            )
+                        );
+                        break;
+                    case 'c':
+                        tiles.push_back(
+                            Tile(
+                                Vector2( x, y ),
+                                Vector2( tileWidth, tileWidth ),
+                                RED,
+                                "",
+                                true
+                            )
+                        );
+                        break;
+                    case 'd':
+                        tiles.push_back(
+                            Tile(
+                                Vector2( x, y ),
+                                Vector2( tileWidth, tileWidth ),
+                                ORANGE,
+                                "",
+                                true
+                            )
+                        );
+                        break;
+                    case '/':
+                        tiles.push_back(
+                            Tile(
+                                Vector2( x, y ),
+                                Vector2( tileWidth, tileWidth ),
+                                WHITE,
+                                "",
+                                false
+                            )
+                        );
+                        break;
+                    case '|':
+                        tiles.push_back(
+                            Tile(
+                                Vector2( x, y ),
+                                Vector2( tileWidth, tileWidth ),
+                                WHITE,
+                                "",
+                                false,
+                                true
+                            )
+                        );
+                        break;
+                    case 'o':
+                        coins.push_back( Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
+                        break;
+                    case '1':
+                        goombas.push_back( Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '\n':
+                        currentLine++;
+                        currentColumn = -1;
+                        ignoreLine = false;
+                        break;
+                    case ' ':
+                        break;
+                    case 'p':
+                        player.setPos( Vector2( x, y ) );
+                        break;
+                    default:
+                        int index = ( *mapData ) - 'A';
+                        if ( *mapData >= 'A' && *mapData <= 'Z' ) {
+                            tiles.push_back(
+                                Tile(
+                                    Vector2( x, y ),
+                                    Vector2( tileWidth, tileWidth ),
+                                    BLACK,
+                                    std::string( 1, *mapData ),
+                                    true
+                                )
+                            );
+                        }
+                        break;
+                }
+
+            }
+
+            if ( ignoreLine && *mapData == '\n' ) {
+                ignoreLine = false;
+                currentColumn = -1;
             }
 
             currentColumn++;
