@@ -1,6 +1,7 @@
 permitir comentários nos arquivos de mapa
 criar preambulo de configurações (cor de fundo e música)
 backgrounds originais
+separar tiles de cenário, fundo etcv
 
 colisão jogador x inimigos
     morrer - ok (resetar fase e subtrair vidas)

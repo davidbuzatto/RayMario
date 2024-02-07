@@ -4,6 +4,7 @@
 #   Tiles:
 #   <space>  Empty tile
 #   /        Invisible tile
+#   |        Baddie invisible
 #   A..Z     Tiles A through Z
 #
 #   Items:

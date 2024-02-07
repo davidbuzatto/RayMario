@@ -22,6 +22,7 @@ Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     frameTime( 0.2 ),
     frameAcum( 0 ),
     currentFrame( 0 ),
+    maxFrames( 2 ),
     facingDirection( Direction::LEFT ) {
 
     setState( SpriteState::IDLE );
@@ -47,7 +48,7 @@ void Goomba::update() {
         if ( frameAcum >= frameTime ) {
             frameAcum = 0;
             currentFrame++;
-            currentFrame %= 2;
+            currentFrame %= maxFrames;
         }
 
         if ( vel.x >= 0 ) {

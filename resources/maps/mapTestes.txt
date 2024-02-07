@@ -16,6 +16,6 @@
 /      IIIIIIIIIIIIII         I              C/
 /                                            C/
 /   I                                        C/
-/         o o 1 o o                          C/
+/  p      o o 1 o o                          C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAA/

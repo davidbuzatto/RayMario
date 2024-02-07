@@ -10,6 +10,7 @@
 #include "Coin.h"
 #include "Drawable.h"
 #include "Goomba.h"
+#include "Player.h"
 #include "raylib.h"
 #include "Sprite.h"
 #include "Tile.h"
@@ -30,9 +31,11 @@ class Map : public virtual Drawable {
     std::vector<Coin> coins;
     std::vector<Goomba> goombas;
 
+    Player &player;
+
 public:
 
-    Map();
+    Map( Player &player );
     ~Map();
     virtual void draw();
     std::vector<Tile> &getTiles();

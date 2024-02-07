@@ -33,15 +33,16 @@ float GameWorld::gravity = 20;
  */
 GameWorld::GameWorld() :
     player( 
-        Vector2( 96, 100 ), 
         Vector2( 0, 0 ), 
         Vector2( 28, 40 ), 
+        Vector2( 0, 0 ), 
         Color( 0, 0, 0, 255 ),
         260,
         360,
         -550,
         true
     ),
+    map( player ),
     camera( nullptr ) {
     std::cout << "creating game world..." << std::endl;
 }
@@ -58,7 +59,7 @@ GameWorld::~GameWorld() {
  */
 void GameWorld::inputAndUpdate() {
 
-    map.parseMap( 1, false );
+    map.parseMap( 1, true );
     if ( player.getState() != SpriteState::DYING ) {
         map.playMusic();
     }

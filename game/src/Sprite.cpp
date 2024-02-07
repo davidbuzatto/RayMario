@@ -10,10 +10,10 @@
 #include "SpriteState.h"
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, Vector2( 0, 0 ), dim, color ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color ) {
 }
 
-Sprite::Sprite( Vector2 pos, Vector2 vel, Vector2 dim, Color color ) :
+Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     pos( pos ),
     dim( dim ),
     vel( vel ),

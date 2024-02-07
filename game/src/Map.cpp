@@ -17,11 +17,12 @@
 
 int Map::tileWidth = 32;
 
-Map::Map() :
+Map::Map( Player &player ) :
     maxWidth( 0 ),
     maxHeight( 0 ),
     playerOffset( 0 ),
-    parsed( false ) {
+    parsed( false ),
+    player( player ) {
 }
 
 Map::~Map() {
@@ -182,13 +183,16 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
                     coins.push_back( Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
                     break;
                 case '1':
-                    goombas.push_back( Goomba( Vector2( x, y ), Vector2( -100, 0 ), Vector2( 32, 30 ), YELLOW ) );
+                    goombas.push_back( Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), YELLOW ) );
                     break;
                 case '\n':
                     currentLine++;
                     currentColumn = -1;
                     break;
                 case ' ':
+                    break;
+                case 'p':
+                    player.setPos( Vector2( x, y ) );
                     break;
                 default:
                     int index = (*mapData)-'A';
