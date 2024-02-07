@@ -14,6 +14,7 @@ enum SpriteState {
 
     ON_GROUND,
     JUMPING,
+    FALLING,
     CROUCHED,
     
     DYING,

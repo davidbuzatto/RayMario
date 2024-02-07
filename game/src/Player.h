@@ -19,6 +19,7 @@ class Player : public virtual Sprite {
     float speedX;
     float maxSpeedX;
     float jumpSpeed;
+    bool immortal;
 
     Direction facingDirection;
     bool crouched;
@@ -30,15 +31,10 @@ class Player : public virtual Sprite {
     int maxFrames;
 
     float activationWidth;
-
-    CollisionProbe cpN;
-    CollisionProbe cpS;
-    CollisionProbe cpE;
-    CollisionProbe cpW;
     
 public:
 
-    Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed );
+    Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed, bool immortal );
     ~Player();
 
     virtual void update();
@@ -47,13 +43,14 @@ public:
 
     CollisionType checkCollisionTile( Sprite& sprite );
     CollisionType checkCollisionGoomba( Sprite& sprite );
-    void updateCollisionProbes();
 
+    void setImmortal( bool immortal );
     void setActivationWidth( float activationWidth );
     
     float getSpeedX();
     float getMaxSpeedX();
     float getJumpSpeed();
+    bool isImmortal();
     float getActivationWidth();
 
 };

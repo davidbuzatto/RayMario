@@ -7,6 +7,7 @@
  */
 #include "Coin.h"
 #include "Player.h"
+#include "Sprite.h"
 #include "raylib.h"
 #include "ResourceManager.h"
 #include <iostream>

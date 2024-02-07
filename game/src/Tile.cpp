@@ -13,9 +13,14 @@
 #include <string>
 
 Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible ) :
+    Tile( pos, dim, color, key, visible, false ) {
+}
+
+Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, bool onlyBaddies ) :
     Sprite( pos, dim, color ),
     key( key ),
-    visible( visible ) {
+    visible( visible ),
+    onlyBaddies( onlyBaddies ) {
 }
 
 Tile::~Tile() {
@@ -46,4 +51,8 @@ void Tile::draw() {
 
 CollisionType Tile::checkCollision( Sprite &sprite ) {
     return CollisionType::NONE;
+}
+
+bool Tile::isOnlyBaddies() {
+    return onlyBaddies;
 }

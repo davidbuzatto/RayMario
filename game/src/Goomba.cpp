@@ -24,13 +24,9 @@ Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     currentFrame( 0 ),
     facingDirection( Direction::LEFT ) {
 
-    Color c = ColorFromHSV( GetRandomValue( 0, 360 ), 1 , 0.9 );
-    /*Color c( GetRandomValue( 100, 255 ),
-             GetRandomValue( 100, 255 ),
-             GetRandomValue( 100, 255 ),
-             255 );*/
-
     setState( SpriteState::IDLE );
+
+    Color c = ColorFromHSV( GetRandomValue( 0, 360 ), 1, 0.9 );
     cpN.setColor( c );
     cpS.setColor( c );
     cpE.setColor( c );
@@ -94,25 +90,25 @@ CollisionType Goomba::checkCollision( Sprite &sprite ) {
 
     try {
 
-        Tile &tile = dynamic_cast<Tile&>(sprite);
-        Rectangle tileRect( tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight() );
+        Tile& tile = dynamic_cast<Tile&>( sprite );
+        Rectangle tileRect = tile.getRect();
 
-        if ( CheckCollisionRecs( cpN.getRect(), tileRect) ) {
+        if ( cpN.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpN.getColor() );
             }
             return CollisionType::NORTH;
-        } else if ( CheckCollisionRecs( cpS.getRect(), tileRect ) ) {
+        } else if ( cpS.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpS.getColor() );
             }
             return CollisionType::SOUTH;
-        } else if ( CheckCollisionRecs( cpE.getRect(), tileRect ) ) {
+        } else if ( cpE.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpE.getColor() );
             }
             return CollisionType::EAST;
-        } else if ( CheckCollisionRecs( cpW.getRect(), tileRect ) ) {
+        } else if ( cpW.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpW.getColor() );
             }
@@ -123,22 +119,6 @@ CollisionType Goomba::checkCollision( Sprite &sprite ) {
     }
 
     return CollisionType::NONE;
-
-}
-
-void Goomba::updateCollisionProbes() {
-
-    cpN.setX( pos.x + dim.x / 2 - cpN.getWidth() / 2 );
-    cpN.setY( pos.y );
-
-    cpS.setX( pos.x + dim.x / 2 - cpS.getWidth() / 2 );
-    cpS.setY( pos.y + dim.y - cpS.getHeight() );
-
-    cpE.setX( pos.x + dim.x - cpE.getWidth() );
-    cpE.setY( pos.y + dim.y / 2 - cpE.getHeight() / 2 );
-
-    cpW.setX( pos.x );
-    cpW.setY( pos.y + dim.y / 2 - cpW.getHeight() / 2 );
 
 }
 

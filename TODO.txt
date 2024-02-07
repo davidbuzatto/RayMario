@@ -1,15 +1,16 @@
-colisão jogador x inimigos
-    matar inimigo - resolver queda (apenas desenho)
-    morrer - ok
-melhorar os collision probes (deixar de ser classe?)
-morrer de queda - tiles específicos?
-tiles invisíveis para os inimigos (colidem, mas o jogador não)
+permitir comentários nos arquivos de mapa
+criar preambulo de configurações (cor de fundo e música)
 backgrounds originais
+
+colisão jogador x inimigos
+    morrer - ok (resetar fase e subtrair vidas)
+
 inimigos colidem entre si?
-permitir comentários nos arquivos de mapa?
+
 refatorar
 polimorfismo
 terminar inimigos
 criar caixas interativas (moedas, "?" etc)
 criar GUI
 criar transição entre fases
+editor de fases - salvar e carregar

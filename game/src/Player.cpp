@@ -15,11 +15,12 @@
 #include <iostream>
 #include <typeinfo>
 
-Player::Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed ) :
+Player::Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed, bool immortal ) :
     Sprite( pos, dim, vel, color ),
     speedX( speedX ),
     maxSpeedX( maxSpeedX ),
     jumpSpeed( jumpSpeed ),
+    immortal( immortal ),
     facingDirection( Direction::RIGHT ),
     crouched( false ),
     frameTimeWalking( 0.1 ),
@@ -78,13 +79,13 @@ void Player::update() {
             vel.x = 0;
         }
 
-        /*if ( IsKeyDown( KEY_DOWN ) ||
+        if ( IsKeyDown( KEY_DOWN ) ||
              IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
              GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
             crouched = true;
         } else {
             crouched = false;
-        }*/
+        }
 
         if ( ( IsKeyPressed( KEY_SPACE ) ||
                IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN ) ) && state != SpriteState::JUMPING ) {
@@ -176,24 +177,24 @@ CollisionType Player::checkCollisionTile( Sprite& sprite ) {
     try {
 
         Tile& tile = dynamic_cast<Tile&>( sprite );
-        Rectangle tileRect( tile.getX(), tile.getY(), tile.getWidth(), tile.getHeight() );
+        Rectangle tileRect = tile.getRect();
 
-        if ( CheckCollisionRecs( cpN.getRect(), tileRect) ) {
+        if ( cpN.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpN.getColor() );
             }
             return CollisionType::NORTH;
-        } else if ( CheckCollisionRecs( cpS.getRect(), tileRect) ) {
+        } else if ( cpS.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpS.getColor() );
             }
             return CollisionType::SOUTH;
-        } else if ( CheckCollisionRecs( cpE.getRect(), tileRect) ) {
+        } else if ( cpE.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpE.getColor() );
             }
             return CollisionType::EAST;
-        } else if ( CheckCollisionRecs( cpW.getRect(), tileRect) ) {
+        } else if ( cpW.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpW.getColor() );
             }
@@ -215,13 +216,13 @@ CollisionType Player::checkCollisionGoomba( Sprite &sprite ) {
         Rectangle goombaRect = goomba.getRect();
         
         if ( state == SpriteState::JUMPING || vel.y > 0 ) {
-            if ( CheckCollisionRecs( cpN.getRect(), goombaRect ) ) {
+            if ( cpN.checkCollision( goombaRect ) ) {
                 return CollisionType::NORTH;
-            } else if ( CheckCollisionRecs( cpS.getRect(), goombaRect ) ) {
+            } else if ( cpS.checkCollision( goombaRect ) ) {
                 return CollisionType::SOUTH;
-            } else if ( CheckCollisionRecs( cpE.getRect(), goombaRect ) ) {
+            } else if ( cpE.checkCollision( goombaRect ) ) {
                 return CollisionType::EAST;
-            } else if ( CheckCollisionRecs( cpW.getRect(), goombaRect ) ) {
+            } else if ( cpW.checkCollision( goombaRect ) ) {
                 return CollisionType::WEST;
             }
         }
@@ -230,22 +231,6 @@ CollisionType Player::checkCollisionGoomba( Sprite &sprite ) {
     }
 
     return CollisionType::NONE;
-
-}
-
-void Player::updateCollisionProbes() {
-
-    cpN.setX( pos.x + dim.x / 2 - cpN.getWidth() / 2 );
-    cpN.setY( pos.y );
-
-    cpS.setX( pos.x + dim.x / 2 - cpS.getWidth() / 2 );
-    cpS.setY( pos.y + dim.y - cpS.getHeight() );
-
-    cpE.setX( pos.x + dim.x - cpE.getWidth() );
-    cpE.setY( pos.y + dim.y / 2 - cpE.getHeight() / 2 );
-
-    cpW.setX( pos.x );
-    cpW.setY( pos.y + dim.y / 2 - cpW.getHeight() / 2 );
 
 }
 
@@ -263,6 +248,14 @@ float Player::getJumpSpeed() {
 
 float Player::getActivationWidth() {
     return activationWidth;
+}
+
+void Player::setImmortal( bool immortal ) {
+    this->immortal = immortal;
+}
+
+bool Player::isImmortal() {
+    return immortal;
 }
 
 void Player::setActivationWidth( float activationWidth ) {

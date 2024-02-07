@@ -8,6 +8,7 @@
 #pragma once
 
 #include "CollisionType.h"
+#include "CollisionProbe.h"
 #include "Drawable.h"
 #include "raylib.h"
 #include "SpriteState.h"
@@ -21,6 +22,11 @@ protected:
     Color color;
     SpriteState state;
 
+    CollisionProbe cpN;
+    CollisionProbe cpS;
+    CollisionProbe cpE;
+    CollisionProbe cpW;
+
 public:
 
     Sprite( Vector2 pos, Vector2 dim, Color color );
@@ -30,6 +36,7 @@ public:
     virtual void update() = 0;
     virtual void draw() = 0;
     virtual CollisionType checkCollision( Sprite &sprite ) = 0;
+    void updateCollisionProbes();
 
     void setPos( Vector2 pos );
     void setPos( float x, float y );

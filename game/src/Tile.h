@@ -15,14 +15,18 @@ class Tile : public virtual Sprite {
 
     std::string key;
     bool visible;
+    bool onlyBaddies;
 
 public:
 
     Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible );
+    Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, bool onlyBaddies );
     ~Tile();
 
     virtual void update();
     virtual void draw();
     virtual CollisionType checkCollision( Sprite &sprite );
+
+    bool isOnlyBaddies();
 
 };

@@ -21,11 +21,6 @@ class Goomba : public virtual Sprite {
     int currentFrame;
     int maxFrames;
     Direction facingDirection;
-
-    CollisionProbe cpN;
-    CollisionProbe cpS;
-    CollisionProbe cpE;
-    CollisionProbe cpW;
     
 public:
 
@@ -35,8 +30,6 @@ public:
     virtual void update();
     virtual void draw();
     virtual CollisionType checkCollision( Sprite &sprite );
-
-    void updateCollisionProbes();
     void activateWithPlayerProximity( Player &player );
 
 };

@@ -129,3 +129,19 @@ SpriteState Sprite::getState() {
 Rectangle Sprite::getRect() {
     return Rectangle( pos.x, pos.y, dim.x, dim.y );
 }
+
+void Sprite::updateCollisionProbes() {
+
+    cpN.setX( pos.x + dim.x / 2 - cpN.getWidth() / 2 );
+    cpN.setY( pos.y );
+
+    cpS.setX( pos.x + dim.x / 2 - cpS.getWidth() / 2 );
+    cpS.setY( pos.y + dim.y - cpS.getHeight() );
+
+    cpE.setX( pos.x + dim.x - cpE.getWidth() );
+    cpE.setY( pos.y + dim.y / 2 - cpE.getHeight() / 2 );
+
+    cpW.setX( pos.x );
+    cpW.setY( pos.y + dim.y / 2 - cpW.getHeight() / 2 );
+
+}

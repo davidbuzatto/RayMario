@@ -166,6 +166,18 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
                         )
                     );
                     break;
+                case '|':
+                    tiles.push_back( 
+                        Tile( 
+                            Vector2( x, y ), 
+                            Vector2( tileWidth, tileWidth ), 
+                            WHITE,
+                            "",
+                            false,
+                            true
+                        )
+                    );
+                    break;
                 case 'o':
                     coins.push_back( Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
                     break;

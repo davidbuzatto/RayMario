@@ -22,6 +22,7 @@ class GameWorld : public virtual Drawable {
 public:
 
     static bool debug;
+    static bool immortalPlayer;
     static float gravity;
     
     /**

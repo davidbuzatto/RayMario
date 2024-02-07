@@ -25,6 +25,7 @@
 #include "Tile.h"
 
 bool GameWorld::debug = true;
+bool GameWorld::immortalPlayer = true;
 float GameWorld::gravity = 20;
 
 /**
@@ -38,7 +39,8 @@ GameWorld::GameWorld() :
         Color( 0, 0, 0, 255 ),
         260,
         360,
-        -550
+        -550,
+        true
     ),
     camera( nullptr ) {
     std::cout << "creating game world..." << std::endl;
@@ -56,7 +58,7 @@ GameWorld::~GameWorld() {
  */
 void GameWorld::inputAndUpdate() {
 
-    map.parseMap( 1, true );
+    map.parseMap( 1, false );
     if ( player.getState() != SpriteState::DYING ) {
         map.playMusic();
     }
@@ -69,6 +71,7 @@ void GameWorld::inputAndUpdate() {
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
 
     player.update();
+
     for ( size_t i = 0; i < goombas.size(); i++ ) {
         goombas[i].update();
     }
@@ -77,29 +80,31 @@ void GameWorld::inputAndUpdate() {
     player.updateCollisionProbes();
     for ( size_t i = 0; i < tiles.size(); i++ ) {
         Tile &tile = tiles[i];
-        switch ( player.checkCollisionTile( tile ) ) {
-            case CollisionType::NORTH:
-                player.setY( tile.getY() + tile.getHeight() );
-                player.setVelY( 0 );
-                break;
-            case CollisionType::SOUTH:
-                player.setY( tile.getY() - player.getHeight() );
-                player.setVelY( 0 );
-                player.setState( SpriteState::ON_GROUND );
-                break;
-            case CollisionType::EAST:
-                player.setX( tile.getX() - player.getWidth() );
-                player.setVelX( 0 );                
-                break;
-            case CollisionType::WEST:
-                player.setX( tile.getX() + tile.getWidth() );
-                player.setVelX( 0 );
-                break;
-            case CollisionType::NONE:
-                break;
+        if ( !tile.isOnlyBaddies() ) {
+            switch ( player.checkCollisionTile( tile ) ) {
+                case CollisionType::NORTH:
+                    player.setY( tile.getY() + tile.getHeight() );
+                    player.setVelY( 0 );
+                    break;
+                case CollisionType::SOUTH:
+                    player.setY( tile.getY() - player.getHeight() );
+                    player.setVelY( 0 );
+                    player.setState( SpriteState::ON_GROUND );
+                    break;
+                case CollisionType::EAST:
+                    player.setX( tile.getX() - player.getWidth() );
+                    player.setVelX( 0 );
+                    break;
+                case CollisionType::WEST:
+                    player.setX( tile.getX() + tile.getWidth() );
+                    player.setVelX( 0 );
+                    break;
+                case CollisionType::NONE:
+                    break;
+            }
         }
+        player.updateCollisionProbes();
     }
-    player.updateCollisionProbes();
 
     // goombas x tiles collision resolution
     for ( size_t i = 0; i < tiles.size(); i++ ) {
@@ -148,10 +153,9 @@ void GameWorld::inputAndUpdate() {
         }
     }
 
-    // player x baddies collision resolution
+    // player x baddies collision resolution and offscreen baddies removal
     collectedIndexes.clear();
     if ( player.getState() != SpriteState::DYING ) {
-
         player.updateCollisionProbes();
         for ( size_t i = 0; i < goombas.size(); i++ ) {
             Goomba& goomba = goombas[i];
@@ -159,8 +163,10 @@ void GameWorld::inputAndUpdate() {
                 case CollisionType::NORTH:
                 case CollisionType::EAST:
                 case CollisionType::WEST:
-                    player.setState( SpriteState::DYING );
-                    PlaySound( sounds["lostLife"] );
+                    if ( !player.isImmortal() ) {
+                        player.setState( SpriteState::DYING );
+                        PlaySound( sounds["lostLife"] );
+                    }
                     break;
                 case CollisionType::SOUTH:
                     if ( player.getState() == SpriteState::JUMPING || player.getVelY() > 0 ) {
@@ -170,13 +176,20 @@ void GameWorld::inputAndUpdate() {
                         collectedIndexes.push_back( i );
                         PlaySound( sounds["stomp"] );
                     } else {
-                        player.setState( SpriteState::DYING );
-                        PlaySound( sounds["lostLife"] );
+                        if ( !player.isImmortal() ) {
+                            player.setState( SpriteState::DYING );
+                            PlaySound( sounds["lostLife"] );
+                        }
+                    }
+                    break;
+                default:
+                    if ( goomba.getY() > map.getMaxHeight() ) {
+                        collectedIndexes.push_back( i );
                     }
                     break;
             }
+            player.updateCollisionProbes();
         }
-        player.updateCollisionProbes();
 
     }
 
@@ -184,6 +197,10 @@ void GameWorld::inputAndUpdate() {
         goombas.erase( goombas.begin() + collectedIndexes[i] );
     }
 
+    if ( player.getState() != SpriteState::DYING && player.getY() > map.getMaxHeight() ) {
+        player.setState( SpriteState::DYING );
+        PlaySound( sounds["lostLife"] );
+    }
 
     if ( IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1 ) ) {
         debug = !debug;
@@ -251,8 +268,10 @@ void GameWorld::draw() {
         DrawFPS( 30, 90 );
     }
 
-    GuiPanel( Rectangle( 20, 20, 100, 60 ), "Controles" );
+    GuiPanel( Rectangle( 20, 20, 100, 90 ), "Controles" );
     GuiCheckBox( Rectangle( 30, 50, 20, 20 ), "debug", &debug );
+    GuiCheckBox( Rectangle( 30, 80, 20, 20 ), "imortal", &immortalPlayer );
+    player.setImmortal( immortalPlayer );
     
     EndDrawing();
 
