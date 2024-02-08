@@ -20,19 +20,33 @@ void ResourceManager::loadTextures() {
 
     if ( textures.empty() ) {
         // load textures...
-        textures["marioSpriteMap"] = LoadTexture( "resources/images/sprites/mario.png" );
-        textures["mario1R"] = LoadTexture( "resources/images/sprites/mario1R.png" );
-        textures["mario2R"] = LoadTexture( "resources/images/sprites/mario2R.png" );
-        textures["mario1L"] = LoadTexture( "resources/images/sprites/mario1L.png" );
-        textures["mario2L"] = LoadTexture( "resources/images/sprites/mario2L.png" );
-        textures["mario1JR"] = LoadTexture( "resources/images/sprites/marioJump1R.png" );
-        textures["mario2JR"] = LoadTexture( "resources/images/sprites/marioJump2R.png" );
-        textures["mario1JL"] = LoadTexture( "resources/images/sprites/marioJump1L.png" );
-        textures["mario2JL"] = LoadTexture( "resources/images/sprites/marioJump2L.png" );
-        textures["marioDR"] = LoadTexture( "resources/images/sprites/marioDown1R.png" );
-        textures["marioDL"] = LoadTexture( "resources/images/sprites/marioDown1L.png" );
-        textures["mario1Dy"] = LoadTexture( "resources/images/sprites/marioDying1.png" );
-        textures["mario2Dy"] = LoadTexture( "resources/images/sprites/marioDying2.png" );
+        textures["mario0R"] = LoadTexture( "resources/images/sprites/mario/Mario_0.png" );
+        textures["mario1R"] = LoadTexture( "resources/images/sprites/mario/Mario_1.png" );
+        textures["mario0L"] = texture2DFlipHorizontal( textures["mario0R"] );
+        textures["mario1L"] = texture2DFlipHorizontal( textures["mario1R"] );
+
+        textures["mario0RuR"] = LoadTexture( "resources/images/sprites/mario/MarioRunning_0.png" );
+        textures["mario1RuR"] = LoadTexture( "resources/images/sprites/mario/MarioRunning_1.png" );
+        textures["mario0RuL"] = texture2DFlipHorizontal( textures["mario0RuR"] );
+        textures["mario1RuL"] = texture2DFlipHorizontal( textures["mario1RuR"] );
+
+        textures["mario0JuR"] = LoadTexture( "resources/images/sprites/mario/MarioJumping_0.png" );
+        textures["mario0JuL"] = texture2DFlipHorizontal( textures["mario0JuR"] );
+
+        textures["mario0JuRuR"] = LoadTexture( "resources/images/sprites/mario/MarioJumpingAndRunning_0.png" );
+        textures["mario0JuRuL"] = texture2DFlipHorizontal( textures["mario0JuRuR"] );
+
+        textures["mario0FaR"] = LoadTexture( "resources/images/sprites/mario/MarioFalling_0.png" );
+        textures["mario0FaL"] = texture2DFlipHorizontal( textures["mario0FaR"] );
+
+        textures["mario0LuR"] = LoadTexture( "resources/images/sprites/mario/MarioLookingUp_0.png" );
+        textures["mario0LuL"] = texture2DFlipHorizontal( textures["mario0LuR"] );
+
+        textures["mario0DuR"] = LoadTexture( "resources/images/sprites/mario/MarioDucking_0.png" );
+        textures["mario0DuL"] = texture2DFlipHorizontal( textures["mario0DuR"] );
+
+        textures["mario0Dy"] = LoadTexture( "resources/images/sprites/mario/MarioDying_0.png" );
+        textures["mario1Dy"] = texture2DFlipHorizontal( textures["mario0Dy"] );
 
         for ( char c = 'A'; c <= 'Z'; c++ ) {
             textures[std::string(1, c)] = LoadTexture( TextFormat( "resources/images/tiles/tile_%c.png", c ) );
@@ -49,19 +63,14 @@ void ResourceManager::loadTextures() {
         textures["background9"] = LoadTexture( TextFormat( "resources/images/backgrounds/background9.png" ) );
         textures["background10"] = LoadTexture( TextFormat( "resources/images/backgrounds/background10.png" ) );
 
-        for ( int i = 1; i <= 5; i++ ) {
-            textures[std::string(TextFormat("coin%d", i))] = LoadTexture( TextFormat("resources/images/sprites/coin%d.png", i ) );
+        for ( int i = 0; i < 4; i++ ) {
+            textures[std::string(TextFormat("coin%d", i))] = LoadTexture( TextFormat("resources/images/sprites/items/Coin_%d.png", i ) );
         }
 
-        textures["goomba1L"] = LoadTexture( "resources/images/sprites/goomba1.png" );
-        textures["goomba2L"] = LoadTexture( "resources/images/sprites/goomba2.png" );
-
-        Image img = LoadImageFromTexture( textures["goomba1L"] ); 
-        ImageFlipHorizontal( &img );
-        textures["goomba1R"] = LoadTextureFromImage( img );
-        img = LoadImageFromTexture( textures["goomba2L"] ); 
-        ImageFlipHorizontal( &img );
-        textures["goomba2R"] = LoadTextureFromImage( img );
+        textures["goomba0R"] = LoadTexture( "resources/images/sprites/baddies/Goomba_0.png" );
+        textures["goomba1R"] = LoadTexture( "resources/images/sprites/baddies/Goomba_1.png" );
+        textures["goomba0L"] = texture2DFlipHorizontal( textures["goomba0R"] );
+        textures["goomba1L"] = texture2DFlipHorizontal( textures["goomba1R"] );
 
     }
 }
@@ -144,6 +153,12 @@ void ResourceManager::unloadMusic( std::string key ) {
         UnloadMusicStream( musics[key] );
         musics.erase( key );
     }
+}
+
+Texture2D ResourceManager::texture2DFlipHorizontal( Texture2D texture ) {
+    Image img = LoadImageFromTexture( texture );
+    ImageFlipHorizontal( &img );
+    return LoadTextureFromImage( img );
 }
 
 std::map<std::string, Texture2D> &ResourceManager::getTextures() {

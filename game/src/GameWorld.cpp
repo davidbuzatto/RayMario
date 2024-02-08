@@ -59,7 +59,7 @@ GameWorld::~GameWorld() {
  */
 void GameWorld::inputAndUpdate() {
 
-    map.parseMap( 2, false );
+    map.parseMap( 1, true);
     if ( player.getState() != SpriteState::DYING ) {
         map.playMusic();
     }

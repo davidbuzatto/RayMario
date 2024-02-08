@@ -1,6 +1,11 @@
-processar mais músicas!
+terminar de ajustar todos os sprites
+
+processar mais músicas <- adicionar no mapa
+ladrilhos parametrizados (tipo na fase)
+power ups
+
 configurar quantidade máxima de músicas
-refazer sprites dobrando o tamanho (base nova)
+
 
 colisão jogador x inimigos
     morrer - ok (resetar fase e subtrair vidas)

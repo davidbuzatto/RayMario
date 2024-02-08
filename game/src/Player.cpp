@@ -22,7 +22,9 @@ Player::Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX
     jumpSpeed( jumpSpeed ),
     immortal( immortal ),
     facingDirection( Direction::RIGHT ),
-    crouched( false ),
+    ducking( false ),
+    lookigUp( false ),
+    running( false ),
     frameTimeWalking( 0.1 ),
     frameTimeRunning( 0.05 ),
     frameAcum( 0 ),
@@ -48,7 +50,7 @@ void Player::update() {
     
     std::map<std::string, Sound>& sounds = ResourceManager::getSounds();
     float delta = GetFrameTime();
-    bool running = IsKeyDown( KEY_LEFT_CONTROL ) || IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT );
+    running = IsKeyDown( KEY_LEFT_CONTROL ) || IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT );
     float currentSpeedX = running ? maxSpeedX : speedX;
     float currentFrameTime = running && state != SpriteState::DYING ? frameTimeRunning : frameTimeWalking;
 
@@ -79,12 +81,19 @@ void Player::update() {
             vel.x = 0;
         }
 
-        if ( IsKeyDown( KEY_DOWN ) ||
-             IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
-             GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
-            crouched = true;
+        if ( IsKeyDown( KEY_UP ) ||
+             IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_UP ) ||
+             GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) < 0 ) {
+            lookigUp = true;
         } else {
-            crouched = false;
+            lookigUp = false;
+            if ( IsKeyDown( KEY_DOWN ) ||
+                 IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
+                 GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
+                ducking = true;
+            } else {
+                ducking = false;
+            }
         }
 
         if ( ( IsKeyPressed( KEY_SPACE ) ||
@@ -108,48 +117,33 @@ void Player::draw() {
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
     
     if ( state == SpriteState::DYING ) {
-        if ( currentFrame == 0 ) {
-            DrawTexture( textures["mario1Dy"], pos.x, pos.y, WHITE );
-        } else if ( currentFrame == 1 ) {
-            DrawTexture( textures["mario2Dy"], pos.x, pos.y, WHITE );
-        }
+        DrawTexture( textures[std::string( TextFormat( "mario%dDy", currentFrame ) )], pos.x, pos.y, WHITE );
     } else {
 
-        if ( facingDirection == Direction::RIGHT ) {
-            if ( state == SpriteState::ON_GROUND ) {
-                if ( crouched ) {
-                    DrawTexture( textures["marioDR"], pos.x, pos.y, WHITE );
-                } else {
-                    if ( currentFrame == 0 ) {
-                        DrawTexture( textures["mario1R"], pos.x, pos.y, WHITE );
-                    } else if ( currentFrame == 1 ) {
-                        DrawTexture( textures["mario2R"], pos.x, pos.y, WHITE );
-                    }
-                }
-            } else if ( state == SpriteState::JUMPING ) {
-                if ( vel.y < 0 ) {
-                    DrawTexture( textures["mario1JR"], pos.x, pos.y, WHITE );
-                } else {
-                    DrawTexture( textures["mario2JR"], pos.x, pos.y, WHITE );
-                }
+        char dir = facingDirection == Direction::RIGHT ? 'R' : 'L';
+
+        if ( state == SpriteState::ON_GROUND ) {
+
+            if ( lookigUp ) {
+                DrawTexture( textures[std::string( TextFormat( "mario0Lu%c", dir ) )], pos.x, pos.y, WHITE );
+            } else if ( ducking ) {
+                DrawTexture( textures[std::string( TextFormat( "mario0Du%c", dir ) )], pos.x, pos.y, WHITE );
+            } else if ( running ) {
+                DrawTexture( textures[std::string( TextFormat( "mario%dRu%c", currentFrame, dir ) )], pos.x, pos.y, WHITE );
+            } else { // iddle
+                DrawTexture( textures[std::string( TextFormat( "mario%d%c", currentFrame, dir ) )], pos.x, pos.y, WHITE );
             }
-        } else {
-            if ( state == SpriteState::ON_GROUND ) {
-                if ( crouched ) {
-                    DrawTexture( textures["marioDL"], pos.x, pos.y, WHITE );
+
+        } else if ( state == SpriteState::JUMPING ) {
+            
+            if ( vel.y < 0 ) {
+                if ( running ) {
+                    DrawTexture( textures[std::string( TextFormat( "mario0JuRu%c", dir ) )], pos.x, pos.y, WHITE );
                 } else {
-                    if ( currentFrame == 0 ) {
-                        DrawTexture( textures["mario1L"], pos.x, pos.y, WHITE );
-                    } else if ( currentFrame == 1 ) {
-                        DrawTexture( textures["mario2L"], pos.x, pos.y, WHITE );
-                    }
+                    DrawTexture( textures[std::string( TextFormat( "mario0Ju%c", dir ) )], pos.x, pos.y, WHITE );
                 }
-            } else if ( state == SpriteState::JUMPING ) {
-                if ( vel.y < 0 ) {
-                    DrawTexture( textures["mario1JL"], pos.x, pos.y, WHITE );
-                } else {
-                    DrawTexture( textures["mario2JL"], pos.x, pos.y, WHITE );
-                }
+            } else {
+                DrawTexture( textures[std::string( TextFormat( "mario0Fa%c", dir ) )], pos.x, pos.y, WHITE );
             }
         }
 

@@ -19,7 +19,8 @@ Coin::Coin( Vector2 pos, Vector2 dim, Color color ) :
     Sprite( pos, dim, color ),
     frameTime( 0.1 ),
     frameAcum( 0 ),
-    currentFrame( 0 ) {
+    currentFrame( 0 ),
+    maxFrames( 4 ) {
 }
 
 Coin::~Coin() {
@@ -31,7 +32,7 @@ void Coin::update() {
     if ( frameAcum >= frameTime ) {
         frameAcum = 0;
         currentFrame++;
-        currentFrame %= 5;
+        currentFrame %= maxFrames;
     }
 
 }
@@ -40,7 +41,7 @@ void Coin::draw() {
 
     update();
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
-    DrawTexture( textures[std::string( TextFormat( "coin%d", currentFrame+1 ))], pos.x, pos.y, WHITE );
+    DrawTexture( textures[std::string( TextFormat( "coin%d", currentFrame ))], pos.x, pos.y, WHITE );
 
 }
 

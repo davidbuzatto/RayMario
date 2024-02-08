@@ -22,7 +22,9 @@ class Player : public virtual Sprite {
     bool immortal;
 
     Direction facingDirection;
-    bool crouched;
+    bool ducking;
+    bool lookigUp;
+    bool running;
 
     float frameTimeWalking;
     float frameTimeRunning;

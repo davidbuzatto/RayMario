@@ -73,9 +73,9 @@ void Goomba::draw() {
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
 
     if ( facingDirection == Direction::RIGHT ) {
-        DrawTexture( textures[std::string( TextFormat( "goomba%dR", currentFrame+1 ))], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "goomba%dR", currentFrame ))], pos.x, pos.y, WHITE );
     } else {
-        DrawTexture( textures[std::string( TextFormat( "goomba%dL", currentFrame+1 ))], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "goomba%dL", currentFrame ))], pos.x, pos.y, WHITE );
     }
 
     if ( GameWorld::debug ) {
