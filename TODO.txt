@@ -1,6 +1,6 @@
-criar preambulo de configurações (cor de fundo e música)
-backgrounds originais
-refazer sprites dobrando o tamanho
+processar mais músicas!
+configurar quantidade máxima de músicas
+refazer sprites dobrando o tamanho (base nova)
 
 colisão jogador x inimigos
     morrer - ok (resetar fase e subtrair vidas)
@@ -14,9 +14,3 @@ criar caixas interativas (moedas, "?" etc)
 criar GUI
 criar transição entre fases
 editor de fases - salvar e carregar
-
-
-
-fundos: 432 altura
-meu mario: 28 x 40
-mario sprite sheet: 14 x 20

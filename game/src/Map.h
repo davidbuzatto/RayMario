@@ -26,12 +26,17 @@ class Map : public virtual Drawable {
 
     Texture2D backgroundTexture;
     bool parsed;
-    int mapNumber;
 
     std::vector<Coin> coins;
     std::vector<Goomba> goombas;
 
     Player &player;
+
+    Color backgroundColor;
+    int backgroundId;
+    int maxBackgroundId;
+    int musicId;
+    int maxMusicId;
 
 public:
 

@@ -22,7 +22,8 @@ Map::Map( Player &player ) :
     maxHeight( 0 ),
     playerOffset( 0 ),
     parsed( false ),
-    player( player ) {
+    player( player ),
+    maxBackgroundId( 10 ) {
 }
 
 Map::~Map() {
@@ -31,11 +32,13 @@ Map::~Map() {
 void Map::draw() {
 
     int repeats = maxWidth / backgroundTexture.width + 2;
+    DrawRectangle( 0, 0, maxWidth, maxHeight, backgroundColor );
+
     for ( int i = 0; i <= repeats; i++ ) {
         DrawTexture( 
             backgroundTexture, 
             -backgroundTexture.width + i * backgroundTexture.width - playerOffset * 0.06, 
-            tileWidth, 
+            0,
             WHITE );
     }
 
@@ -68,7 +71,7 @@ std::vector<Goomba> &Map::getGoombas() {
 void Map::playMusic() {
 
     std::map<std::string, Music> musics = ResourceManager::getMusics();
-    std::string key(TextFormat( "map%d", mapNumber ));
+    std::string key(TextFormat( "map%d", musicId ));
 
     if ( !IsMusicStreamPlaying( musics[key] ) ) {
         PlayMusicStream( musics[key] );
@@ -82,7 +85,6 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
 
     if ( !parsed ) {
 
-        this->mapNumber = mapNumber;
         char *mapData;
         
         if ( loadTestMap ) {
@@ -92,7 +94,6 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
         }
 
         std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();    
-        backgroundTexture = textures[TextFormat("background%d", mapNumber)];
 
         int currentColumn = 0;
         int currentLine = 0;
@@ -105,6 +106,58 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
 
             if ( *mapData == '#' ) {
                 ignoreLine = true;
+            }
+
+            if ( currentLine == 0 && currentColumn == 0 ) {
+                if ( *mapData == 'c' ) {            // parse color
+
+                    ignoreLine = true;
+                    mapData += 3;
+                    std::string hexColor = "";
+
+                    while ( *mapData != ' ' ) {
+                        hexColor += std::string( 1, *mapData );
+                        mapData++;
+                    }
+
+                    backgroundColor = GetColor( std::stoul( hexColor, nullptr, 16 ) );
+                    currentColumn = 1;
+
+                } else if ( *mapData == 'b' ) {     // parse background
+
+                    ignoreLine = true;
+                    mapData += 3;
+                    std::string number = "";
+
+                    while ( *mapData != ' ' ) {
+                        number += std::string( 1, *mapData );
+                        mapData++;
+                    }                    
+                    backgroundId = std::stoi( number );
+                    if ( backgroundId <= 0 ) {
+                        backgroundId = 1;
+                    } else if ( backgroundId > maxBackgroundId ) {
+                        backgroundId = maxBackgroundId;
+                    }
+
+                    backgroundTexture = textures[TextFormat( "background%d", backgroundId )];
+                    currentColumn = 1;
+
+                } else if ( *mapData == 'm' ) {     // parse music
+                    
+                    ignoreLine = true;
+                    mapData += 3;
+                    std::string number = "";
+
+                    while ( *mapData != ' ' ) {
+                        number += std::string( 1, *mapData );
+                        mapData++;
+                    }
+                    musicId = std::stoi( number );
+
+                    currentColumn = 1;
+
+                }
             }
 
             if ( !ignoreLine ) {

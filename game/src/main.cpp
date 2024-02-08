@@ -10,8 +10,7 @@
 
 int main( void ) {
 
-    GameWindow gameWindow( 800, 640, "Ray Mario", true );
-    //GameWindow gameWindow( 800, 640, "Ray Mario", 60, true, false, true, false, false, false, false );
+    GameWindow gameWindow( 960, 736, "Ray Mario", true );
     gameWindow.init();
 
     return 0;

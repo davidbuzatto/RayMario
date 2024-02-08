@@ -41,6 +41,13 @@ void ResourceManager::loadTextures() {
         textures["background1"] = LoadTexture( TextFormat( "resources/images/backgrounds/background1.png" ) );
         textures["background2"] = LoadTexture( TextFormat( "resources/images/backgrounds/background2.png" ) );
         textures["background3"] = LoadTexture( TextFormat( "resources/images/backgrounds/background3.png" ) );
+        textures["background4"] = LoadTexture( TextFormat( "resources/images/backgrounds/background4.png" ) );
+        textures["background5"] = LoadTexture( TextFormat( "resources/images/backgrounds/background5.png" ) );
+        textures["background6"] = LoadTexture( TextFormat( "resources/images/backgrounds/background6.png" ) );
+        textures["background7"] = LoadTexture( TextFormat( "resources/images/backgrounds/background7.png" ) );
+        textures["background8"] = LoadTexture( TextFormat( "resources/images/backgrounds/background8.png" ) );
+        textures["background9"] = LoadTexture( TextFormat( "resources/images/backgrounds/background9.png" ) );
+        textures["background10"] = LoadTexture( TextFormat( "resources/images/backgrounds/background10.png" ) );
 
         for ( int i = 1; i <= 5; i++ ) {
             textures[std::string(TextFormat("coin%d", i))] = LoadTexture( TextFormat("resources/images/sprites/coin%d.png", i ) );
