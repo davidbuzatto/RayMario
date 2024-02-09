@@ -8,9 +8,21 @@
 #include "Map.h"
 #include "ResourceManager.h"
 #include "Coin.h"
-#include "Goomba.h"
+#include "Baddie.h"
 #include "raylib.h"
 #include "Sprite.h"
+#include "BlueKoopaTroopa.h"
+#include "BobOmb.h"
+#include "BulletBill.h"
+#include "BuzzyBeetle.h"
+#include "FlyingGoomba.h"
+#include "Goomba.h"
+#include "GreenKoopaTroopa.h"
+#include "MummyBeetle.h"
+#include "RedKoopaTroopa.h"
+#include "Rex.h"
+#include "Swooper.h"
+#include "YellowKoopaTroopa.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -23,7 +35,12 @@ Map::Map( Player &player ) :
     playerOffset( 0 ),
     parsed( false ),
     player( player ),
-    maxBackgroundId( 10 ) {
+    maxBackgroundId( 10 ),
+    backgroundColor( WHITE ),
+    backgroundId( 1 ),
+    backgroundTexture( Texture( 0 ) ),
+    maxMusicId( 1 ),
+    musicId( 1 ) {
 }
 
 Map::~Map() {
@@ -50,8 +67,8 @@ void Map::draw() {
         coins[i].draw();
     }
 
-    for ( size_t i = 0; i < goombas.size(); i++ ) {
-        goombas[i].draw();
+    for ( size_t i = 0; i < baddies.size(); i++ ) {
+        baddies[i]->draw();
     }
 
 }
@@ -64,8 +81,8 @@ std::vector<Coin> &Map::getCoins() {
     return coins;
 }
 
-std::vector<Goomba> &Map::getGoombas() {
-    return goombas;
+std::vector<Baddie*> &Map::getBaddies() {
+    return baddies;
 }
 
 void Map::playMusic() {
@@ -88,7 +105,8 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
         char *mapData;
         
         if ( loadTestMap ) {
-            mapData = LoadFileText( TextFormat( "resources/maps/mapTestes.txt" ) );
+            //mapData = LoadFileText( TextFormat( "resources/maps/mapTests.txt" ) );
+            mapData = LoadFileText( TextFormat( "resources/maps/mapTestsBaddies.txt" ) );
         } else {
             mapData = LoadFileText( TextFormat( "resources/maps/map%d.txt", mapNumber ) );
         }
@@ -243,7 +261,40 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
                         coins.push_back( Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
                         break;
                     case '1':
-                        goombas.push_back( Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '2':
+                        baddies.push_back( new FlyingGoomba( Vector2( x, y ), Vector2( 66, 48 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '3':
+                        baddies.push_back( new GreenKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '4':
+                        baddies.push_back( new RedKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '5':
+                        baddies.push_back( new BlueKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '6':
+                        baddies.push_back( new YellowKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '7':
+                        baddies.push_back( new BobOmb( Vector2( x, y ), Vector2( 24, 30 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '8':
+                        baddies.push_back( new BulletBill( Vector2( x, y ), Vector2( 32, 28 ), Vector2( -200, 0 ), YELLOW ) );
+                        break;
+                    case '9':
+                        baddies.push_back( new Swooper( Vector2( x, y ), Vector2( 32, 34 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '@':
+                        baddies.push_back( new BuzzyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '$':
+                        baddies.push_back( new MummyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -100, 0 ), YELLOW ) );
+                        break;
+                    case '%':
+                        baddies.push_back( new Rex( Vector2( x, y ), Vector2( 40, 64 ), Vector2( -100, 0 ), YELLOW ) );
                         break;
                     case '\n':
                         currentLine++;

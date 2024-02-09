@@ -1,12 +1,12 @@
 /**
- * @file Goomba.cpp
+ * @file FlyingGoomba.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Goomba class implementation.
+ * @brief FlyingGoomba class implementation.
  * 
  * @copyright Copyright (c) 2024
  */
 #include "Baddie.h"
-#include "Goomba.h"
+#include "FlyingGoomba.h"
 #include "CollisionProbe.h"
 #include "Direction.h"
 #include "GameWorld.h"
@@ -19,7 +19,7 @@
 #include <map>
 #include <vector>
 
-Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
+FlyingGoomba::FlyingGoomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color, 0.2, 2 ) {
 
     facingDirection = Direction::LEFT;
@@ -32,10 +32,10 @@ Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     
 }
 
-Goomba::~Goomba() {
+FlyingGoomba::~FlyingGoomba() {
 }
 
-void Goomba::update() {
+void FlyingGoomba::update() {
     
     if ( state == SpriteState::ACTIVE ) {
 
@@ -57,22 +57,20 @@ void Goomba::update() {
         pos.x = pos.x + vel.x * delta;
         pos.y = pos.y + vel.y * delta;
 
-        vel.y += GameWorld::gravity;
-
     }
 
     updateCollisionProbes();
 
 }
 
-void Goomba::draw() {
+void FlyingGoomba::draw() {
 
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
 
     if ( facingDirection == Direction::RIGHT ) {
-        DrawTexture( textures[std::string( TextFormat( "goomba%dR", currentFrame ))], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "flyingGoomba%dR", currentFrame ))], pos.x, pos.y, WHITE );
     } else {
-        DrawTexture( textures[std::string( TextFormat( "goomba%dL", currentFrame ))], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "flyingGoomba%dL", currentFrame ))], pos.x, pos.y, WHITE );
     }
 
     if ( GameWorld::debug ) {
@@ -84,7 +82,7 @@ void Goomba::draw() {
 
 }
 
-CollisionType Goomba::checkCollision( Sprite &sprite ) {
+CollisionType FlyingGoomba::checkCollision( Sprite &sprite ) {
 
     try {
 
@@ -117,5 +115,21 @@ CollisionType Goomba::checkCollision( Sprite &sprite ) {
     }
 
     return CollisionType::NONE;
+
+}
+
+void FlyingGoomba::updateCollisionProbes() {
+
+    cpN.setX( pos.x + dim.x / 2 - cpN.getWidth() / 2 );
+    cpN.setY( pos.y + 14 );
+
+    cpS.setX( pos.x + dim.x / 2 - cpS.getWidth() / 2 );
+    cpS.setY( pos.y + dim.y - cpS.getHeight() );
+
+    cpE.setX( pos.x + dim.x - cpE.getWidth() );
+    cpE.setY( pos.y + dim.y / 2 - cpE.getHeight() / 2 );
+
+    cpW.setX( pos.x );
+    cpW.setY( pos.y + dim.y / 2 - cpW.getHeight() / 2 );
 
 }

@@ -1,12 +1,12 @@
 /**
- * @file Goomba.cpp
+ * @file YellowKoopaTroopa.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Goomba class implementation.
+ * @brief YellowKoopaTroopa class implementation.
  * 
  * @copyright Copyright (c) 2024
  */
 #include "Baddie.h"
-#include "Goomba.h"
+#include "YellowKoopaTroopa.h"
 #include "CollisionProbe.h"
 #include "Direction.h"
 #include "GameWorld.h"
@@ -19,7 +19,7 @@
 #include <map>
 #include <vector>
 
-Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
+YellowKoopaTroopa::YellowKoopaTroopa( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color, 0.2, 2 ) {
 
     facingDirection = Direction::LEFT;
@@ -32,10 +32,10 @@ Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     
 }
 
-Goomba::~Goomba() {
+YellowKoopaTroopa::~YellowKoopaTroopa() {
 }
 
-void Goomba::update() {
+void YellowKoopaTroopa::update() {
     
     if ( state == SpriteState::ACTIVE ) {
 
@@ -65,14 +65,14 @@ void Goomba::update() {
 
 }
 
-void Goomba::draw() {
+void YellowKoopaTroopa::draw() {
 
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
 
     if ( facingDirection == Direction::RIGHT ) {
-        DrawTexture( textures[std::string( TextFormat( "goomba%dR", currentFrame ))], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "yellowKoopaTroopa%dR", currentFrame ))], pos.x, pos.y, WHITE );
     } else {
-        DrawTexture( textures[std::string( TextFormat( "goomba%dL", currentFrame ))], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "yellowKoopaTroopa%dL", currentFrame ))], pos.x, pos.y, WHITE );
     }
 
     if ( GameWorld::debug ) {
@@ -84,7 +84,7 @@ void Goomba::draw() {
 
 }
 
-CollisionType Goomba::checkCollision( Sprite &sprite ) {
+CollisionType YellowKoopaTroopa::checkCollision( Sprite &sprite ) {
 
     try {
 

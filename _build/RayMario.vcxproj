@@ -274,37 +274,61 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\game\src\Baddie.cpp" />
+    <ClCompile Include="..\game\src\BlueKoopaTroopa.cpp" />
+    <ClCompile Include="..\game\src\BobOmb.cpp" />
+    <ClCompile Include="..\game\src\BulletBill.cpp" />
+    <ClCompile Include="..\game\src\BuzzyBeetle.cpp" />
     <ClCompile Include="..\game\src\Coin.cpp" />
     <ClCompile Include="..\game\src\CollisionProbe.cpp" />
+    <ClCompile Include="..\game\src\FlyingGoomba.cpp" />
     <ClCompile Include="..\game\src\GameWindow.cpp" />
     <ClCompile Include="..\game\src\GameWorld.cpp" />
     <ClCompile Include="..\game\src\Goomba.cpp" />
+    <ClCompile Include="..\game\src\GreenKoopaTroopa.cpp" />
     <ClCompile Include="..\game\src\main.cpp" />
     <ClCompile Include="..\game\src\Map.cpp" />
+    <ClCompile Include="..\game\src\MummyBeetle.cpp" />
     <ClCompile Include="..\game\src\Player.cpp" />
+    <ClCompile Include="..\game\src\RedKoopaTroopa.cpp" />
     <ClCompile Include="..\game\src\ResourceManager.cpp" />
+    <ClCompile Include="..\game\src\Rex.cpp" />
     <ClCompile Include="..\game\src\Sprite.cpp" />
+    <ClCompile Include="..\game\src\Swooper.cpp" />
     <ClCompile Include="..\game\src\Tile.cpp" />
     <ClCompile Include="..\game\src\utils.cpp" />
+    <ClCompile Include="..\game\src\YellowKoopaTroopa.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\game\src\Baddie.h" />
+    <ClInclude Include="..\game\src\BlueKoopaTroopa.h" />
+    <ClInclude Include="..\game\src\BobOmb.h" />
+    <ClInclude Include="..\game\src\BulletBill.h" />
+    <ClInclude Include="..\game\src\BuzzyBeetle.h" />
     <ClInclude Include="..\game\src\Coin.h" />
     <ClInclude Include="..\game\src\CollisionProbe.h" />
     <ClInclude Include="..\game\src\CollisionType.h" />
     <ClInclude Include="..\game\src\Direction.h" />
     <ClInclude Include="..\game\src\Drawable.h" />
+    <ClInclude Include="..\game\src\FlyingGoomba.h" />
     <ClInclude Include="..\game\src\GameWindow.h" />
     <ClInclude Include="..\game\src\GameWorld.h" />
     <ClInclude Include="..\game\src\Goomba.h" />
+    <ClInclude Include="..\game\src\GreenKoopaTroopa.h" />
     <ClInclude Include="..\game\src\Map.h" />
+    <ClInclude Include="..\game\src\MummyBeetle.h" />
     <ClInclude Include="..\game\src\Player.h" />
+    <ClInclude Include="..\game\src\RedKoopaTroopa.h" />
+    <ClInclude Include="..\game\src\Rex.h" />
     <ClInclude Include="..\game\src\SpriteState.h" />
     <ClInclude Include="..\game\src\raygui.h" />
     <ClInclude Include="..\game\src\raymath.h" />
     <ClInclude Include="..\game\src\ResourceManager.h" />
     <ClInclude Include="..\game\src\Sprite.h" />
+    <ClInclude Include="..\game\src\Swooper.h" />
     <ClInclude Include="..\game\src\Tile.h" />
     <ClInclude Include="..\game\src\utils.h" />
+    <ClInclude Include="..\game\src\YellowKoopaTroopa.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

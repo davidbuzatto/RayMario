@@ -1,12 +1,12 @@
 /**
- * @file Goomba.cpp
+ * @file BobOmb.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Goomba class implementation.
+ * @brief BobOmb class implementation.
  * 
  * @copyright Copyright (c) 2024
  */
 #include "Baddie.h"
-#include "Goomba.h"
+#include "BobOmb.h"
 #include "CollisionProbe.h"
 #include "Direction.h"
 #include "GameWorld.h"
@@ -19,7 +19,7 @@
 #include <map>
 #include <vector>
 
-Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
+BobOmb::BobOmb( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color, 0.2, 2 ) {
 
     facingDirection = Direction::LEFT;
@@ -32,10 +32,10 @@ Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     
 }
 
-Goomba::~Goomba() {
+BobOmb::~BobOmb() {
 }
 
-void Goomba::update() {
+void BobOmb::update() {
     
     if ( state == SpriteState::ACTIVE ) {
 
@@ -65,14 +65,14 @@ void Goomba::update() {
 
 }
 
-void Goomba::draw() {
+void BobOmb::draw() {
 
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
 
     if ( facingDirection == Direction::RIGHT ) {
-        DrawTexture( textures[std::string( TextFormat( "goomba%dR", currentFrame ))], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "bobOmb%dR", currentFrame ))], pos.x, pos.y, WHITE );
     } else {
-        DrawTexture( textures[std::string( TextFormat( "goomba%dL", currentFrame ))], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "bobOmb%dL", currentFrame ))], pos.x, pos.y, WHITE );
     }
 
     if ( GameWorld::debug ) {
@@ -84,7 +84,7 @@ void Goomba::draw() {
 
 }
 
-CollisionType Goomba::checkCollision( Sprite &sprite ) {
+CollisionType BobOmb::checkCollision( Sprite &sprite ) {
 
     try {
 

@@ -1,5 +1,3 @@
-terminar de ajustar todos os sprites
-
 processar mais músicas <- adicionar no mapa
 ladrilhos parametrizados (tipo na fase)
 power ups

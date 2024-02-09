@@ -9,6 +9,7 @@
 
 #include "CollisionType.h"
 #include "CollisionProbe.h"
+#include "Direction.h"
 #include "Drawable.h"
 #include "raylib.h"
 #include "SpriteState.h"
@@ -22,6 +23,12 @@ protected:
     Color color;
     SpriteState state;
 
+    float frameTime;
+    float frameAcum;
+    int currentFrame;
+    int maxFrames;
+    Direction facingDirection;
+
     CollisionProbe cpN;
     CollisionProbe cpS;
     CollisionProbe cpE;
@@ -29,14 +36,17 @@ protected:
 
 public:
 
+    Sprite();
     Sprite( Vector2 pos, Vector2 dim, Color color );
+    Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
+    Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames );
     ~Sprite();
 
     virtual void update() = 0;
     virtual void draw() = 0;
     virtual CollisionType checkCollision( Sprite &sprite ) = 0;
-    void updateCollisionProbes();
+    virtual void updateCollisionProbes();
 
     void setPos( Vector2 pos );
     void setPos( float x, float y );

@@ -59,7 +59,7 @@ GameWorld::~GameWorld() {
  */
 void GameWorld::inputAndUpdate() {
 
-    map.parseMap( 1, false );
+    map.parseMap( 1, true );
 
     if ( player.getState() != SpriteState::DYING ) {
         map.playMusic();
@@ -67,15 +67,15 @@ void GameWorld::inputAndUpdate() {
     player.setActivationWidth( GetScreenWidth() * 2 );
 
     std::vector<Coin> &coins = map.getCoins();
-    std::vector<Goomba> &goombas = map.getGoombas();
+    std::vector<Baddie*> &baddies = map.getBaddies();
     std::vector<Tile>& tiles = map.getTiles();
     std::vector<int> collectedIndexes;
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
 
     player.update();
 
-    for ( size_t i = 0; i < goombas.size(); i++ ) {
-        goombas[i].update();
+    for ( size_t i = 0; i < baddies.size(); i++ ) {
+        baddies[i]->update();
     }
 
     // player x tiles collision resolution
@@ -108,31 +108,31 @@ void GameWorld::inputAndUpdate() {
         player.updateCollisionProbes();
     }
 
-    // goombas x tiles collision resolution
+    // baddies x tiles collision resolution
     for ( size_t i = 0; i < tiles.size(); i++ ) {
         Tile &tile = tiles[i];
-        for ( size_t j = 0; j < goombas.size(); j++ ) {
-            Goomba &goomba = goombas[j];
-            goomba.updateCollisionProbes();
-            switch ( goomba.checkCollision( tile ) ) {
+        for ( size_t j = 0; j < baddies.size(); j++ ) {
+            Baddie *baddie = baddies[j];
+            baddie->updateCollisionProbes();
+            switch ( baddie->checkCollision( tile ) ) {
                 case CollisionType::NORTH:
-                    goomba.setY( tile.getY() + tile.getHeight() );
-                    goomba.setVelY( 0 );
+                    baddie->setY( tile.getY() + tile.getHeight() );
+                    baddie->setVelY( 0 );
                     break;
                 case CollisionType::SOUTH:
-                    goomba.setY( tile.getY() - goomba.getHeight() );
-                    goomba.setVelY( 0 );
+                    baddie->setY( tile.getY() - baddie->getHeight() );
+                    baddie->setVelY( 0 );
                     break;
                 case CollisionType::EAST:
-                    goomba.setX( tile.getX() - goomba.getWidth() );
-                    goomba.setVelX( -goomba.getVelX() );
+                    baddie->setX( tile.getX() - baddie->getWidth() );
+                    baddie->setVelX( -baddie->getVelX() );
                     break;
                 case CollisionType::WEST:
-                    goomba.setX( tile.getX() + tile.getWidth() );
-                    goomba.setVelX( -goomba.getVelX() );
+                    baddie->setX( tile.getX() + tile.getWidth() );
+                    baddie->setVelX( -baddie->getVelX() );
                     break;
             }
-            goomba.updateCollisionProbes();
+            baddie->updateCollisionProbes();
         }
     }
 
@@ -148,10 +148,10 @@ void GameWorld::inputAndUpdate() {
     }
 
     // baddies activation
-    for ( size_t i = 0; i < goombas.size(); i++ ) {
-        Goomba *g = &goombas[i];
-        if ( g->getState() == SpriteState::IDLE ) {
-            g->activateWithPlayerProximity( player );
+    for ( size_t i = 0; i < baddies.size(); i++ ) {
+        Baddie *baddie = baddies[i];
+        if ( baddie->getState() == SpriteState::IDLE ) {
+            baddie->activateWithPlayerProximity( player );
         }
     }
 
@@ -159,9 +159,9 @@ void GameWorld::inputAndUpdate() {
     collectedIndexes.clear();
     if ( player.getState() != SpriteState::DYING ) {
         player.updateCollisionProbes();
-        for ( size_t i = 0; i < goombas.size(); i++ ) {
-            Goomba& goomba = goombas[i];
-            switch ( player.checkCollisionGoomba( goomba ) ) {
+        for ( size_t i = 0; i < baddies.size(); i++ ) {
+            Baddie *baddie = baddies[i];
+            switch ( player.checkCollisionBaddie( *baddie ) ) {
                 case CollisionType::NORTH:
                 case CollisionType::EAST:
                 case CollisionType::WEST:
@@ -172,7 +172,7 @@ void GameWorld::inputAndUpdate() {
                     break;
                 case CollisionType::SOUTH:
                     if ( player.getState() == SpriteState::JUMPING || player.getVelY() > 0 ) {
-                        player.setY( goomba.getY() - player.getHeight() );
+                        player.setY( baddie->getY() - player.getHeight() );
                         player.setVelY( player.getJumpSpeed() );
                         player.setState( SpriteState::JUMPING );
                         collectedIndexes.push_back( i );
@@ -185,7 +185,7 @@ void GameWorld::inputAndUpdate() {
                     }
                     break;
                 default:
-                    if ( goomba.getY() > map.getMaxHeight() ) {
+                    if ( baddie->getY() > map.getMaxHeight() ) {
                         collectedIndexes.push_back( i );
                     }
                     break;
@@ -196,7 +196,8 @@ void GameWorld::inputAndUpdate() {
     }
 
     for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
-        goombas.erase( goombas.begin() + collectedIndexes[i] );
+        //delete baddies[collectedIndexes[i]];
+        baddies.erase( baddies.begin() + collectedIndexes[i] );
     }
 
     if ( player.getState() != SpriteState::DYING && player.getY() > map.getMaxHeight() ) {

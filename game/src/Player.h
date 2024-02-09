@@ -21,16 +21,12 @@ class Player : public virtual Sprite {
     float jumpSpeed;
     bool immortal;
 
-    Direction facingDirection;
     bool ducking;
     bool lookigUp;
     bool running;
 
     float frameTimeWalking;
     float frameTimeRunning;
-    float frameAcum;
-    int currentFrame;
-    int maxFrames;
 
     float activationWidth;
     
@@ -44,7 +40,7 @@ public:
     virtual CollisionType checkCollision( Sprite& sprite );
 
     CollisionType checkCollisionTile( Sprite& sprite );
-    CollisionType checkCollisionGoomba( Sprite& sprite );
+    CollisionType checkCollisionBaddie( Sprite& sprite );
 
     void setImmortal( bool immortal );
     void setActivationWidth( float activationWidth );

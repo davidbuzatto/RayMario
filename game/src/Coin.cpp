@@ -16,11 +16,7 @@
 #include <vector>
 
 Coin::Coin( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, dim, color ),
-    frameTime( 0.1 ),
-    frameAcum( 0 ),
-    currentFrame( 0 ),
-    maxFrames( 4 ) {
+    Sprite( pos, dim, color, 0.1, 4 ) {
 }
 
 Coin::~Coin() {

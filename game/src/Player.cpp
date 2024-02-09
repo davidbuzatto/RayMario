@@ -16,20 +16,16 @@
 #include <typeinfo>
 
 Player::Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed, bool immortal ) :
-    Sprite( pos, dim, vel, color ),
+    Sprite( pos, dim, vel, color, 0, 2 ),
     speedX( speedX ),
     maxSpeedX( maxSpeedX ),
     jumpSpeed( jumpSpeed ),
     immortal( immortal ),
-    facingDirection( Direction::RIGHT ),
     ducking( false ),
     lookigUp( false ),
     running( false ),
     frameTimeWalking( 0.1 ),
     frameTimeRunning( 0.05 ),
-    frameAcum( 0 ),
-    currentFrame( 0 ),
-    maxFrames( 2 ),
     activationWidth( 0 ) {
 
     setState( SpriteState::ON_GROUND );
@@ -202,21 +198,21 @@ CollisionType Player::checkCollisionTile( Sprite& sprite ) {
 
 }
 
-CollisionType Player::checkCollisionGoomba( Sprite &sprite ) {
+CollisionType Player::checkCollisionBaddie( Sprite &sprite ) {
 
     try {
         
-        Goomba &goomba = dynamic_cast<Goomba&>(sprite);
-        Rectangle goombaRect = goomba.getRect();
+        Baddie &baddie = dynamic_cast<Baddie&>(sprite);
+        Rectangle baddieRect = baddie.getRect();
         
         if ( state == SpriteState::JUMPING || vel.y > 0 ) {
-            if ( cpN.checkCollision( goombaRect ) ) {
+            if ( cpN.checkCollision( baddieRect ) ) {
                 return CollisionType::NORTH;
-            } else if ( cpS.checkCollision( goombaRect ) ) {
+            } else if ( cpS.checkCollision( baddieRect ) ) {
                 return CollisionType::SOUTH;
-            } else if ( cpE.checkCollision( goombaRect ) ) {
+            } else if ( cpE.checkCollision( baddieRect ) ) {
                 return CollisionType::EAST;
-            } else if ( cpW.checkCollision( goombaRect ) ) {
+            } else if ( cpW.checkCollision( baddieRect ) ) {
                 return CollisionType::WEST;
             }
         }

@@ -12,11 +12,6 @@
 #include <vector>
 
 class Coin : public virtual Sprite {
-
-    float frameTime;
-    float frameAcum;
-    int currentFrame;
-    int maxFrames;
     
 public:
 

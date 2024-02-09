@@ -1,7 +1,7 @@
 /**
- * @file Goomba.h
+ * @file FlyingGoomba.h
  * @author Prof. Dr. David Buzatto
- * @brief Goomba class declaration.
+ * @brief FlyingGoomba class declaration.
  * 
  * @copyright Copyright (c) 2024
  */
@@ -15,15 +15,16 @@
 #include "Sprite.h"
 #include <vector>
 
-class Goomba : public virtual Baddie {
+class FlyingGoomba : public virtual Baddie {
     
 public:
 
-    Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
-    ~Goomba();
+    FlyingGoomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
+    ~FlyingGoomba();
 
     virtual void update();
     virtual void draw();
     virtual CollisionType checkCollision( Sprite &sprite );
+    virtual void updateCollisionProbes();
 
 };

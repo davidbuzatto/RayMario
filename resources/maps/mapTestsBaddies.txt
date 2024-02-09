@@ -1,0 +1,70 @@
+# Map file
+# Lines that starts with '#' are comments
+#
+#   Tiles:
+#   <space>  Empty tile
+#   /        Invisible tile
+#   |        Baddie invisible tile
+#   A..Z     Tiles A through Z
+#
+#   Items:
+#   o        Coin
+#   !        Mushroom
+#   f        Fire Flower
+#   u        1-Up
+#   *        Goal
+#
+#   Baddies:
+#   1        Goomba
+#   2        Flying Goomba
+#   3        Green Koopa Troopa
+#   4        Red Koopa Troopa
+#   5        Blue Koopa Troopa
+#   6        Yellow Koopa Troopa
+#   7        Bob-omb
+#   8        Bullet Bill
+#   9        Swooper
+#   @        Buzzy Beetle
+#   $        Mummy Beetle
+#   %        Rex
+#
+#
+# colors: 
+#     - 0xf8e0b0ff (beige)
+#     - 0xd8f8d8ff (light green)
+#     - 0x0060b8ff (blue)
+#     - 0x000000ff (black)
+#     - 0x104838ff (dark green)
+#     - 0x183048ff (dark blue)
+#     - 0x98e0e0ff (light blue)
+#     - 0xf8f8f8ff (white)
+c: 0x0060b8ff     # background color: [0xrrggbbaa]
+b: 1              # background id: [1-10]
+m: 1              # music id: [1-3]
+////////////////////////////////////////////////////////////////
+/                                                              /
+/                                                              /
+/                                                              /
+/      IIIIIIIIIIIIII    IIIIIIIIIIIIII    IIIIIIIIIIIIII      /
+/      I            I    I            I    I            I      /
+/      I          1 I    I        3   I    I      7     I      /
+/      IIIIIIIIIIIIII    IIIIIIIIIIIIII    IIIIIIIIIIIIII      /
+/                                                              /
+/      JJJJJJJJJJJJJJ    JJJJJJJJJJJJJJ    JJJJJJJJJJJJJJ     E/
+/      J       2    J    J            J    J            J     C/
+/      J            J    J    4       J    J      8     J     C/
+/      JJJJJJJJJJJJJJ    JJJJJJJJJJJJJJ    JJJJJJJJJJJJJJ     C/
+/                                                             C/
+/      KKKKKKKKKKKKKK    KKKKKKKKKKKKKK    KKKKKKKKKKKKKK     C/
+/      K            K    K            K    K            K     C/
+/      K          @ K    K          5 K    K     9      K     C/
+/      KKKKKKKKKKKKKK    KKKKKKKKKKKKKK    KKKKKKKKKKKKKK     C/
+/                                                             C/
+/      LLLLLLLLLLLLLL    LLLLLLLLLLLLLL    LLLLLLLLLLLLLL     C/
+/      L            L    L            L    L            L     C/
+/      L          $ L    L  6         L    L     %      L     C/
+/      LLLLLLLLLLLLLL    LLLLLLLLLLLLLL    LLLLLLLLLLLLLL     C/
+/                                                             C/
+/   p  o o o o o o o o o o o o o o o o o o o o o o o o o      C/
+/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

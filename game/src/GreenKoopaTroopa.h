@@ -1,7 +1,7 @@
 /**
- * @file Goomba.h
+ * @file GreenKoopaTroopa.h
  * @author Prof. Dr. David Buzatto
- * @brief Goomba class declaration.
+ * @brief GreenKoopaTroopa class declaration.
  * 
  * @copyright Copyright (c) 2024
  */
@@ -15,12 +15,12 @@
 #include "Sprite.h"
 #include <vector>
 
-class Goomba : public virtual Baddie {
+class GreenKoopaTroopa : public virtual Baddie {
     
 public:
 
-    Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
-    ~Goomba();
+    GreenKoopaTroopa( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
+    ~GreenKoopaTroopa();
 
     virtual void update();
     virtual void draw();
