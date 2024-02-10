@@ -9,7 +9,7 @@
 
 #include "Baddie.h"
 #include "Drawable.h"
-#include "Player.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "Sprite.h"
 #include "Item.h"
@@ -22,7 +22,7 @@ class Map : public virtual Drawable {
     std::vector<Tile> tiles;
     float maxWidth;
     float maxHeight;
-    float playerOffset;
+    float marioOffset;
 
     Texture2D backgroundTexture;
     bool parsed;
@@ -30,7 +30,7 @@ class Map : public virtual Drawable {
     std::vector<Item*> items;
     std::vector<Baddie*> baddies;
 
-    Player &player;
+    Mario &mario;
 
     Color backgroundColor;
     int backgroundId;
@@ -40,7 +40,7 @@ class Map : public virtual Drawable {
 
 public:
 
-    Map( Player &player );
+    Map( Mario &mario );
     ~Map();
     virtual void draw();
     std::vector<Tile> &getTiles();
@@ -49,7 +49,7 @@ public:
     void parseMap( int mapNumber, bool loadTestMap );
     float getMaxWidth();
     float getMaxHeight();
-    void setPlayerOffset( float playerOffset );
+    void setMarioOffset( float marioOffset );
     void playMusic();
 
     static int tileWidth;

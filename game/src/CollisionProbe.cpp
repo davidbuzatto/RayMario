@@ -1,7 +1,7 @@
 /**
- * @file Player.cpp
+ * @file Mario.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Player class implementation.
+ * @brief Mario class implementation.
  * 
  * @copyright Copyright (c) 2024
  */

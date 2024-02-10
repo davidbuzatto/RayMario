@@ -9,6 +9,7 @@
 #include "raylib.h"
 #include <map>
 #include <string>
+#include <vector>
 
 std::map<std::string, Texture2D> ResourceManager::textures;
 std::map<std::string, Sound> ResourceManager::sounds;
@@ -18,36 +19,122 @@ void ResourceManager::loadTextures() {
 
     if ( textures.empty() ) {
 
+        std::vector<Color> flowerMarioReplacePallete;
+        flowerMarioReplacePallete.push_back( GetColor( 0xd8a038ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xf8d800ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xf8d870ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xf8f898ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0x500000ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0x484848ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xf84070ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xf8f8f8ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0x203088ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0x400000ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0x408098ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xb80000ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0x80d8c8ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xf80000ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xb02860ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xd8d8a8ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xf87068ff ) );
+        flowerMarioReplacePallete.push_back( GetColor( 0xf87018ff ) );
+
         // load textures...
 
-        // mario
-        textures["mario0R"] = LoadTexture( "resources/images/sprites/mario/Mario_0.png" );
-        textures["mario1R"] = LoadTexture( "resources/images/sprites/mario/Mario_1.png" );
-        textures["mario0L"] = texture2DFlipHorizontal( textures["mario0R"] );
-        textures["mario1L"] = texture2DFlipHorizontal( textures["mario1R"] );
+        // small mario
+        textures["smallMario0R"] = LoadTexture( "resources/images/sprites/mario/SmallMario_0.png" );
+        textures["smallMario1R"] = LoadTexture( "resources/images/sprites/mario/SmallMario_1.png" );
+        textures["smallMario0L"] = texture2DFlipHorizontal( textures["smallMario0R"] );
+        textures["smallMario1L"] = texture2DFlipHorizontal( textures["smallMario1R"] );
 
-        textures["mario0RuR"] = LoadTexture( "resources/images/sprites/mario/MarioRunning_0.png" );
-        textures["mario1RuR"] = LoadTexture( "resources/images/sprites/mario/MarioRunning_1.png" );
-        textures["mario0RuL"] = texture2DFlipHorizontal( textures["mario0RuR"] );
-        textures["mario1RuL"] = texture2DFlipHorizontal( textures["mario1RuR"] );
+        textures["smallMario0RuR"] = LoadTexture( "resources/images/sprites/mario/SmallMarioRunning_0.png" );
+        textures["smallMario1RuR"] = LoadTexture( "resources/images/sprites/mario/SmallMarioRunning_1.png" );
+        textures["smallMario0RuL"] = texture2DFlipHorizontal( textures["smallMario0RuR"] );
+        textures["smallMario1RuL"] = texture2DFlipHorizontal( textures["smallMario1RuR"] );
 
-        textures["mario0JuR"] = LoadTexture( "resources/images/sprites/mario/MarioJumping_0.png" );
-        textures["mario0JuL"] = texture2DFlipHorizontal( textures["mario0JuR"] );
+        textures["smallMario0JuR"] = LoadTexture( "resources/images/sprites/mario/SmallMarioJumping_0.png" );
+        textures["smallMario0JuL"] = texture2DFlipHorizontal( textures["smallMario0JuR"] );
 
-        textures["mario0JuRuR"] = LoadTexture( "resources/images/sprites/mario/MarioJumpingAndRunning_0.png" );
-        textures["mario0JuRuL"] = texture2DFlipHorizontal( textures["mario0JuRuR"] );
+        textures["smallMario0JuRuR"] = LoadTexture( "resources/images/sprites/mario/SmallMarioJumpingAndRunning_0.png" );
+        textures["smallMario0JuRuL"] = texture2DFlipHorizontal( textures["smallMario0JuRuR"] );
 
-        textures["mario0FaR"] = LoadTexture( "resources/images/sprites/mario/MarioFalling_0.png" );
-        textures["mario0FaL"] = texture2DFlipHorizontal( textures["mario0FaR"] );
+        textures["smallMario0FaR"] = LoadTexture( "resources/images/sprites/mario/SmallMarioFalling_0.png" );
+        textures["smallMario0FaL"] = texture2DFlipHorizontal( textures["smallMario0FaR"] );
 
-        textures["mario0LuR"] = LoadTexture( "resources/images/sprites/mario/MarioLookingUp_0.png" );
-        textures["mario0LuL"] = texture2DFlipHorizontal( textures["mario0LuR"] );
+        textures["smallMario0LuR"] = LoadTexture( "resources/images/sprites/mario/SmallMarioLookingUp_0.png" );
+        textures["smallMario0LuL"] = texture2DFlipHorizontal( textures["smallMario0LuR"] );
 
-        textures["mario0DuR"] = LoadTexture( "resources/images/sprites/mario/MarioDucking_0.png" );
-        textures["mario0DuL"] = texture2DFlipHorizontal( textures["mario0DuR"] );
+        textures["smallMario0DuR"] = LoadTexture( "resources/images/sprites/mario/SmallMarioDucking_0.png" );
+        textures["smallMario0DuL"] = texture2DFlipHorizontal( textures["smallMario0DuR"] );
 
-        textures["mario0Dy"] = LoadTexture( "resources/images/sprites/mario/MarioDying_0.png" );
-        textures["mario1Dy"] = texture2DFlipHorizontal( textures["mario0Dy"] );
+        textures["smallMario0Vic"] = LoadTexture( "resources/images/sprites/mario/SmallMarioVictory_0.png" );
+
+        textures["smallMario0Dy"] = LoadTexture( "resources/images/sprites/mario/SmallMarioDying_0.png" );
+        textures["smallMario1Dy"] = texture2DFlipHorizontal( textures["smallMario0Dy"] );
+
+        // super mario
+        textures["superMario0R"] = LoadTexture( "resources/images/sprites/mario/SuperMario_0.png" );
+        textures["superMario1R"] = LoadTexture( "resources/images/sprites/mario/SuperMario_1.png" );
+        textures["superMario2R"] = LoadTexture( "resources/images/sprites/mario/SuperMario_2.png" );
+        textures["superMario0L"] = texture2DFlipHorizontal( textures["superMario0R"] );
+        textures["superMario1L"] = texture2DFlipHorizontal( textures["superMario1R"] );
+        textures["superMario2L"] = texture2DFlipHorizontal( textures["superMario2R"] );
+
+        textures["superMario0RuR"] = LoadTexture( "resources/images/sprites/mario/SuperMarioRunning_0.png" );
+        textures["superMario1RuR"] = LoadTexture( "resources/images/sprites/mario/SuperMarioRunning_1.png" );
+        textures["superMario2RuR"] = LoadTexture( "resources/images/sprites/mario/SuperMarioRunning_2.png" );
+        textures["superMario0RuL"] = texture2DFlipHorizontal( textures["superMario0RuR"] );
+        textures["superMario1RuL"] = texture2DFlipHorizontal( textures["superMario1RuR"] );
+        textures["superMario2RuL"] = texture2DFlipHorizontal( textures["superMario2RuR"] );
+
+        textures["superMario0JuR"] = LoadTexture( "resources/images/sprites/mario/SuperMarioJumping_0.png" );
+        textures["superMario0JuL"] = texture2DFlipHorizontal( textures["superMario0JuR"] );
+
+        textures["superMario0JuRuR"] = LoadTexture( "resources/images/sprites/mario/SuperMarioJumpingAndRunning_0.png" );
+        textures["superMario0JuRuL"] = texture2DFlipHorizontal( textures["superMario0JuRuR"] );
+
+        textures["superMario0FaR"] = LoadTexture( "resources/images/sprites/mario/SuperMarioFalling_0.png" );
+        textures["superMario0FaL"] = texture2DFlipHorizontal( textures["superMario0FaR"] );
+
+        textures["superMario0LuR"] = LoadTexture( "resources/images/sprites/mario/SuperMarioLookingUp_0.png" );
+        textures["superMario0LuL"] = texture2DFlipHorizontal( textures["superMario0LuR"] );
+
+        textures["superMario0DuR"] = LoadTexture( "resources/images/sprites/mario/SuperMarioDucking_0.png" );
+        textures["superMario0DuL"] = texture2DFlipHorizontal( textures["superMario0DuR"] );
+
+        textures["superMario0Vic"] = LoadTexture( "resources/images/sprites/mario/SuperMarioVictory_0.png" );
+
+        // flower mario
+        textures["flowerMario0R"] = textureColorReplace( textures["superMario0R"], flowerMarioReplacePallete );
+        textures["flowerMario1R"] = textureColorReplace( textures["superMario1R"], flowerMarioReplacePallete );
+        textures["flowerMario2R"] = textureColorReplace( textures["superMario2R"], flowerMarioReplacePallete );
+        textures["flowerMario0L"] = texture2DFlipHorizontal( textures["flowerMario0R"] );
+        textures["flowerMario1L"] = texture2DFlipHorizontal( textures["flowerMario1R"] );
+        textures["flowerMario2L"] = texture2DFlipHorizontal( textures["flowerMario2R"] );
+
+        textures["flowerMario0RuR"] = textureColorReplace( textures["superMario0RuR"], flowerMarioReplacePallete );
+        textures["flowerMario1RuR"] = textureColorReplace( textures["superMario1RuR"], flowerMarioReplacePallete );
+        textures["flowerMario2RuR"] = textureColorReplace( textures["superMario2RuR"], flowerMarioReplacePallete );
+        textures["flowerMario0RuL"] = texture2DFlipHorizontal( textures["flowerMario0RuR"] );
+        textures["flowerMario1RuL"] = texture2DFlipHorizontal( textures["flowerMario1RuR"] );
+        textures["flowerMario2RuL"] = texture2DFlipHorizontal( textures["flowerMario2RuR"] );
+
+        textures["flowerMario0JuR"] = textureColorReplace( textures["superMario0JuR"], flowerMarioReplacePallete );
+        textures["flowerMario0JuL"] = texture2DFlipHorizontal( textures["flowerMario0JuR"] );
+
+        textures["flowerMario0JuRuR"] = textureColorReplace( textures["superMario0JuRuR"], flowerMarioReplacePallete );
+        textures["flowerMario0JuRuL"] = texture2DFlipHorizontal( textures["flowerMario0JuRuR"] );
+
+        textures["flowerMario0FaR"] = textureColorReplace( textures["superMario0FaR"], flowerMarioReplacePallete );
+        textures["flowerMario0FaL"] = texture2DFlipHorizontal( textures["flowerMario0FaR"] );
+
+        textures["flowerMario0LuR"] = textureColorReplace( textures["superMario0LuR"], flowerMarioReplacePallete );
+        textures["flowerMario0LuL"] = texture2DFlipHorizontal( textures["flowerMario0LuR"] );
+
+        textures["flowerMario0DuR"] = textureColorReplace( textures["superMario0DuR"], flowerMarioReplacePallete );
+        textures["flowerMario0DuL"] = texture2DFlipHorizontal( textures["flowerMario0DuR"] );
+
+        textures["flowerMario0Vic"] = textureColorReplace( textures["superMario0Vic"], flowerMarioReplacePallete );
 
         // tiles
         for ( char c = 'A'; c <= 'Z'; c++ ) {
@@ -165,12 +252,21 @@ void ResourceManager::loadSounds() {
     if ( sounds.empty() ) {
         // load sounds...
         sounds["1up"] = LoadSound( "resources/sfx/smw_1-up.wav" );
+        sounds["breakBlock"] = LoadSound( "resources/sfx/smw_break_block.wav" );
         sounds["coin"] = LoadSound( "resources/sfx/smw_coin.wav" );
+        sounds["chuckWhistle"] = LoadSound( "resources/sfx/smw_chuck_whistle.wav" );
+        sounds["fireball"] = LoadSound( "resources/sfx/smw_fireball.wav" );
+        sounds["goalIris"] = LoadSound( "resources/sfx/smw_goal_iris-out.wav" );
         sounds["jump"] = LoadSound( "resources/sfx/smw_jump.wav" );
         sounds["kick"] = LoadSound( "resources/sfx/smw_kick.wav" );
+        sounds["messageBlock"] = LoadSound( "resources/sfx/smw_message_block.wav" );
         sounds["pause"] = LoadSound( "resources/sfx/smw_pause.wav" );
+        sounds["pipe"] = LoadSound( "resources/sfx/smw_pipe.wav" );
         sounds["powerUp"] = LoadSound( "resources/sfx/smw_power-up.wav" );
+        sounds["powerUpAppears"] = LoadSound( "resources/sfx/smw_power-up_appears.wav" );
+        sounds["ridingYoshi"] = LoadSound( "resources/sfx/smw_riding_yoshi.wav" );
         sounds["stomp"] = LoadSound( "resources/sfx/smw_stomp.wav" );
+        sounds["stompNoDamage"] = LoadSound( "resources/sfx/smw_stomp_no_damage.wav" );
         sounds["lostLife"] = LoadSound( "resources/sfx/lostLife.wav" );
     }
 }
@@ -244,6 +340,20 @@ void ResourceManager::unloadMusic( std::string key ) {
 Texture2D ResourceManager::texture2DFlipHorizontal( Texture2D texture ) {
     Image img = LoadImageFromTexture( texture );
     ImageFlipHorizontal( &img );
+    return LoadTextureFromImage( img );
+}
+
+Texture2D ResourceManager::textureColorReplace( Texture2D texture, Color targetColor, Color newColor ) {
+    Image img = LoadImageFromTexture( texture );
+    ImageColorReplace( &img, targetColor, newColor );
+    return LoadTextureFromImage( img );
+}
+
+Texture2D ResourceManager::textureColorReplace( Texture2D texture, std::vector<Color> replacePallete ) {
+    Image img = LoadImageFromTexture( texture );
+    for ( size_t i = 0; i < replacePallete.size(); i += 2 ) {
+        ImageColorReplace( &img, replacePallete[i], replacePallete[i+1] );
+    }
     return LoadTextureFromImage( img );
 }
 

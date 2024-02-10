@@ -39,7 +39,7 @@
     <ClCompile Include="..\game\src\Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\game\src\Player.cpp">
+    <ClCompile Include="..\game\src\Mario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\Baddie.cpp">
@@ -128,7 +128,7 @@
     <ClInclude Include="..\game\src\Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\game\src\Player.h">
+    <ClInclude Include="..\game\src\Mario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\Baddie.h">
@@ -226,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="..\game\src\Item.h">
       <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\MarioType.h">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

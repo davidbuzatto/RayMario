@@ -9,7 +9,7 @@
 
 #include "raylib.h"
 #include "Item.h"
-#include "Player.h"
+#include "Mario.h"
 
 class Star : public virtual Item {
     
@@ -21,6 +21,6 @@ public:
     virtual void update();
     virtual void draw();
     virtual void playCollisionSound();
-    virtual void updatePlayer( Player& player );
+    virtual void updateMario( Mario& mario );
 
 };

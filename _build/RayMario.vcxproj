@@ -293,7 +293,7 @@
     <ClCompile Include="..\game\src\MummyBeetle.cpp" />
     <ClCompile Include="..\game\src\Mushroom.cpp" />
     <ClCompile Include="..\game\src\OneUpMushroom.cpp" />
-    <ClCompile Include="..\game\src\Player.cpp" />
+    <ClCompile Include="..\game\src\Mario.cpp" />
     <ClCompile Include="..\game\src\RedKoopaTroopa.cpp" />
     <ClCompile Include="..\game\src\ResourceManager.cpp" />
     <ClCompile Include="..\game\src\Rex.cpp" />
@@ -324,10 +324,11 @@
     <ClInclude Include="..\game\src\GreenKoopaTroopa.h" />
     <ClInclude Include="..\game\src\Item.h" />
     <ClInclude Include="..\game\src\Map.h" />
+    <ClInclude Include="..\game\src\MarioType.h" />
     <ClInclude Include="..\game\src\MummyBeetle.h" />
     <ClInclude Include="..\game\src\Mushroom.h" />
     <ClInclude Include="..\game\src\OneUpMushroom.h" />
-    <ClInclude Include="..\game\src\Player.h" />
+    <ClInclude Include="..\game\src\Mario.h" />
     <ClInclude Include="..\game\src\RedKoopaTroopa.h" />
     <ClInclude Include="..\game\src\Rex.h" />
     <ClInclude Include="..\game\src\SpriteState.h" />

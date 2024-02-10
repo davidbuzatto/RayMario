@@ -9,7 +9,7 @@
 #include "CollisionProbe.h"
 #include "Direction.h"
 #include "GameWorld.h"
-#include "Player.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "ResourceManager.h"
 #include "SpriteState.h"
@@ -40,14 +40,14 @@ Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
 Baddie::~Baddie() {
 }
 
-void Baddie::activateWithPlayerProximity( Player &player ) {
+void Baddie::activateWithMarioProximity( Mario &mario ) {
     if ( CheckCollisionPointRec( 
         Vector2( pos.x + dim.x/2, pos.y + dim.y/2 ),
         Rectangle( 
-            player.getX() + player.getWidth() / 2 - player.getActivationWidth() / 2, 
-            player.getY() + player.getHeight() / 2 - player.getActivationWidth() / 2,
-            player.getActivationWidth(),
-            player.getActivationWidth() ) ) ) {
+            mario.getX() + mario.getWidth() / 2 - mario.getActivationWidth() / 2, 
+            mario.getY() + mario.getHeight() / 2 - mario.getActivationWidth() / 2,
+            mario.getActivationWidth(),
+            mario.getActivationWidth() ) ) ) {
         state = SpriteState::ACTIVE;
     }
 }

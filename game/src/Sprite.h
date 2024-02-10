@@ -41,7 +41,7 @@ public:
     Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames );
-    ~Sprite();
+    virtual ~Sprite();   // virtual destructor enables polimorphism
 
     virtual void update() = 0;
     virtual void draw() = 0;

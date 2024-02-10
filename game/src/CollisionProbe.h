@@ -11,20 +11,6 @@
 #include "Drawable.h"
 #include "raylib.h"
 
-/*class CollisionProbe : public virtual Sprite {
-    
-public:
-
-    CollisionProbe();
-    CollisionProbe( Vector2 pos, Vector2 dim, Color color );
-    ~CollisionProbe();
-
-    virtual void update();
-    virtual void draw();
-    virtual CollisionType checkCollision( Sprite &sprite );
-
-};*/
-
 class CollisionProbe : public virtual Drawable {
 
     Vector2 pos;

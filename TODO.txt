@@ -1,22 +1,33 @@
-como desalocar o objeto criado no vector "genérico"
-processar mais músicas <- adicionar no mapa
-ladrilhos parametrizados (tipo na fase)
-power ups
-morrer com o tempo
-mudar de fases
+player -> mario
+alterar colission probe quando estiver maior ou menor
+melhorar colisão do mário
+implementar tiro quando mario estiver em flower
+colocar em estado invulnerável por alguns segundos
+movimentar power ups
+transição de power ups
+se já tiver power up:
+    mushroom -> mushroom colocar na reserva
+                flower colocar mushroom na reserva
+    flower -> mushroom colocar na reserva -> se já houver reserva, não faz nada
+              flower colocar nar eserva   -> se a reserva for mushroom, troca
+              
+implementar estado "caindo" para correção de frame e evitar pular ao cair
 
+processar mais músicas <- adicionar no mapa
 configurar quantidade máxima de músicas
 
+morrer com o tempo
+morre com colisão dos inimigos
 
-colisão jogador x inimigos
-    morrer - ok (resetar fase e subtrair vidas)
+mudar de fases
+criar transição entre fases
 
 inimigos colidem entre si?
 separar tiles de cenário, fundo etcv
+ladrilhos parametrizados (tipo na fase)
 refatorar
-polimorfismo
-terminar inimigos
+
 criar caixas interativas (moedas, "?" etc)
 criar GUI
-criar transição entre fases
+
 editor de fases - salvar e carregar

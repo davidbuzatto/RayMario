@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "Star.h"
-#include "Player.h"
+#include "Mario.h"
 #include "Sprite.h"
 #include "raylib.h"
 #include "ResourceManager.h"
@@ -30,6 +30,6 @@ void Star::draw() {
 void Star::playCollisionSound() {
 }
 
-void Star::updatePlayer( Player& player ) {
-    player.addPoints( 10000 );
+void Star::updateMario( Mario& mario ) {
+    mario.addPoints( 10000 );
 }

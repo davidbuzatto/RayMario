@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "OneUpMushroom.h"
-#include "Player.h"
+#include "Mario.h"
 #include "Sprite.h"
 #include "raylib.h"
 #include "ResourceManager.h"
@@ -31,6 +31,6 @@ void OneUpMushroom::playCollisionSound() {
     PlaySound( ResourceManager::getSounds()["1up"] );
 }
 
-void OneUpMushroom::updatePlayer( Player& player ) {
-    player.addLives( 1 );
+void OneUpMushroom::updateMario( Mario& mario ) {
+    mario.addLives( 1 );
 }

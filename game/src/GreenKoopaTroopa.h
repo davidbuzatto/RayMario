@@ -10,7 +10,7 @@
 #include "CollisionProbe.h"
 #include "Baddie.h"
 #include "Direction.h"
-#include "Player.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "Sprite.h"
 #include <vector>

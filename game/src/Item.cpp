@@ -7,7 +7,7 @@
  */
 #include "CollisionType.h"
 #include "Item.h"
-#include "Player.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "Sprite.h"
 

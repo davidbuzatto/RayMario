@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "Coin.h"
-#include "Player.h"
+#include "Mario.h"
 #include "Sprite.h"
 #include "raylib.h"
 #include "ResourceManager.h"
@@ -39,11 +39,11 @@ void Coin::playCollisionSound() {
     PlaySound( ResourceManager::getSounds()["coin"] );
 }
 
-void Coin::updatePlayer( Player& player ) {
-    player.addCoins( 1 );
-    if ( player.getCoins() >= 100 ) {
-        player.addLives( 1 );
-        player.setCoins( player.getCoins() - 100 );
+void Coin::updateMario( Mario& mario ) {
+    mario.addCoins( 1 );
+    if ( mario.getCoins() >= 100 ) {
+        mario.addLives( 1 );
+        mario.setCoins( mario.getCoins() - 100 );
         PlaySound( ResourceManager::getSounds()["1up"] );
     }
 }

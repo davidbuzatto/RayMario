@@ -10,12 +10,12 @@
 
 #include "Drawable.h"
 #include "Map.h"
-#include "Player.h"
+#include "Mario.h"
 #include "raylib.h"
 
 class GameWorld : public virtual Drawable {
 
-    Player player;
+    Mario mario;
     Map map;
     Camera2D *camera;
     bool showControls;
@@ -23,7 +23,7 @@ class GameWorld : public virtual Drawable {
 public:
 
     static bool debug;
-    static bool immortalPlayer;
+    static bool immortalMario;
     static float gravity;
     
     /**

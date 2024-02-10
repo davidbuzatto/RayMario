@@ -61,8 +61,8 @@ m: 1              # music id: [1-3]
 /      I            I           I                           C/
 /      I        1   I          I                            C/
 /      IIIIIIIIIIIIII         I                             C/
-/         o                                                 C/
-/    I     o                                                C/
+/                                                           C/
+/    I                                                      C/
 /   p     o ! f u + *                                       C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAA/

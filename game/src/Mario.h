@@ -1,7 +1,7 @@
 /**
- * @file Player.h
+ * @file Mario.h
  * @author Prof. Dr. David Buzatto
- * @brief Player class declaration.
+ * @brief Mario class declaration.
  * 
  * @copyright Copyright (c) 2024
  */
@@ -10,16 +10,21 @@
 #include "CollisionProbe.h"
 #include "CollisionType.h"
 #include "Direction.h"
+#include "MarioType.h"
 #include "raylib.h"
 #include "Sprite.h"
 #include "Tile.h"
 
-class Player : public virtual Sprite {
+class Mario : public virtual Sprite {
 
     float speedX;
     float maxSpeedX;
     float jumpSpeed;
     bool immortal;
+    bool invulnerable;
+    float invulnerableTime;
+    float invulnerableTimeAcum;
+    bool invulnerableBlink;
 
     bool ducking;
     bool lookigUp;
@@ -34,11 +39,13 @@ class Player : public virtual Sprite {
     int coins;
     int points;
     int time;
+
+    MarioType type;
     
 public:
 
-    Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed, bool immortal );
-    ~Player();
+    Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed, bool immortal );
+    ~Mario();
 
     virtual void update();
     virtual void draw();
@@ -71,5 +78,12 @@ public:
     void removeCoins( int coins );
     void addPoints( int points );
     void removePoints( int points );
+    
+    void changeToSmall();
+    void changeToSuper();
+    void changeToFlower();
+    MarioType getType();
+    void setInvulnerable( bool invulnerable );
+    bool isInvulnerable();
 
 };

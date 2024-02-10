@@ -35,12 +35,12 @@
 
 int Map::tileWidth = 32;
 
-Map::Map( Player &player ) :
+Map::Map( Mario &mario ) :
     maxWidth( 0 ),
     maxHeight( 0 ),
-    playerOffset( 0 ),
+    marioOffset( 0 ),
     parsed( false ),
-    player( player ),
+    mario( mario ),
     maxBackgroundId( 10 ),
     backgroundColor( WHITE ),
     backgroundId( 1 ),
@@ -60,7 +60,7 @@ void Map::draw() {
     for ( int i = 0; i <= repeats; i++ ) {
         DrawTexture( 
             backgroundTexture, 
-            -backgroundTexture.width + i * backgroundTexture.width - playerOffset * 0.06, 
+            -backgroundTexture.width + i * backgroundTexture.width - marioOffset * 0.06, 
             0,
             WHITE );
     }
@@ -309,10 +309,10 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
                         baddies.push_back( new Swooper( Vector2( x, y ), Vector2( 32, 34 ), Vector2( -100, 0 ), YELLOW ) );
                         break;
                     case '@':
-                        baddies.push_back( new BuzzyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new BuzzyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), YELLOW ) );
                         break;
                     case '$':
-                        baddies.push_back( new MummyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new MummyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), YELLOW ) );
                         break;
                     case '%':
                         baddies.push_back( new Rex( Vector2( x, y ), Vector2( 40, 64 ), Vector2( -100, 0 ), YELLOW ) );
@@ -325,7 +325,7 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
                     case ' ':
                         break;
                     case 'p':
-                        player.setPos( Vector2( x, y ) );
+                        mario.setPos( Vector2( x, y ) );
                         break;
                     default:
                         int index = ( *mapData ) - 'A';
@@ -371,6 +371,6 @@ float Map::getMaxHeight() {
     return maxHeight;
 }
 
-void Map::setPlayerOffset( float playerOffset ) {
-    this->playerOffset = playerOffset;
+void Map::setMarioOffset( float marioOffset ) {
+    this->marioOffset = marioOffset;
 }

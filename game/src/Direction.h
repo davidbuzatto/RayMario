@@ -1,7 +1,7 @@
 /**
- * @file PlayerDirection.h
+ * @file Direction.h
  * @author Prof. Dr. David Buzatto
- * @brief PlayerDirection enumeration.
+ * @brief Direction enumeration.
  * 
  * @copyright Copyright (c) 2024
  */

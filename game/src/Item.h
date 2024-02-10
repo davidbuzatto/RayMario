@@ -9,7 +9,7 @@
 
 #include "CollisionProbe.h"
 #include "Direction.h"
-#include "Player.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "Sprite.h"
 #include <vector>
@@ -29,6 +29,6 @@ public:
     virtual void draw() = 0;
     virtual CollisionType checkCollision( Sprite& sprite );
     virtual void playCollisionSound() = 0;
-    virtual void updatePlayer( Player &player ) = 0;
+    virtual void updateMario( Mario &mario ) = 0;
 
 };

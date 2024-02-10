@@ -10,6 +10,7 @@
 #include "raylib.h"
 #include <map>
 #include <string>
+#include <vector>
 
 class ResourceManager {
 
@@ -32,6 +33,8 @@ public:
     static void unloadSound( std::string key );
     static void unloadMusic( std::string key );
     static Texture2D texture2DFlipHorizontal( Texture2D texture );
+    static Texture2D textureColorReplace( Texture2D texture, Color targetColor, Color newColor );
+    static Texture2D textureColorReplace( Texture2D texture, std::vector<Color> replacePallete );
 
     static std::map<std::string, Texture2D> &getTextures();
     static std::map<std::string, Sound> &getSounds();

@@ -1,7 +1,7 @@
 /**
- * @file Goomba.h
+ * @file Baddie.h
  * @author Prof. Dr. David Buzatto
- * @brief Goomba class declaration.
+ * @brief Baddie class declaration.
  * 
  * @copyright Copyright (c) 2024
  */
@@ -9,7 +9,7 @@
 
 #include "CollisionProbe.h"
 #include "Direction.h"
-#include "Player.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "Sprite.h"
 #include <vector>
@@ -28,6 +28,6 @@ public:
     virtual void update() = 0;
     virtual void draw() = 0;
     virtual CollisionType checkCollision( Sprite &sprite ) = 0;
-    void activateWithPlayerProximity( Player &player );
+    void activateWithMarioProximity( Mario &mario );
 
 };

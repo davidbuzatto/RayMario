@@ -10,7 +10,7 @@
 #include "CollisionProbe.h"
 #include "Direction.h"
 #include "GameWorld.h"
-#include "Player.h"
+#include "Mario.h"
 #include "Sprite.h"
 #include "raylib.h"
 #include "ResourceManager.h"

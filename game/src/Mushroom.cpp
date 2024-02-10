@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "Mushroom.h"
-#include "Player.h"
+#include "Mario.h"
 #include "Sprite.h"
 #include "raylib.h"
 #include "ResourceManager.h"
@@ -31,6 +31,7 @@ void Mushroom::playCollisionSound() {
     PlaySound( ResourceManager::getSounds()["powerUp"] );
 }
 
-void Mushroom::updatePlayer( Player& player ) {
-    player.addPoints( 1000 );
+void Mushroom::updateMario( Mario& mario ) {
+    mario.addPoints( 1000 );
+    mario.changeToSuper();
 }

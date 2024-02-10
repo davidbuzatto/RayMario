@@ -20,21 +20,23 @@
 #include "raygui.h"
 #undef RAYGUI_IMPLEMENTATION
 
-#include "Player.h"
+#include "Mario.h"
 #include "Item.h"
 #include "Baddie.h"
 #include "SpriteState.h"
 #include "Tile.h"
 
-bool GameWorld::debug = true;
-bool GameWorld::immortalPlayer = true;
+#define ACTIVATE_DEBUG false
+
+bool GameWorld::debug = ACTIVATE_DEBUG;
+bool GameWorld::immortalMario = ACTIVATE_DEBUG;
 float GameWorld::gravity = 20;
 
 /**
  * @brief Construct a new GameWorld object
  */
 GameWorld::GameWorld() :
-    player( 
+    mario( 
         Vector2( 0, 0 ), 
         Vector2( 28, 40 ), 
         Vector2( 0, 0 ), 
@@ -44,9 +46,9 @@ GameWorld::GameWorld() :
         -550,
         true
     ),
-    map( player ),
+    map( mario ),
     camera( nullptr ),
-    showControls( true ) {
+    showControls( ACTIVATE_DEBUG ) {
     std::cout << "creating game world..." << std::endl;
 }
 
@@ -62,7 +64,7 @@ GameWorld::~GameWorld() {
  */
 void GameWorld::inputAndUpdate() {
 
-    map.parseMap( 2, false );
+    map.parseMap( 1, false );
 
     std::vector<Item*> &items = map.getItems();
     std::vector<Baddie*> &baddies = map.getBaddies();
@@ -74,11 +76,11 @@ void GameWorld::inputAndUpdate() {
         showControls = !showControls;
     }
 
-    if ( player.getState() != SpriteState::DYING ) {
+    if ( mario.getState() != SpriteState::DYING ) {
         map.playMusic();
     }
-    player.setActivationWidth( GetScreenWidth() * 2 );
-    player.update();
+    mario.setActivationWidth( GetScreenWidth() * 2 );
+    mario.update();
 
     for ( size_t i = 0; i < items.size(); i++ ) {
         items[i]->update();
@@ -88,34 +90,34 @@ void GameWorld::inputAndUpdate() {
         baddies[i]->update();
     }
 
-    // player x tiles collision resolution
-    player.updateCollisionProbes();
+    // mario x tiles collision resolution
+    mario.updateCollisionProbes();
     for ( size_t i = 0; i < tiles.size(); i++ ) {
         Tile &tile = tiles[i];
         if ( !tile.isOnlyBaddies() ) {
-            switch ( player.checkCollisionTile( tile ) ) {
+            switch ( mario.checkCollisionTile( tile ) ) {
                 case CollisionType::NORTH:
-                    player.setY( tile.getY() + tile.getHeight() );
-                    player.setVelY( 0 );
+                    mario.setY( tile.getY() + tile.getHeight() );
+                    mario.setVelY( 0 );
                     break;
                 case CollisionType::SOUTH:
-                    player.setY( tile.getY() - player.getHeight() );
-                    player.setVelY( 0 );
-                    player.setState( SpriteState::ON_GROUND );
+                    mario.setY( tile.getY() - mario.getHeight() );
+                    mario.setVelY( 0 );
+                    mario.setState( SpriteState::ON_GROUND );
                     break;
                 case CollisionType::EAST:
-                    player.setX( tile.getX() - player.getWidth() );
-                    player.setVelX( 0 );
+                    mario.setX( tile.getX() - mario.getWidth() );
+                    mario.setVelX( 0 );
                     break;
                 case CollisionType::WEST:
-                    player.setX( tile.getX() + tile.getWidth() );
-                    player.setVelX( 0 );
+                    mario.setX( tile.getX() + tile.getWidth() );
+                    mario.setVelX( 0 );
                     break;
                 case CollisionType::NONE:
                     break;
             }
         }
-        player.updateCollisionProbes();
+        mario.updateCollisionProbes();
     }
 
     // baddies x tiles collision resolution
@@ -146,65 +148,68 @@ void GameWorld::inputAndUpdate() {
         }
     }
 
-    // player x items collision resolution
+    // mario x items collision resolution
     for ( size_t i = 0; i < items.size(); i++ ) {
-        if ( items[i]->checkCollision( player ) == CollisionType::COLLIDED ) {
+        if ( items[i]->checkCollision( mario ) == CollisionType::COLLIDED ) {
             collectedIndexes.push_back(i);
             items[i]->playCollisionSound();
-            items[i]->updatePlayer( player );
+            items[i]->updateMario( mario );
         }
     }
     for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
-        
-        // error
-        //delete items[collectedIndexes[i]];
-
-        // error too
-        /*auto it = items.begin() + collectedIndexes[i];
-        delete* it;
-        items.erase( it );*/
-
+        delete items[collectedIndexes[i]];
         items.erase( items.begin() + collectedIndexes[i] );
-
     }
 
     // baddies activation
     for ( size_t i = 0; i < baddies.size(); i++ ) {
         Baddie *baddie = baddies[i];
         if ( baddie->getState() == SpriteState::IDLE ) {
-            baddie->activateWithPlayerProximity( player );
+            baddie->activateWithMarioProximity( mario );
         }
     }
 
-    // player x baddies collision resolution and offscreen baddies removal
+    // mario x baddies collision resolution and offscreen baddies removal
     collectedIndexes.clear();
-    if ( player.getState() != SpriteState::DYING ) {
-        player.updateCollisionProbes();
+    if ( mario.getState() != SpriteState::DYING ) {
+        mario.updateCollisionProbes();
         for ( size_t i = 0; i < baddies.size(); i++ ) {
             Baddie *baddie = baddies[i];
-            switch ( player.checkCollisionBaddie( *baddie ) ) {
+            switch ( mario.checkCollisionBaddie( *baddie ) ) {
                 case CollisionType::NORTH:
                 case CollisionType::EAST:
                 case CollisionType::WEST:
-                    if ( !player.isImmortal() ) {
-                        player.setState( SpriteState::DYING );
-                        PlaySound( sounds["lostLife"] );
-                        player.removeLives( 1 );
+                    if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
+                        if ( mario.getType() == MarioType::SMALL ) {
+                            mario.setState( SpriteState::DYING );
+                            PlaySound( sounds["lostLife"] );
+                            mario.removeLives( 1 );
+                        } else {
+                            PlaySound( sounds["pipe"] );
+                            mario.changeToSmall();
+                            mario.setInvulnerable( true );
+                        }
                     }
                     break;
                 case CollisionType::SOUTH:
-                    if ( player.getState() == SpriteState::JUMPING || player.getVelY() > 0 ) {
-                        player.setY( baddie->getY() - player.getHeight() );
-                        player.setVelY( player.getJumpSpeed() );
-                        player.setState( SpriteState::JUMPING );
+                    if ( mario.getState() == SpriteState::JUMPING || mario.getVelY() > 0 ) {
+                        mario.setY( baddie->getY() - mario.getHeight() );
+                        mario.setVelY( mario.getJumpSpeed() );
+                        mario.setState( SpriteState::JUMPING );
                         collectedIndexes.push_back( i );
                         PlaySound( sounds["stomp"] );
-                        player.addPoints( 200 );
+                        mario.addPoints( 200 );
                     } else {
-                        if ( !player.isImmortal() ) {
-                            player.setState( SpriteState::DYING );
-                            PlaySound( sounds["lostLife"] );
-                            player.removeLives( 1 );
+                        if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
+                            if ( mario.getType() == MarioType::SMALL ) {
+                                mario.setState( SpriteState::DYING );
+                                PlaySound( sounds["lostLife"] );
+                                mario.removeLives( 1 );
+                            } else {
+                                PlaySound( sounds["pipe"] );
+                                mario.changeToSmall();
+                                mario.setInvulnerable( true );
+                            }
                         }
                     }
                     break;
@@ -214,18 +219,18 @@ void GameWorld::inputAndUpdate() {
                     }
                     break;
             }
-            player.updateCollisionProbes();
+            mario.updateCollisionProbes();
         }
 
     }
 
     for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
-        //delete baddies[collectedIndexes[i]];
+        delete baddies[collectedIndexes[i]];
         baddies.erase( baddies.begin() + collectedIndexes[i] );
     }
 
-    if ( player.getState() != SpriteState::DYING && player.getY() > map.getMaxHeight() ) {
-        player.setState( SpriteState::DYING );
+    if ( mario.getState() != SpriteState::DYING && mario.getY() > map.getMaxHeight() ) {
+        mario.setState( SpriteState::DYING );
         PlaySound( sounds["lostLife"] );
     }
 
@@ -237,20 +242,20 @@ void GameWorld::inputAndUpdate() {
 
     float xc = GetScreenWidth() / 2.0;
     float yc = GetScreenHeight() / 2.0;
-    float pxc = player.getX() + player.getWidth() / 2.0;
-    float pyc = player.getY() + player.getHeight() / 2.0;
+    float pxc = mario.getX() + mario.getWidth() / 2.0;
+    float pyc = mario.getY() + mario.getHeight() / 2.0;
     
     camera->offset.x = xc;
 
     if ( pxc < xc ) {
         camera->target.x = xc + Map::tileWidth;
-        map.setPlayerOffset( 0 );         // x parallax
+        map.setMarioOffset( 0 );         // x parallax
     } else if ( pxc >= map.getMaxWidth() - xc - Map::tileWidth ) {
         camera->target.x = map.getMaxWidth() - GetScreenWidth();
         camera->offset.x = 0;
     } else {
         camera->target.x = pxc + Map::tileWidth;
-        map.setPlayerOffset( pxc - xc );  // x parallax
+        map.setMarioOffset( pxc - xc );  // x parallax
     }
 
     camera->offset.y = yc;
@@ -280,7 +285,7 @@ void GameWorld::draw() {
     BeginMode2D( *camera );
 
     map.draw();
-    player.draw();
+    mario.draw();
 
     if ( debug ) {
         for ( int i = -20; i <= lines + 20; i++ ) {
@@ -293,17 +298,17 @@ void GameWorld::draw() {
 
     EndMode2D();
 
-    player.drawHud();
+    mario.drawHud();
 
     if ( showControls ) {
 
         int compMargin = 10;
         int fpsHeight = debug ? 30 : 0;
-        Rectangle guiPanelRect( 20, GetScreenHeight() - 110 - fpsHeight, 100, 90 + fpsHeight );
+        Rectangle guiPanelRect( GetScreenWidth() - 120, GetScreenHeight() - 110 - fpsHeight, 100, 90 + fpsHeight);
         GuiPanel( guiPanelRect, "Controles" );
         GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 30, 20, 20 ), "debug", &debug );
-        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "imortal", &immortalPlayer );
-        player.setImmortal( immortalPlayer );
+        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "imortal", &immortalMario );
+        mario.setImmortal( immortalMario );
 
         if ( debug ) {
             DrawFPS( guiPanelRect.x + compMargin, guiPanelRect.y + 90 );

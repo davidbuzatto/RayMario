@@ -1,7 +1,7 @@
 /**
- * @file PlayerState.h
+ * @file MarioState.h
  * @author Prof. Dr. David Buzatto
- * @brief PlayerState enumeration.
+ * @brief MarioState enumeration.
  * 
  * @copyright Copyright (c) 2024
  */

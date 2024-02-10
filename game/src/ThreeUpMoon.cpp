@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "ThreeUpMoon.h"
-#include "Player.h"
+#include "Mario.h"
 #include "Sprite.h"
 #include "raylib.h"
 #include "ResourceManager.h"
@@ -31,6 +31,6 @@ void ThreeUpMoon::playCollisionSound() {
     PlaySound( ResourceManager::getSounds()["1up"] );
 }
 
-void ThreeUpMoon::updatePlayer( Player& player ) {
-    player.addLives( 3 );
+void ThreeUpMoon::updateMario( Mario& mario ) {
+    mario.addLives( 3 );
 }

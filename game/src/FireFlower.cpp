@@ -6,7 +6,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "FireFlower.h"
-#include "Player.h"
+#include "Mario.h"
 #include "Sprite.h"
 #include "raylib.h"
 #include "ResourceManager.h"
@@ -30,6 +30,7 @@ void FireFlower::playCollisionSound() {
     PlaySound( ResourceManager::getSounds()["powerUp"] );
 }
 
-void FireFlower::updatePlayer( Player& player ) {
-    player.addPoints( 1000 );
+void FireFlower::updateMario( Mario& mario ) {
+    mario.addPoints( 1000 );
+    mario.changeToFlower();
 }
