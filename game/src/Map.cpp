@@ -7,7 +7,13 @@
  */
 #include "Map.h"
 #include "ResourceManager.h"
+#include "Item.h"
 #include "Coin.h"
+#include "Mushroom.h"
+#include "FireFlower.h"
+#include "OneUpMushroom.h"
+#include "ThreeUpMoon.h"
+#include "Star.h"
 #include "Baddie.h"
 #include "raylib.h"
 #include "Sprite.h"
@@ -63,8 +69,8 @@ void Map::draw() {
         tiles[i].draw();
     }
 
-    for ( size_t i = 0; i < coins.size(); i++ ) {
-        coins[i].draw();
+    for ( size_t i = 0; i < items.size(); i++ ) {
+        items[i]->draw();
     }
 
     for ( size_t i = 0; i < baddies.size(); i++ ) {
@@ -77,8 +83,8 @@ std::vector<Tile> &Map::getTiles() {
     return tiles;
 }
 
-std::vector<Coin> &Map::getCoins() {
-    return coins;
+std::vector<Item*> &Map::getItems() {
+    return items;
 }
 
 std::vector<Baddie*> &Map::getBaddies() {
@@ -105,8 +111,8 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
         char *mapData;
         
         if ( loadTestMap ) {
-            //mapData = LoadFileText( TextFormat( "resources/maps/mapTests.txt" ) );
-            mapData = LoadFileText( TextFormat( "resources/maps/mapTestsBaddies.txt" ) );
+            mapData = LoadFileText( TextFormat( "resources/maps/mapTests.txt" ) );
+            //mapData = LoadFileText( TextFormat( "resources/maps/mapTestsBaddies.txt" ) );
         } else {
             mapData = LoadFileText( TextFormat( "resources/maps/map%d.txt", mapNumber ) );
         }
@@ -258,7 +264,22 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
                         );
                         break;
                     case 'o':
-                        coins.push_back( Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
+                        items.push_back( new Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
+                        break;
+                    case '!':
+                        items.push_back( new Mushroom( Vector2( x, y ), Vector2( 32, 32 ), YELLOW ) );
+                        break;
+                    case 'f':
+                        items.push_back( new FireFlower( Vector2( x, y ), Vector2( 32, 32 ), YELLOW ) );
+                        break;
+                    case 'u':
+                        items.push_back( new OneUpMushroom( Vector2( x, y ), Vector2( 32, 32 ), YELLOW ) );
+                        break;
+                    case '+':
+                        items.push_back( new ThreeUpMoon( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
+                        break;
+                    case '*':
+                        items.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
                         break;
                     case '1':
                         baddies.push_back( new Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), YELLOW ) );

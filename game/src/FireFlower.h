@@ -1,7 +1,7 @@
 /**
- * @file Coin.h
+ * @file FireFlower.h
  * @author Prof. Dr. David Buzatto
- * @brief Coin class declaration.
+ * @brief FireFlower class declaration.
  * 
  * @copyright Copyright (c) 2024
  */
@@ -11,12 +11,12 @@
 #include "Item.h"
 #include "Player.h"
 
-class Coin : public virtual Item {
+class FireFlower : public virtual Item {
     
 public:
 
-    Coin( Vector2 pos, Vector2 dim, Color color );
-    ~Coin();
+    FireFlower( Vector2 pos, Vector2 dim, Color color );
+    ~FireFlower();
 
     virtual void update();
     virtual void draw();

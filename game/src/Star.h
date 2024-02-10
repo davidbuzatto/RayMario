@@ -1,7 +1,7 @@
 /**
- * @file Coin.h
+ * @file Star.h
  * @author Prof. Dr. David Buzatto
- * @brief Coin class declaration.
+ * @brief Star class declaration.
  * 
  * @copyright Copyright (c) 2024
  */
@@ -11,12 +11,12 @@
 #include "Item.h"
 #include "Player.h"
 
-class Coin : public virtual Item {
+class Star : public virtual Item {
     
 public:
 
-    Coin( Vector2 pos, Vector2 dim, Color color );
-    ~Coin();
+    Star( Vector2 pos, Vector2 dim, Color color );
+    ~Star();
 
     virtual void update();
     virtual void draw();

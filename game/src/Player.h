@@ -29,6 +29,11 @@ class Player : public virtual Sprite {
     float frameTimeRunning;
 
     float activationWidth;
+
+    int lives;
+    int coins;
+    int points;
+    int time;
     
 public:
 
@@ -38,6 +43,7 @@ public:
     virtual void update();
     virtual void draw();
     virtual CollisionType checkCollision( Sprite& sprite );
+    void drawHud();
 
     CollisionType checkCollisionTile( Sprite& sprite );
     CollisionType checkCollisionBaddie( Sprite& sprite );
@@ -50,5 +56,20 @@ public:
     float getJumpSpeed();
     bool isImmortal();
     float getActivationWidth();
+
+    void setLives( int lives );
+    void setCoins( int coins );
+    void setPoints( int points );
+    
+    int getLives();
+    int getCoins();
+    int getPoints();
+
+    void addLives( int lives );
+    void removeLives( int lives );
+    void addCoins( int coins );
+    void removeCoins( int coins );
+    void addPoints( int points );
+    void removePoints( int points );
 
 };

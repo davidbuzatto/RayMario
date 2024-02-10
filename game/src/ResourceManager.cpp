@@ -7,10 +7,8 @@
  */
 #include "ResourceManager.h"
 #include "raylib.h"
-#include <iostream>
 #include <map>
 #include <string>
-#include <vector>
 
 std::map<std::string, Texture2D> ResourceManager::textures;
 std::map<std::string, Sound> ResourceManager::sounds;
@@ -19,7 +17,10 @@ std::map<std::string, Music> ResourceManager::musics;
 void ResourceManager::loadTextures() {
 
     if ( textures.empty() ) {
+
         // load textures...
+
+        // mario
         textures["mario0R"] = LoadTexture( "resources/images/sprites/mario/Mario_0.png" );
         textures["mario1R"] = LoadTexture( "resources/images/sprites/mario/Mario_1.png" );
         textures["mario0L"] = texture2DFlipHorizontal( textures["mario0R"] );
@@ -48,10 +49,12 @@ void ResourceManager::loadTextures() {
         textures["mario0Dy"] = LoadTexture( "resources/images/sprites/mario/MarioDying_0.png" );
         textures["mario1Dy"] = texture2DFlipHorizontal( textures["mario0Dy"] );
 
+        // tiles
         for ( char c = 'A'; c <= 'Z'; c++ ) {
             textures[std::string(1, c)] = LoadTexture( TextFormat( "resources/images/tiles/tile_%c.png", c ) );
         }
 
+        // backgrounds
         textures["background1"] = LoadTexture( TextFormat( "resources/images/backgrounds/background1.png" ) );
         textures["background2"] = LoadTexture( TextFormat( "resources/images/backgrounds/background2.png" ) );
         textures["background3"] = LoadTexture( TextFormat( "resources/images/backgrounds/background3.png" ) );
@@ -63,10 +66,18 @@ void ResourceManager::loadTextures() {
         textures["background9"] = LoadTexture( TextFormat( "resources/images/backgrounds/background9.png" ) );
         textures["background10"] = LoadTexture( TextFormat( "resources/images/backgrounds/background10.png" ) );
 
+        // items
         for ( int i = 0; i < 4; i++ ) {
             textures[std::string(TextFormat("coin%d", i))] = LoadTexture( TextFormat("resources/images/sprites/items/Coin_%d.png", i ) );
         }
 
+        textures["1UpMushroom"] = LoadTexture( TextFormat( "resources/images/sprites/items/1UpMushroom.png" ) );
+        textures["3UpMoon"] = LoadTexture( TextFormat( "resources/images/sprites/items/3UpMoon.png" ) );
+        textures["fireFlower"] = LoadTexture( TextFormat( "resources/images/sprites/items/FireFlower.png" ) );
+        textures["mushroom"] = LoadTexture( TextFormat( "resources/images/sprites/items/Mushroom.png" ) );
+        textures["star"] = LoadTexture( TextFormat( "resources/images/sprites/items/Star.png" ) );
+
+        // baddies
         textures["blueKoopaTroopa0R"] = LoadTexture( "resources/images/sprites/baddies/BlueKoopaTroopa_0.png" );
         textures["blueKoopaTroopa1R"] = LoadTexture( "resources/images/sprites/baddies/BlueKoopaTroopa_1.png" );
         textures["blueKoopaTroopa0L"] = texture2DFlipHorizontal( textures["blueKoopaTroopa0R"] );
@@ -134,6 +145,18 @@ void ResourceManager::loadTextures() {
         textures["yellowKoopaTroopa1R"] = LoadTexture( "resources/images/sprites/baddies/YellowKoopaTroopa_1.png" );
         textures["yellowKoopaTroopa0L"] = texture2DFlipHorizontal( textures["yellowKoopaTroopa0R"] );
         textures["yellowKoopaTroopa1L"] = texture2DFlipHorizontal( textures["yellowKoopaTroopa1R"] );
+
+        // gui
+        textures["guiCoin"] = LoadTexture( "resources/images/gui/guiCoin.png" );
+        textures["guiLetters"] = LoadTexture( "resources/images/gui/guiLetters.png" );
+        textures["guiMario"] = LoadTexture( "resources/images/gui/guiMario.png" );
+        textures["guiNextItem"] = LoadTexture( "resources/images/gui/guiNextItem.png" );
+        textures["guiNumbersBig"] = LoadTexture( "resources/images/gui/guiNumbersBig.png" );
+        textures["guiNumbersWhite"] = LoadTexture( "resources/images/gui/guiNumbersWhite.png" );
+        textures["guiNumbersYellow"] = LoadTexture( "resources/images/gui/guiNumbersYellow.png" );
+        textures["guiPunctuation"] = LoadTexture( "resources/images/gui/guiPunctuation.png" );
+        textures["guiTime"] = LoadTexture( "resources/images/gui/guiTime.png" );
+        textures["guiX"] = LoadTexture( "resources/images/gui/guiX.png" );
 
     }
 }

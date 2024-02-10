@@ -11,7 +11,8 @@
 #   o        Coin
 #   !        Mushroom
 #   f        Fire Flower
-#   u        1-Up
+#   u        1-Up Mushroom
+#   +        3-Up Moon
 #   *        Goal
 #
 #   Baddies:
@@ -60,8 +61,8 @@ m: 1              # music id: [1-3]
 /      I            I           I                           C/
 /      I        1   I          I                            C/
 /      IIIIIIIIIIIIII         I                             C/
-/                                                           C/
-/    I                                                      C/
-/   p     o o 1 o o                                         C/
+/         o                                                 C/
+/    I     o                                                C/
+/   p     o ! f u + *                                       C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAA/

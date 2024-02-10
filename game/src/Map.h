@@ -8,11 +8,11 @@
 #pragma once
 
 #include "Baddie.h"
-#include "Coin.h"
 #include "Drawable.h"
 #include "Player.h"
 #include "raylib.h"
 #include "Sprite.h"
+#include "Item.h"
 #include "Tile.h"
 #include <map>
 #include <vector>
@@ -27,7 +27,7 @@ class Map : public virtual Drawable {
     Texture2D backgroundTexture;
     bool parsed;
 
-    std::vector<Coin> coins;
+    std::vector<Item*> items;
     std::vector<Baddie*> baddies;
 
     Player &player;
@@ -44,7 +44,7 @@ public:
     ~Map();
     virtual void draw();
     std::vector<Tile> &getTiles();
-    std::vector<Coin> &getCoins();
+    std::vector<Item*> &getItems();
     std::vector<Baddie*> &getBaddies();
     void parseMap( int mapNumber, bool loadTestMap );
     float getMaxWidth();

@@ -1,7 +1,7 @@
 /**
- * @file Coin.h
+ * @file ThreeUpMoon.h
  * @author Prof. Dr. David Buzatto
- * @brief Coin class declaration.
+ * @brief ThreeUpMoon class declaration.
  * 
  * @copyright Copyright (c) 2024
  */
@@ -11,12 +11,12 @@
 #include "Item.h"
 #include "Player.h"
 
-class Coin : public virtual Item {
+class ThreeUpMoon : public virtual Item {
     
 public:
 
-    Coin( Vector2 pos, Vector2 dim, Color color );
-    ~Coin();
+    ThreeUpMoon( Vector2 pos, Vector2 dim, Color color );
+    ~ThreeUpMoon();
 
     virtual void update();
     virtual void draw();

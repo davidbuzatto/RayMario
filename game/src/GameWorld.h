@@ -18,6 +18,7 @@ class GameWorld : public virtual Drawable {
     Player player;
     Map map;
     Camera2D *camera;
+    bool showControls;
     
 public:
 

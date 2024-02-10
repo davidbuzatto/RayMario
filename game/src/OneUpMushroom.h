@@ -11,12 +11,12 @@
 #include "Item.h"
 #include "Player.h"
 
-class Coin : public virtual Item {
+class OneUpMushroom : public virtual Item {
     
 public:
 
-    Coin( Vector2 pos, Vector2 dim, Color color );
-    ~Coin();
+    OneUpMushroom( Vector2 pos, Vector2 dim, Color color );
+    ~OneUpMushroom();
 
     virtual void update();
     virtual void draw();

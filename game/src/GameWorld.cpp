@@ -21,6 +21,8 @@
 #undef RAYGUI_IMPLEMENTATION
 
 #include "Player.h"
+#include "Item.h"
+#include "Baddie.h"
 #include "SpriteState.h"
 #include "Tile.h"
 
@@ -43,7 +45,8 @@ GameWorld::GameWorld() :
         true
     ),
     map( player ),
-    camera( nullptr ) {
+    camera( nullptr ),
+    showControls( true ) {
     std::cout << "creating game world..." << std::endl;
 }
 
@@ -59,21 +62,28 @@ GameWorld::~GameWorld() {
  */
 void GameWorld::inputAndUpdate() {
 
-    map.parseMap( 1, true );
+    map.parseMap( 2, false );
 
-    if ( player.getState() != SpriteState::DYING ) {
-        map.playMusic();
-    }
-    player.setActivationWidth( GetScreenWidth() * 2 );
-
-    std::vector<Coin> &coins = map.getCoins();
+    std::vector<Item*> &items = map.getItems();
     std::vector<Baddie*> &baddies = map.getBaddies();
     std::vector<Tile>& tiles = map.getTiles();
     std::vector<int> collectedIndexes;
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
 
+    if ( IsKeyPressed( KEY_LEFT_ALT ) ) {
+        showControls = !showControls;
+    }
+
+    if ( player.getState() != SpriteState::DYING ) {
+        map.playMusic();
+    }
+    player.setActivationWidth( GetScreenWidth() * 2 );
     player.update();
 
+    for ( size_t i = 0; i < items.size(); i++ ) {
+        items[i]->update();
+    }
+    
     for ( size_t i = 0; i < baddies.size(); i++ ) {
         baddies[i]->update();
     }
@@ -136,15 +146,26 @@ void GameWorld::inputAndUpdate() {
         }
     }
 
-    // player x coins collision resolution
-    for ( size_t i = 0; i < coins.size(); i++ ) {
-        if ( coins[i].checkCollision( player ) == CollisionType::COLLIDED ) {
+    // player x items collision resolution
+    for ( size_t i = 0; i < items.size(); i++ ) {
+        if ( items[i]->checkCollision( player ) == CollisionType::COLLIDED ) {
             collectedIndexes.push_back(i);
-            PlaySound( sounds[ "coin" ] );
+            items[i]->playCollisionSound();
+            items[i]->updatePlayer( player );
         }
     }
     for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
-        coins.erase( coins.begin() + collectedIndexes[i] );
+        
+        // error
+        //delete items[collectedIndexes[i]];
+
+        // error too
+        /*auto it = items.begin() + collectedIndexes[i];
+        delete* it;
+        items.erase( it );*/
+
+        items.erase( items.begin() + collectedIndexes[i] );
+
     }
 
     // baddies activation
@@ -168,6 +189,7 @@ void GameWorld::inputAndUpdate() {
                     if ( !player.isImmortal() ) {
                         player.setState( SpriteState::DYING );
                         PlaySound( sounds["lostLife"] );
+                        player.removeLives( 1 );
                     }
                     break;
                 case CollisionType::SOUTH:
@@ -177,10 +199,12 @@ void GameWorld::inputAndUpdate() {
                         player.setState( SpriteState::JUMPING );
                         collectedIndexes.push_back( i );
                         PlaySound( sounds["stomp"] );
+                        player.addPoints( 200 );
                     } else {
                         if ( !player.isImmortal() ) {
                             player.setState( SpriteState::DYING );
                             PlaySound( sounds["lostLife"] );
+                            player.removeLives( 1 );
                         }
                     }
                     break;
@@ -206,7 +230,9 @@ void GameWorld::inputAndUpdate() {
     }
 
     if ( IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_TRIGGER_1 ) ) {
-        debug = !debug;
+        if ( showControls ) {
+            debug = !debug;
+        }
     }
 
     float xc = GetScreenWidth() / 2.0;
@@ -267,15 +293,24 @@ void GameWorld::draw() {
 
     EndMode2D();
 
-    if ( debug ) {
-        DrawFPS( 30, 90 );
+    player.drawHud();
+
+    if ( showControls ) {
+
+        int compMargin = 10;
+        int fpsHeight = debug ? 30 : 0;
+        Rectangle guiPanelRect( 20, GetScreenHeight() - 110 - fpsHeight, 100, 90 + fpsHeight );
+        GuiPanel( guiPanelRect, "Controles" );
+        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 30, 20, 20 ), "debug", &debug );
+        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "imortal", &immortalPlayer );
+        player.setImmortal( immortalPlayer );
+
+        if ( debug ) {
+            DrawFPS( guiPanelRect.x + compMargin, guiPanelRect.y + 90 );
+        }
+
     }
 
-    GuiPanel( Rectangle( 20, 20, 100, 90 ), "Controles" );
-    GuiCheckBox( Rectangle( 30, 50, 20, 20 ), "debug", &debug );
-    GuiCheckBox( Rectangle( 30, 80, 20, 20 ), "imortal", &immortalPlayer );
-    player.setImmortal( immortalPlayer );
-    
     EndDrawing();
 
 }

@@ -1,6 +1,9 @@
+como desalocar o objeto criado no vector "genérico"
 processar mais músicas <- adicionar no mapa
 ladrilhos parametrizados (tipo na fase)
 power ups
+morrer com o tempo
+mudar de fases
 
 configurar quantidade máxima de músicas
 

@@ -14,6 +14,7 @@
 #include "Tile.h"
 #include <iostream>
 #include <typeinfo>
+#include <utils.h>
 
 Player::Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed, bool immortal ) :
     Sprite( pos, dim, vel, color, 0, 2 ),
@@ -26,7 +27,11 @@ Player::Player( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX
     running( false ),
     frameTimeWalking( 0.1 ),
     frameTimeRunning( 0.05 ),
-    activationWidth( 0 ) {
+    activationWidth( 0 ),
+    coins( 0 ),
+    lives( 5 ),
+    points( 0 ),
+    time( 400 ) {
 
     setState( SpriteState::ON_GROUND );
 
@@ -224,6 +229,27 @@ CollisionType Player::checkCollisionBaddie( Sprite &sprite ) {
 
 }
 
+void Player::drawHud() {
+
+    std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
+
+    DrawTexture( textures["guiMario" ], 34, 32, WHITE );
+    DrawTexture( textures["guiX" ], 54, 49, WHITE );
+    drawSmallNumber( lives, 68, 49, textures, "guiNumbersWhite" );
+    
+    DrawTexture( textures["guiCoin"], GetScreenWidth() - 115, 32, WHITE );
+    DrawTexture( textures["guiX"], GetScreenWidth() - 97, 34, WHITE );
+    drawSmallNumber( coins, GetScreenWidth() - 34 - std::to_string( coins ).length() * 16, 34, textures, "guiNumbersWhite" );
+    drawSmallNumber( points, GetScreenWidth() - 34 - std::to_string( points ).length() * 16, 50, textures, "guiNumbersWhite");
+
+    int t = time - ( (int) GetTime() );
+    DrawTexture( textures["guiTime"], GetScreenWidth() - 34 - 176, 32, WHITE );
+    drawSmallNumber( t, GetScreenWidth() - 34 - 128 - std::to_string( t ).length() * 16, 50, textures, "guiNumbersYellow");
+
+    DrawTexture( textures["guiNextItem"], GetScreenWidth() / 2 - textures["guiNextItem"].width / 2, 20, WHITE );
+
+}
+
 float Player::getSpeedX() {
     return speedX;
 }
@@ -250,4 +276,52 @@ bool Player::isImmortal() {
 
 void Player::setActivationWidth( float activationWidth ) {
     this->activationWidth = activationWidth;
+}
+
+void Player::setLives( int lives ) {
+    this->lives = lives;
+}
+
+void Player::setCoins( int coins ) {
+    this->coins = coins;
+}
+
+void Player::setPoints( int points ) {
+    this->points = points;
+}
+
+int Player::getLives() {
+    return lives;
+}
+
+int Player::getCoins() {
+    return coins;
+}
+
+int Player::getPoints() {
+    return points;
+}
+
+void Player::addLives( int lives ) {
+    this->lives += lives;
+}
+
+void Player::removeLives( int lives ) {
+    this->lives -= lives;
+}
+
+void Player::addCoins( int coins ) {
+    this->coins += coins;
+}
+
+void Player::removeCoins( int coins ) {
+    this->coins -= coins;
+}
+
+void Player::addPoints( int points ) {
+    this->points += points;
+}
+
+void Player::removePoints( int points ) {
+    this->points -= points;
 }
