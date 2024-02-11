@@ -35,7 +35,7 @@
 
 int Map::tileWidth = 32;
 
-Map::Map( Mario &mario ) :
+Map::Map( Mario &mario, int id, bool loadTestMap ) :
     maxWidth( 0 ),
     maxHeight( 0 ),
     marioOffset( 0 ),
@@ -46,7 +46,9 @@ Map::Map( Mario &mario ) :
     backgroundId( 1 ),
     backgroundTexture( Texture( 0 ) ),
     maxMusicId( 9 ),
-    musicId( 1 ) {
+    musicId( 1 ),
+    id( id ),
+    loadTestMap( loadTestMap ) {
 }
 
 Map::~Map() {
@@ -104,7 +106,7 @@ void Map::playMusic() {
 
 }
 
-void Map::parseMap( int mapNumber, bool loadTestMap ) {
+void Map::parseMap() {
 
     if ( !parsed ) {
 
@@ -114,7 +116,7 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
             mapData = LoadFileText( TextFormat( "resources/maps/mapTests.txt" ) );
             //mapData = LoadFileText( TextFormat( "resources/maps/mapTestsBaddies.txt" ) );
         } else {
-            mapData = LoadFileText( TextFormat( "resources/maps/map%d.txt", mapNumber ) );
+            mapData = LoadFileText( TextFormat( "resources/maps/map%d.txt", id ) );
         }
 
         std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();    
@@ -378,4 +380,28 @@ float Map::getMaxHeight() {
 
 void Map::setMarioOffset( float marioOffset ) {
     this->marioOffset = marioOffset;
+}
+
+void Map::reset() {
+
+    maxWidth = 0;
+    maxHeight = 0;
+    marioOffset = 0;
+
+    tiles.clear();
+
+    for ( size_t i = 0; i < items.size(); i++ ) {
+        delete items[i];
+    }
+    items.clear();
+
+    for ( size_t i = 0; i < baddies.size(); i++ ) {
+        delete baddies[i];
+    }
+    baddies.clear();
+
+    StopMusicStream( ResourceManager::getMusics()[std::string( TextFormat( "music%d", musicId ) )] );
+    parsed = false;
+    parseMap();
+
 }

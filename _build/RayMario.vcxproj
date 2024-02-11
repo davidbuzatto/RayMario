@@ -318,6 +318,7 @@
     <ClInclude Include="..\game\src\Drawable.h" />
     <ClInclude Include="..\game\src\FireFlower.h" />
     <ClInclude Include="..\game\src\FlyingGoomba.h" />
+    <ClInclude Include="..\game\src\GameState.h" />
     <ClInclude Include="..\game\src\GameWindow.h" />
     <ClInclude Include="..\game\src\GameWorld.h" />
     <ClInclude Include="..\game\src\Goomba.h" />

@@ -1,6 +1,11 @@
+se passar de fase, incrementar o id do mapa (até id máximo) e dar reset
+para passar de fase, tem que chegar no final (inicialmente transição com a estrela)
+   mudar o sprite do mário para victory
+   tocar música
+   transitar (incrementar id e reset) e fazer o efeito de transição (última coisa)
+
 ao morrer:
-    se tiver vidas: reiniciar fase
-    caso contrário: mostrar tela de game over e dar opção para reiniciar
+    se game over, voltar para tela de título (GameWorld)
     
 implementar tiro quando mario estiver em flower
 movimentar power ups

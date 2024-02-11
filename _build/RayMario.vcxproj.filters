@@ -230,5 +230,8 @@
     <ClInclude Include="..\game\src\MarioType.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\game\src\GameState.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

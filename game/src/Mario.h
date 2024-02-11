@@ -38,8 +38,8 @@ class Mario : public virtual Sprite {
     int lives;
     int coins;
     int points;
-    int maxTime;
-    int ellapsedTime;
+    float maxTime;
+    float ellapsedTime;
 
     MarioType type;
 
@@ -90,5 +90,7 @@ public:
     MarioType getType();
     void setInvulnerable( bool invulnerable );
     bool isInvulnerable();
+
+    void reset();
 
 };

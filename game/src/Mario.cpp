@@ -8,6 +8,7 @@
 #include "Mario.h"
 #include "Direction.h"
 #include "GameWorld.h"
+#include "GameState.h"
 #include "MarioType.h"
 #include "raylib.h"
 #include "ResourceManager.h"
@@ -35,8 +36,8 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     coins( 0 ),
     lives( 5 ),
     points( 0 ),
-    maxTime( 400 ),
-    ellapsedTime( 0 ),
+    maxTime( 400.0f ),
+    ellapsedTime( 0.0f ),
     type( MarioType::SMALL ) {
 
     setState( SpriteState::ON_GROUND );
@@ -58,7 +59,11 @@ Mario::~Mario() {
 void Mario::update() {
     
     running = IsKeyDown( KEY_LEFT_CONTROL ) || IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT );
-    ellapsedTime = (int) GetTime();
+
+    if ( state != SpriteState::DYING ) {
+        //ellapsedTime = (int) GetTime();
+        ellapsedTime += GetFrameTime();
+    }
 
     float delta = GetFrameTime();
     float currentSpeedX = running ? maxSpeedX : speedX;
@@ -68,6 +73,8 @@ void Mario::update() {
     if ( ellapsedTime >= maxTime && state != SpriteState::DYING ) {
         state = SpriteState::DYING;
         PlaySound( sounds["playerDown"] );
+        removeLives( 1 );
+        GameWorld::state = GameState::TIME_UP;
     }
 
     if ( vel.x != 0 || state == SpriteState::DYING ) {
@@ -276,14 +283,14 @@ void Mario::drawHud() {
 
     DrawTexture( textures["guiMario" ], 34, 32, WHITE );
     DrawTexture( textures["guiX" ], 54, 49, WHITE );
-    drawWhiteSmallNumber( lives, 68, 49, textures );
+    drawWhiteSmallNumber( lives < 0 ? 0 : lives, 68, 49, textures );
     
     DrawTexture( textures["guiCoin"], GetScreenWidth() - 115, 32, WHITE );
     DrawTexture( textures["guiX"], GetScreenWidth() - 97, 34, WHITE );
     drawWhiteSmallNumber( coins, GetScreenWidth() - 34 - std::to_string( coins ).length() * 16, 34, textures );
     drawWhiteSmallNumber( points, GetScreenWidth() - 34 - std::to_string( points ).length() * 16, 50, textures );
 
-    int t = maxTime - ellapsedTime;
+    int t = (int) (maxTime - ellapsedTime);
     t = t < 0 ? 0 : t;
 
     DrawTexture( textures["guiTime"], GetScreenWidth() - 34 - 176, 32, WHITE );
@@ -448,5 +455,19 @@ void Mario::updateCollisionProbes() {
         }
 
     }
+
+}
+
+void Mario::reset() {
+
+    changeToSmall();
+    state = SpriteState::ON_GROUND;
+    ducking = false;
+    lookigUp = false;
+    running = false;
+    ellapsedTime = 0;
+    invulnerable = false;
+    invulnerableTimeAcum = 0;
+    invulnerableBlink = false;
 
 }

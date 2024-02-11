@@ -38,20 +38,24 @@ class Map : public virtual Drawable {
     int musicId;
     int maxMusicId;
 
+    int id;
+    bool loadTestMap;
+
 public:
 
-    Map( Mario &mario );
+    static int tileWidth;
+
+    Map( Mario &mario, int mapNumber, bool loadTestMap );
     ~Map();
     virtual void draw();
     std::vector<Tile> &getTiles();
     std::vector<Item*> &getItems();
     std::vector<Baddie*> &getBaddies();
-    void parseMap( int mapNumber, bool loadTestMap );
+    void parseMap();
     float getMaxWidth();
     float getMaxHeight();
     void setMarioOffset( float marioOffset );
     void playMusic();
-
-    static int tileWidth;
+    void reset();
 
 };

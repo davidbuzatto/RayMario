@@ -9,6 +9,7 @@
 #pragma once
 
 #include "Drawable.h"
+#include "GameState.h"
 #include "Map.h"
 #include "Mario.h"
 #include "raylib.h"
@@ -24,6 +25,7 @@ public:
 
     static bool debug;
     static bool immortalMario;
+    static GameState state;
     static float gravity;
     
     /**
@@ -60,5 +62,8 @@ public:
     static void unloadResources();
 
     void setCamera( Camera2D *camera );
+
+    void resetMap();
+    void resetGame();
     
 };
