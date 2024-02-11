@@ -35,7 +35,8 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     coins( 0 ),
     lives( 5 ),
     points( 0 ),
-    time( 400 ),
+    maxTime( 400 ),
+    ellapsedTime( 0 ),
     type( MarioType::SMALL ) {
 
     setState( SpriteState::ON_GROUND );
@@ -43,7 +44,9 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     cpN.setColor( PINK );
     cpS.setColor( VIOLET );
     cpE.setColor( YELLOW );
+    cpE1.setColor( YELLOW );
     cpW.setColor( LIME );
+    cpW1.setColor( LIME );
 
     updateCollisionProbes();
     
@@ -54,11 +57,18 @@ Mario::~Mario() {
 
 void Mario::update() {
     
-    std::map<std::string, Sound>& sounds = ResourceManager::getSounds();
-    float delta = GetFrameTime();
     running = IsKeyDown( KEY_LEFT_CONTROL ) || IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT );
+    ellapsedTime = (int) GetTime();
+
+    float delta = GetFrameTime();
     float currentSpeedX = running ? maxSpeedX : speedX;
     float currentFrameTime = running && state != SpriteState::DYING ? frameTimeRunning : frameTimeWalking;
+    std::map<std::string, Sound>& sounds = ResourceManager::getSounds();
+
+    if ( ellapsedTime >= maxTime && state != SpriteState::DYING ) {
+        state = SpriteState::DYING;
+        PlaySound( sounds["playerDown"] );
+    }
 
     if ( vel.x != 0 || state == SpriteState::DYING ) {
         frameAcum += delta;
@@ -96,25 +106,6 @@ void Mario::update() {
         } else {
             vel.x = 0;
         }
-
-        /*if ( state == SpriteState::ON_GROUND ) {
-            if ( IsKeyDown( KEY_UP ) ||
-                 IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_UP ) ||
-                 GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) < 0 ) {
-                lookigUp = true;
-                vel.x = 0;
-            } else {
-                lookigUp = false;
-                if ( IsKeyDown( KEY_DOWN ) ||
-                     IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
-                     GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
-                    ducking = true;
-                    vel.x = 0;
-                } else {
-                    ducking = false;
-                }
-            }
-        }*/
 
         if ( state == SpriteState::ON_GROUND ) {
             if ( IsKeyDown( KEY_DOWN ) ||
@@ -202,7 +193,9 @@ void Mario::draw() {
         cpN.draw();
         cpS.draw();
         cpE.draw();
+        cpE1.draw();
         cpW.draw();
+        cpW1.draw();
         DrawRectangleLines( 
             pos.x + dim.x / 2 - activationWidth / 2, 
             pos.y + dim.y / 2 - activationWidth / 2, 
@@ -232,12 +225,12 @@ CollisionType Mario::checkCollisionTile( Sprite& sprite ) {
                 tile.setColor( cpS.getColor() );
             }
             return CollisionType::SOUTH;
-        } else if ( cpE.checkCollision( tileRect ) ) {
+        } else if ( cpE.checkCollision( tileRect ) || cpE1.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpE.getColor() );
             }
             return CollisionType::EAST;
-        } else if ( cpW.checkCollision( tileRect ) ) {
+        } else if ( cpW.checkCollision( tileRect ) || cpW1.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpW.getColor() );
             }
@@ -263,9 +256,9 @@ CollisionType Mario::checkCollisionBaddie( Sprite &sprite ) {
                 return CollisionType::NORTH;
             } else if ( cpS.checkCollision( baddieRect ) ) {
                 return CollisionType::SOUTH;
-            } else if ( cpE.checkCollision( baddieRect ) ) {
+            } else if ( cpE.checkCollision( baddieRect ) || cpE1.checkCollision( baddieRect ) ) {
                 return CollisionType::EAST;
-            } else if ( cpW.checkCollision( baddieRect ) ) {
+            } else if ( cpW.checkCollision( baddieRect ) || cpW1.checkCollision( baddieRect ) ) {
                 return CollisionType::WEST;
             }
         }
@@ -283,18 +276,22 @@ void Mario::drawHud() {
 
     DrawTexture( textures["guiMario" ], 34, 32, WHITE );
     DrawTexture( textures["guiX" ], 54, 49, WHITE );
-    drawSmallNumber( lives, 68, 49, textures, "guiNumbersWhite" );
+    drawWhiteSmallNumber( lives, 68, 49, textures );
     
     DrawTexture( textures["guiCoin"], GetScreenWidth() - 115, 32, WHITE );
     DrawTexture( textures["guiX"], GetScreenWidth() - 97, 34, WHITE );
-    drawSmallNumber( coins, GetScreenWidth() - 34 - std::to_string( coins ).length() * 16, 34, textures, "guiNumbersWhite" );
-    drawSmallNumber( points, GetScreenWidth() - 34 - std::to_string( points ).length() * 16, 50, textures, "guiNumbersWhite");
+    drawWhiteSmallNumber( coins, GetScreenWidth() - 34 - std::to_string( coins ).length() * 16, 34, textures );
+    drawWhiteSmallNumber( points, GetScreenWidth() - 34 - std::to_string( points ).length() * 16, 50, textures );
 
-    int t = time - ( (int) GetTime() );
+    int t = maxTime - ellapsedTime;
+    t = t < 0 ? 0 : t;
+
     DrawTexture( textures["guiTime"], GetScreenWidth() - 34 - 176, 32, WHITE );
-    drawSmallNumber( t, GetScreenWidth() - 34 - 128 - std::to_string( t ).length() * 16, 50, textures, "guiNumbersYellow");
+    drawYellowSmallNumber( t, GetScreenWidth() - 34 - 128 - std::to_string( t ).length() * 16, 50, textures );
 
     DrawTexture( textures["guiNextItem"], GetScreenWidth() / 2 - textures["guiNextItem"].width / 2, 20, WHITE );
+
+    //drawString( "esse eh um teste!!! david buzatto", 100, 100, textures );
 
 }
 
@@ -403,4 +400,53 @@ void Mario::setInvulnerable( bool invulnerable ) {
 
 bool Mario::isInvulnerable() {
     return invulnerable;
+}
+
+void Mario::updateCollisionProbes() {
+
+    cpN.setX( pos.x + dim.x / 2 - cpN.getWidth() / 2 );
+    if ( ducking ) {
+        cpN.setY( pos.y + dim.y - 32 );
+    } else {
+        cpN.setY( pos.y );
+    }
+
+    cpS.setX( pos.x + dim.x / 2 - cpS.getWidth() / 2 );
+    cpS.setY( pos.y + dim.y - cpS.getHeight() );
+
+    cpE.setX( pos.x + dim.x - cpE.getWidth() );
+    cpE1.setX( pos.x + dim.x - cpE1.getWidth() );
+    cpW.setX( pos.x );
+    cpW1.setX( pos.x );
+
+    if ( type == MarioType::SMALL ) {
+
+        if ( ducking ) {
+            cpE.setY( pos.y + 21 - cpE.getHeight() / 2 );
+            cpE1.setY( pos.y + 30 - cpE1.getHeight() / 2 );
+            cpW.setY( pos.y + 21 - cpW.getHeight() / 2 );
+            cpW1.setY( pos.y + 30 - cpW1.getHeight() / 2 );
+        } else {
+            cpE.setY( pos.y + dim.y * 0.33 - cpE.getHeight() / 2 );
+            cpE1.setY( pos.y + dim.y * 0.66 - cpE1.getHeight() / 2 );
+            cpW.setY( pos.y + dim.y * 0.33 - cpW.getHeight() / 2 );
+            cpW1.setY( pos.y + dim.y * 0.66 - cpW1.getHeight() / 2 );
+        }
+
+    } else {
+
+        if ( ducking ) {
+            cpE.setY( pos.y + 36 - cpE.getHeight() / 2 );
+            cpE1.setY( pos.y + 46 - cpE1.getHeight() / 2 );
+            cpW.setY( pos.y + 36 - cpW.getHeight() / 2 );
+            cpW1.setY( pos.y + 46 - cpW1.getHeight() / 2 );
+        } else {
+            cpE.setY( pos.y + dim.y * 0.33 - cpE.getHeight() / 2 );
+            cpE1.setY( pos.y + dim.y * 0.66 - cpE1.getHeight() / 2 );
+            cpW.setY( pos.y + dim.y * 0.33 - cpW.getHeight() / 2 );
+            cpW1.setY( pos.y + dim.y * 0.66 - cpW1.getHeight() / 2 );
+        }
+
+    }
+
 }

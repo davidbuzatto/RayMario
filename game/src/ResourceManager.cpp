@@ -10,6 +10,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <utils.h>
 
 std::map<std::string, Texture2D> ResourceManager::textures;
 std::map<std::string, Sound> ResourceManager::sounds;
@@ -235,14 +236,17 @@ void ResourceManager::loadTextures() {
 
         // gui
         textures["guiCoin"] = LoadTexture( "resources/images/gui/guiCoin.png" );
+        textures["guiGameOver"] = LoadTexture( "resources/images/gui/guiGameOver.png" );
         textures["guiLetters"] = LoadTexture( "resources/images/gui/guiLetters.png" );
         textures["guiMario"] = LoadTexture( "resources/images/gui/guiMario.png" );
+        textures["guiMarioStart"] = LoadTexture( "resources/images/gui/guiMarioStart.png" );
         textures["guiNextItem"] = LoadTexture( "resources/images/gui/guiNextItem.png" );
         textures["guiNumbersBig"] = LoadTexture( "resources/images/gui/guiNumbersBig.png" );
         textures["guiNumbersWhite"] = LoadTexture( "resources/images/gui/guiNumbersWhite.png" );
         textures["guiNumbersYellow"] = LoadTexture( "resources/images/gui/guiNumbersYellow.png" );
         textures["guiPunctuation"] = LoadTexture( "resources/images/gui/guiPunctuation.png" );
         textures["guiTime"] = LoadTexture( "resources/images/gui/guiTime.png" );
+        textures["guiTimeUp"] = LoadTexture( "resources/images/gui/guiTimeUp.png" );
         textures["guiX"] = LoadTexture( "resources/images/gui/guiX.png" );
 
     }
@@ -267,16 +271,26 @@ void ResourceManager::loadSounds() {
         sounds["ridingYoshi"] = LoadSound( "resources/sfx/smw_riding_yoshi.wav" );
         sounds["stomp"] = LoadSound( "resources/sfx/smw_stomp.wav" );
         sounds["stompNoDamage"] = LoadSound( "resources/sfx/smw_stomp_no_damage.wav" );
-        sounds["lostLife"] = LoadSound( "resources/sfx/lostLife.wav" );
+
+        sounds["courseClear"] = LoadSound( "resources/sfx/courseClear.mp3" );
+        sounds["gameOver"] = LoadSound( "resources/sfx/gameOver.mp3" );
+        sounds["playerDown"] = LoadSound( "resources/sfx/playerDown.mp3" );
+        sounds["title"] = LoadSound( "resources/sfx/title.mp3" );
     }
 }
 
 void ResourceManager::loadMusics() {
     if ( musics.empty() ) {
         // load musics...
-        musics["map1"] = LoadMusicStream( "resources/musics/map1.mp3" );
-        musics["map2"] = LoadMusicStream( "resources/musics/map2.mp3" );
-        musics["map3"] = LoadMusicStream( "resources/musics/map3.mp3" );
+        musics["music1"] = LoadMusicStream( "resources/musics/music1.mp3" );
+        musics["music2"] = LoadMusicStream( "resources/musics/music2.mp3" );
+        musics["music3"] = LoadMusicStream( "resources/musics/music3.mp3" );
+        musics["music4"] = LoadMusicStream( "resources/musics/music4.mp3" );
+        musics["music5"] = LoadMusicStream( "resources/musics/music5.mp3" );
+        musics["music6"] = LoadMusicStream( "resources/musics/music6.mp3" );
+        musics["music7"] = LoadMusicStream( "resources/musics/music7.mp3" );
+        musics["music8"] = LoadMusicStream( "resources/musics/music8.mp3" );
+        musics["music9"] = LoadMusicStream( "resources/musics/music9.mp3" );
     }
 }
 
@@ -335,26 +349,6 @@ void ResourceManager::unloadMusic( std::string key ) {
         UnloadMusicStream( musics[key] );
         musics.erase( key );
     }
-}
-
-Texture2D ResourceManager::texture2DFlipHorizontal( Texture2D texture ) {
-    Image img = LoadImageFromTexture( texture );
-    ImageFlipHorizontal( &img );
-    return LoadTextureFromImage( img );
-}
-
-Texture2D ResourceManager::textureColorReplace( Texture2D texture, Color targetColor, Color newColor ) {
-    Image img = LoadImageFromTexture( texture );
-    ImageColorReplace( &img, targetColor, newColor );
-    return LoadTextureFromImage( img );
-}
-
-Texture2D ResourceManager::textureColorReplace( Texture2D texture, std::vector<Color> replacePallete ) {
-    Image img = LoadImageFromTexture( texture );
-    for ( size_t i = 0; i < replacePallete.size(); i += 2 ) {
-        ImageColorReplace( &img, replacePallete[i], replacePallete[i+1] );
-    }
-    return LoadTextureFromImage( img );
 }
 
 std::map<std::string, Texture2D> &ResourceManager::getTextures() {

@@ -1,34 +1,33 @@
 # Map file
 # Lines that starts with '#' are comments
 #
-#   Tiles:
-#   <space>  Empty tile
-#   /        Invisible tile
-#   |        Baddie invisible tile
-#   A..Z     Tiles A through Z
+# tiles:
+#     <space>: Empty tile
+#           /: Invisible tile
+#           |: Baddie invisible tile
+#        A..Z: Tiles A through Z (depends on the selected map)
 #
-#   Items:
-#   o        Coin
-#   !        Mushroom
-#   f        Fire Flower
-#   u        1-Up Mushroom
-#   +        3-Up Moon
-#   *        Goal
+# items:
+#     o: Coin
+#     !: Mushroom
+#     f: Fire Flower
+#     u: 1-Up Mushroom
+#     +: 3-Up Moon
+#     *: Star
 #
-#   Baddies:
-#   1        Goomba
-#   2        Flying Goomba
-#   3        Green Koopa Troopa
-#   4        Red Koopa Troopa
-#   5        Blue Koopa Troopa
-#   6        Yellow Koopa Troopa
-#   7        Bob-omb
-#   8        Bullet Bill
-#   9        Swooper
-#   @        Buzzy Beetle
-#   $        Mummy Beetle
-#   %        Rex
-#
+# baddies:
+#     1: Goomba
+#     2: Flying Goomba
+#     3: Green Koopa Troopa
+#     4: Red Koopa Troopa
+#     5: Blue Koopa Troopa
+#     6: Yellow Koopa Troopa
+#     7: Bob-omb
+#     8: Bullet Bill
+#     9: Swooper
+#     @: Buzzy Beetle
+#     $: Mummy Beetle
+#     %: Rex
 #
 # colors: 
 #     - 0xf8e0b0ff (beige)
@@ -39,9 +38,33 @@
 #     - 0x183048ff (dark blue)
 #     - 0x98e0e0ff (light blue)
 #     - 0xf8f8f8ff (white)
+#
+# backgrounds:
+#     -  1) mountains and clouds
+#     -  2) forest
+#     -  3) rocky mountains
+#     -  4) clouds
+#     -  5) sharp rocky mountains
+#     -  6) fields os grass
+#     -  7) desert mountains
+#     -  8) sea
+#     -  9) wrecked ship
+#     - 10) castle
+#
+# musics:
+#     - 1) overworld
+#     - 2) athletic
+#     - 3) bonus
+#     - 4) underground
+#     - 5) swimming
+#     - 6) haunted house
+#     - 7) sub castle
+#     - 8) koopa junior
+#     - 9) the evil koopa
+#
 c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
-m: 1              # music id: [1-3]
+m: 1              # music id: [1-9]
 //////////////////////////////////////////////////////////////
 /                                                            /
 /                                             I              /
@@ -62,7 +85,7 @@ m: 1              # music id: [1-3]
 /      I        1   I          I                            C/
 /      IIIIIIIIIIIIII         I                             C/
 /                                                           C/
-/    I                                                      C/
+/I                                                          C/
 /   p     o ! f u + *                                       C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAA/

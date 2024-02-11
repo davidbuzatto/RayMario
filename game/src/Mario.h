@@ -38,9 +38,13 @@ class Mario : public virtual Sprite {
     int lives;
     int coins;
     int points;
-    int time;
+    int maxTime;
+    int ellapsedTime;
 
     MarioType type;
+
+    CollisionProbe cpE1;
+    CollisionProbe cpW1;
     
 public:
 
@@ -50,6 +54,7 @@ public:
     virtual void update();
     virtual void draw();
     virtual CollisionType checkCollision( Sprite& sprite );
+    virtual void updateCollisionProbes();
     void drawHud();
 
     CollisionType checkCollisionTile( Sprite& sprite );

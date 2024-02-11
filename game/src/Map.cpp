@@ -45,7 +45,7 @@ Map::Map( Mario &mario ) :
     backgroundColor( WHITE ),
     backgroundId( 1 ),
     backgroundTexture( Texture( 0 ) ),
-    maxMusicId( 1 ),
+    maxMusicId( 9 ),
     musicId( 1 ) {
 }
 
@@ -94,7 +94,7 @@ std::vector<Baddie*> &Map::getBaddies() {
 void Map::playMusic() {
 
     std::map<std::string, Music> musics = ResourceManager::getMusics();
-    std::string key(TextFormat( "map%d", musicId ));
+    std::string key(TextFormat( "music%d", musicId ));
 
     if ( !IsMusicStreamPlaying( musics[key] ) ) {
         PlayMusicStream( musics[key] );
@@ -147,7 +147,7 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
                     backgroundColor = GetColor( std::stoul( hexColor, nullptr, 16 ) );
                     currentColumn = 1;
 
-                } else if ( *mapData == 'b' ) {     // parse background
+                } else if ( *mapData == 'b' ) {     // parse background id
 
                     ignoreLine = true;
                     mapData += 3;
@@ -167,7 +167,7 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
                     backgroundTexture = textures[TextFormat( "background%d", backgroundId )];
                     currentColumn = 1;
 
-                } else if ( *mapData == 'm' ) {     // parse music
+                } else if ( *mapData == 'm' ) {     // parse music id
                     
                     ignoreLine = true;
                     mapData += 3;
@@ -178,6 +178,11 @@ void Map::parseMap( int mapNumber, bool loadTestMap ) {
                         mapData++;
                     }
                     musicId = std::stoi( number );
+                    if ( musicId <= 0 ) {
+                        musicId = 1;
+                    } else if ( musicId > maxMusicId ) {
+                        musicId = maxMusicId;
+                    }
 
                     currentColumn = 1;
 

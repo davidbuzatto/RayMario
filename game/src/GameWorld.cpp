@@ -26,7 +26,7 @@
 #include "SpriteState.h"
 #include "Tile.h"
 
-#define ACTIVATE_DEBUG false
+#define ACTIVATE_DEBUG true
 
 bool GameWorld::debug = ACTIVATE_DEBUG;
 bool GameWorld::immortalMario = ACTIVATE_DEBUG;
@@ -38,13 +38,13 @@ float GameWorld::gravity = 20;
 GameWorld::GameWorld() :
     mario( 
         Vector2( 0, 0 ), 
-        Vector2( 28, 40 ), 
+        Vector2( 32, 40 ), 
         Vector2( 0, 0 ), 
         Color( 0, 0, 0, 255 ),
         260,
         360,
         -550,
-        true
+        ACTIVATE_DEBUG
     ),
     map( mario ),
     camera( nullptr ),
@@ -64,7 +64,7 @@ GameWorld::~GameWorld() {
  */
 void GameWorld::inputAndUpdate() {
 
-    map.parseMap( 1, false );
+    map.parseMap( 1, true );
 
     std::vector<Item*> &items = map.getItems();
     std::vector<Baddie*> &baddies = map.getBaddies();
@@ -180,14 +180,22 @@ void GameWorld::inputAndUpdate() {
                 case CollisionType::EAST:
                 case CollisionType::WEST:
                     if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
-                        if ( mario.getType() == MarioType::SMALL ) {
-                            mario.setState( SpriteState::DYING );
-                            PlaySound( sounds["lostLife"] );
-                            mario.removeLives( 1 );
-                        } else {
-                            PlaySound( sounds["pipe"] );
-                            mario.changeToSmall();
-                            mario.setInvulnerable( true );
+                        switch ( mario.getType() ) {
+                            case MarioType::SMALL:
+                                mario.setState( SpriteState::DYING );
+                                PlaySound( sounds["playerDown"] );
+                                mario.removeLives( 1 );
+                                break;
+                            case MarioType::SUPER:
+                                PlaySound( sounds["pipe"] );
+                                mario.changeToSmall();
+                                mario.setInvulnerable( true );
+                                break;
+                            case MarioType::FLOWER:
+                                PlaySound( sounds["pipe"] );
+                                mario.changeToSuper();
+                                mario.setInvulnerable( true );
+                                break;
                         }
                     }
                     break;
@@ -201,14 +209,22 @@ void GameWorld::inputAndUpdate() {
                         mario.addPoints( 200 );
                     } else {
                         if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
-                            if ( mario.getType() == MarioType::SMALL ) {
-                                mario.setState( SpriteState::DYING );
-                                PlaySound( sounds["lostLife"] );
-                                mario.removeLives( 1 );
-                            } else {
-                                PlaySound( sounds["pipe"] );
-                                mario.changeToSmall();
-                                mario.setInvulnerable( true );
+                            switch ( mario.getType() ) {
+                                case MarioType::SMALL:
+                                    mario.setState( SpriteState::DYING );
+                                    PlaySound( sounds["playerDown"] );
+                                    mario.removeLives( 1 );
+                                    break;
+                                case MarioType::SUPER:
+                                    PlaySound( sounds["pipe"] );
+                                    mario.changeToSmall();
+                                    mario.setInvulnerable( true );
+                                    break;
+                                case MarioType::FLOWER:
+                                    PlaySound( sounds["pipe"] );
+                                    mario.changeToSuper();
+                                    mario.setInvulnerable( true );
+                                    break;
                             }
                         }
                     }
