@@ -57,6 +57,8 @@ void FlyingGoomba::update() {
         pos.x = pos.x + vel.x * delta;
         pos.y = pos.y + vel.y * delta;
 
+        vel.y += GameWorld::gravity;
+
     }
 
     updateCollisionProbes();
@@ -132,4 +134,8 @@ void FlyingGoomba::updateCollisionProbes() {
     cpW.setX( pos.x );
     cpW.setY( pos.y + dim.y / 2 - cpW.getHeight() / 2 );
 
+}
+
+void FlyingGoomba::onSouthCollision() {
+    vel.y = -400;
 }

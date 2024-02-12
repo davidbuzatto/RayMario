@@ -9,6 +9,7 @@
 
 enum GameState {
     TITLE_SCREEN,
+    FINISHED,
     PLAYING,
     PAUSED,
     TIME_UP,

@@ -24,6 +24,7 @@ class GameWorld : public virtual Drawable {
 public:
 
     static bool debug;
+    static bool showFPS;
     static bool immortalMario;
     static GameState state;
     static float gravity;
@@ -65,5 +66,6 @@ public:
 
     void resetMap();
     void resetGame();
+    void nextMap();
     
 };

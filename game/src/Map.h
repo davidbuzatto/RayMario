@@ -39,6 +39,7 @@ class Map : public virtual Drawable {
     int maxMusicId;
 
     int id;
+    int maxId;
     bool loadTestMap;
 
 public:
@@ -57,5 +58,7 @@ public:
     void setMarioOffset( float marioOffset );
     void playMusic();
     void reset();
+    bool next();
+    void first();
 
 };

@@ -51,3 +51,7 @@ void Baddie::activateWithMarioProximity( Mario &mario ) {
         state = SpriteState::ACTIVE;
     }
 }
+
+void Baddie::onSouthCollision() {
+    
+}

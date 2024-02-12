@@ -12,7 +12,7 @@ int main( void ) {
 
     //GameWindow gameWindow( 960, 736, "Ray Mario", true );
     //GameWindow gameWindow( 704, 448, "Ray Mario", true );
-    GameWindow gameWindow( 576, 448, "Ray Mario", true );
+    GameWindow gameWindow( 576, 448, "RayMario", true );
     gameWindow.init();
 
     return 0;

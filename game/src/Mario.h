@@ -92,5 +92,6 @@ public:
     bool isInvulnerable();
 
     void reset();
+    void resetAll();
 
 };

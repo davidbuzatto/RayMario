@@ -6,6 +6,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "Map.h"
+#include "GameWorld.h"
 #include "ResourceManager.h"
 #include "Item.h"
 #include "Coin.h"
@@ -47,6 +48,7 @@ Map::Map( Mario &mario, int id, bool loadTestMap ) :
     backgroundTexture( Texture( 0 ) ),
     maxMusicId( 9 ),
     musicId( 1 ),
+    maxId( 3 ),
     id( id ),
     loadTestMap( loadTestMap ) {
 }
@@ -114,7 +116,6 @@ void Map::parseMap() {
         
         if ( loadTestMap ) {
             mapData = LoadFileText( TextFormat( "resources/maps/mapTests.txt" ) );
-            //mapData = LoadFileText( TextFormat( "resources/maps/mapTestsBaddies.txt" ) );
         } else {
             mapData = LoadFileText( TextFormat( "resources/maps/map%d.txt", id ) );
         }
@@ -404,4 +405,22 @@ void Map::reset() {
     parsed = false;
     parseMap();
 
+}
+
+bool Map::next() {
+
+    id++;
+
+    if ( id > maxId ) {
+        return false;
+    } else {
+        reset();
+    }
+
+    return true;
+    
+}
+
+void Map::first() {
+    id = 1;
 }

@@ -26,14 +26,16 @@
 #include "Baddie.h"
 #include "SpriteState.h"
 #include "Tile.h"
+#include "utils.h"
 
 #define ACTIVATE_DEBUG true
 #define INITIAL_MAP_ID 1
 #define LOAD_TEST_MAP false
 
 bool GameWorld::debug = ACTIVATE_DEBUG;
+bool GameWorld::showFPS = ACTIVATE_DEBUG;
 bool GameWorld::immortalMario = ACTIVATE_DEBUG;
-GameState GameWorld::state = GameState::PLAYING;
+GameState GameWorld::state = GameState::TITLE_SCREEN;
 float GameWorld::gravity = 20;
 
 /**
@@ -75,18 +77,29 @@ void GameWorld::inputAndUpdate() {
     std::vector<Tile>& tiles = map.getTiles();
     std::vector<int> collectedIndexes;
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
+    std::map<std::string, Music> &musics = ResourceManager::getMusics();
 
     if ( IsKeyPressed( KEY_LEFT_ALT ) ) {
         showControls = !showControls;
     }
 
-    if ( mario.getState() != SpriteState::DYING ) {
+    if ( mario.getState() != SpriteState::DYING && 
+         mario.getState() != SpriteState::VICTORY &&
+         state != GameState::TITLE_SCREEN &&
+         state != GameState::FINISHED ) {
         map.playMusic();
     }
-    mario.setActivationWidth( GetScreenWidth() * 2 );
-    mario.update();
 
-    if ( mario.getState() != SpriteState::DYING ) {
+    if ( state != GameState::TITLE_SCREEN &&
+         state != GameState::FINISHED ) {
+        mario.setActivationWidth( GetScreenWidth() * 2 );
+        mario.update();
+    }
+
+    if ( mario.getState() != SpriteState::DYING && 
+         mario.getState() != SpriteState::VICTORY &&
+         state != GameState::TITLE_SCREEN &&
+         state != GameState::FINISHED ) {
 
         for ( size_t i = 0; i < items.size(); i++ ) {
             items[i]->update();
@@ -140,6 +153,7 @@ void GameWorld::inputAndUpdate() {
                     case CollisionType::SOUTH:
                         baddie->setY( tile.getY() - baddie->getHeight() );
                         baddie->setVelY( 0 );
+                        baddie->onSouthCollision();
                         break;
                     case CollisionType::EAST:
                         baddie->setX( tile.getX() - baddie->getWidth() );
@@ -177,7 +191,7 @@ void GameWorld::inputAndUpdate() {
 
         // mario x baddies collision resolution and offscreen baddies removal
         collectedIndexes.clear();
-        if ( mario.getState() != SpriteState::DYING ) {
+        if ( mario.getState() != SpriteState::DYING && mario.getState() != SpriteState::VICTORY ) {
             mario.updateCollisionProbes();
             for ( size_t i = 0; i < baddies.size(); i++ ) {
                 Baddie* baddie = baddies[i];
@@ -252,7 +266,7 @@ void GameWorld::inputAndUpdate() {
             baddies.erase( baddies.begin() + collectedIndexes[i] );
         }
 
-    } else {
+    } else if ( mario.getState() == SpriteState::DYING ) {
 
         if ( !IsSoundPlaying( sounds["playerDown"] ) && !IsSoundPlaying( sounds["gameOver"] ) ) {
             
@@ -266,6 +280,12 @@ void GameWorld::inputAndUpdate() {
                 mario.setLives( -1 );
             }
 
+        }
+
+    } else if ( mario.getState() == SpriteState::VICTORY ) {
+
+        if ( !IsSoundPlaying( sounds["courseClear"] ) ) {
+            nextMap();
         }
 
     }
@@ -311,6 +331,21 @@ void GameWorld::inputAndUpdate() {
         camera->target.y = pyc + Map::tileWidth;
     }
 
+    if ( state == GameState::TITLE_SCREEN ) {
+
+        if ( !IsMusicStreamPlaying( musics["title"] ) ) {
+            PlayMusicStream( musics["title"] );
+        } else {
+            UpdateMusicStream( musics["title"] );
+        }
+
+        if ( GetKeyPressed() && !IsKeyPressed( KEY_LEFT_ALT ) ) {
+            StopMusicStream( musics["title"] );
+            state = GameState::PLAYING;
+        }
+
+    }
+
 }
 
 /**
@@ -324,7 +359,7 @@ void GameWorld::draw() {
     int columns = GetScreenWidth() / Map::tileWidth;
     int lines = GetScreenHeight() / Map::tileWidth;
 
-    if ( state != GameState::GAME_OVER ) {
+    if ( state != GameState::GAME_OVER && state != GameState::TITLE_SCREEN ) {
 
         BeginMode2D( *camera );
 
@@ -347,8 +382,26 @@ void GameWorld::draw() {
         if ( state == GameState::TIME_UP ) {
             Texture2D* t = &ResourceManager::getTextures()["guiTimeUp"];
             DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height / 2, WHITE );
+        } else if ( state == GameState::FINISHED ) {
+            DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( GREEN, 0.9 ) );
         }
 
+    } else if ( state == GameState::TITLE_SCREEN ) {
+        DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), RAYWHITE );
+        Texture2D* t = &ResourceManager::getTextures()["guiRayMarioLogo"];
+        DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height, WHITE );
+        std::string message1 = "Press any key to start!";
+        std::string message2 = "Developed by:";
+        std::string message3 = "Prof. Dr. David Buzatto";
+        std::string message4 = "2024";
+        drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() + 30, ResourceManager::getTextures());
+        drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 5 + 30, ResourceManager::getTextures());
+        drawString( message3, GetScreenWidth() / 2 - getDrawStringWidth( message3 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 6 + 35, ResourceManager::getTextures());
+        drawWhiteSmallNumber( 2004, GetScreenWidth() / 2 - getSmallNumberWidth( 2024 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 7 + 40, ResourceManager::getTextures() );
+        Rectangle r( 40, 40, 70, 70 );
+        DrawRectangle( r.x, r.y, r.width, r.height, Fade( RAYWHITE, 0.5 ) );
+        DrawRectangleLinesEx( r, 5, BLACK );
+        DrawText( "ray", r.x + r.width - 50, r.y + r.height - 35, 20, BLACK );
     } else if ( state == GameState::GAME_OVER ) {
         DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), BLACK );
         Texture2D* t = &ResourceManager::getTextures()["guiGameOver"];
@@ -358,15 +411,17 @@ void GameWorld::draw() {
     if ( showControls ) {
 
         int compMargin = 10;
-        int fpsHeight = debug ? 30 : 0;
-        Rectangle guiPanelRect( GetScreenWidth() - 120, GetScreenHeight() - 110 - fpsHeight, 100, 90 + fpsHeight);
+        Rectangle guiPanelRect( GetScreenWidth() - 120, GetScreenHeight() - 140, 100, 120 );
         GuiPanel( guiPanelRect, "Controles" );
         GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 30, 20, 20 ), "debug", &debug );
-        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "imortal", &immortalMario );
+        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "fps", &showFPS );
+        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 90, 20, 20 ), "imortal", &immortalMario );
         mario.setImmortal( immortalMario );
 
-        if ( debug ) {
-            DrawFPS( guiPanelRect.x + compMargin, guiPanelRect.y + 90 );
+        if ( showFPS ) {
+            DrawRectangle( guiPanelRect.x, guiPanelRect.y - 30, guiPanelRect.width, 25, Fade( WHITE, 0.9 ) );
+            DrawRectangleLines( guiPanelRect.x, guiPanelRect.y - 30, guiPanelRect.width, 25, GRAY );
+            DrawFPS( guiPanelRect.x + compMargin, guiPanelRect.y - 27 );
         }
 
     }
@@ -402,13 +457,23 @@ void GameWorld::setCamera( Camera2D *camera ) {
 }
 
 void GameWorld::resetMap() {
-    
     mario.reset();
     map.reset();
-    state = PLAYING;
-
+    state = GameState::PLAYING;
 }
 
 void GameWorld::resetGame() {
-    std::cout << "reset jogo" << std::endl;
+    mario.resetAll();
+    map.first();
+    map.reset();
+    state = GameState::TITLE_SCREEN;
+}
+
+void GameWorld::nextMap() {
+    if ( map.next() ) {
+        mario.reset();
+        state = GameState::PLAYING;
+    } else {
+        state = GameState::FINISHED;
+    }
 }

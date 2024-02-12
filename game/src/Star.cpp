@@ -28,8 +28,10 @@ void Star::draw() {
 }
 
 void Star::playCollisionSound() {
+    PlaySound( ResourceManager::getSounds()["courseClear"] );
 }
 
 void Star::updateMario( Mario& mario ) {
     mario.addPoints( 10000 );
+    mario.setState( SpriteState::VICTORY );
 }

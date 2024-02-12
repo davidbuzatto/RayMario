@@ -245,6 +245,7 @@ void ResourceManager::loadTextures() {
         textures["guiNumbersWhite"] = LoadTexture( "resources/images/gui/guiNumbersWhite.png" );
         textures["guiNumbersYellow"] = LoadTexture( "resources/images/gui/guiNumbersYellow.png" );
         textures["guiPunctuation"] = LoadTexture( "resources/images/gui/guiPunctuation.png" );
+        textures["guiRayMarioLogo"] = LoadTexture( "resources/images/gui/guiRayMarioLogo.png" );
         textures["guiTime"] = LoadTexture( "resources/images/gui/guiTime.png" );
         textures["guiTimeUp"] = LoadTexture( "resources/images/gui/guiTimeUp.png" );
         textures["guiX"] = LoadTexture( "resources/images/gui/guiX.png" );
@@ -275,13 +276,14 @@ void ResourceManager::loadSounds() {
         sounds["courseClear"] = LoadSound( "resources/sfx/courseClear.mp3" );
         sounds["gameOver"] = LoadSound( "resources/sfx/gameOver.mp3" );
         sounds["playerDown"] = LoadSound( "resources/sfx/playerDown.mp3" );
-        sounds["title"] = LoadSound( "resources/sfx/title.mp3" );
+
     }
 }
 
 void ResourceManager::loadMusics() {
     if ( musics.empty() ) {
         // load musics...
+        musics["title"]  = LoadMusicStream( "resources/musics/title.mp3" );
         musics["music1"] = LoadMusicStream( "resources/musics/music1.mp3" );
         musics["music2"] = LoadMusicStream( "resources/musics/music2.mp3" );
         musics["music3"] = LoadMusicStream( "resources/musics/music3.mp3" );

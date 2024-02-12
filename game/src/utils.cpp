@@ -109,3 +109,27 @@ void drawString( std::string str, int x, int y, std::map<std::string, Texture2D>
 
     }
 }
+
+int getSmallNumberWidth( int number ) {
+    return 16 * std::to_string( number ).length();
+}
+
+int getSmallNumberHeight() {
+    return 14;
+}
+
+int getBigNumberWidth( int number ) {
+    return 16 * std::to_string( number ).length();
+}
+
+int getBigNumberHeight() {
+    return 28;
+}
+
+int getDrawStringWidth( std::string str ) {
+    return 16 * str.length();
+}
+
+int getDrawStringHeight() {
+    return 16;
+}

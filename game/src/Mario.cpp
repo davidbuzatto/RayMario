@@ -60,8 +60,7 @@ void Mario::update() {
     
     running = IsKeyDown( KEY_LEFT_CONTROL ) || IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT );
 
-    if ( state != SpriteState::DYING ) {
-        //ellapsedTime = (int) GetTime();
+    if ( state != SpriteState::DYING && state != SpriteState::VICTORY ) {
         ellapsedTime += GetFrameTime();
     }
 
@@ -70,7 +69,7 @@ void Mario::update() {
     float currentFrameTime = running && state != SpriteState::DYING ? frameTimeRunning : frameTimeWalking;
     std::map<std::string, Sound>& sounds = ResourceManager::getSounds();
 
-    if ( ellapsedTime >= maxTime && state != SpriteState::DYING ) {
+    if ( ellapsedTime >= maxTime && state != SpriteState::DYING && state != SpriteState::VICTORY ) {
         state = SpriteState::DYING;
         PlaySound( sounds["playerDown"] );
         removeLives( 1 );
@@ -98,7 +97,7 @@ void Mario::update() {
         }
     }
 
-    if ( state != SpriteState::DYING ) {
+    if ( state != SpriteState::DYING && state != SpriteState::VICTORY ) {
 
         if ( IsKeyDown( KEY_RIGHT ) ||
              IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT ) ||
@@ -190,6 +189,9 @@ void Mario::draw() {
                 } else {
                     DrawTexture( textures[std::string( TextFormat( "%sMario0Fa%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
                 }
+
+            } else if ( state == SpriteState::VICTORY ) {
+                DrawTexture( textures[std::string( TextFormat( "%sMario0Vic", prefix.c_str() ) )], pos.x, pos.y, WHITE );
             }
 
         }
@@ -287,14 +289,14 @@ void Mario::drawHud() {
     
     DrawTexture( textures["guiCoin"], GetScreenWidth() - 115, 32, WHITE );
     DrawTexture( textures["guiX"], GetScreenWidth() - 97, 34, WHITE );
-    drawWhiteSmallNumber( coins, GetScreenWidth() - 34 - std::to_string( coins ).length() * 16, 34, textures );
-    drawWhiteSmallNumber( points, GetScreenWidth() - 34 - std::to_string( points ).length() * 16, 50, textures );
+    drawWhiteSmallNumber( coins, GetScreenWidth() - 34 - getSmallNumberWidth( coins ), 34, textures);
+    drawWhiteSmallNumber( points, GetScreenWidth() - 34 - getSmallNumberWidth( points ), 50, textures );
 
     int t = (int) (maxTime - ellapsedTime);
     t = t < 0 ? 0 : t;
 
     DrawTexture( textures["guiTime"], GetScreenWidth() - 34 - 176, 32, WHITE );
-    drawYellowSmallNumber( t, GetScreenWidth() - 34 - 128 - std::to_string( t ).length() * 16, 50, textures );
+    drawYellowSmallNumber( t, GetScreenWidth() - 34 - 128 - getSmallNumberWidth( t ), 50, textures );
 
     DrawTexture( textures["guiNextItem"], GetScreenWidth() / 2 - textures["guiNextItem"].width / 2, 20, WHITE );
 
@@ -470,4 +472,11 @@ void Mario::reset() {
     invulnerableTimeAcum = 0;
     invulnerableBlink = false;
 
+}
+
+void Mario::resetAll() {
+    lives = 5;
+    coins = 0;
+    points = 0;
+    reset();
 }

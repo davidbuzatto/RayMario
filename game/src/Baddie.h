@@ -30,4 +30,6 @@ public:
     virtual CollisionType checkCollision( Sprite &sprite ) = 0;
     void activateWithMarioProximity( Mario &mario );
 
+    virtual void onSouthCollision();
+
 };

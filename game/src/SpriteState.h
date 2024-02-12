@@ -18,6 +18,8 @@ enum SpriteState {
     CROUCHED,
     
     DYING,
-    DEAD
+    DEAD,
+
+    VICTORY
 
 };
