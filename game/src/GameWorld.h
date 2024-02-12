@@ -20,6 +20,7 @@ class GameWorld : public virtual Drawable {
     Map map;
     Camera2D *camera;
     bool showControls;
+    GameState stateBeforePause;
     
 public:
 

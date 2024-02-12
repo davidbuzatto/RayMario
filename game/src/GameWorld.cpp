@@ -28,7 +28,7 @@
 #include "Tile.h"
 #include "utils.h"
 
-#define ACTIVATE_DEBUG true
+#define ACTIVATE_DEBUG false
 #define INITIAL_MAP_ID 1
 #define LOAD_TEST_MAP false
 
@@ -54,7 +54,8 @@ GameWorld::GameWorld() :
     ),
     map( mario, INITIAL_MAP_ID, LOAD_TEST_MAP ),
     camera( nullptr ),
-    showControls( ACTIVATE_DEBUG ) {
+    showControls( ACTIVATE_DEBUG ),
+    stateBeforePause( GameState::TITLE_SCREEN ) {
     std::cout << "creating game world..." << std::endl;
 }
 
@@ -86,12 +87,14 @@ void GameWorld::inputAndUpdate() {
     if ( mario.getState() != SpriteState::DYING && 
          mario.getState() != SpriteState::VICTORY &&
          state != GameState::TITLE_SCREEN &&
-         state != GameState::FINISHED ) {
+         state != GameState::FINISHED && 
+         state != GameState::PAUSED ) {
         map.playMusic();
     }
 
     if ( state != GameState::TITLE_SCREEN &&
-         state != GameState::FINISHED ) {
+         state != GameState::FINISHED &&
+         state != GameState::PAUSED ) {
         mario.setActivationWidth( GetScreenWidth() * 2 );
         mario.update();
     }
@@ -99,7 +102,14 @@ void GameWorld::inputAndUpdate() {
     if ( mario.getState() != SpriteState::DYING && 
          mario.getState() != SpriteState::VICTORY &&
          state != GameState::TITLE_SCREEN &&
-         state != GameState::FINISHED ) {
+         state != GameState::FINISHED &&
+         state != GameState::PAUSED ) {
+
+        if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
+            PlaySound( sounds["pause"] );
+            stateBeforePause = state;
+            state = GameState::PAUSED;
+        }
 
         for ( size_t i = 0; i < items.size(); i++ ) {
             items[i]->update();
@@ -288,6 +298,10 @@ void GameWorld::inputAndUpdate() {
             nextMap();
         }
 
+    } else if ( state == GameState::PAUSED ) {
+        if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
+            state = stateBeforePause;
+        }
     }
 
     if ( mario.getState() != SpriteState::DYING && mario.getY() > map.getMaxHeight() ) {
@@ -383,29 +397,58 @@ void GameWorld::draw() {
             Texture2D* t = &ResourceManager::getTextures()["guiTimeUp"];
             DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height / 2, WHITE );
         } else if ( state == GameState::FINISHED ) {
-            DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( GREEN, 0.9 ) );
+
+            if ( !IsMusicStreamPlaying( ResourceManager::getMusics()["ending"] ) ) {
+                PlayMusicStream( ResourceManager::getMusics()["ending"] );
+            } else {
+                UpdateMusicStream( ResourceManager::getMusics()["ending"] );
+            }
+
+            if ( GetKeyPressed() ) {
+                PlayMusicStream( ResourceManager::getMusics()["ending"] );
+                resetGame();
+            }
+
+            DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( RAYWHITE, 0.9 ) );
+            Texture2D* t = &ResourceManager::getTextures()["guiCredits"];
+            DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, 20, WHITE );
+
+            std::string message1 = "Thank you for playing!!!";
+            std::string message2 = "Press any key to restart!";
+
+            drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, t->height + 40, ResourceManager::getTextures() );
+            drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, t->height + 65, ResourceManager::getTextures() );
+
+        } else if ( state == GameState::PAUSED ) {
+            DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( BLACK, 0.3 ) );
         }
 
     } else if ( state == GameState::TITLE_SCREEN ) {
+
         DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), RAYWHITE );
         Texture2D* t = &ResourceManager::getTextures()["guiRayMarioLogo"];
         DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height, WHITE );
+
         std::string message1 = "Press any key to start!";
         std::string message2 = "Developed by:";
-        std::string message3 = "Prof. Dr. David Buzatto";
+        std::string message3 = "Prof. Dr. David Buzatto - IFSP";
         std::string message4 = "2024";
         drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() + 30, ResourceManager::getTextures());
         drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 5 + 30, ResourceManager::getTextures());
         drawString( message3, GetScreenWidth() / 2 - getDrawStringWidth( message3 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 6 + 35, ResourceManager::getTextures());
-        drawWhiteSmallNumber( 2004, GetScreenWidth() / 2 - getSmallNumberWidth( 2024 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 7 + 40, ResourceManager::getTextures() );
+        drawWhiteSmallNumber( 2024, GetScreenWidth() / 2 - getSmallNumberWidth( 2024 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 7 + 40, ResourceManager::getTextures() );
+        
         Rectangle r( 40, 40, 70, 70 );
         DrawRectangle( r.x, r.y, r.width, r.height, Fade( RAYWHITE, 0.5 ) );
         DrawRectangleLinesEx( r, 5, BLACK );
         DrawText( "ray", r.x + r.width - 50, r.y + r.height - 35, 20, BLACK );
+
     } else if ( state == GameState::GAME_OVER ) {
+
         DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), BLACK );
         Texture2D* t = &ResourceManager::getTextures()["guiGameOver"];
         DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height / 2, WHITE );
+
     }
 
     if ( showControls ) {
@@ -457,7 +500,7 @@ void GameWorld::setCamera( Camera2D *camera ) {
 }
 
 void GameWorld::resetMap() {
-    mario.reset();
+    mario.reset( true );
     map.reset();
     state = GameState::PLAYING;
 }
@@ -471,7 +514,7 @@ void GameWorld::resetGame() {
 
 void GameWorld::nextMap() {
     if ( map.next() ) {
-        mario.reset();
+        mario.reset( false );
         state = GameState::PLAYING;
     } else {
         state = GameState::FINISHED;

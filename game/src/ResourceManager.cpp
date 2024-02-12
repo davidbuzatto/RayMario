@@ -236,6 +236,7 @@ void ResourceManager::loadTextures() {
 
         // gui
         textures["guiCoin"] = LoadTexture( "resources/images/gui/guiCoin.png" );
+        textures["guiCredits"] = LoadTexture( "resources/images/gui/guiCredits.png" );
         textures["guiGameOver"] = LoadTexture( "resources/images/gui/guiGameOver.png" );
         textures["guiLetters"] = LoadTexture( "resources/images/gui/guiLetters.png" );
         textures["guiMario"] = LoadTexture( "resources/images/gui/guiMario.png" );
@@ -284,6 +285,7 @@ void ResourceManager::loadMusics() {
     if ( musics.empty() ) {
         // load musics...
         musics["title"]  = LoadMusicStream( "resources/musics/title.mp3" );
+        musics["ending"]  = LoadMusicStream( "resources/musics/ending.mp3" );
         musics["music1"] = LoadMusicStream( "resources/musics/music1.mp3" );
         musics["music2"] = LoadMusicStream( "resources/musics/music2.mp3" );
         musics["music3"] = LoadMusicStream( "resources/musics/music3.mp3" );

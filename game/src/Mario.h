@@ -91,7 +91,7 @@ public:
     void setInvulnerable( bool invulnerable );
     bool isInvulnerable();
 
-    void reset();
+    void reset( bool removePowerUps );
     void resetAll();
 
 };

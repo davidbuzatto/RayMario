@@ -1,23 +1,23 @@
-ao terminar o jogo, mostrar mensagem e voltar à tela inicial
-pausar jogo
-
-implementar tiro quando mario estiver em flower
-movimentar power ups
-transição de power ups
-
-implementar estado "caindo" para correção de frame e evitar pular ao cair
+ajustar lógica dos powerups
 
 se já tiver power up:
     mushroom -> mushroom colocar na reserva
                 flower colocar mushroom na reserva
     flower -> mushroom colocar na reserva -> se já houver reserva, não faz nada
               flower colocar nar eserva   -> se a reserva for mushroom, troca
-              
+
+movimentar power ups
+
+criar caixas interativas (moedas, "?", powerup etc)
+
+colisão apenas para tiles que estão a uma certa distância
+
+implementar tiro quando mario estiver em flower
+
+implementar estado "caindo" para correção de frame e evitar pular ao cair
 
 separar tiles de cenário, fundo etc
 ladrilhos parametrizados (tipo na fase)
 refatorar
-
-criar caixas interativas (moedas, "?", powerup etc)
 
 editor de fases - salvar e carregar

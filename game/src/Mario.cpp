@@ -115,8 +115,8 @@ void Mario::update() {
 
         if ( state == SpriteState::ON_GROUND ) {
             if ( IsKeyDown( KEY_DOWN ) ||
-                    IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
-                    GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
+                 IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
+                 GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
                 ducking = true;
                 vel.x = 0;
             } else {
@@ -125,7 +125,8 @@ void Mario::update() {
         }
 
         if ( ( IsKeyPressed( KEY_SPACE ) ||
-               IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN ) ) && state != SpriteState::JUMPING ) {
+               IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN ) ) && 
+               state != SpriteState::JUMPING ) {
             vel.y = jumpSpeed;
             state = SpriteState::JUMPING;
             PlaySound( sounds["jump"] );
@@ -460,9 +461,11 @@ void Mario::updateCollisionProbes() {
 
 }
 
-void Mario::reset() {
+void Mario::reset( bool removePowerUps ) {
 
-    changeToSmall();
+    if ( removePowerUps ) {
+        changeToSmall();
+    }
     state = SpriteState::ON_GROUND;
     ducking = false;
     lookigUp = false;
@@ -478,5 +481,5 @@ void Mario::resetAll() {
     lives = 5;
     coins = 0;
     points = 0;
-    reset();
+    reset( true );
 }
