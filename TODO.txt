@@ -13,15 +13,11 @@ se já tiver power up:
     flower -> mushroom colocar na reserva -> se já houver reserva, não faz nada
               flower colocar nar eserva   -> se a reserva for mushroom, troca
               
-mudar de fases
-criar transição entre fases
 
-inimigos colidem entre si?
-separar tiles de cenário, fundo etcv
+separar tiles de cenário, fundo etc
 ladrilhos parametrizados (tipo na fase)
 refatorar
 
-criar caixas interativas (moedas, "?" etc)
-criar GUI
+criar caixas interativas (moedas, "?", powerup etc)
 
 editor de fases - salvar e carregar
