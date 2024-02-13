@@ -39,8 +39,10 @@ public:
     Sprite();
     Sprite( Vector2 pos, Vector2 dim, Color color );
     Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
+    Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, Direction facingDirection );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames );
+    Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection );
     virtual ~Sprite();   // virtual destructor enables polimorphism
 
     virtual void update() = 0;

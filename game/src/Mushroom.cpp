@@ -32,6 +32,19 @@ void Mushroom::playCollisionSound() {
 }
 
 void Mushroom::updateMario( Mario& mario ) {
+
     mario.addPoints( 1000 );
-    mario.changeToSuper();
+
+    switch ( mario.getType() ) {
+        case MarioType::SMALL:
+            mario.changeToSuper();
+            break;
+        case MarioType::SUPER:
+            mario.setReservedPowerUp( MarioType::SUPER );
+            break;
+        case MarioType::FLOWER:
+            // nothing
+            break;
+    }
+
 }

@@ -281,6 +281,7 @@
     <ClCompile Include="..\game\src\BuzzyBeetle.cpp" />
     <ClCompile Include="..\game\src\Coin.cpp" />
     <ClCompile Include="..\game\src\CollisionProbe.cpp" />
+    <ClCompile Include="..\game\src\Fireball.cpp" />
     <ClCompile Include="..\game\src\FireFlower.cpp" />
     <ClCompile Include="..\game\src\FlyingGoomba.cpp" />
     <ClCompile Include="..\game\src\GameWindow.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="..\game\src\CollisionType.h" />
     <ClInclude Include="..\game\src\Direction.h" />
     <ClInclude Include="..\game\src\Drawable.h" />
+    <ClInclude Include="..\game\src\Fireball.h" />
     <ClInclude Include="..\game\src\FireFlower.h" />
     <ClInclude Include="..\game\src\FlyingGoomba.h" />
     <ClInclude Include="..\game\src\GameState.h" />

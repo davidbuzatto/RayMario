@@ -1,18 +1,35 @@
-ajustar lógica dos powerups
+implementar tiro quando mario estiver em flower
+ -> colisão com cenário 
+ -> colisão com baddies
+ -> timespam para a bolinha de fogo (2 segundos?)
+ -> quantidade máxima ativa (acho que são 3 no jogo)
+ -> remoção de bolinhas inativas
+ -> remoção de bolinhas fora da tela
+ -> remoção de bolinhas que mataram os bichos
 
-se já tiver power up:
-    mushroom -> mushroom colocar na reserva
-                flower colocar mushroom na reserva
-    flower -> mushroom colocar na reserva -> se já houver reserva, não faz nada
-              flower colocar nar eserva   -> se a reserva for mushroom, troca
+esquematizar em papel a transição de estados
 
-movimentar power ups
+        se não tiver, ativa
+
+        se tiver cogumelo:
+            pegar outro cogumelo -> armazena
+            pegar flor -> evolui
+            
+        se tiver flor
+            pegar um cogumelo -> conta ponto
+            pegar flor -> armazena
+            
+        se tiver armazenado 
+        
+        
+        modelar um DFA :D
+
+
+movimentar power ups (vida e super)
 
 criar caixas interativas (moedas, "?", powerup etc)
 
 colisão apenas para tiles que estão a uma certa distância
-
-implementar tiro quando mario estiver em flower
 
 implementar estado "caindo" para correção de frame e evitar pular ao cair
 

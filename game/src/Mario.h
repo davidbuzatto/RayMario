@@ -10,10 +10,12 @@
 #include "CollisionProbe.h"
 #include "CollisionType.h"
 #include "Direction.h"
+#include "Fireball.h"
 #include "MarioType.h"
 #include "raylib.h"
 #include "Sprite.h"
 #include "Tile.h"
+#include <vector>
 
 class Mario : public virtual Sprite {
 
@@ -45,6 +47,10 @@ class Mario : public virtual Sprite {
 
     CollisionProbe cpE1;
     CollisionProbe cpW1;
+
+    MarioType reservedPowerUp;
+
+    std::vector<Fireball> fireballs;
     
 public:
 
@@ -87,6 +93,8 @@ public:
     void changeToSmall();
     void changeToSuper();
     void changeToFlower();
+    void setReservedPowerUp( MarioType reservedPowerUp );
+
     MarioType getType();
     void setInvulnerable( bool invulnerable );
     bool isInvulnerable();

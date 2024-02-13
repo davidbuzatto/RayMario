@@ -137,6 +137,16 @@ void ResourceManager::loadTextures() {
 
         textures["flowerMario0Vic"] = textureColorReplace( textures["superMario0Vic"], flowerMarioReplacePallete );
 
+        // fireball
+        textures["fireball0R"] = LoadTexture( "resources/images/sprites/mario/FlowerMarioFireball_0.png" );
+        textures["fireball1R"] = LoadTexture( "resources/images/sprites/mario/FlowerMarioFireball_1.png" );
+        textures["fireball2R"] = LoadTexture( "resources/images/sprites/mario/FlowerMarioFireball_2.png" );
+        textures["fireball3R"] = LoadTexture( "resources/images/sprites/mario/FlowerMarioFireball_3.png" );
+        textures["fireball0L"] = texture2DFlipHorizontal( textures["fireball0R"] );
+        textures["fireball1L"] = texture2DFlipHorizontal( textures["fireball1R"] );
+        textures["fireball2L"] = texture2DFlipHorizontal( textures["fireball2R"] );
+        textures["fireball3L"] = texture2DFlipHorizontal( textures["fireball3R"] );
+
         // tiles
         for ( char c = 'A'; c <= 'Z'; c++ ) {
             textures[std::string(1, c)] = LoadTexture( TextFormat( "resources/images/tiles/tile_%c.png", c ) );

@@ -31,6 +31,20 @@ void FireFlower::playCollisionSound() {
 }
 
 void FireFlower::updateMario( Mario& mario ) {
+
     mario.addPoints( 1000 );
-    mario.changeToFlower();
+
+    switch ( mario.getType() ) {
+        case MarioType::SMALL:
+            mario.changeToFlower();
+            break;
+        case MarioType::SUPER:
+            mario.changeToFlower();
+            mario.setReservedPowerUp( MarioType::SUPER );
+            break;
+        case MarioType::FLOWER:
+            mario.setReservedPowerUp( MarioType::FLOWER );
+            break;
+    }
+
 }

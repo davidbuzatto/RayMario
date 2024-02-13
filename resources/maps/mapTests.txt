@@ -67,9 +67,6 @@ b: 1              # background id: [1-10]
 m: 1              # music id: [1-9]
 //////////////////////////////////////////////////////////////
 /                                                            /
-/                                             I              /
-/                                            I               /
-/                                           I                /
 /                                          I                E/
 /                                         I                 C/
 /                         1              I                  C/
@@ -85,7 +82,14 @@ m: 1              # music id: [1-9]
 /      I        1   I          I                            C/
 /      IIIIIIIIIIIIII         I                             C/
 /                                                           C/
-/I                                                          C/
-/   p     o ! f u + *                                       C/
+/                                                           C/
+/                                                           C/
+/                                                           C/
+/                                                           C/
+/                                                           C/
+/                                                           C/
+/        ! ! f        f f !    |     1   |                  C/
+/      IIIIIIIII    IIIIIIIII   IIIIIIIII                   C/
+/   p                                                       C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAA/

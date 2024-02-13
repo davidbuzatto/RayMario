@@ -120,6 +120,9 @@
     <ClCompile Include="..\game\src\Item.cpp">
       <Filter>Source Files\items</Filter>
     </ClCompile>
+    <ClCompile Include="..\game\src\Fireball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\game\src\GameWorld.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="..\game\src\GameState.h">
       <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Fireball.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

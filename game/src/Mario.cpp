@@ -38,7 +38,8 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     points( 0 ),
     maxTime( 400.0f ),
     ellapsedTime( 0.0f ),
-    type( MarioType::SMALL ) {
+    type( MarioType::SMALL ),
+    reservedPowerUp( MarioType::SMALL ) {
 
     setState( SpriteState::ON_GROUND );
 
@@ -58,7 +59,9 @@ Mario::~Mario() {
 
 void Mario::update() {
     
-    running = IsKeyDown( KEY_LEFT_CONTROL ) || IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT );
+    running = ( IsKeyDown( KEY_LEFT_CONTROL ) || 
+                IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) &&
+                vel.x != 0;
 
     if ( state != SpriteState::DYING && state != SpriteState::VICTORY ) {
         ellapsedTime += GetFrameTime();
@@ -132,6 +135,20 @@ void Mario::update() {
             PlaySound( sounds["jump"] );
         }
 
+        if ( ( IsKeyPressed( KEY_LEFT_CONTROL ) ||
+               IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) &&
+             type == MarioType::FLOWER ) {
+            if ( facingDirection == Direction::RIGHT ) {
+                fireballs.push_back( Fireball( Vector2( pos.x + dim.x / 2, pos.y + dim.y/2 - 3 ), Vector2( 16, 16 ), Vector2( 200, 0 ), RED, Direction::RIGHT ) );
+            } else {
+                fireballs.push_back( Fireball( Vector2( pos.x, pos.y + dim.y / 2 - 3 ), Vector2( 16, 16 ), Vector2( -200, 0 ), RED, Direction::LEFT ) );
+            }
+        }
+
+        for ( size_t i = 0; i < fireballs.size(); i++ ) {
+            fireballs[i].update();
+        }
+
         pos.x = pos.x + vel.x * delta;
         pos.y = pos.y + vel.y * delta;
 
@@ -195,6 +212,10 @@ void Mario::draw() {
                 DrawTexture( textures[std::string( TextFormat( "%sMario0Vic", prefix.c_str() ) )], pos.x, pos.y, WHITE );
             }
 
+        }
+
+        for ( size_t i = 0; i < fireballs.size(); i++ ) {
+            fireballs[i].draw();
         }
 
     }
@@ -299,9 +320,12 @@ void Mario::drawHud() {
     DrawTexture( textures["guiTime"], GetScreenWidth() - 34 - 176, 32, WHITE );
     drawYellowSmallNumber( t, GetScreenWidth() - 34 - 128 - getSmallNumberWidth( t ), 50, textures );
 
+    if ( reservedPowerUp == MarioType::SUPER ) {
+        DrawTexture( textures["mushroom"], GetScreenWidth() / 2 - textures["mushroom"].width / 2, 32, WHITE );
+    } else if ( reservedPowerUp == MarioType::FLOWER ) {
+        DrawTexture( textures["fireFlower"], GetScreenWidth() / 2 - textures["fireFlower"].width / 2, 32, WHITE );
+    }
     DrawTexture( textures["guiNextItem"], GetScreenWidth() / 2 - textures["guiNextItem"].width / 2, 20, WHITE );
-
-    //drawString( "esse eh um teste!!! david buzatto", 100, 100, textures );
 
 }
 
@@ -400,6 +424,10 @@ void Mario::changeToFlower() {
     maxFrames = 3;
 }
 
+void Mario::setReservedPowerUp( MarioType reservedPowerUp ) {
+    this->reservedPowerUp = reservedPowerUp;
+}
+
 MarioType Mario::getType() {
     return type;
 }
@@ -465,6 +493,7 @@ void Mario::reset( bool removePowerUps ) {
 
     if ( removePowerUps ) {
         changeToSmall();
+        reservedPowerUp = MarioType::SMALL;
     }
     state = SpriteState::ON_GROUND;
     ducking = false;

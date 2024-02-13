@@ -28,14 +28,15 @@
 #include "Tile.h"
 #include "utils.h"
 
-#define ACTIVATE_DEBUG false
+#define ACTIVATE_DEBUG true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP false
+#define LOAD_TEST_MAP true
 
 bool GameWorld::debug = ACTIVATE_DEBUG;
 bool GameWorld::showFPS = ACTIVATE_DEBUG;
 bool GameWorld::immortalMario = ACTIVATE_DEBUG;
-GameState GameWorld::state = GameState::TITLE_SCREEN;
+//GameState GameWorld::state = GameState::TITLE_SCREEN;
+GameState GameWorld::state = GameState::PLAYING;
 float GameWorld::gravity = 20;
 
 /**
