@@ -15,12 +15,13 @@ class OneUpMushroom : public virtual Item {
     
 public:
 
-    OneUpMushroom( Vector2 pos, Vector2 dim, Color color );
+    OneUpMushroom( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
     ~OneUpMushroom();
 
     virtual void update();
     virtual void draw();
     virtual void playCollisionSound();
     virtual void updateMario( Mario& mario );
+    virtual CollisionType checkCollisionTile( Sprite& sprite );
 
 };

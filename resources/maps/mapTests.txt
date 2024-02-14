@@ -67,29 +67,28 @@ b: 1              # background id: [1-10]
 m: 1              # music id: [1-9]
 //////////////////////////////////////////////////////////////
 /                                                            /
-/                                          I                E/
-/                                         I                 C/
-/                         1              I                  C/
-/                      IIII             I                   C/
-/                                      I                    C/
-/                  IIIIIIII           I                     C/
-/                                    I                      C/
-/              IIIIIIIIIIII         I                       C/
-/          |               |       I                        C/
-/           IIIIIIIIIIIIIII       I                         C/
+/                                           I               E/
+/                                          I                C/
+/                         1               I                 C/
+/                      IIII              I                  C/
+/                                       I                   C/
+/                  IIIIIIII            I                    C/
+/                                     I                     C/
+/              IIIIIIIIIIII          I                      C/
+/          |               |        I                       C/
+/           IIIIIIIIIIIIIII        I                        C/
+/                                 I                         C/
 /                                I                          C/
-/      I            I           I                           C/
-/      I        1   I          I                            C/
-/      IIIIIIIIIIIIII         I                             C/
+/      I            IIII        I                           C/
+/      I        1   I   I      I                            C/
+/      IIIIIIIIIIIIII    I    I                             C/
+/                            I                              C/
+/                           I                               C/
+/     IIII  IIII           I                                C/
+/     I        I                                            C/
+/     Iu + ! f I      f f !    |     1   |                  C/
+/     IIIIIIIIII    IIIIIIIII   IIIIIIIII                   C/
 /                                                           C/
-/                                                           C/
-/                                                           C/
-/                                                           C/
-/                                                           C/
-/                                                           C/
-/        ! ! f        f f !    |     1   |                  C/
-/      IIIIIIIII    IIIIIIIII   IIIIIIIII                   C/
-/                                                           C/
-/   p                                                       C/
+/  p                                                        C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAA/

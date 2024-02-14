@@ -19,10 +19,6 @@
 Fireball::Fireball( Vector2 pos, Vector2 dim, Vector2 vel, Color color, Direction facingDirection, float timeSpan ) :
     Sprite( pos, dim, vel, color, 0.05, 4, facingDirection ), timeSpan( timeSpan ), timeSpanAcum( 0 ) {
     setState( SpriteState::ACTIVE );
-    cpN.setColor( color );
-    cpS.setColor( color );
-    cpE.setColor( color );
-    cpW.setColor( color );
 }
 
 Fireball::~Fireball() {

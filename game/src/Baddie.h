@@ -29,7 +29,6 @@ public:
     virtual void draw() = 0;
     virtual CollisionType checkCollision( Sprite &sprite ) = 0;
     void activateWithMarioProximity( Mario &mario );
-
     virtual void onSouthCollision();
 
 };

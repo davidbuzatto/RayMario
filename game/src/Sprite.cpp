@@ -31,16 +31,7 @@ Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames ) :
-    pos( pos ),
-    dim( dim ),
-    vel( vel ),
-    color( color ),
-    frameTime( frameTime ),
-    frameAcum( 0 ),
-    currentFrame( 0 ),
-    maxFrames( maxFrames ),
-    state( SpriteState::IDLE ),
-    facingDirection( Direction::RIGHT ) {
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, Direction::RIGHT ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection ) :
@@ -53,7 +44,12 @@ Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
     currentFrame( 0 ),
     maxFrames( maxFrames ),
     state( SpriteState::IDLE ),
-    facingDirection( facingDirection ) {}
+    facingDirection( facingDirection ) {
+    cpN.setColor( color );
+    cpS.setColor( color );
+    cpE.setColor( color );
+    cpW.setColor( color );
+}
 
 Sprite::~Sprite() {
 }
@@ -117,6 +113,10 @@ void Sprite::setState( SpriteState state ) {
     this->state = state;
 }
 
+void Sprite::setFacingDirection( Direction facingDirection ) {
+    this->facingDirection = facingDirection;
+}
+
 Vector2 &Sprite::getPos() {
     return pos;
 }
@@ -159,6 +159,10 @@ Color &Sprite::getColor() {
 
 SpriteState Sprite::getState() {
     return state;
+}
+
+Direction Sprite::getFacingDirection() {
+    return facingDirection;
 }
 
 Rectangle Sprite::getRect() {

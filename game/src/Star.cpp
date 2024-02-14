@@ -35,3 +35,7 @@ void Star::updateMario( Mario& mario ) {
     mario.addPoints( 10000 );
     mario.setState( SpriteState::VICTORY );
 }
+
+CollisionType Star::checkCollisionTile( Sprite& sprite ) {
+    return CollisionType::NONE;
+}

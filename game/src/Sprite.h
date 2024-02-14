@@ -67,6 +67,7 @@ public:
 
     void setColor( Color color );
     void setState( SpriteState state );
+    void setFacingDirection( Direction facingDirection );
 
     Vector2 &getPos();
     float getX();
@@ -82,6 +83,7 @@ public:
     
     Color &getColor();
     SpriteState getState();
+    Direction getFacingDirection();
 
     Rectangle getRect();
 

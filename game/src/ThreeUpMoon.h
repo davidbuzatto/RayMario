@@ -15,12 +15,14 @@ class ThreeUpMoon : public virtual Item {
     
 public:
 
-    ThreeUpMoon( Vector2 pos, Vector2 dim, Color color );
+    ThreeUpMoon( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
     ~ThreeUpMoon();
 
     virtual void update();
     virtual void draw();
     virtual void playCollisionSound();
     virtual void updateMario( Mario& mario );
+    virtual CollisionType checkCollisionTile( Sprite& sprite );
+    virtual void onSouthCollision();
 
 };

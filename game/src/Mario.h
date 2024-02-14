@@ -36,6 +36,7 @@ class Mario : public virtual Sprite {
     float frameTimeRunning;
 
     float activationWidth;
+    float powerUpActivationRadius;
 
     int lives;
     int coins;
@@ -55,6 +56,8 @@ class Mario : public virtual Sprite {
     float runningAcum;
     float runningTime;
     bool drawRunningFrames;
+
+    Vector2 lastPos;
     
 public:
 
@@ -78,6 +81,7 @@ public:
     float getJumpSpeed();
     bool isImmortal();
     float getActivationWidth();
+    float getPowerUpActivationRadius();
 
     void setLives( int lives );
     void setCoins( int coins );
@@ -98,6 +102,8 @@ public:
     void changeToSuper();
     void changeToFlower();
     void setReservedPowerUp( MarioType reservedPowerUp );
+    MarioType getReservedPowerUp();
+    void consumeReservedPowerUp();
 
     MarioType getType();
     void setInvulnerable( bool invulnerable );

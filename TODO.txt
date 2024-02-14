@@ -1,31 +1,21 @@
-esquematizar em papel a transição de estados
+para versão final:
 
-        se não tiver, ativa
+    - otimizações:
+        - diminuir a quantidade de loops no GameWorld (muitos podem ser condensados)
+        - colisão apenas para tiles e baddies que estão a uma certa distância (depende de organização matricial)
+        - a partir da segunda fase o jogo está muito pesado (muitas iterações)
 
-        se tiver cogumelo:
-            pegar outro cogumelo -> armazena
-            pegar flor -> evolui
-            
-        se tiver flor
-            pegar um cogumelo -> conta ponto
-            pegar flor -> armazena
-            
-        se tiver armazenado 
-        
-        
-        modelar um DFA :D
+    - animar baddies ao morrer (angulo, tornar não colidível e eliminar offscreen)
+    
+    - tela de transição entre fases
+        - efeito funil
+        - contagem de pontos:
+            1 segundo equivale a 50 pontos
 
+    - criar caixas interativas (moedas, "?", powerup etc)
 
-movimentar power ups (vida e super)
-
-criar caixas interativas (moedas, "?", powerup etc)
-
-colisão apenas para tiles que estão a uma certa distância
-
-implementar estado "caindo" para correção de frame e evitar pular ao cair
-
-separar tiles de cenário, fundo etc
-ladrilhos parametrizados (tipo na fase)
-refatorar
-
-editor de fases - salvar e carregar
+futuro:
+    separar tiles de cenário, fundo etc
+    ladrilhos parametrizados (tipo na fase)
+    refatorar
+    editor de fases - salvar e carregar, usar formato binário

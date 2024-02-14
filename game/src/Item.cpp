@@ -37,3 +37,16 @@ Item::~Item() {
 CollisionType Item::checkCollision( Sprite& sprite ) {
     return CheckCollisionRecs( getRect(), sprite.getRect() ) ? CollisionType::COLLIDED : CollisionType::NONE;
 }
+
+void Item::activateWithMarioProximity( Mario& mario ) {
+    if ( CheckCollisionCircleRec( 
+        Vector2( mario.getX(), mario.getY() ), 
+        mario.getPowerUpActivationRadius(), getRect() ) ) {
+        state = SpriteState::ACTIVE;
+        setFacingDirection( mario.getFacingDirection() );
+    }
+}
+
+void Item::onSouthCollision() {
+
+}

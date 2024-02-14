@@ -48,11 +48,32 @@ void FireFlower::updateMario( Mario& mario ) {
             break;
         case MarioType::SUPER:
             mario.changeToFlower();
-            mario.setReservedPowerUp( MarioType::SUPER );
+            switch ( mario.getReservedPowerUp() ) {
+                case MarioType::SMALL:
+                    mario.setReservedPowerUp( MarioType::SUPER );
+                    break;
+                case MarioType::SUPER:
+                    break;
+                case MarioType::FLOWER:
+                    break;
+            }
             break;
         case MarioType::FLOWER:
-            mario.setReservedPowerUp( MarioType::FLOWER );
+            switch ( mario.getReservedPowerUp() ) {
+                case MarioType::SMALL:
+                    mario.setReservedPowerUp( MarioType::FLOWER );
+                    break;
+                case MarioType::SUPER:
+                    mario.setReservedPowerUp( MarioType::FLOWER );
+                    break;
+                case MarioType::FLOWER:
+                    break;
+            }
             break;
     }
 
+}
+
+CollisionType FireFlower::checkCollisionTile( Sprite& sprite ) {
+    return CollisionType::NONE;
 }

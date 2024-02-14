@@ -179,12 +179,51 @@ void GameWorld::inputAndUpdate() {
             }
         }
 
-        // mario x items collision resolution
+        // items x tiles collision resolution
+        for ( size_t i = 0; i < tiles.size(); i++ ) {
+            Tile& tile = tiles[i];
+            for ( size_t j = 0; j < items.size(); j++ ) {
+                Item* item = items[j];
+                item->updateCollisionProbes();
+                switch ( item->checkCollisionTile( tile ) ) {
+                    case CollisionType::NORTH:
+                        item->setY( tile.getY() + tile.getHeight() );
+                        item->setVelY( 0 );
+                        break;
+                    case CollisionType::SOUTH:
+                        item->setY( tile.getY() - item->getHeight() );
+                        item->setVelY( 0 );
+                        item->onSouthCollision();
+                        break;
+                    case CollisionType::EAST:
+                        item->setX( tile.getX() - item->getWidth() );
+                        item->setVelX( -item->getVelX() );
+                        break;
+                    case CollisionType::WEST:
+                        item->setX( tile.getX() + tile.getWidth() );
+                        item->setVelX( -item->getVelX() );
+                        break;
+                }
+                item->updateCollisionProbes();
+            }
+        }
+
+        // items activation
+        for ( size_t i = 0; i < items.size(); i++ ) {
+            Item* item = items[i];
+            if ( item->getState() == SpriteState::IDLE ) {
+                item->activateWithMarioProximity( mario );
+            }
+        }
+
+        // mario x items collision resolution and offscreen items removal
         for ( size_t i = 0; i < items.size(); i++ ) {
             if ( items[i]->checkCollision( mario ) == CollisionType::COLLIDED ) {
                 collectedIndexes.push_back( i );
                 items[i]->playCollisionSound();
                 items[i]->updateMario( mario );
+            } else if ( items[i]->getY() > map.getMaxHeight() ) {
+                collectedIndexes.push_back( i );
             }
         }
         for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
@@ -200,7 +239,7 @@ void GameWorld::inputAndUpdate() {
             }
         }
 
-        // mario x baddies collision resolution and offscreen baddies removal
+        // mario and fireballs x baddies collision resolution and offscreen baddies removal
         collectedIndexes.clear();
         if ( mario.getState() != SpriteState::DYING && mario.getState() != SpriteState::VICTORY ) {
             mario.updateCollisionProbes();
@@ -226,11 +265,13 @@ void GameWorld::inputAndUpdate() {
                                         PlaySound( sounds["pipe"] );
                                         mario.changeToSmall();
                                         mario.setInvulnerable( true );
+                                        mario.consumeReservedPowerUp();
                                         break;
                                     case MarioType::FLOWER:
                                         PlaySound( sounds["pipe"] );
-                                        mario.changeToSuper();
+                                        mario.changeToSmall();
                                         mario.setInvulnerable( true );
+                                        mario.consumeReservedPowerUp();
                                         break;
                                 }
                             }
@@ -255,11 +296,13 @@ void GameWorld::inputAndUpdate() {
                                             PlaySound( sounds["pipe"] );
                                             mario.changeToSmall();
                                             mario.setInvulnerable( true );
+                                            mario.consumeReservedPowerUp();
                                             break;
                                         case MarioType::FLOWER:
                                             PlaySound( sounds["pipe"] );
-                                            mario.changeToSuper();
+                                            mario.changeToSmall();
                                             mario.setInvulnerable( true );
+                                            mario.consumeReservedPowerUp();
                                             break;
                                     }
                                 }

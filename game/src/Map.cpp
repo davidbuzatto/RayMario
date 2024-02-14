@@ -275,55 +275,55 @@ void Map::parseMap() {
                         items.push_back( new Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
                         break;
                     case '!':
-                        items.push_back( new Mushroom( Vector2( x, y ), Vector2( 32, 32 ), YELLOW ) );
+                        items.push_back( new Mushroom( Vector2( x, y ), Vector2( 32, 32 ), Vector2( 200, 0 ), RED ) );
                         break;
                     case 'f':
-                        items.push_back( new FireFlower( Vector2( x, y ), Vector2( 32, 32 ), YELLOW ) );
+                        items.push_back( new FireFlower( Vector2( x, y ), Vector2( 32, 32 ), ORANGE ) );
                         break;
                     case 'u':
-                        items.push_back( new OneUpMushroom( Vector2( x, y ), Vector2( 32, 32 ), YELLOW ) );
+                        items.push_back( new OneUpMushroom( Vector2( x, y ), Vector2( 32, 32 ), Vector2( 250, 0 ), GREEN ) );
                         break;
                     case '+':
-                        items.push_back( new ThreeUpMoon( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
+                        items.push_back( new ThreeUpMoon( Vector2( x, y ), Vector2( 30, 32 ), Vector2( 300, 0 ), YELLOW ) );
                         break;
                     case '*':
                         items.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
                         break;
                     case '1':
-                        baddies.push_back( new Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), MAROON ) );
                         break;
                     case '2':
-                        baddies.push_back( new FlyingGoomba( Vector2( x, y ), Vector2( 66, 48 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new FlyingGoomba( Vector2( x, y ), Vector2( 66, 48 ), Vector2( -100, 0 ), MAROON ) );
                         break;
                     case '3':
-                        baddies.push_back( new GreenKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new GreenKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), GREEN ) );
                         break;
                     case '4':
-                        baddies.push_back( new RedKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new RedKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), RED ) );
                         break;
                     case '5':
-                        baddies.push_back( new BlueKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new BlueKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), BLUE ) );
                         break;
                     case '6':
                         baddies.push_back( new YellowKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
                         break;
                     case '7':
-                        baddies.push_back( new BobOmb( Vector2( x, y ), Vector2( 24, 30 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new BobOmb( Vector2( x, y ), Vector2( 24, 30 ), Vector2( -100, 0 ), BLACK ) );
                         break;
                     case '8':
-                        baddies.push_back( new BulletBill( Vector2( x, y ), Vector2( 32, 28 ), Vector2( -200, 0 ), YELLOW ) );
+                        baddies.push_back( new BulletBill( Vector2( x, y ), Vector2( 32, 28 ), Vector2( -200, 0 ), BLACK ) );
                         break;
                     case '9':
-                        baddies.push_back( new Swooper( Vector2( x, y ), Vector2( 32, 34 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new Swooper( Vector2( x, y ), Vector2( 32, 34 ), Vector2( -100, 0 ), GREEN ) );
                         break;
                     case '@':
-                        baddies.push_back( new BuzzyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), YELLOW ) );
+                        baddies.push_back( new BuzzyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), BLUE ) );
                         break;
                     case '$':
-                        baddies.push_back( new MummyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), YELLOW ) );
+                        baddies.push_back( new MummyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), GRAY ) );
                         break;
                     case '%':
-                        baddies.push_back( new Rex( Vector2( x, y ), Vector2( 40, 64 ), Vector2( -100, 0 ), YELLOW ) );
+                        baddies.push_back( new Rex( Vector2( x, y ), Vector2( 40, 64 ), Vector2( -100, 0 ), VIOLET ) );
                         break;
                     case '\n':
                         currentLine++;

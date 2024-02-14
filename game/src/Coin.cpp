@@ -47,3 +47,7 @@ void Coin::updateMario( Mario& mario ) {
         PlaySound( ResourceManager::getSounds()["1up"] );
     }
 }
+
+CollisionType Coin::checkCollisionTile( Sprite& sprite ) {
+    return CollisionType::NONE;
+}

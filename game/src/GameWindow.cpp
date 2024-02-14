@@ -99,6 +99,7 @@ void GameWindow::init() {
         }
 
         InitWindow( width, height, title.c_str() );
+        SetExitKey( 0 );
         
         if ( initAudio ) {
             InitAudioDevice();

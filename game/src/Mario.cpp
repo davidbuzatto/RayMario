@@ -33,6 +33,7 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     frameTimeWalking( 0.1 ),
     frameTimeRunning( 0.05 ),
     activationWidth( 0 ),
+    powerUpActivationRadius( 100 ),
     coins( 0 ),
     lives( 5 ),
     points( 0 ),
@@ -42,7 +43,8 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     reservedPowerUp( MarioType::SMALL ),
     runningAcum( 0 ),
     runningTime( 0.5 ),
-    drawRunningFrames( false ) {
+    drawRunningFrames( false ),
+    lastPos( pos ) {
 
     //changeToFlower();
 
@@ -128,7 +130,11 @@ void Mario::update() {
             facingDirection = Direction::LEFT;
             vel.x = -currentSpeedX;
         } else {
-            vel.x = 0;
+            if ( vel.x >= -10 && vel.x <= 10 ) {
+                vel.x = 0;
+            } else {
+                vel.x = vel.x * 0.9;
+            }
         }
 
         if ( state == SpriteState::ON_GROUND ) {
@@ -145,9 +151,11 @@ void Mario::update() {
         if ( ( IsKeyPressed( KEY_SPACE ) ||
                IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN ) ) && 
                state != SpriteState::JUMPING ) {
-            vel.y = jumpSpeed;
-            state = SpriteState::JUMPING;
-            PlaySound( sounds["jump"] );
+            if ( state == SpriteState::ON_GROUND ) {
+                vel.y = jumpSpeed;
+                state = SpriteState::JUMPING;
+                PlaySound( sounds["jump"] );
+            }
         }
 
         if ( ( IsKeyPressed( KEY_LEFT_CONTROL ) ||
@@ -178,6 +186,11 @@ void Mario::update() {
         pos.y = pos.y + vel.y * delta;
 
         vel.y += GameWorld::gravity;
+
+        if ( (int) lastPos.y < (int) pos.y ) {
+            state = SpriteState::FALLING;
+        }
+        lastPos = pos;
 
     }
 
@@ -228,17 +241,13 @@ void Mario::draw() {
                 }
 
             } else if ( state == SpriteState::JUMPING ) {
-
-                if ( vel.y < 0 ) {
-                    if ( drawRunningFrames ) {
-                        DrawTexture( textures[std::string( TextFormat( "%sMario0JuRu%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
-                    } else {
-                        DrawTexture( textures[std::string( TextFormat( "%sMario0Ju%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
-                    }
+                if ( drawRunningFrames ) {
+                    DrawTexture( textures[std::string( TextFormat( "%sMario0JuRu%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
                 } else {
-                    DrawTexture( textures[std::string( TextFormat( "%sMario0Fa%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
+                    DrawTexture( textures[std::string( TextFormat( "%sMario0Ju%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
                 }
-
+            } else if ( state == SpriteState::FALLING ) {
+                DrawTexture( textures[std::string( TextFormat( "%sMario0Fa%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
             } else if ( state == SpriteState::VICTORY ) {
                 DrawTexture( textures[std::string( TextFormat( "%sMario0Vic", prefix.c_str() ) )], pos.x, pos.y, WHITE );
             }
@@ -262,6 +271,10 @@ void Mario::draw() {
             pos.x + dim.x / 2 - activationWidth / 2, 
             pos.y + dim.y / 2 - activationWidth / 2, 
             activationWidth, activationWidth, BLACK );
+        DrawCircleLines( 
+            pos.x + dim.x / 2,
+            pos.y + dim.y / 2,
+            powerUpActivationRadius, BLACK );
     }
 
 }
@@ -281,15 +294,27 @@ CollisionType Mario::checkCollisionTile( Sprite& sprite ) {
             Fireball *f = &fireballs[i];
             switch ( f->checkCollisionTile( tile ) ) {
                 case CollisionType::NORTH:
+                    if ( GameWorld::debug ) {
+                        tile.setColor( cpN.getColor() );
+                    }
                     f->setVelY( -f->getVelY() );
                     break;
                 case CollisionType::SOUTH:
+                    if ( GameWorld::debug ) {
+                        tile.setColor( cpS.getColor() );
+                    }
                     f->setVelY( -300 );
                     break;
                 case CollisionType::EAST:
+                    if ( GameWorld::debug ) {
+                        tile.setColor( cpE.getColor() );
+                    }
                     f->setState( SpriteState::TO_BE_REMOVED );
                     break;
                 case CollisionType::WEST:
+                    if ( GameWorld::debug ) {
+                        tile.setColor( cpW.getColor() );
+                    }
                     f->setState( SpriteState::TO_BE_REMOVED );
                     break;
             }
@@ -407,6 +432,10 @@ float Mario::getActivationWidth() {
     return activationWidth;
 }
 
+float Mario::getPowerUpActivationRadius() {
+    return powerUpActivationRadius;
+}
+
 void Mario::setImmortal( bool immortal ) {
     this->immortal = immortal;
 }
@@ -490,6 +519,19 @@ void Mario::setReservedPowerUp( MarioType reservedPowerUp ) {
     this->reservedPowerUp = reservedPowerUp;
 }
 
+MarioType Mario::getReservedPowerUp() {
+    return reservedPowerUp;
+}
+
+void Mario::consumeReservedPowerUp() {
+    if ( reservedPowerUp == MarioType::SUPER ) {
+        changeToSuper();
+    } else if ( reservedPowerUp == MarioType::FLOWER ) {
+        changeToFlower();
+    }
+    reservedPowerUp = MarioType::SMALL;
+}
+
 MarioType Mario::getType() {
     return type;
 }
@@ -557,7 +599,10 @@ void Mario::reset( bool removePowerUps ) {
         changeToSmall();
         reservedPowerUp = MarioType::SMALL;
     }
+    vel.x = 0;
+    vel.y = 0;
     state = SpriteState::ON_GROUND;
+    facingDirection = Direction::RIGHT;
     ducking = false;
     lookigUp = false;
     running = false;
