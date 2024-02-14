@@ -87,9 +87,9 @@ m: 1              # music id: [1-9]
 /                                                           C/
 /                                                           C/
 /                                                           C/
-/                                                           C/
 /        ! ! f        f f !    |     1   |                  C/
 /      IIIIIIIII    IIIIIIIII   IIIIIIIII                   C/
+/                                                           C/
 /   p                                                       C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAA/

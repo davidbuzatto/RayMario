@@ -13,17 +13,25 @@
 #include <string>
 
 FireFlower::FireFlower( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, dim, color, 0, 0 ) {
+    Sprite( pos, dim, color, 0.2, 2 ) {
 }
 
 FireFlower::~FireFlower() {
 }
 
 void FireFlower::update() {
+
+    frameAcum += GetFrameTime();
+    if ( frameAcum >= frameTime ) {
+        frameAcum = 0;
+        currentFrame++;
+        currentFrame %= maxFrames;
+    }
+
 }
 
 void FireFlower::draw() {
-    DrawTexture( ResourceManager::getTextures()["fireFlower"], pos.x, pos.y, WHITE );
+    DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "fireFlower%d", currentFrame ) )], pos.x, pos.y, WHITE );
 }
 
 void FireFlower::playCollisionSound() {

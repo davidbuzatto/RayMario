@@ -11,6 +11,7 @@ enum SpriteState {
 
     IDLE,
     ACTIVE,
+    TO_BE_REMOVED,
 
     ON_GROUND,
     JUMPING,

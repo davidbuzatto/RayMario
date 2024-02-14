@@ -105,6 +105,9 @@ void ResourceManager::loadTextures() {
 
         textures["superMario0Vic"] = LoadTexture( "resources/images/sprites/mario/SuperMarioVictory_0.png" );
 
+        textures["superMario0TfR"] = LoadTexture( "resources/images/sprites/mario/SuperMarioThrowingFireball_0.png" );
+        textures["superMario0TfL"] = texture2DFlipHorizontal( textures["superMario0TfR"] );
+
         // flower mario
         textures["flowerMario0R"] = textureColorReplace( textures["superMario0R"], flowerMarioReplacePallete );
         textures["flowerMario1R"] = textureColorReplace( textures["superMario1R"], flowerMarioReplacePallete );
@@ -136,6 +139,9 @@ void ResourceManager::loadTextures() {
         textures["flowerMario0DuL"] = texture2DFlipHorizontal( textures["flowerMario0DuR"] );
 
         textures["flowerMario0Vic"] = textureColorReplace( textures["superMario0Vic"], flowerMarioReplacePallete );
+
+        textures["flowerMario0TfR"] = textureColorReplace( textures["superMario0TfR"], flowerMarioReplacePallete );
+        textures["flowerMario0TfL"] = texture2DFlipHorizontal( textures["flowerMario0TfR"] );
 
         // fireball
         textures["fireball0R"] = LoadTexture( "resources/images/sprites/mario/FlowerMarioFireball_0.png" );
@@ -171,7 +177,8 @@ void ResourceManager::loadTextures() {
 
         textures["1UpMushroom"] = LoadTexture( TextFormat( "resources/images/sprites/items/1UpMushroom.png" ) );
         textures["3UpMoon"] = LoadTexture( TextFormat( "resources/images/sprites/items/3UpMoon.png" ) );
-        textures["fireFlower"] = LoadTexture( TextFormat( "resources/images/sprites/items/FireFlower.png" ) );
+        textures["fireFlower0"] = LoadTexture( TextFormat( "resources/images/sprites/items/FireFlower_0.png" ) );
+        textures["fireFlower1"] = LoadTexture( TextFormat( "resources/images/sprites/items/FireFlower_1.png" ) );
         textures["mushroom"] = LoadTexture( TextFormat( "resources/images/sprites/items/Mushroom.png" ) );
         textures["star"] = LoadTexture( TextFormat( "resources/images/sprites/items/Star.png" ) );
 

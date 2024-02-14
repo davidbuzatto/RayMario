@@ -206,39 +206,15 @@ void GameWorld::inputAndUpdate() {
             mario.updateCollisionProbes();
             for ( size_t i = 0; i < baddies.size(); i++ ) {
                 Baddie* baddie = baddies[i];
-                switch ( mario.checkCollisionBaddie( *baddie ) ) {
-                    case CollisionType::NORTH:
-                    case CollisionType::EAST:
-                    case CollisionType::WEST:
-                        if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
-                            switch ( mario.getType() ) {
-                                case MarioType::SMALL:
-                                    mario.setState( SpriteState::DYING );
-                                    PlaySound( sounds["playerDown"] );
-                                    mario.removeLives( 1 );
-                                    break;
-                                case MarioType::SUPER:
-                                    PlaySound( sounds["pipe"] );
-                                    mario.changeToSmall();
-                                    mario.setInvulnerable( true );
-                                    break;
-                                case MarioType::FLOWER:
-                                    PlaySound( sounds["pipe"] );
-                                    mario.changeToSuper();
-                                    mario.setInvulnerable( true );
-                                    break;
-                            }
-                        }
-                        break;
-                    case CollisionType::SOUTH:
-                        if ( mario.getState() == SpriteState::JUMPING || mario.getVelY() > 0 ) {
-                            mario.setY( baddie->getY() - mario.getHeight() );
-                            mario.setVelY( mario.getJumpSpeed() );
-                            mario.setState( SpriteState::JUMPING );
-                            collectedIndexes.push_back( i );
-                            PlaySound( sounds["stomp"] );
-                            mario.addPoints( 200 );
-                        } else {
+                CollisionType c = mario.checkCollisionBaddie( *baddie );
+                if ( baddie->getState() == SpriteState::TO_BE_REMOVED ) {
+                    collectedIndexes.push_back(i);
+                    PlaySound( sounds["stomp"] );
+                } else {
+                    switch ( c ) {
+                        case CollisionType::NORTH:
+                        case CollisionType::EAST:
+                        case CollisionType::WEST:
                             if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
                                 switch ( mario.getType() ) {
                                     case MarioType::SMALL:
@@ -258,14 +234,46 @@ void GameWorld::inputAndUpdate() {
                                         break;
                                 }
                             }
-                        }
-                        break;
-                    default:
-                        if ( baddie->getY() > map.getMaxHeight() ) {
-                            collectedIndexes.push_back( i );
-                        }
-                        break;
+                            break;
+                        case CollisionType::SOUTH:
+                            if ( mario.getState() == SpriteState::JUMPING || mario.getVelY() > 0 ) {
+                                mario.setY( baddie->getY() - mario.getHeight() );
+                                mario.setVelY( mario.getJumpSpeed() );
+                                mario.setState( SpriteState::JUMPING );
+                                collectedIndexes.push_back( i );
+                                PlaySound( sounds["stomp"] );
+                                mario.addPoints( 200 );
+                            } else {
+                                if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
+                                    switch ( mario.getType() ) {
+                                        case MarioType::SMALL:
+                                            mario.setState( SpriteState::DYING );
+                                            PlaySound( sounds["playerDown"] );
+                                            mario.removeLives( 1 );
+                                            break;
+                                        case MarioType::SUPER:
+                                            PlaySound( sounds["pipe"] );
+                                            mario.changeToSmall();
+                                            mario.setInvulnerable( true );
+                                            break;
+                                        case MarioType::FLOWER:
+                                            PlaySound( sounds["pipe"] );
+                                            mario.changeToSuper();
+                                            mario.setInvulnerable( true );
+                                            break;
+                                    }
+                                }
+                            }
+                            break;
+                        default:
+                            if ( baddie->getY() > map.getMaxHeight() ) {
+                                collectedIndexes.push_back( i );
+                            }
+                            break;
+                    }
+
                 }
+
                 mario.updateCollisionProbes();
 
             }

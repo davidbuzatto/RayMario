@@ -336,7 +336,6 @@
     <ClInclude Include="..\game\src\Rex.h" />
     <ClInclude Include="..\game\src\SpriteState.h" />
     <ClInclude Include="..\game\src\raygui.h" />
-    <ClInclude Include="..\game\src\raymath.h" />
     <ClInclude Include="..\game\src\ResourceManager.h" />
     <ClInclude Include="..\game\src\Sprite.h" />
     <ClInclude Include="..\game\src\Star.h" />

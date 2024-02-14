@@ -191,9 +191,6 @@
     <ClInclude Include="..\game\src\raygui.h">
       <Filter>Header Files\raylib</Filter>
     </ClInclude>
-    <ClInclude Include="..\game\src\raymath.h">
-      <Filter>Header Files\raylib</Filter>
-    </ClInclude>
     <ClInclude Include="..\game\src\CollisionProbe.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>

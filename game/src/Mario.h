@@ -51,6 +51,10 @@ class Mario : public virtual Sprite {
     MarioType reservedPowerUp;
 
     std::vector<Fireball> fireballs;
+
+    float runningAcum;
+    float runningTime;
+    bool drawRunningFrames;
     
 public:
 

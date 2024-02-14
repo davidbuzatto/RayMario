@@ -1,12 +1,3 @@
-implementar tiro quando mario estiver em flower
- -> colisão com cenário 
- -> colisão com baddies
- -> timespam para a bolinha de fogo (2 segundos?)
- -> quantidade máxima ativa (acho que são 3 no jogo)
- -> remoção de bolinhas inativas
- -> remoção de bolinhas fora da tela
- -> remoção de bolinhas que mataram os bichos
-
 esquematizar em papel a transição de estados
 
         se não tiver, ativa

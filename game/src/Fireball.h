@@ -13,13 +13,19 @@
 
 class Fireball : public virtual Sprite {
     
+    float timeSpan;
+    float timeSpanAcum;
+
 public:
 
-    Fireball( Vector2 pos, Vector2 dim, Vector2 vel, Color color, Direction facingDirection );
+    Fireball( Vector2 pos, Vector2 dim, Vector2 vel, Color color, Direction facingDirection, float timeSpan );
     ~Fireball();
 
     virtual void update();
     virtual void draw();
     virtual CollisionType checkCollision( Sprite& sprite );
+    virtual CollisionType checkCollisionTile( Sprite& sprite );
+    virtual CollisionType checkCollisionBaddie( Sprite& sprite );
+    virtual void updateCollisionProbes();
 
 };

@@ -39,7 +39,12 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     maxTime( 400.0f ),
     ellapsedTime( 0.0f ),
     type( MarioType::SMALL ),
-    reservedPowerUp( MarioType::SMALL ) {
+    reservedPowerUp( MarioType::SMALL ),
+    runningAcum( 0 ),
+    runningTime( 0.5 ),
+    drawRunningFrames( false ) {
+
+    //changeToFlower();
 
     setState( SpriteState::ON_GROUND );
 
@@ -63,12 +68,22 @@ void Mario::update() {
                 IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) &&
                 vel.x != 0;
 
+    if ( running ) {
+        runningAcum += GetFrameTime();
+        if ( runningAcum >= runningTime ) {
+            drawRunningFrames = true;
+        }
+    } else {
+        runningAcum = 0;
+        drawRunningFrames = false;
+    }
+
     if ( state != SpriteState::DYING && state != SpriteState::VICTORY ) {
         ellapsedTime += GetFrameTime();
     }
 
     float delta = GetFrameTime();
-    float currentSpeedX = running ? maxSpeedX : speedX;
+    float currentSpeedX = running ? ( drawRunningFrames ? maxSpeedX * 1.3 : maxSpeedX ) : speedX;
     float currentFrameTime = running && state != SpriteState::DYING ? frameTimeRunning : frameTimeWalking;
     std::map<std::string, Sound>& sounds = ResourceManager::getSounds();
 
@@ -138,15 +153,25 @@ void Mario::update() {
         if ( ( IsKeyPressed( KEY_LEFT_CONTROL ) ||
                IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) &&
              type == MarioType::FLOWER ) {
+
             if ( facingDirection == Direction::RIGHT ) {
-                fireballs.push_back( Fireball( Vector2( pos.x + dim.x / 2, pos.y + dim.y/2 - 3 ), Vector2( 16, 16 ), Vector2( 200, 0 ), RED, Direction::RIGHT ) );
+                fireballs.push_back( Fireball( Vector2( pos.x + dim.x / 2, pos.y + dim.y / 2 - 3 ), Vector2( 16, 16 ), Vector2( 400, 100 ), RED, Direction::RIGHT, 2 ) );
             } else {
-                fireballs.push_back( Fireball( Vector2( pos.x, pos.y + dim.y / 2 - 3 ), Vector2( 16, 16 ), Vector2( -200, 0 ), RED, Direction::LEFT ) );
+                fireballs.push_back( Fireball( Vector2( pos.x, pos.y + dim.y / 2 - 3 ), Vector2( 16, 16 ), Vector2( -400, 100 ), RED, Direction::LEFT, 2 ) );
             }
+            PlaySound( sounds["fireball"] );
+
         }
 
+        std::vector<int> collectedIndexes;
         for ( size_t i = 0; i < fireballs.size(); i++ ) {
             fireballs[i].update();
+            if ( fireballs[i].getState() == SpriteState::TO_BE_REMOVED ) {
+                collectedIndexes.push_back(i);
+            }
+        }
+        for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
+            fireballs.erase( fireballs.begin() + collectedIndexes[i] );
         }
 
         pos.x = pos.x + vel.x * delta;
@@ -190,16 +215,22 @@ void Mario::draw() {
                     DrawTexture( textures[std::string( TextFormat( "%sMario0Lu%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
                 } else if ( ducking ) {
                     DrawTexture( textures[std::string( TextFormat( "%sMario0Du%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
-                } else if ( running ) {
+                } else if ( drawRunningFrames ) {
                     DrawTexture( textures[std::string( TextFormat( "%sMario%dRu%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, WHITE );
                 } else { // iddle
-                    DrawTexture( textures[std::string( TextFormat( "%sMario%d%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, WHITE );
+                    if ( ( IsKeyPressed( KEY_LEFT_CONTROL ) ||
+                           IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) && 
+                           type == MarioType::FLOWER ) {
+                        DrawTexture( textures[std::string( TextFormat( "%sMario%dTf%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, WHITE );
+                    } else {
+                        DrawTexture( textures[std::string( TextFormat( "%sMario%d%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, WHITE );
+                    }
                 }
 
             } else if ( state == SpriteState::JUMPING ) {
 
                 if ( vel.y < 0 ) {
-                    if ( running ) {
+                    if ( drawRunningFrames ) {
                         DrawTexture( textures[std::string( TextFormat( "%sMario0JuRu%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
                     } else {
                         DrawTexture( textures[std::string( TextFormat( "%sMario0Ju%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
@@ -246,6 +277,24 @@ CollisionType Mario::checkCollisionTile( Sprite& sprite ) {
         Tile& tile = dynamic_cast<Tile&>( sprite );
         Rectangle tileRect = tile.getRect();
 
+        for ( size_t i = 0; i < fireballs.size(); i++ ) {
+            Fireball *f = &fireballs[i];
+            switch ( f->checkCollisionTile( tile ) ) {
+                case CollisionType::NORTH:
+                    f->setVelY( -f->getVelY() );
+                    break;
+                case CollisionType::SOUTH:
+                    f->setVelY( -300 );
+                    break;
+                case CollisionType::EAST:
+                    f->setState( SpriteState::TO_BE_REMOVED );
+                    break;
+                case CollisionType::WEST:
+                    f->setState( SpriteState::TO_BE_REMOVED );
+                    break;
+            }
+        }
+
         if ( cpN.checkCollision( tileRect ) ) {
             if ( GameWorld::debug ) {
                 tile.setColor( cpN.getColor() );
@@ -269,7 +318,7 @@ CollisionType Mario::checkCollisionTile( Sprite& sprite ) {
         }
 
     } catch ( std::bad_cast const& ) {
-    }
+    } 
 
     return CollisionType::NONE;
 
@@ -282,6 +331,19 @@ CollisionType Mario::checkCollisionBaddie( Sprite &sprite ) {
         Baddie &baddie = dynamic_cast<Baddie&>(sprite);
         Rectangle baddieRect = baddie.getRect();
         
+        for ( size_t i = 0; i < fireballs.size(); i++ ) {
+            Fireball* f = &fireballs[i];
+            switch ( f->checkCollisionBaddie( baddie ) ) {
+                case CollisionType::NORTH:
+                case CollisionType::SOUTH:
+                case CollisionType::EAST:
+                case CollisionType::WEST:
+                    f->setState( SpriteState::TO_BE_REMOVED );
+                    baddie.setState( SpriteState::TO_BE_REMOVED );
+                    break;
+            }
+        }
+
         if ( state == SpriteState::JUMPING || vel.y > 0 ) {
             if ( cpN.checkCollision( baddieRect ) ) {
                 return CollisionType::NORTH;
@@ -323,7 +385,7 @@ void Mario::drawHud() {
     if ( reservedPowerUp == MarioType::SUPER ) {
         DrawTexture( textures["mushroom"], GetScreenWidth() / 2 - textures["mushroom"].width / 2, 32, WHITE );
     } else if ( reservedPowerUp == MarioType::FLOWER ) {
-        DrawTexture( textures["fireFlower"], GetScreenWidth() / 2 - textures["fireFlower"].width / 2, 32, WHITE );
+        DrawTexture( textures["fireFlower0"], GetScreenWidth() / 2 - textures["fireFlower0"].width / 2, 32, WHITE );
     }
     DrawTexture( textures["guiNextItem"], GetScreenWidth() / 2 - textures["guiNextItem"].width / 2, 20, WHITE );
 
