@@ -30,7 +30,7 @@
 
 #define ACTIVATE_DEBUG true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
+#define LOAD_TEST_MAP false
 
 bool GameWorld::debug = ACTIVATE_DEBUG;
 bool GameWorld::showFPS = ACTIVATE_DEBUG;
@@ -289,7 +289,7 @@ void GameWorld::inputAndUpdate() {
                     case CollisionType::SOUTH:
                         if ( mario.getState() == SpriteState::FALLING && baddie->getState() != SpriteState::DYING ) {
                             mario.setY( baddie->getY() - mario.getHeight() );
-                            mario.setVelY( -150 );
+                            mario.setVelY( -200 );
                             mario.setState( SpriteState::JUMPING );
                             baddie->onHit();
                             /*baddie->setState(SpriteState::DYING);

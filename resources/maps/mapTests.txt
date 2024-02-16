@@ -3,16 +3,31 @@
 #
 # tiles:
 #     <space>: Empty tile
-#           /: Invisible tile
-#           |: Baddie invisible tile
-#        A..Z: Tiles A through Z (depends on the selected map)
+#           /: Invisible tile               (used for map/player/boundaries boundaries)
+#           |: Baddie invisible tile        (used only for baddies boundaries)
+#        A..Z: Tiles A through Z            (depends on the selected map)
+# 
+# boxes:
+#     i: eyes closed
+#     y: eyes opened          (interactive)
+#     s: stone
+#     w: wood
+#     g: glass
+#     c: cloud
+#     h: message              (interactive)
+#     !: ! with coin          (interactive)
+#     ?: ? with coin          (interactive)
+#     [: ? with mushroom      (interactive, will be exchanged by m)
+#     ]: ? with fire flower   (interactive, will be exchanged by f)
+#     {: ? with 1-up mushroom (interactive, will be exchanged by u)
+#     }: ? with 3-up moon     (interactive, will be exchanged by +)
 #
 # items:
 #     o: Coin
-#     !: Mushroom
-#     f: Fire Flower
-#     u: 1-Up Mushroom
-#     +: 3-Up Moon
+#     m: Mushroom             (will turn into a box)
+#     f: Fire Flower          (will turn into a box)
+#     u: 1-Up Mushroom        (will turn into a box)
+#     +: 3-Up Moon            (will turn into a box)
 #     *: Star
 #
 # baddies:
@@ -66,30 +81,30 @@ c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 m: 1              # music id: [1-9]
 t: 20000          # time to finish the map
-////////////////////////////////////////////////////////////////////////
-/                                                                      /
-/                                                     I               E/
-/                                                    I                C/
-/                                   1               I                 C/
-/                                IIII              I                  C/
-/                                                 I                   C/
-/                            IIIIIIII            I                    C/
-/                                               I                     C/
-/                        IIIIIIIIIIII          I                      C/
-/                    |               |        I                       C/
-/                     IIIIIIIIIIIIIII        I                        C/
-/                                           I                         C/
-/                                          I                          C/
-/                I            IIII        I                           C/
-/                I        1   I   I      I                            C/
-/                IIIIIIIIIIIIII    I    I                             C/
-/                                      I                              C/
-/                                     I                               C/
-/               IIII  IIII           I                                C/
-/               I        I                                            C/
-/               Iu + ! f I      f f !    |     1                      C/
-/               IIIIIIIIII    IIIIIIIII   IIIIIIIII                   C/
-/                                                                     C/
-/  p     % % % % % % %                                |                           C/
-/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBG/
-/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAA/
+/////////////////////////////////////////////////////////////////////////
+/                                                                       /
+/                                                      I               E/
+/                                                     I                C/
+/                                    1               I                 C/
+/                                 IIII              I                  C/
+/                                                  I                   C/
+/                             IIIIIIII            I                    C/
+/                                                I                     C/
+/                         IIIIIIIIIIII          I                      C/
+/                     |               |        I                       C/
+/                      IIIIIIIIIIIIIII        I                        C/
+/                                            I                         C/
+/                                           I                          C/
+/                 I            IIII        I                           C/
+/                 I        1   I   I      I                            C/
+/                 IIIIIIIIIIIIII    I    I                             C/
+/                                       I                              C/
+/                                      I                               C/
+/                IIII  IIII           I                                C/
+/                I        I                                            C/
+/                Iu + m f I      f f m    |     1                      C/
+/  iyswgch!?[]{} IIIIIIIIII    IIIIIIIII   IIIIIIIII                   C/
+/                                                                      C/
+/  p                                 |                                 C/
+/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

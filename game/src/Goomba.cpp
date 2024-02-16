@@ -23,7 +23,6 @@ Goomba::Goomba( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color, 0.2, 2, 1 ) {
 
     facingDirection = Direction::LEFT;
-    TraceLog( LOG_INFO, "%d", hitsToDie);
 
     Color c = ColorFromHSV( GetRandomValue( 0, 360 ), 1, 0.9 );
     cpN.setColor( c );

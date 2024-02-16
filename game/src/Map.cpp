@@ -210,6 +210,8 @@ void Map::parseMap() {
 
             if ( !ignoreLine ) {
 
+                // processing boundarie tiles when used as first column
+                // for camera adjustment
                 if ( *mapData != '/' ) {
                     if ( maxWidth < x ) {
                         maxWidth = x;
@@ -220,77 +222,82 @@ void Map::parseMap() {
                 }
 
                 switch ( *mapData ) {
-                    case 'a':
-                        tiles.push_back(
-                            Tile(
-                                Vector2( x, y ),
-                                Vector2( tileWidth, tileWidth ),
-                                GREEN,
-                                "",
-                                true
-                            )
-                        );
+
+                    // test tiles
+                    /*case 'a':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), GREEN, "", true ) );
                         break;
                     case 'b':
-                        tiles.push_back(
-                            Tile(
-                                Vector2( x, y ),
-                                Vector2( tileWidth, tileWidth ),
-                                BLUE,
-                                "",
-                                true
-                            )
-                        );
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLUE, "", true ) );
                         break;
                     case 'c':
-                        tiles.push_back(
-                            Tile(
-                                Vector2( x, y ),
-                                Vector2( tileWidth, tileWidth ),
-                                RED,
-                                "",
-                                true
-                            )
-                        );
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), RED, "", true ) );
                         break;
                     case 'd':
-                        tiles.push_back(
-                            Tile(
-                                Vector2( x, y ),
-                                Vector2( tileWidth, tileWidth ),
-                                ORANGE,
-                                "",
-                                true
-                            )
-                        );
-                        break;
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), ORANGE, "", true ) );
+                        break;*/
+
+                    // bondarie tiles
                     case '/':
-                        tiles.push_back(
-                            Tile(
-                                Vector2( x, y ),
-                                Vector2( tileWidth, tileWidth ),
-                                WHITE,
-                                "",
-                                false
-                            )
-                        );
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false ) );
                         break;
                     case '|':
-                        tiles.push_back(
-                            Tile(
-                                Vector2( x, y ),
-                                Vector2( tileWidth, tileWidth ),
-                                WHITE,
-                                "",
-                                false,
-                                true
-                            )
-                        );
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false, true ) );
                         break;
+
+                    // boxes
+                    case 'i':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), YELLOW, "", true ) );
+                        break;
+                    case 'y':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), GOLD, "", true ) );
+                        break;
+                    case 's':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), ORANGE, "", true ) );
+                        break;
+                    case 'w':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), PINK, "", true ) );
+                        break;
+                    case 'g':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), RED, "", true ) );
+                        break;
+                    case 'c':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), MAROON, "", true ) );
+                        break;
+                    case 'h':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), GREEN, "", true ) );
+                        break;
+                    case '!':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), LIME, "", true ) );
+                        break;
+                    case '?':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), SKYBLUE, "", true ) );
+                        break;
+                    case '[':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLUE, "", true ) );
+                        break;
+                    case ']':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), PURPLE, "", true ) );
+                        break;
+                    case '{':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), VIOLET, "", true ) );
+                        break;
+                    case '}':
+                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BROWN, "", true ) );
+                        break;
+
+                    // tiles from A to Z (map dependent - future)
+                    default:
+                        if ( *mapData >= 'A' && *mapData <= 'Z' ) {
+                            tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, std::string( 1, *mapData ), true ) );
+                        }
+                        break;
+
+                    // items
                     case 'o':
                         items.push_back( new Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
                         break;
-                    case '!':
+                    case 'm':
                         items.push_back( new Mushroom( Vector2( x, y ), Vector2( 32, 32 ), Vector2( 200, 0 ), RED ) );
                         break;
                     case 'f':
@@ -305,6 +312,8 @@ void Map::parseMap() {
                     case '*':
                         items.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
                         break;
+
+                    // baddies
                     case '1':
                         baddies.push_back( new Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), MAROON ) );
                         break;
@@ -341,30 +350,23 @@ void Map::parseMap() {
                     case '%':
                         baddies.push_back( new Rex( Vector2( x, y ), Vector2( 40, 64 ), Vector2( -100, 0 ), VIOLET ) );
                         break;
+
+                    // no tile
+                    case ' ':
+                        break;
+
+                    // mario/player
+                    case 'p':
+                        mario.setPos( Vector2( x, y ) );
+                        break;
+
+                    // parsing control
                     case '\n':
                         currentLine++;
                         currentColumn = -1;
                         ignoreLine = false;
                         break;
-                    case ' ':
-                        break;
-                    case 'p':
-                        mario.setPos( Vector2( x, y ) );
-                        break;
-                    default:
-                        int index = ( *mapData ) - 'A';
-                        if ( *mapData >= 'A' && *mapData <= 'Z' ) {
-                            tiles.push_back(
-                                Tile(
-                                    Vector2( x, y ),
-                                    Vector2( tileWidth, tileWidth ),
-                                    BLACK,
-                                    std::string( 1, *mapData ),
-                                    true
-                                )
-                            );
-                        }
-                        break;
+
                 }
 
             }
