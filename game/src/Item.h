@@ -31,7 +31,7 @@ public:
     virtual void playCollisionSound() = 0;
     virtual void updateMario( Mario &mario ) = 0;
     void activateWithMarioProximity( Mario& mario );
-    virtual CollisionType checkCollisionTile( Sprite& sprite ) = 0;
+    virtual CollisionType checkCollisionTile( Sprite& sprite );
     virtual void onSouthCollision();
 
 };

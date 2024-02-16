@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Baddie.h"
+#include "Box.h"
 #include "Drawable.h"
 #include "Mario.h"
 #include "raylib.h"
@@ -29,6 +30,7 @@ class Map : public virtual Drawable {
 
     std::vector<Item*> items;
     std::vector<Baddie*> baddies;
+    std::vector<Box*> boxes;
 
     Mario &mario;
 
@@ -52,6 +54,7 @@ public:
     std::vector<Tile> &getTiles();
     std::vector<Item*> &getItems();
     std::vector<Baddie*> &getBaddies();
+    std::vector<Box*> &getBoxes();
     void parseMap();
     float getMaxWidth();
     float getMaxHeight();

@@ -24,7 +24,6 @@ public:
 
     virtual void update();
     virtual void draw();
-    virtual CollisionType checkCollision( Sprite &sprite );
     virtual void updateCollisionProbes();
     virtual void onSouthCollision();
 

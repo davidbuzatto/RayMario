@@ -158,29 +158,46 @@ void ResourceManager::loadTextures() {
             textures[std::string(1, c)] = LoadTexture( TextFormat( "resources/images/tiles/tile_%c.png", c ) );
         }
 
+        // boxes
+        textures["boxCloud"] = LoadTexture( "resources/images/sprites/boxes/Cloud_0.png" );
+        textures["boxExclamation"] = LoadTexture( "resources/images/sprites/boxes/Exclamation_0.png" );
+        textures["boxEyesClosed"] = LoadTexture(  "resources/images/sprites/boxes/EyesClosed_0.png" );
+        textures["boxEyesOpened0"] = LoadTexture( "resources/images/sprites/boxes/EyesOpened_0.png" );
+        textures["boxEyesOpened1"] = LoadTexture( "resources/images/sprites/boxes/EyesOpened_1.png" );
+        textures["boxEyesOpened2"] = LoadTexture( "resources/images/sprites/boxes/EyesOpened_2.png" );
+        textures["boxEyesOpened3"] = LoadTexture( "resources/images/sprites/boxes/EyesOpened_3.png" );
+        textures["boxGlass"] = LoadTexture(   "resources/images/sprites/boxes/Glass_0.png" );
+        textures["boxMessage"] = LoadTexture( "resources/images/sprites/boxes/Message_0.png" );
+        textures["boxQuestion0"] = LoadTexture( "resources/images/sprites/boxes/Question_0.png" );
+        textures["boxQuestion1"] = LoadTexture( "resources/images/sprites/boxes/Question_1.png" );
+        textures["boxQuestion2"] = LoadTexture( "resources/images/sprites/boxes/Question_2.png" );
+        textures["boxQuestion3"] = LoadTexture( "resources/images/sprites/boxes/Question_3.png" );
+        textures["boxStone"] = LoadTexture( "resources/images/sprites/boxes/Stone_0.png" );
+        textures["boxWood"] = LoadTexture( "resources/images/sprites/boxes/Wood_0.png" );
+
         // backgrounds
-        textures["background1"] = LoadTexture( TextFormat( "resources/images/backgrounds/background1.png" ) );
-        textures["background2"] = LoadTexture( TextFormat( "resources/images/backgrounds/background2.png" ) );
-        textures["background3"] = LoadTexture( TextFormat( "resources/images/backgrounds/background3.png" ) );
-        textures["background4"] = LoadTexture( TextFormat( "resources/images/backgrounds/background4.png" ) );
-        textures["background5"] = LoadTexture( TextFormat( "resources/images/backgrounds/background5.png" ) );
-        textures["background6"] = LoadTexture( TextFormat( "resources/images/backgrounds/background6.png" ) );
-        textures["background7"] = LoadTexture( TextFormat( "resources/images/backgrounds/background7.png" ) );
-        textures["background8"] = LoadTexture( TextFormat( "resources/images/backgrounds/background8.png" ) );
-        textures["background9"] = LoadTexture( TextFormat( "resources/images/backgrounds/background9.png" ) );
-        textures["background10"] = LoadTexture( TextFormat( "resources/images/backgrounds/background10.png" ) );
+        textures["background1"] = LoadTexture( "resources/images/backgrounds/background1.png" );
+        textures["background2"] = LoadTexture( "resources/images/backgrounds/background2.png" );
+        textures["background3"] = LoadTexture( "resources/images/backgrounds/background3.png" );
+        textures["background4"] = LoadTexture( "resources/images/backgrounds/background4.png" );
+        textures["background5"] = LoadTexture( "resources/images/backgrounds/background5.png" );
+        textures["background6"] = LoadTexture( "resources/images/backgrounds/background6.png" );
+        textures["background7"] = LoadTexture( "resources/images/backgrounds/background7.png" );
+        textures["background8"] = LoadTexture( "resources/images/backgrounds/background8.png" );
+        textures["background9"] = LoadTexture( "resources/images/backgrounds/background9.png" );
+        textures["background10"] = LoadTexture( "resources/images/backgrounds/background10.png" );
 
         // items
         for ( int i = 0; i < 4; i++ ) {
-            textures[std::string(TextFormat("coin%d", i))] = LoadTexture( TextFormat("resources/images/sprites/items/Coin_%d.png", i ) );
+            textures[std::string( TextFormat("coin%d", i))] = LoadTexture( TextFormat("resources/images/sprites/items/Coin_%d.png", i ) );
         }
 
-        textures["1UpMushroom"] = LoadTexture( TextFormat( "resources/images/sprites/items/1UpMushroom.png" ) );
-        textures["3UpMoon"] = LoadTexture( TextFormat( "resources/images/sprites/items/3UpMoon.png" ) );
-        textures["fireFlower0"] = LoadTexture( TextFormat( "resources/images/sprites/items/FireFlower_0.png" ) );
-        textures["fireFlower1"] = LoadTexture( TextFormat( "resources/images/sprites/items/FireFlower_1.png" ) );
-        textures["mushroom"] = LoadTexture( TextFormat( "resources/images/sprites/items/Mushroom.png" ) );
-        textures["star"] = LoadTexture( TextFormat( "resources/images/sprites/items/Star.png" ) );
+        textures["1UpMushroom"] = LoadTexture(  "resources/images/sprites/items/1UpMushroom.png" );
+        textures["3UpMoon"] = LoadTexture( "resources/images/sprites/items/3UpMoon.png" );
+        textures["fireFlower0"] = LoadTexture( "resources/images/sprites/items/FireFlower_0.png" );
+        textures["fireFlower1"] = LoadTexture( "resources/images/sprites/items/FireFlower_1.png" );
+        textures["mushroom"] = LoadTexture( "resources/images/sprites/items/Mushroom.png" );
+        textures["star"] = LoadTexture( "resources/images/sprites/items/Star.png" );
 
         // baddies
         textures["blueKoopaTroopa0R"] = LoadTexture( "resources/images/sprites/baddies/BlueKoopaTroopa_0.png" );

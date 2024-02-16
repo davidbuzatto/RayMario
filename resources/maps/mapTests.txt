@@ -83,27 +83,27 @@ m: 1              # music id: [1-9]
 t: 20000          # time to finish the map
 /////////////////////////////////////////////////////////////////////////
 /                                                                       /
-/                                                      I               E/
-/                                                     I                C/
-/                                    1               I                 C/
-/                                 IIII              I                  C/
-/                                                  I                   C/
-/                             IIIIIIII            I                    C/
-/                                                I                     C/
-/                         IIIIIIIIIIII          I                      C/
-/                     |               |        I                       C/
-/                      IIIIIIIIIIIIIII        I                        C/
-/                                            I                         C/
-/                                           I                          C/
-/                 I            IIII        I                           C/
-/                 I        1   I   I      I                            C/
-/                 IIIIIIIIIIIIII    I    I                             C/
-/                                       I                              C/
-/                                      I                               C/
-/                IIII  IIII           I                                C/
-/                I        I                                            C/
-/                Iu + m f I      f f m    |     1                      C/
-/  iyswgch!?[]{} IIIIIIIIII    IIIIIIIII   IIIIIIIII                   C/
+/                                                      i               E/
+/                                                     i                C/
+/                                    1               i                 C/
+/                                 iiii              i                  C/
+/                                                  i                   C/
+/                             iiiiiiii            i                    C/
+/                                                i                     C/
+/                         iiiiiiiiiiii          i                      C/
+/                     |               |        i                       C/
+/                      iiiiiiiiiiiiiii        i                        C/
+/                                            i                         C/
+/                                           i                          C/
+/                 i            iiii        i                           C/
+/                 i        1   i   i      i                            C/
+/                 iiiiiiiiiiiiii    i    i                             C/
+/                                       i                              C/
+/                                      i                               C/
+/                iiii  iiii           i                                C/
+/                i        i                                            C/
+/ |           1 |iu + m f i      f f m    |     1                      C/
+/  iyswgch!?[]{} iiiiiiiiii    iiiiiiiii   iiiiiiiii                   C/
 /                                                                      C/
 /  p                                 |                                 C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBBBBBBBG/

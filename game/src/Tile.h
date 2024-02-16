@@ -13,6 +13,7 @@
 
 class Tile : public virtual Sprite {
 
+protected:
     std::string key;
     bool visible;
     bool onlyBaddies;

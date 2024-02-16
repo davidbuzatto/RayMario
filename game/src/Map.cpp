@@ -30,6 +30,20 @@
 #include "Rex.h"
 #include "Swooper.h"
 #include "YellowKoopaTroopa.h"
+#include "Box.h"
+#include "Cloud.h"
+#include "Exclamation.h"
+#include "EyesClosed.h"
+#include "EyesOpened.h"
+#include "Glass.h"
+#include "Message.h"
+#include "Question.h"
+#include "QuestionFireFlower.h"
+#include "QuestionMushroom.h"
+#include "QuestionOneUpMushroom.h"
+#include "QuestionThreeUpMoon.h"
+#include "Stone.h"
+#include "Wood.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -73,6 +87,10 @@ void Map::draw() {
         tiles[i].draw();
     }
 
+    for ( size_t i = 0; i < boxes.size(); i++ ) {
+        boxes[i]->draw();
+    }
+
     for ( size_t i = 0; i < items.size(); i++ ) {
         items[i]->draw();
     }
@@ -93,6 +111,10 @@ std::vector<Item*> &Map::getItems() {
 
 std::vector<Baddie*> &Map::getBaddies() {
     return baddies;
+}
+
+std::vector<Box*> &Map::getBoxes() {
+    return boxes;
 }
 
 void Map::playMusic() {
@@ -247,43 +269,43 @@ void Map::parseMap() {
 
                     // boxes
                     case 'i':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), YELLOW, "", true ) );
+                        boxes.push_back( new EyesClosed( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'y':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), GOLD, "", true ) );
+                        boxes.push_back( new EyesOpened( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 's':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), ORANGE, "", true ) );
+                        boxes.push_back( new Stone( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'w':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), PINK, "", true ) );
+                        boxes.push_back( new Wood( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'g':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), RED, "", true ) );
+                        boxes.push_back( new Glass( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'c':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), MAROON, "", true ) );
+                        boxes.push_back( new Cloud( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'h':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), GREEN, "", true ) );
+                        boxes.push_back( new Message( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '!':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), LIME, "", true ) );
+                        boxes.push_back( new Exclamation( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '?':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), SKYBLUE, "", true ) );
+                        boxes.push_back( new Question( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '[':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLUE, "", true ) );
+                        boxes.push_back( new QuestionMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case ']':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), PURPLE, "", true ) );
+                        boxes.push_back( new QuestionFireFlower( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '{':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), VIOLET, "", true ) );
+                        boxes.push_back( new QuestionOneUpMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '}':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BROWN, "", true ) );
+                        boxes.push_back( new QuestionThreeUpMoon( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
 
                     // tiles from A to Z (map dependent - future)

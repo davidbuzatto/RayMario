@@ -26,11 +26,12 @@
 #include "Baddie.h"
 #include "SpriteState.h"
 #include "Tile.h"
+#include "Box.h"
 #include "utils.h"
 
 #define ACTIVATE_DEBUG true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP false
+#define LOAD_TEST_MAP true
 
 bool GameWorld::debug = ACTIVATE_DEBUG;
 bool GameWorld::showFPS = ACTIVATE_DEBUG;
@@ -77,6 +78,7 @@ void GameWorld::inputAndUpdate() {
 
     std::vector<Item*> &items = map.getItems();
     std::vector<Baddie*> &baddies = map.getBaddies();
+    std::vector<Box*> &boxes = map.getBoxes();
     std::vector<Tile>& tiles = map.getTiles();
     std::vector<int> collectedIndexes;
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
@@ -119,6 +121,10 @@ void GameWorld::inputAndUpdate() {
 
         for ( size_t i = 0; i < baddies.size(); i++ ) {
             baddies[i]->update();
+        }
+
+        for ( size_t i = 0; i < boxes.size(); i++ ) {
+            boxes[i]->update();
         }
 
         // tiles collision resolution
@@ -215,7 +221,102 @@ void GameWorld::inputAndUpdate() {
                         break;
                 }
             }
-            
+
+        }
+
+        // boxes collision resolution
+        mario.updateCollisionProbes();
+        for ( size_t i = 0; i < boxes.size(); i++ ) {
+
+            Box *box = boxes[i];
+
+            // mario x boxes
+            switch ( mario.checkCollisionBox( *box ) ) {
+                case CollisionType::NORTH:
+                    mario.setY( box->getY() + box->getHeight() );
+                    mario.setVelY( 0 );
+                    mario.updateCollisionProbes();
+                    break;
+                case CollisionType::SOUTH:
+                    mario.setY( box->getY() - mario.getHeight() );
+                    mario.setVelY( 0 );
+                    mario.setState( SpriteState::ON_GROUND );
+                    mario.updateCollisionProbes();
+                    break;
+                case CollisionType::EAST:
+                    mario.setX( box->getX() - mario.getWidth() );
+                    mario.setVelX( 0 );
+                    mario.updateCollisionProbes();
+                    break;
+                case CollisionType::WEST:
+                    mario.setX( box->getX() + box->getWidth() );
+                    mario.setVelX( 0 );
+                    mario.updateCollisionProbes();
+                    break;
+                case CollisionType::NONE:
+                    break;
+            }
+
+            // baddies x boxes
+            for ( size_t j = 0; j < baddies.size(); j++ ) {
+                Baddie* baddie = baddies[j];
+                baddie->updateCollisionProbes();
+                if ( baddie->getState() != SpriteState::DYING ) {
+                    switch ( baddie->checkCollision( *box ) ) {
+                        case CollisionType::NORTH:
+                            baddie->setY( box->getY() + box->getHeight() );
+                            baddie->setVelY( 0 );
+                            baddie->updateCollisionProbes();
+                            break;
+                        case CollisionType::SOUTH:
+                            baddie->setY( box->getY() - baddie->getHeight() );
+                            baddie->setVelY( 0 );
+                            baddie->onSouthCollision();
+                            baddie->updateCollisionProbes();
+                            break;
+                        case CollisionType::EAST:
+                            baddie->setX( box->getX() - baddie->getWidth() );
+                            baddie->setVelX( -baddie->getVelX() );
+                            baddie->updateCollisionProbes();
+                            break;
+                        case CollisionType::WEST:
+                            baddie->setX( box->getX() + box->getWidth() );
+                            baddie->setVelX( -baddie->getVelX() );
+                            baddie->updateCollisionProbes();
+                            break;
+                    }
+                }
+            }
+
+            // items x boxes
+            for ( size_t j = 0; j < items.size(); j++ ) {
+                Item* item = items[j];
+                item->updateCollisionProbes();
+                switch ( item->checkCollisionTile( *box ) ) {
+                    case CollisionType::NORTH:
+                        item->setY( box->getY() + box->getHeight() );
+                        item->setVelY( 0 );
+                        item->updateCollisionProbes();
+                        break;
+                    case CollisionType::SOUTH:
+                        item->setY( box->getY() - item->getHeight() );
+                        item->setVelY( 0 );
+                        item->onSouthCollision();
+                        item->updateCollisionProbes();
+                        break;
+                    case CollisionType::EAST:
+                        item->setX( box->getX() - item->getWidth() );
+                        item->setVelX( -item->getVelX() );
+                        item->updateCollisionProbes();
+                        break;
+                    case CollisionType::WEST:
+                        item->setX( box->getX() + box->getWidth() );
+                        item->setVelX( -item->getVelX() );
+                        item->updateCollisionProbes();
+                        break;
+                }
+            }
+
         }
 
         // items activation
@@ -292,8 +393,6 @@ void GameWorld::inputAndUpdate() {
                             mario.setVelY( -200 );
                             mario.setState( SpriteState::JUMPING );
                             baddie->onHit();
-                            /*baddie->setState(SpriteState::DYING);
-                            baddie->setAttributesOnDying();*/
                             PlaySound( sounds["stomp"] );
                             mario.addPoints( 200 );
                         } else {

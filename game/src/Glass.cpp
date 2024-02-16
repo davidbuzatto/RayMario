@@ -1,58 +1,37 @@
 /**
- * @file Tile.cpp
+ * @file Glass.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Tile class implementation.
- * 
+ * @brief Glass class implementation.
+ *
  * @copyright Copyright (c) 2024
  */
-#include "Tile.h"
+#include "Glass.h"
 #include "GameWorld.h"
 #include "ResourceManager.h"
 #include "raylib.h"
 #include <iostream>
 #include <string>
 
-Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible ) :
-    Tile( pos, dim, color, key, visible, false ) {
-}
+Glass::Glass( Vector2 pos, Vector2 dim, Color color ) :
+    Glass( pos, dim, color, 0, 1 ) {}
 
-Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, bool onlyBaddies ) :
-    Sprite( pos, dim, color ),
-    key( key ),
-    visible( visible ),
-    onlyBaddies( onlyBaddies ) {
-}
+Glass::Glass( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+    Sprite( pos, dim, color, frameTime, maxFrames ) {}
 
-Tile::~Tile() {
-}
+Glass::~Glass() {}
 
-void Tile::update() {
-}
+void Glass::update() {}
 
-void Tile::draw() {
+void Glass::draw() {
 
-    if ( visible ) {
-        
-        std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
+    DrawTexture( ResourceManager::getTextures()["boxGlass"], pos.x, pos.y, WHITE );
 
-        if ( key.length() != 0 ) {
-            DrawTexture( textures[key], pos.x, pos.y, WHITE );
-        } else {
-            DrawRectangle( pos.x, pos.y, dim.x, dim.y, color );
-        }
-
-    }
-
-    if ( GameWorld::debug && !(color.r == 0 && color.g == 0 && color.b == 0) ) {
+    if ( GameWorld::debug && !( color.r == 0 && color.g == 0 && color.b == 0 ) ) {
         DrawRectangle( pos.x, pos.y, dim.x, dim.y, Fade( color, 0.5 ) );
     }
 
 }
 
-CollisionType Tile::checkCollision( Sprite &sprite ) {
+CollisionType Glass::checkCollision( Sprite& sprite ) {
     return CollisionType::NONE;
-}
-
-bool Tile::isOnlyBaddies() {
-    return onlyBaddies;
 }

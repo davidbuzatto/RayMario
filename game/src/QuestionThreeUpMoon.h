@@ -1,27 +1,25 @@
 /**
- * @file Question.h
+ * @file QuestionThreeUpMoon.h
  * @author Prof. Dr. David Buzatto
- * @brief Question class declaration.
- * 
+ * @brief QuestionThreeUpMoon class declaration.
+ *
  * @copyright Copyright (c) 2024
  */
 #pragma once
 
 #include "raylib.h"
 #include "Box.h"
-#include <vector>
 
-class Question : public virtual Box {
+class QuestionThreeUpMoon : public virtual Box {
 
 public:
 
-    Question();
-    Question( Vector2 pos, Vector2 dim, Color color );
-    Question( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
-    ~Question();
+    QuestionThreeUpMoon( Vector2 pos, Vector2 dim, Color color );
+    QuestionThreeUpMoon( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
+    ~QuestionThreeUpMoon();
 
-    virtual void update() = 0;
-    virtual void draw() = 0;
-    virtual CollisionType checkCollision( Sprite &sprite ) = 0;
+    virtual void update();
+    virtual void draw();
+    virtual CollisionType checkCollision( Sprite& sprite );
 
 };

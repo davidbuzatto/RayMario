@@ -72,6 +72,7 @@ public:
 
     CollisionType checkCollisionTile( Sprite& sprite );
     CollisionType checkCollisionBaddie( Sprite& sprite );
+    CollisionType checkCollisionBox( Sprite& sprite );
 
     void setImmortal( bool immortal );
     void setActivationWidth( float activationWidth );

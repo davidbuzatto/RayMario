@@ -387,6 +387,72 @@ CollisionType Mario::checkCollisionBaddie( Sprite &sprite ) {
 
 }
 
+CollisionType Mario::checkCollisionBox( Sprite& sprite ) {
+
+    try {
+
+        Box& box = dynamic_cast<Box&>( sprite );
+        Rectangle boxRect = box.getRect();
+
+        for ( size_t i = 0; i < fireballs.size(); i++ ) {
+            Fireball* f = &fireballs[i];
+            switch ( f->checkCollisionTile( box ) ) {
+                case CollisionType::NORTH:
+                    if ( GameWorld::debug ) {
+                        box.setColor( cpN.getColor() );
+                    }
+                    f->setVelY( -f->getVelY() );
+                    break;
+                case CollisionType::SOUTH:
+                    if ( GameWorld::debug ) {
+                        box.setColor( cpS.getColor() );
+                    }
+                    f->setVelY( -300 );
+                    break;
+                case CollisionType::EAST:
+                    if ( GameWorld::debug ) {
+                        box.setColor( cpE.getColor() );
+                    }
+                    f->setState( SpriteState::TO_BE_REMOVED );
+                    break;
+                case CollisionType::WEST:
+                    if ( GameWorld::debug ) {
+                        box.setColor( cpW.getColor() );
+                    }
+                    f->setState( SpriteState::TO_BE_REMOVED );
+                    break;
+            }
+        }
+
+        if ( cpN.checkCollision( boxRect ) ) {
+            if ( GameWorld::debug ) {
+                box.setColor( cpN.getColor() );
+            }
+            return CollisionType::NORTH;
+        } else if ( cpS.checkCollision( boxRect ) ) {
+            if ( GameWorld::debug ) {
+                box.setColor( cpS.getColor() );
+            }
+            return CollisionType::SOUTH;
+        } else if ( cpE.checkCollision( boxRect ) || cpE1.checkCollision( boxRect ) ) {
+            if ( GameWorld::debug ) {
+                box.setColor( cpE.getColor() );
+            }
+            return CollisionType::EAST;
+        } else if ( cpW.checkCollision( boxRect ) || cpW1.checkCollision( boxRect ) ) {
+            if ( GameWorld::debug ) {
+                box.setColor( cpW.getColor() );
+            }
+            return CollisionType::WEST;
+        }
+
+    } catch ( std::bad_cast const& ) {
+    }
+
+    return CollisionType::NONE;
+
+}
+
 void Mario::drawHud() {
 
     std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();

@@ -93,38 +93,3 @@ void GreenKoopaTroopa::draw() {
 
 }
 
-CollisionType GreenKoopaTroopa::checkCollision( Sprite &sprite ) {
-
-    try {
-
-        Tile& tile = dynamic_cast<Tile&>( sprite );
-        Rectangle tileRect = tile.getRect();
-
-        if ( cpN.checkCollision( tileRect ) ) {
-            if ( GameWorld::debug ) {
-                tile.setColor( cpN.getColor() );
-            }
-            return CollisionType::NORTH;
-        } else if ( cpS.checkCollision( tileRect ) ) {
-            if ( GameWorld::debug ) {
-                tile.setColor( cpS.getColor() );
-            }
-            return CollisionType::SOUTH;
-        } else if ( cpE.checkCollision( tileRect ) ) {
-            if ( GameWorld::debug ) {
-                tile.setColor( cpE.getColor() );
-            }
-            return CollisionType::EAST;
-        } else if ( cpW.checkCollision( tileRect ) ) {
-            if ( GameWorld::debug ) {
-                tile.setColor( cpW.getColor() );
-            }
-            return CollisionType::WEST;
-        }
-
-    } catch ( std::bad_cast const& ) {
-    }
-
-    return CollisionType::NONE;
-
-}

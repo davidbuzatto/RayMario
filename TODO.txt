@@ -1,16 +1,24 @@
 para versão final:
     
     - criar caixas interativas (moedas, "?", powerup etc)
+         - adicionar interação
+         - ajustar mapas
+         - ajustar tiles (remoção das caixas)
+    
+    - atualizar readme
     
     - otimizações:
         - diminuir a quantidade de loops no GameWorld (muitos podem ser condensados)
         - colisão apenas para tiles e baddies que estão a uma certa distância (depende de organização matricial)
         - a partir da segunda fase o jogo está muito pesado (muitas iterações)
+        - há muitas chamadas de funções desnecessárias
         
     - tela de transição entre fases
         - efeito funil
         - contagem de pontos:
             1 segundo equivale a 50 pontos
+            
+    
             
 futuro:
     separar tiles de cenário, fundo etc
