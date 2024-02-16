@@ -291,8 +291,9 @@ void GameWorld::inputAndUpdate() {
                             mario.setY( baddie->getY() - mario.getHeight() );
                             mario.setVelY( -150 );
                             mario.setState( SpriteState::JUMPING );
-                            baddie->setState( SpriteState::DYING );
-                            baddie->setAttributesOnDying();
+                            baddie->onHit();
+                            /*baddie->setState(SpriteState::DYING);
+                            baddie->setAttributesOnDying();*/
                             PlaySound( sounds["stomp"] );
                             mario.addPoints( 200 );
                         } else {

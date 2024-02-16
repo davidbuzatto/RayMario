@@ -20,7 +20,7 @@
 #include <vector>
 
 BulletBill::BulletBill( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Sprite( pos, dim, vel, color, 0.2, 1 ) {
+    Sprite( pos, dim, vel, color, 0.2, 1, 1 ) {
 
     facingDirection = Direction::LEFT;
     

@@ -1,6 +1,5 @@
 para versão final:
     
-    - rex para morrer precisa de 2 hits
     - criar caixas interativas (moedas, "?", powerup etc)
     
     - otimizações:

@@ -20,7 +20,7 @@
 #include <vector>
 
 Rex::Rex( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Sprite( pos, dim, vel, color, 0.2, 2 ) {
+    Sprite( pos, dim, vel, color, 0.2, 2, 2 ) {
 
     facingDirection = Direction::LEFT;
     
@@ -79,7 +79,7 @@ void Rex::draw() {
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
     char dir = facingDirection == Direction::RIGHT ? 'R' : 'L';
 
-    DrawTexturePro( textures[std::string( TextFormat( "rex2%d%c", currentFrame, dir ) )],
+    DrawTexturePro( textures[std::string( TextFormat( "rex%d%d%c", hitsToDie, currentFrame, dir ) )],
                     Rectangle( 0, 0, dim.x, dim.y ),
                     Rectangle( pos.x + dim.x / 2, pos.y + dim.y / 2, dim.x, dim.y ),
                     Vector2( dim.x / 2, dim.y / 2 ), angle, WHITE );
@@ -127,4 +127,17 @@ CollisionType Rex::checkCollision( Sprite &sprite ) {
 
     return CollisionType::NONE;
 
+}
+
+void Rex::onHit() {
+    if ( hitsToDie == 1 ) {
+        state = SpriteState::DYING;
+        setAttributesOnDying();
+    } else {
+        dim.x = 32;
+        dim.y = 32;
+        pos.y += 32;
+        hitsToDie--;
+        updateCollisionProbes();
+    }
 }

@@ -15,26 +15,50 @@ Sprite::Sprite() :
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT, 1 ) {
+}
+
+Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, int hitsToDie ) :
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, Direction::RIGHT ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, Direction::RIGHT, 1 ) {
+}
+
+Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, int hitsToDie ) :
+    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, Direction::RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, Direction facingDirection ) : 
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT, 1 ) {
+}
+
+Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie ) :
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Sprite( pos, dim, vel, color, 0, 0, Direction::RIGHT ) {
+    Sprite( pos, dim, vel, color, 0, 0, Direction::RIGHT, 1 ) {
+}
+
+Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, int hitsToDie ) :
+    Sprite( pos, dim, vel, color, 0, 0, Direction::RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, vel, color, frameTime, maxFrames, Direction::RIGHT ) {
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, Direction::RIGHT, 1 ) {
+}
+
+Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int hitsToDie ) :
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, Direction::RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection ) :
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, facingDirection, 1 ) {
+}
+
+Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie ) :
     pos( pos ),
     dim( dim ),
     vel( vel ),
@@ -45,7 +69,8 @@ Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
     currentFrame( 0 ),
     maxFrames( maxFrames ),
     state( SpriteState::IDLE ),
-    facingDirection( facingDirection ) {
+    facingDirection( facingDirection ),
+    hitsToDie( hitsToDie ) {
     cpN.setColor( color );
     cpS.setColor( color );
     cpE.setColor( color );

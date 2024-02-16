@@ -20,7 +20,7 @@
 #include <vector>
 
 BlueKoopaTroopa::BlueKoopaTroopa( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Sprite( pos, dim, vel, color, 0.2, 2 ) {
+    Sprite( pos, dim, vel, color, 0.2, 2, 1 ) {
 
     facingDirection = Direction::LEFT;
     

@@ -21,6 +21,7 @@ protected:
     Vector2 dim;
     Vector2 vel;
     float angle;
+    int hitsToDie;
     Color color;
     SpriteState state;
 
@@ -39,11 +40,17 @@ public:
 
     Sprite();
     Sprite( Vector2 pos, Vector2 dim, Color color );
+    Sprite( Vector2 pos, Vector2 dim, Color color, int hitsToDie );
     Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
+    Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, int hitsToDie );
     Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, Direction facingDirection );
+    Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
+    Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, int hitsToDie );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames );
+    Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int hitsToDie );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection );
+    Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie );
     virtual ~Sprite();   // virtual destructor enables polimorphism
 
     virtual void update() = 0;

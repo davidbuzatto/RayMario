@@ -90,6 +90,6 @@ t: 20000          # time to finish the map
 /               Iu + ! f I      f f !    |     1                      C/
 /               IIIIIIIIII    IIIIIIIII   IIIIIIIII                   C/
 /                                                                     C/
-/  p     1                                |                           C/
+/  p     % % % % % % %                                |                           C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAA/

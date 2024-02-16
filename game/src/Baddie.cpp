@@ -59,5 +59,10 @@ void Baddie::setAttributesOnDying() {
 }
 
 void Baddie::onSouthCollision() {
-    
+
+}
+
+void Baddie::onHit() {
+    state = SpriteState::DYING;
+    setAttributesOnDying();
 }

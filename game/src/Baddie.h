@@ -31,5 +31,6 @@ public:
     void activateWithMarioProximity( Mario &mario );
     void setAttributesOnDying();
     virtual void onSouthCollision();
+    virtual void onHit();
 
 };
