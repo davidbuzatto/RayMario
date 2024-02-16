@@ -136,6 +136,7 @@ void Map::parseMap() {
             }
 
             if ( currentLine == 0 && currentColumn == 0 ) {
+
                 if ( *mapData == 'c' ) {            // parse color
 
                     ignoreLine = true;
@@ -171,7 +172,7 @@ void Map::parseMap() {
                     currentColumn = 1;
 
                 } else if ( *mapData == 'm' ) {     // parse music id
-                    
+
                     ignoreLine = true;
                     mapData += 3;
                     std::string number = "";
@@ -189,7 +190,22 @@ void Map::parseMap() {
 
                     currentColumn = 1;
 
+                } else if ( *mapData == 't' ) {     // parse music id
+
+                    ignoreLine = true;
+                    mapData += 3;
+                    std::string number = "";
+
+                    while ( *mapData != ' ' ) {
+                        number += std::string( 1, *mapData );
+                        mapData++;
+                    }
+                    mario.setMaxTime( std::stoi( number ) );
+
+                    currentColumn = 1;
+
                 }
+
             }
 
             if ( !ignoreLine ) {

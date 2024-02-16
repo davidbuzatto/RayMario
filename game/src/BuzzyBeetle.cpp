@@ -37,9 +37,9 @@ BuzzyBeetle::~BuzzyBeetle() {
 
 void BuzzyBeetle::update() {
     
-    if ( state == SpriteState::ACTIVE ) {
+    float delta = GetFrameTime();
 
-        float delta = GetFrameTime();
+    if ( state == SpriteState::ACTIVE ) {
 
         frameAcum += delta;
         if ( frameAcum >= frameTime ) {
@@ -59,6 +59,15 @@ void BuzzyBeetle::update() {
 
         vel.y += GameWorld::gravity;
 
+    } else if ( state == SpriteState::DYING ) {
+
+        angle += ( vel.x >= 0 ? 600 : -600 ) * delta;
+
+        pos.x = pos.x + vel.x * delta;
+        pos.y = pos.y + vel.y * delta;
+
+        vel.y += GameWorld::gravity;
+
     }
 
     updateCollisionProbes();
@@ -68,12 +77,12 @@ void BuzzyBeetle::update() {
 void BuzzyBeetle::draw() {
 
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
+    char dir = facingDirection == Direction::RIGHT ? 'R' : 'L';
 
-    if ( facingDirection == Direction::RIGHT ) {
-        DrawTexture( textures[std::string( TextFormat( "buzzyBeetle%dR", currentFrame ))], pos.x, pos.y, WHITE );
-    } else {
-        DrawTexture( textures[std::string( TextFormat( "buzzyBeetle%dL", currentFrame ))], pos.x, pos.y, WHITE );
-    }
+    DrawTexturePro( textures[std::string( TextFormat( "buzzyBeetle%d%c", currentFrame, dir ) )],
+                    Rectangle( 0, 0, dim.x, dim.y ),
+                    Rectangle( pos.x + dim.x / 2, pos.y + dim.y / 2, dim.x, dim.y ),
+                    Vector2( dim.x / 2, dim.y / 2 ), angle, WHITE );
 
     if ( GameWorld::debug ) {
         cpN.draw();

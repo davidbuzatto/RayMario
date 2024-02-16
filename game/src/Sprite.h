@@ -20,6 +20,7 @@ protected:
     Vector2 pos;
     Vector2 dim;
     Vector2 vel;
+    float angle;
     Color color;
     SpriteState state;
 
@@ -65,6 +66,8 @@ public:
     void setVelX( float velX );
     void setVelY( float velY );
 
+    void setAngle( float angle );
+
     void setColor( Color color );
     void setState( SpriteState state );
     void setFacingDirection( Direction facingDirection );
@@ -72,6 +75,7 @@ public:
     Vector2 &getPos();
     float getX();
     float getY();
+    Vector2 getCenter();
 
     Vector2 &getDim();
     float getWidth();
@@ -81,6 +85,8 @@ public:
     float getVelX();
     float getVelY();
     
+    float getAngle();
+
     Color &getColor();
     SpriteState getState();
     Direction getFacingDirection();

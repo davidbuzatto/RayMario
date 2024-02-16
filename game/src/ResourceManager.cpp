@@ -236,10 +236,15 @@ void ResourceManager::loadTextures() {
         textures["redKoopaTroopa0L"] = texture2DFlipHorizontal( textures["redKoopaTroopa0R"] );
         textures["redKoopaTroopa1L"] = texture2DFlipHorizontal( textures["redKoopaTroopa1R"] );
 
-        textures["rex0R"] = LoadTexture( "resources/images/sprites/baddies/Rex_0.png" );
-        textures["rex1R"] = LoadTexture( "resources/images/sprites/baddies/Rex_1.png" );
-        textures["rex0L"] = texture2DFlipHorizontal( textures["rex0R"] );
-        textures["rex1L"] = texture2DFlipHorizontal( textures["rex1R"] );
+        textures["rex20R"] = LoadTexture( "resources/images/sprites/baddies/Rex_2_0.png" );
+        textures["rex21R"] = LoadTexture( "resources/images/sprites/baddies/Rex_2_1.png" );
+        textures["rex20L"] = texture2DFlipHorizontal( textures["rex20R"] );
+        textures["rex21L"] = texture2DFlipHorizontal( textures["rex21R"] );
+
+        textures["rex10R"] = LoadTexture( "resources/images/sprites/baddies/Rex_1_0.png" );
+        textures["rex11R"] = LoadTexture( "resources/images/sprites/baddies/Rex_1_1.png" );
+        textures["rex10L"] = texture2DFlipHorizontal( textures["rex10R"] );
+        textures["rex11L"] = texture2DFlipHorizontal( textures["rex11R"] );
 
         textures["swooper0R"] = LoadTexture( "resources/images/sprites/baddies/Swooper_1.png" );
         textures["swooper1R"] = LoadTexture( "resources/images/sprites/baddies/Swooper_2.png" );

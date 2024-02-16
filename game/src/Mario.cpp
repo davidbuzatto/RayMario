@@ -37,7 +37,7 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     coins( 0 ),
     lives( 5 ),
     points( 0 ),
-    maxTime( 400.0f ),
+    maxTime( 0 ),
     ellapsedTime( 0.0f ),
     type( MarioType::SMALL ),
     reservedPowerUp( MarioType::SMALL ),
@@ -45,8 +45,6 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     runningTime( 0.5 ),
     drawRunningFrames( false ),
     lastPos( pos ) {
-
-    //changeToFlower();
 
     setState( SpriteState::ON_GROUND );
 
@@ -364,7 +362,8 @@ CollisionType Mario::checkCollisionBaddie( Sprite &sprite ) {
                 case CollisionType::EAST:
                 case CollisionType::WEST:
                     f->setState( SpriteState::TO_BE_REMOVED );
-                    baddie.setState( SpriteState::TO_BE_REMOVED );
+                    baddie.setState( SpriteState::DYING );
+                    PlaySound( ResourceManager::getSounds()["stomp"] );
                     break;
             }
         }
@@ -458,6 +457,10 @@ void Mario::setCoins( int coins ) {
 
 void Mario::setPoints( int points ) {
     this->points = points;
+}
+
+void Mario::setMaxTime( float maxTime ) {
+    this->maxTime = maxTime;
 }
 
 int Mario::getLives() {

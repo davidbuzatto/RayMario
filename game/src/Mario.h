@@ -86,6 +86,7 @@ public:
     void setLives( int lives );
     void setCoins( int coins );
     void setPoints( int points );
+    void setMaxTime( float maxTime );
     
     int getLives();
     int getCoins();

@@ -15,7 +15,7 @@
 #include <vector>
 
 class Baddie : public virtual Sprite {
-    
+
 public:
 
     Baddie();
@@ -29,6 +29,7 @@ public:
     virtual void draw() = 0;
     virtual CollisionType checkCollision( Sprite &sprite ) = 0;
     void activateWithMarioProximity( Mario &mario );
+    void setAttributesOnDying();
     virtual void onSouthCollision();
 
 };

@@ -1,6 +1,7 @@
 c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 m: 1              # music id: [1-3]
+t: 200            # time to finish the map
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                                                                                                                                                                               /
 /                                                                                                                                                                                                                                               /
@@ -13,7 +14,7 @@ m: 1              # music id: [1-3]
 /D                                          KKKKKKKK                                                                                                                                                                   KKKKKKKK                 /
 /D                                                 KKKKKK                                                                                                                                                                    KKKKKKKKKK         /
 /D                                                      KKKKKKK                                                                                                                   IIII                                       KKKKKKKKKKEBBBBBBBB/
-/D                                                            KKKKKKK                             o o o o o o o                !                                                                        8                              CAAAAAAAA/
+/D                                                            KKKKKKK                             o o o o o o o                f                                                                        8                              CAAAAAAAA/
 /D                                                                                                                            ST                                                                    8                                  CAAAAAAAA/
 /D                                                             o o o o o o o    3         |          5      5         |      YQRST                                      UV                       8                                     CAAAAAAAA/
 /D                                                     IIIIIIIIIIIIIIIIIIIIIIIIIIII        KKKKKKKKKKKKKKKKKKKKKKKKKKK       ZQRQR    1   1                             WX                    8                                        CAAAAAAAA/

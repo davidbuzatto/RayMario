@@ -35,6 +35,7 @@ Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
 
 Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, vel, color, frameTime, maxFrames ) {
+    //TraceLog( LOG_INFO, "a %d", hitsToDie );
 }
 
 Baddie::~Baddie() {
@@ -50,6 +51,11 @@ void Baddie::activateWithMarioProximity( Mario &mario ) {
             mario.getActivationWidth() ) ) ) {
         state = SpriteState::ACTIVE;
     }
+}
+
+void Baddie::setAttributesOnDying() {
+    vel.x = GetRandomValue( 0, 1 ) == 0 ? 200 : -200;
+    vel.y = -200;
 }
 
 void Baddie::onSouthCollision() {

@@ -38,6 +38,7 @@ Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
     pos( pos ),
     dim( dim ),
     vel( vel ),
+    angle( 0 ),
     color( color ),
     frameTime( frameTime ),
     frameAcum( 0 ),
@@ -105,6 +106,10 @@ void Sprite::setVelY( float velY ) {
     vel.y = velY;
 }
 
+void Sprite::setAngle( float angle ) {
+    this->angle = angle;
+}
+
 void Sprite::setColor( Color color ) {
     this->color = color;
 }
@@ -129,6 +134,10 @@ float Sprite::getY() {
     return pos.y;
 }
 
+Vector2 Sprite::getCenter() {
+    return Vector2( pos.x + dim.x / 2, pos.y + dim.y / 2 );
+}
+
 Vector2 &Sprite::getDim() {
     return dim;
 }
@@ -151,6 +160,10 @@ float Sprite::getVelX() {
 
 float Sprite::getVelY() {
     return vel.y;
+}
+
+float Sprite::getAngle() {
+    return angle;
 }
 
 Color &Sprite::getColor() {

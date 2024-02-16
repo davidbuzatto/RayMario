@@ -1,19 +1,18 @@
 para versão final:
-
+    
+    - rex para morrer precisa de 2 hits
+    - criar caixas interativas (moedas, "?", powerup etc)
+    
     - otimizações:
         - diminuir a quantidade de loops no GameWorld (muitos podem ser condensados)
         - colisão apenas para tiles e baddies que estão a uma certa distância (depende de organização matricial)
         - a partir da segunda fase o jogo está muito pesado (muitas iterações)
-
-    - animar baddies ao morrer (angulo, tornar não colidível e eliminar offscreen)
-    
+        
     - tela de transição entre fases
         - efeito funil
         - contagem de pontos:
             1 segundo equivale a 50 pontos
-
-    - criar caixas interativas (moedas, "?", powerup etc)
-
+            
 futuro:
     separar tiles de cenário, fundo etc
     ladrilhos parametrizados (tipo na fase)
