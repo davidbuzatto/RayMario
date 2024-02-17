@@ -22,41 +22,46 @@ class Box;
 
 class Map : public virtual Drawable {
 
-    std::vector<Tile> tiles;
-    float maxWidth;
-    float maxHeight;
-    float marioOffset;
-
-    Texture2D backgroundTexture;
-    bool parsed;
-
+    std::vector<Tile*> tiles;
+    std::vector<Box*> boxes;
     std::vector<Item*> items;
     std::vector<Baddie*> baddies;
-    std::vector<Box*> boxes;
-
-    Mario &mario;
-
-    Color backgroundColor;
-    int backgroundId;
-    int maxBackgroundId;
-    int musicId;
-    int maxMusicId;
 
     int id;
     int maxId;
+
+    float maxWidth;
+    float maxHeight;
+
+    Mario& mario;
+    float marioOffset;
+    
+    int backgroundId;
+    int maxBackgroundId;
+    Color backgroundColor;
+    Texture2D backgroundTexture;
+    
+    int musicId;
+    int maxMusicId;
+
+    bool parseBoxes;
+    bool parseItems;
+    bool parseBaddies;
+
     bool loadTestMap;
+    bool parsed;
 
 public:
 
     static int tileWidth;
 
-    Map( Mario &mario, int mapNumber, bool loadTestMap );
+    Map( Mario &mario, int mapNumber, bool loadTestMap, bool parseBoxes, bool parseItems, bool parseBaddies );
     ~Map();
     virtual void draw();
-    std::vector<Tile> &getTiles();
+    std::vector<Tile*> &getTiles();
+    std::vector<Box*>& getBoxes();
     std::vector<Item*> &getItems();
     std::vector<Baddie*> &getBaddies();
-    std::vector<Box*> &getBoxes();
     void parseMap();
     float getMaxWidth();
     float getMaxHeight();

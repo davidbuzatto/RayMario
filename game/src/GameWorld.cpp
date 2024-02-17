@@ -30,8 +30,14 @@
 #include "utils.h"
 
 #define ACTIVATE_DEBUG true
+
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
+#define LOAD_TEST_MAP false
+
+#define PARSE_BOXES true
+#define PARSE_ITEMS false
+#define PARSE_BADDIES false
+
 
 bool GameWorld::debug = ACTIVATE_DEBUG;
 bool GameWorld::showFPS = ACTIVATE_DEBUG;
@@ -54,7 +60,7 @@ GameWorld::GameWorld() :
         -600,
         ACTIVATE_DEBUG
     ),
-    map( mario, INITIAL_MAP_ID, LOAD_TEST_MAP ),
+    map( mario, INITIAL_MAP_ID, LOAD_TEST_MAP, PARSE_BOXES, PARSE_ITEMS, PARSE_BADDIES ),
     camera( nullptr ),
     showControls( ACTIVATE_DEBUG ),
     stateBeforePause( GameState::TITLE_SCREEN ) {
@@ -76,10 +82,11 @@ void GameWorld::inputAndUpdate() {
 
     map.parseMap();
 
+    std::vector<Tile*> &tiles = map.getTiles();
+    std::vector<Box*> &boxes = map.getBoxes();
     std::vector<Item*> &items = map.getItems();
     std::vector<Baddie*> &baddies = map.getBaddies();
-    std::vector<Box*> &boxes = map.getBoxes();
-    std::vector<Tile> &tiles = map.getTiles();
+
     std::vector<int> collectedIndexes;
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
     std::map<std::string, Music> &musics = ResourceManager::getMusics();
@@ -115,6 +122,10 @@ void GameWorld::inputAndUpdate() {
             state = GameState::PAUSED;
         }
 
+        for ( size_t i = 0; i < boxes.size(); i++ ) {
+            boxes[i]->update();
+        }
+
         for ( size_t i = 0; i < items.size(); i++ ) {
             items[i]->update();
         }
@@ -123,37 +134,33 @@ void GameWorld::inputAndUpdate() {
             baddies[i]->update();
         }
 
-        for ( size_t i = 0; i < boxes.size(); i++ ) {
-            boxes[i]->update();
-        }
-
         // tiles collision resolution
         mario.updateCollisionProbes();
         for ( size_t i = 0; i < tiles.size(); i++ ) {
 
-            Tile& tile = tiles[i];
+            Tile *tile = tiles[i];
 
             // mario x tiles
-            if ( !tile.isOnlyBaddies() ) {
-                switch ( mario.checkCollision( &tile ) ) {
+            if ( !tile->isOnlyBaddies() ) {
+                switch ( mario.checkCollision( tile ) ) {
                     case CollisionType::NORTH:
-                        mario.setY( tile.getY() + tile.getHeight() );
+                        mario.setY( tile->getY() + tile->getHeight() );
                         mario.setVelY( 0 );
                         mario.updateCollisionProbes();
                         break;
                     case CollisionType::SOUTH:
-                        mario.setY( tile.getY() - mario.getHeight() );
+                        mario.setY( tile->getY() - mario.getHeight() );
                         mario.setVelY( 0 );
                         mario.setState( SpriteState::ON_GROUND );
                         mario.updateCollisionProbes();
                         break;
                     case CollisionType::EAST:
-                        mario.setX( tile.getX() - mario.getWidth() );
+                        mario.setX( tile->getX() - mario.getWidth() );
                         mario.setVelX( 0 );
                         mario.updateCollisionProbes();
                         break;
                     case CollisionType::WEST:
-                        mario.setX( tile.getX() + tile.getWidth() );
+                        mario.setX( tile->getX() + tile->getWidth() );
                         mario.setVelX( 0 );
                         mario.updateCollisionProbes();
                         break;
@@ -167,25 +174,25 @@ void GameWorld::inputAndUpdate() {
                 Baddie* baddie = baddies[j];
                 baddie->updateCollisionProbes();
                 if ( baddie->getState() != SpriteState::DYING ) {
-                    switch ( baddie->checkCollision( &tile ) ) {
+                    switch ( baddie->checkCollision( tile ) ) {
                         case CollisionType::NORTH:
-                            baddie->setY( tile.getY() + tile.getHeight() );
+                            baddie->setY( tile->getY() + tile->getHeight() );
                             baddie->setVelY( 0 );
                             baddie->updateCollisionProbes();
                             break;
                         case CollisionType::SOUTH:
-                            baddie->setY( tile.getY() - baddie->getHeight() );
+                            baddie->setY( tile->getY() - baddie->getHeight() );
                             baddie->setVelY( 0 );
                             baddie->onSouthCollision();
                             baddie->updateCollisionProbes();
                             break;
                         case CollisionType::EAST:
-                            baddie->setX( tile.getX() - baddie->getWidth() );
+                            baddie->setX( tile->getX() - baddie->getWidth() );
                             baddie->setVelX( -baddie->getVelX() );
                             baddie->updateCollisionProbes();
                             break;
                         case CollisionType::WEST:
-                            baddie->setX( tile.getX() + tile.getWidth() );
+                            baddie->setX( tile->getX() + tile->getWidth() );
                             baddie->setVelX( -baddie->getVelX() );
                             baddie->updateCollisionProbes();
                             break;
@@ -197,25 +204,25 @@ void GameWorld::inputAndUpdate() {
             for ( size_t j = 0; j < items.size(); j++ ) {
                 Item* item = items[j];
                 item->updateCollisionProbes();
-                switch ( item->checkCollision( &tile ) ) {
+                switch ( item->checkCollision( tile ) ) {
                     case CollisionType::NORTH:
-                        item->setY( tile.getY() + tile.getHeight() );
+                        item->setY( tile->getY() + tile->getHeight() );
                         item->setVelY( 0 );
                         item->updateCollisionProbes();
                         break;
                     case CollisionType::SOUTH:
-                        item->setY( tile.getY() - item->getHeight() );
+                        item->setY( tile->getY() - item->getHeight() );
                         item->setVelY( 0 );
                         item->onSouthCollision();
                         item->updateCollisionProbes();
                         break;
                     case CollisionType::EAST:
-                        item->setX( tile.getX() - item->getWidth() );
+                        item->setX( tile->getX() - item->getWidth() );
                         item->setVelX( -item->getVelX() );
                         item->updateCollisionProbes();
                         break;
                     case CollisionType::WEST:
-                        item->setX( tile.getX() + tile.getWidth() );
+                        item->setX( tile->getX() + tile->getWidth() );
                         item->setVelX( -item->getVelX() );
                         item->updateCollisionProbes();
                         break;

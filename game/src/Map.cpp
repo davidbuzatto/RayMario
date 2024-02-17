@@ -50,24 +50,51 @@
 
 int Map::tileWidth = 32;
 
-Map::Map( Mario &mario, int id, bool loadTestMap ) :
+Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBoxes, bool parseItems, bool parseBaddies ) :
+
+    id( id ),
+    maxId( 3 ),
+
     maxWidth( 0 ),
     maxHeight( 0 ),
-    marioOffset( 0 ),
-    parsed( false ),
+
     mario( mario ),
+    marioOffset( 0 ),
+    
+    backgroundId( 1 ),
     maxBackgroundId( 10 ),
     backgroundColor( WHITE ),
-    backgroundId( 1 ),
     backgroundTexture( Texture( 0 ) ),
-    maxMusicId( 9 ),
+
     musicId( 1 ),
-    maxId( 3 ),
-    id( id ),
-    loadTestMap( loadTestMap ) {
+    maxMusicId( 9 ),
+
+    parseBoxes( parseBoxes ),
+    parseItems( parseItems ),
+    parseBaddies( parseBaddies ),
+
+    loadTestMap( loadTestMap ),
+    parsed( false ) {
 }
 
 Map::~Map() {
+
+    for ( size_t i = 0; i < tiles.size(); i++ ) {
+        delete tiles[i];
+    }
+    
+    for ( size_t i = 0; i < items.size(); i++ ) {
+        delete items[i];
+    }
+
+    for ( size_t i = 0; i < baddies.size(); i++ ) {
+        delete baddies[i];
+    }
+
+    for ( size_t i = 0; i < boxes.size(); i++ ) {
+        delete boxes[i];
+    }
+
 }
 
 void Map::draw() {
@@ -84,7 +111,7 @@ void Map::draw() {
     }
 
     for ( size_t i = 0; i < tiles.size(); i++ ) {
-        tiles[i].draw();
+        tiles[i]->draw();
     }
 
     for ( size_t i = 0; i < boxes.size(); i++ ) {
@@ -101,8 +128,12 @@ void Map::draw() {
 
 }
 
-std::vector<Tile> &Map::getTiles() {
+std::vector<Tile*> &Map::getTiles() {
     return tiles;
+}
+
+std::vector<Box*>& Map::getBoxes() {
+    return boxes;
 }
 
 std::vector<Item*> &Map::getItems() {
@@ -111,10 +142,6 @@ std::vector<Item*> &Map::getItems() {
 
 std::vector<Baddie*> &Map::getBaddies() {
     return baddies;
-}
-
-std::vector<Box*> &Map::getBoxes() {
-    return boxes;
 }
 
 void Map::playMusic() {
@@ -247,77 +274,80 @@ void Map::parseMap() {
 
                     // test tiles
                     /*case 'a':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), GREEN, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), GREEN, "", true ) );
                         break;
                     case 'b':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLUE, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLUE, "", true ) );
                         break;
                     case 'c':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), RED, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), RED, "", true ) );
                         break;
                     case 'd':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), ORANGE, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), ORANGE, "", true ) );
                         break;*/
 
                     // bondarie tiles
                     case '/':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false ) );
                         break;
                     case '|':
-                        tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false, true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false, true ) );
                         break;
 
                     // boxes
                     case 'i':
-                        boxes.push_back( new EyesClosed( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new EyesClosed( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'y':
-                        boxes.push_back( new EyesOpened( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new EyesOpened( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 's':
-                        boxes.push_back( new Stone( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new Stone( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'w':
-                        boxes.push_back( new Wood( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new Wood( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'g':
-                        boxes.push_back( new Glass( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new Glass( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'c':
-                        boxes.push_back( new Cloud( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new Cloud( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'h':
-                        boxes.push_back( new Message( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) if ( parseBoxes ) boxes.push_back( new Message( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '!':
-                        boxes.push_back( new Exclamation( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new Exclamation( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '?':
-                        boxes.push_back( new Question( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new Question( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'm':
-                        boxes.push_back( new QuestionMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new QuestionMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'f':
-                        boxes.push_back( new QuestionFireFlower( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new QuestionFireFlower( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'u':
-                        boxes.push_back( new QuestionOneUpMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new QuestionOneUpMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '+':
-                        boxes.push_back( new QuestionThreeUpMoon( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBoxes ) boxes.push_back( new QuestionThreeUpMoon( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
 
                     // tiles from A to Z (map dependent - future)
                     default:
                         if ( *mapData >= 'A' && *mapData <= 'Z' ) {
-                            tiles.push_back( Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, std::string( 1, *mapData ), true ) );
+                            tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, std::string( 1, *mapData ), true ) );
                         }
                         break;
 
                     // items
                     case 'o':
-                        items.push_back( new Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
+                        if ( parseItems ) items.push_back( new Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
+                        break;
+                    case '*':
+                        if ( parseItems ) items.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
                         break;
                     /*case 'm':
                         items.push_back( new Mushroom( Vector2( x, y ), Vector2( 32, 32 ), Vector2( 200, 0 ), RED ) );
@@ -331,46 +361,43 @@ void Map::parseMap() {
                     case '+':
                         items.push_back( new ThreeUpMoon( Vector2( x, y ), Vector2( 30, 32 ), Vector2( 300, 0 ), YELLOW ) );
                         break;*/
-                    case '*':
-                        items.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
-                        break;
 
                     // baddies
                     case '1':
-                        baddies.push_back( new Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), MAROON ) );
+                        if ( parseBaddies ) baddies.push_back( new Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), MAROON ) );
                         break;
                     case '2':
-                        baddies.push_back( new FlyingGoomba( Vector2( x, y ), Vector2( 66, 48 ), Vector2( -100, 0 ), MAROON ) );
+                        if ( parseBaddies ) baddies.push_back( new FlyingGoomba( Vector2( x, y ), Vector2( 66, 48 ), Vector2( -100, 0 ), MAROON ) );
                         break;
                     case '3':
-                        baddies.push_back( new GreenKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), GREEN ) );
+                        if ( parseBaddies ) baddies.push_back( new GreenKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), GREEN ) );
                         break;
                     case '4':
-                        baddies.push_back( new RedKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), RED ) );
+                        if ( parseBaddies ) baddies.push_back( new RedKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), RED ) );
                         break;
                     case '5':
-                        baddies.push_back( new BlueKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), BLUE ) );
+                        if ( parseBaddies ) baddies.push_back( new BlueKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), BLUE ) );
                         break;
                     case '6':
-                        baddies.push_back( new YellowKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
+                        if ( parseBaddies ) baddies.push_back( new YellowKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
                         break;
                     case '7':
-                        baddies.push_back( new BobOmb( Vector2( x, y ), Vector2( 24, 30 ), Vector2( -100, 0 ), BLACK ) );
+                        if ( parseBaddies ) baddies.push_back( new BobOmb( Vector2( x, y ), Vector2( 24, 30 ), Vector2( -100, 0 ), BLACK ) );
                         break;
                     case '8':
-                        baddies.push_back( new BulletBill( Vector2( x, y ), Vector2( 32, 28 ), Vector2( -200, 0 ), BLACK ) );
+                        if ( parseBaddies ) baddies.push_back( new BulletBill( Vector2( x, y ), Vector2( 32, 28 ), Vector2( -200, 0 ), BLACK ) );
                         break;
                     case '9':
-                        baddies.push_back( new Swooper( Vector2( x, y ), Vector2( 32, 34 ), Vector2( -100, 0 ), GREEN ) );
+                        if ( parseBaddies ) baddies.push_back( new Swooper( Vector2( x, y ), Vector2( 32, 34 ), Vector2( -100, 0 ), GREEN ) );
                         break;
                     case '@':
-                        baddies.push_back( new BuzzyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), BLUE ) );
+                        if ( parseBaddies ) baddies.push_back( new BuzzyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), BLUE ) );
                         break;
                     case '$':
-                        baddies.push_back( new MummyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), GRAY ) );
+                        if ( parseBaddies ) baddies.push_back( new MummyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), GRAY ) );
                         break;
                     case '%':
-                        baddies.push_back( new Rex( Vector2( x, y ), Vector2( 40, 64 ), Vector2( -100, 0 ), VIOLET ) );
+                        if ( parseBaddies ) baddies.push_back( new Rex( Vector2( x, y ), Vector2( 40, 64 ), Vector2( -100, 0 ), VIOLET ) );
                         break;
 
                     // no tile
@@ -429,7 +456,15 @@ void Map::reset() {
     maxHeight = 0;
     marioOffset = 0;
 
+    for ( size_t i = 0; i < tiles.size(); i++ ) {
+        delete tiles[i];
+    }
     tiles.clear();
+
+    for ( size_t i = 0; i < boxes.size(); i++ ) {
+        delete boxes[i];
+    }
+    boxes.clear();
 
     for ( size_t i = 0; i < items.size(); i++ ) {
         delete items[i];
@@ -440,11 +475,6 @@ void Map::reset() {
         delete baddies[i];
     }
     baddies.clear();
-    
-    for ( size_t i = 0; i < boxes.size(); i++ ) {
-        delete boxes[i];
-    }
-    boxes.clear();
 
     StopMusicStream( ResourceManager::getMusics()[std::string( TextFormat( "music%d", musicId ) )] );
     parsed = false;
