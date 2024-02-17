@@ -32,12 +32,11 @@
 #define ACTIVATE_DEBUG true
 
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP false
+#define LOAD_TEST_MAP true
 
 #define PARSE_BOXES true
-#define PARSE_ITEMS false
-#define PARSE_BADDIES false
-
+#define PARSE_ITEMS true
+#define PARSE_BADDIES true
 
 bool GameWorld::debug = ACTIVATE_DEBUG;
 bool GameWorld::showFPS = ACTIVATE_DEBUG;

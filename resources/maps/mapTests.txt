@@ -98,7 +98,7 @@ t: 20000          # time to finish the map
 /                                        i                               C/
 /                  iiii  iiii           i                                C/
 /                  i        i                                            C/
-/             1    i        i               |     1                      C/
+/ |           1 |  i        i               |     1                      C/
 /  iyswgch!?mfu+   imifiui+ii    iiiiiiiii   iiiiiiiii                   C/
 /                                                                        C/
 /  p           o                       |                                 C/
