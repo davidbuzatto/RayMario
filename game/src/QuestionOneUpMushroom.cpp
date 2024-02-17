@@ -68,10 +68,6 @@ void QuestionOneUpMushroom::draw() {
 
 }
 
-CollisionType QuestionOneUpMushroom::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}
-
 void QuestionOneUpMushroom::doHit( Mario& mario, Map* map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["powerUpAppears"] );

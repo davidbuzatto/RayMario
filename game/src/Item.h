@@ -27,10 +27,8 @@ public:
 
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual CollisionType checkCollision( Sprite& sprite );
     virtual void playCollisionSound() = 0;
     virtual void updateMario( Mario &mario ) = 0;
-    virtual CollisionType checkCollisionTile( Sprite& sprite );
     virtual void onSouthCollision();
 
 };

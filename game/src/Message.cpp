@@ -32,10 +32,6 @@ void Message::draw() {
 
 }
 
-CollisionType Message::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}
-
 void Message::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["messageBlock"] );

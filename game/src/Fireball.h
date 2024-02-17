@@ -23,10 +23,6 @@ public:
 
     virtual void update();
     virtual void draw();
-    virtual CollisionType checkCollision( Sprite& sprite );
-    virtual CollisionType checkCollisionTile( Sprite& sprite );
-    virtual CollisionType checkCollisionBaddie( Sprite& sprite );
-    virtual CollisionType checkCollisionBox( Sprite& sprite );
     virtual void updateCollisionProbes();
 
 };

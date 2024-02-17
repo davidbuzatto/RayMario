@@ -81,10 +81,6 @@ void Question::draw() {
 
 }
 
-CollisionType Question::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}
-
 void Question::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["coin"] );

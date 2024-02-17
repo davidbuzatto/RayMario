@@ -55,7 +55,7 @@ public:
 
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual CollisionType checkCollision( Sprite &sprite ) = 0;
+    virtual CollisionType checkCollision( Sprite *sprite );
     virtual void updateCollisionProbes();
 
     void setPos( Vector2 pos );

@@ -76,7 +76,3 @@ void FireFlower::updateMario( Mario& mario ) {
     }
 
 }
-
-CollisionType FireFlower::checkCollisionTile( Sprite& sprite ) {
-    return CollisionType::NONE;
-}

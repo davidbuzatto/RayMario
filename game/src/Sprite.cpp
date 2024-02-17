@@ -7,6 +7,7 @@
  */
 #include "Direction.h"
 #include "Sprite.h"
+#include "GameWorld.h"
 #include "raylib.h"
 #include "SpriteState.h"
 
@@ -205,6 +206,40 @@ Direction Sprite::getFacingDirection() {
 
 Rectangle Sprite::getRect() {
     return Rectangle( pos.x, pos.y, dim.x, dim.y );
+}
+
+CollisionType Sprite::checkCollision( Sprite* sprite ) {
+
+    if ( sprite->getState() != SpriteState::NO_COLLIDABLE ) {
+
+        Rectangle rect = sprite->getRect();
+
+        if ( cpN.checkCollision( rect ) ) {
+            if ( GameWorld::debug ) {
+                sprite->setColor( cpN.getColor() );
+            }
+            return CollisionType::NORTH;
+        } else if ( cpS.checkCollision( rect ) ) {
+            if ( GameWorld::debug ) {
+                sprite->setColor( cpS.getColor() );
+            }
+            return CollisionType::SOUTH;
+        } else if ( cpE.checkCollision( rect ) ) {
+            if ( GameWorld::debug ) {
+                sprite->setColor( cpE.getColor() );
+            }
+            return CollisionType::EAST;
+        } else if ( cpW.checkCollision( rect ) ) {
+            if ( GameWorld::debug ) {
+                sprite->setColor( cpW.getColor() );
+            }
+            return CollisionType::WEST;
+        }
+
+    }
+
+    return CollisionType::NONE;
+
 }
 
 void Sprite::updateCollisionProbes() {

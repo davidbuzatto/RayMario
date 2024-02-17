@@ -31,7 +31,3 @@ void Cloud::draw() {
     }
 
 }
-
-CollisionType Cloud::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}

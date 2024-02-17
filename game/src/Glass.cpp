@@ -31,7 +31,3 @@ void Glass::draw() {
     }
 
 }
-
-CollisionType Glass::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}

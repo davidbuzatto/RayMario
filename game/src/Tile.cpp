@@ -49,10 +49,6 @@ void Tile::draw() {
 
 }
 
-CollisionType Tile::checkCollision( Sprite &sprite ) {
-    return CollisionType::NONE;
-}
-
 bool Tile::isOnlyBaddies() {
     return onlyBaddies;
 }

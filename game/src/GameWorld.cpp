@@ -135,7 +135,7 @@ void GameWorld::inputAndUpdate() {
 
             // mario x tiles
             if ( !tile.isOnlyBaddies() ) {
-                switch ( mario.checkCollisionTile( tile ) ) {
+                switch ( mario.checkCollision( &tile ) ) {
                     case CollisionType::NORTH:
                         mario.setY( tile.getY() + tile.getHeight() );
                         mario.setVelY( 0 );
@@ -167,7 +167,7 @@ void GameWorld::inputAndUpdate() {
                 Baddie* baddie = baddies[j];
                 baddie->updateCollisionProbes();
                 if ( baddie->getState() != SpriteState::DYING ) {
-                    switch ( baddie->checkCollision( tile ) ) {
+                    switch ( baddie->checkCollision( &tile ) ) {
                         case CollisionType::NORTH:
                             baddie->setY( tile.getY() + tile.getHeight() );
                             baddie->setVelY( 0 );
@@ -197,7 +197,7 @@ void GameWorld::inputAndUpdate() {
             for ( size_t j = 0; j < items.size(); j++ ) {
                 Item* item = items[j];
                 item->updateCollisionProbes();
-                switch ( item->checkCollisionTile( tile ) ) {
+                switch ( item->checkCollision( &tile ) ) {
                     case CollisionType::NORTH:
                         item->setY( tile.getY() + tile.getHeight() );
                         item->setVelY( 0 );
@@ -231,7 +231,7 @@ void GameWorld::inputAndUpdate() {
             Box *box = boxes[i];
 
             // mario x boxes
-            switch ( mario.checkCollisionBox( *box ) ) {
+            switch ( mario.checkCollision( box ) ) {
                 case CollisionType::NORTH:
                     mario.setY( box->getY() + box->getHeight() );
                     mario.setVelY( 0 );
@@ -263,7 +263,7 @@ void GameWorld::inputAndUpdate() {
                 Baddie* baddie = baddies[j];
                 baddie->updateCollisionProbes();
                 if ( baddie->getState() != SpriteState::DYING ) {
-                    switch ( baddie->checkCollision( *box ) ) {
+                    switch ( baddie->checkCollision( box ) ) {
                         case CollisionType::NORTH:
                             baddie->setY( box->getY() + box->getHeight() );
                             baddie->setVelY( 0 );
@@ -293,7 +293,7 @@ void GameWorld::inputAndUpdate() {
             for ( size_t j = 0; j < items.size(); j++ ) {
                 Item* item = items[j];
                 item->updateCollisionProbes();
-                switch ( item->checkCollisionTile( *box ) ) {
+                switch ( item->checkCollision( box ) ) {
                     case CollisionType::NORTH:
                         item->setY( box->getY() + box->getHeight() );
                         item->setVelY( 0 );
@@ -325,7 +325,7 @@ void GameWorld::inputAndUpdate() {
 
             Item* item = items[i];
 
-            if ( item->checkCollision( mario ) == CollisionType::COLLIDED ) {
+            if ( item->checkCollision( &mario ) != CollisionType::NONE ) {
                 collectedIndexes.push_back( i );
                 item->playCollisionSound();
                 item->updateMario( mario );
@@ -356,7 +356,7 @@ void GameWorld::inputAndUpdate() {
                 }
 
                 // mario and fireballs x baddies collision resolution and offscreen baddies removal
-                switch ( mario.checkCollisionBaddie( *baddie ) ) {
+                switch ( mario.checkCollisionBaddie( baddie ) ) {
                     case CollisionType::NORTH:
                     case CollisionType::EAST:
                     case CollisionType::WEST:

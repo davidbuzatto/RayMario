@@ -68,10 +68,6 @@ void QuestionFireFlower::draw() {
 
 }
 
-CollisionType QuestionFireFlower::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}
-
 void QuestionFireFlower::doHit( Mario& mario, Map* map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["powerUpAppears"] );

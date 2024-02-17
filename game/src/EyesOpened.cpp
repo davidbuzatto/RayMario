@@ -58,10 +58,6 @@ void EyesOpened::draw() {
 
 }
 
-CollisionType EyesOpened::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}
-
 void EyesOpened::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["shellRicochet"] );

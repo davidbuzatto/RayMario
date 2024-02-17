@@ -31,7 +31,3 @@ void EyesClosed::draw() {
     }
 
 }
-
-CollisionType EyesClosed::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}

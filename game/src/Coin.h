@@ -22,6 +22,5 @@ public:
     virtual void draw();
     virtual void playCollisionSound();
     virtual void updateMario( Mario& mario );
-    virtual CollisionType checkCollisionTile( Sprite &sprite );
 
 };

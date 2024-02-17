@@ -67,13 +67,11 @@ public:
 
     virtual void update();
     virtual void draw();
-    virtual CollisionType checkCollision( Sprite& sprite );
     virtual void updateCollisionProbes();
     void drawHud();
 
-    CollisionType checkCollisionTile( Sprite& sprite );
-    CollisionType checkCollisionBaddie( Sprite& sprite );
-    CollisionType checkCollisionBox( Sprite& sprite );
+    virtual CollisionType checkCollision( Sprite *sprite );
+    CollisionType checkCollisionBaddie( Sprite *sprite );
 
     void setImmortal( bool immortal );
     void setActivationWidth( float activationWidth );

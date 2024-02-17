@@ -68,10 +68,6 @@ void QuestionThreeUpMoon::draw() {
 
 }
 
-CollisionType QuestionThreeUpMoon::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}
-
 void QuestionThreeUpMoon::doHit( Mario& mario, Map* map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["powerUpAppears"] );

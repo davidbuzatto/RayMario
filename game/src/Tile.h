@@ -26,7 +26,6 @@ public:
 
     virtual void update();
     virtual void draw();
-    virtual CollisionType checkCollision( Sprite &sprite );
 
     bool isOnlyBaddies();
 

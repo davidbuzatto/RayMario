@@ -31,7 +31,3 @@ void Wood::draw() {
     }
 
 }
-
-CollisionType Wood::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}

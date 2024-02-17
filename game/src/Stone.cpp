@@ -31,7 +31,3 @@ void Stone::draw() {
     }
 
 }
-
-CollisionType Stone::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}

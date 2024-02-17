@@ -29,7 +29,6 @@ public:
 
     virtual void update() = 0;
     virtual void draw() = 0;
-    virtual CollisionType checkCollision( Sprite& sprite ) = 0;
     virtual void doHit( Mario &mario, Map *map );
 
 };

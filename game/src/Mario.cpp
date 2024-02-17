@@ -276,181 +276,102 @@ void Mario::draw() {
 
 }
 
-CollisionType Mario::checkCollision( Sprite &sprite ) {
-    return CollisionType::NONE;
-}
-
-CollisionType Mario::checkCollisionTile( Sprite& sprite ) {
+CollisionType Mario::checkCollision( Sprite *sprite ) {
     
-    try {
+    if ( sprite->getState() != SpriteState::NO_COLLIDABLE ) {
 
-        Tile& tile = dynamic_cast<Tile&>( sprite );
-        Rectangle tileRect = tile.getRect();
+        Rectangle rect = sprite->getRect();
 
         for ( size_t i = 0; i < fireballs.size(); i++ ) {
-            Fireball *f = &fireballs[i];
-            switch ( f->checkCollisionTile( tile ) ) {
+            Fireball* f = &fireballs[i];
+            switch ( f->checkCollision( sprite ) ) {
                 case CollisionType::NORTH:
                     if ( GameWorld::debug ) {
-                        tile.setColor( cpN.getColor() );
+                        sprite->setColor( cpN.getColor() );
                     }
                     f->setVelY( -f->getVelY() );
                     break;
                 case CollisionType::SOUTH:
                     if ( GameWorld::debug ) {
-                        tile.setColor( cpS.getColor() );
+                        sprite->setColor( cpS.getColor() );
                     }
                     f->setVelY( -300 );
                     break;
                 case CollisionType::EAST:
                     if ( GameWorld::debug ) {
-                        tile.setColor( cpE.getColor() );
+                        sprite->setColor( cpE.getColor() );
                     }
                     f->setState( SpriteState::TO_BE_REMOVED );
                     break;
                 case CollisionType::WEST:
                     if ( GameWorld::debug ) {
-                        tile.setColor( cpW.getColor() );
+                        sprite->setColor( cpW.getColor() );
                     }
                     f->setState( SpriteState::TO_BE_REMOVED );
                     break;
             }
         }
 
-        if ( cpN.checkCollision( tileRect ) ) {
+        if ( cpN.checkCollision( rect ) ) {
             if ( GameWorld::debug ) {
-                tile.setColor( cpN.getColor() );
+                sprite->setColor( cpN.getColor() );
             }
             return CollisionType::NORTH;
-        } else if ( cpS.checkCollision( tileRect ) ) {
+        } else if ( cpS.checkCollision( rect ) ) {
             if ( GameWorld::debug ) {
-                tile.setColor( cpS.getColor() );
+                sprite->setColor( cpS.getColor() );
             }
             return CollisionType::SOUTH;
-        } else if ( cpE.checkCollision( tileRect ) || cpE1.checkCollision( tileRect ) ) {
+        } else if ( cpE.checkCollision( rect ) || cpE1.checkCollision( rect ) ) {
             if ( GameWorld::debug ) {
-                tile.setColor( cpE.getColor() );
+                sprite->setColor( cpE.getColor() );
             }
             return CollisionType::EAST;
-        } else if ( cpW.checkCollision( tileRect ) || cpW1.checkCollision( tileRect ) ) {
+        } else if ( cpW.checkCollision( rect ) || cpW1.checkCollision( rect ) ) {
             if ( GameWorld::debug ) {
-                tile.setColor( cpW.getColor() );
+                sprite->setColor( cpW.getColor() );
             }
             return CollisionType::WEST;
         }
 
-    } catch ( std::bad_cast const& ) {
-    } 
-
-    return CollisionType::NONE;
-
-}
-
-CollisionType Mario::checkCollisionBaddie( Sprite &sprite ) {
-
-    try {
-        
-        Baddie &baddie = dynamic_cast<Baddie&>(sprite);
-        Rectangle baddieRect = baddie.getRect();
-        
-        for ( size_t i = 0; i < fireballs.size(); i++ ) {
-            Fireball* f = &fireballs[i];
-            switch ( f->checkCollisionBaddie( baddie ) ) {
-                case CollisionType::NORTH:
-                case CollisionType::SOUTH:
-                case CollisionType::EAST:
-                case CollisionType::WEST:
-                    f->setState( SpriteState::TO_BE_REMOVED );
-                    baddie.setState( SpriteState::DYING );
-                    PlaySound( ResourceManager::getSounds()["stomp"] );
-                    break;
-            }
-        }
-
-        if ( state == SpriteState::JUMPING || vel.y > 0 ) {
-            if ( cpN.checkCollision( baddieRect ) ) {
-                return CollisionType::NORTH;
-            } else if ( cpS.checkCollision( baddieRect ) ) {
-                return CollisionType::SOUTH;
-            } else if ( cpE.checkCollision( baddieRect ) || cpE1.checkCollision( baddieRect ) ) {
-                return CollisionType::EAST;
-            } else if ( cpW.checkCollision( baddieRect ) || cpW1.checkCollision( baddieRect ) ) {
-                return CollisionType::WEST;
-            }
-        }
-
-    } catch ( std::bad_cast const& ) {
     }
 
     return CollisionType::NONE;
 
 }
 
-CollisionType Mario::checkCollisionBox( Sprite& sprite ) {
+CollisionType Mario::checkCollisionBaddie( Sprite *sprite ) {
 
-    try {
+    if ( sprite->getState() != SpriteState::NO_COLLIDABLE ) {
 
-        Box& box = dynamic_cast<Box&>( sprite );
+        Rectangle rect = sprite->getRect();
 
-        if ( box.getState() != SpriteState::NO_COLLIDABLE ) {
-
-            Rectangle boxRect = box.getRect();
-
-            for ( size_t i = 0; i < fireballs.size(); i++ ) {
-                Fireball* f = &fireballs[i];
-                switch ( f->checkCollisionBox( box ) ) {
-                    case CollisionType::NORTH:
-                        if ( GameWorld::debug ) {
-                            box.setColor( cpN.getColor() );
-                        }
-                        f->setVelY( -f->getVelY() );
-                        break;
-                    case CollisionType::SOUTH:
-                        if ( GameWorld::debug ) {
-                            box.setColor( cpS.getColor() );
-                        }
-                        f->setVelY( -300 );
-                        break;
-                    case CollisionType::EAST:
-                        if ( GameWorld::debug ) {
-                            box.setColor( cpE.getColor() );
-                        }
-                        f->setState( SpriteState::TO_BE_REMOVED );
-                        break;
-                    case CollisionType::WEST:
-                        if ( GameWorld::debug ) {
-                            box.setColor( cpW.getColor() );
-                        }
-                        f->setState( SpriteState::TO_BE_REMOVED );
-                        break;
-                }
+        for ( size_t i = 0; i < fireballs.size(); i++ ) {
+            Fireball* f = &fireballs[i];
+            switch ( f->checkCollision( sprite ) ) {
+                case CollisionType::NORTH:
+                case CollisionType::SOUTH:
+                case CollisionType::EAST:
+                case CollisionType::WEST:
+                    f->setState( SpriteState::TO_BE_REMOVED );
+                    sprite->setState( SpriteState::DYING );
+                    PlaySound( ResourceManager::getSounds()["stomp"] );
+                    break;
             }
-
-            if ( cpN.checkCollision( boxRect ) ) {
-                if ( GameWorld::debug ) {
-                    box.setColor( cpN.getColor() );
-                }
-                return CollisionType::NORTH;
-            } else if ( cpS.checkCollision( boxRect ) ) {
-                if ( GameWorld::debug ) {
-                    box.setColor( cpS.getColor() );
-                }
-                return CollisionType::SOUTH;
-            } else if ( cpE.checkCollision( boxRect ) || cpE1.checkCollision( boxRect ) ) {
-                if ( GameWorld::debug ) {
-                    box.setColor( cpE.getColor() );
-                }
-                return CollisionType::EAST;
-            } else if ( cpW.checkCollision( boxRect ) || cpW1.checkCollision( boxRect ) ) {
-                if ( GameWorld::debug ) {
-                    box.setColor( cpW.getColor() );
-                }
-                return CollisionType::WEST;
-            }
-
         }
 
-    } catch ( std::bad_cast const& ) {
+        if ( state == SpriteState::JUMPING || vel.y > 0 ) {
+            if ( cpN.checkCollision( rect ) ) {
+                return CollisionType::NORTH;
+            } else if ( cpS.checkCollision( rect ) ) {
+                return CollisionType::SOUTH;
+            } else if ( cpE.checkCollision( rect ) || cpE1.checkCollision( rect ) ) {
+                return CollisionType::EAST;
+            } else if ( cpW.checkCollision( rect ) || cpW1.checkCollision( rect ) ) {
+                return CollisionType::WEST;
+            }
+        }
+
     }
 
     return CollisionType::NONE;

@@ -69,10 +69,6 @@ void Exclamation::draw() {
 
 }
 
-CollisionType Exclamation::checkCollision( Sprite& sprite ) {
-    return CollisionType::NONE;
-}
-
 void Exclamation::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["coin"] );
