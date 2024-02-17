@@ -9,8 +9,19 @@
 
 #include "raylib.h"
 #include "Box.h"
+#include "Mario.h"
+#include "Map.h"
 
 class Question : public virtual Box {
+
+private:
+    float coinAnimationTime;
+    float coinAnimationAcum;
+    float coinFrameAcum;
+    int coinAnimationFrame;
+    bool coinAnimationStarted;
+    float coinY;
+    float coinVelY;
 
 public:
 
@@ -21,5 +32,6 @@ public:
     virtual void update();
     virtual void draw();
     virtual CollisionType checkCollision( Sprite& sprite );
+    virtual void doHit( Mario& mario, Map *map );
 
 };

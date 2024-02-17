@@ -33,7 +33,6 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     frameTimeWalking( 0.1 ),
     frameTimeRunning( 0.05 ),
     activationWidth( 0 ),
-    powerUpActivationRadius( 100 ),
     coins( 0 ),
     lives( 5 ),
     points( 0 ),
@@ -44,6 +43,7 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     runningAcum( 0 ),
     runningTime( 0.5 ),
     drawRunningFrames( false ),
+    movinAcum( 0 ),
     lastPos( pos ) {
 
     setState( SpriteState::ON_GROUND );
@@ -121,13 +121,16 @@ void Mario::update() {
              IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT ) ||
              GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) > 0 ) {
             facingDirection = Direction::RIGHT;
-            vel.x = currentSpeedX;
+            movinAcum += delta * 2;
+            vel.x = currentSpeedX * ( movinAcum < 1 ? movinAcum : 1);
         } else if ( IsKeyDown( KEY_LEFT ) ||
                     IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_LEFT ) ||
                     GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) < 0 ) {
             facingDirection = Direction::LEFT;
-            vel.x = -currentSpeedX;
+            movinAcum += delta * 2;
+            vel.x = -currentSpeedX * ( movinAcum < 1 ? movinAcum : 1 );
         } else {
+            movinAcum = 0;
             if ( vel.x >= -10 && vel.x <= 10 ) {
                 vel.x = 0;
             } else {
@@ -269,10 +272,6 @@ void Mario::draw() {
             pos.x + dim.x / 2 - activationWidth / 2, 
             pos.y + dim.y / 2 - activationWidth / 2, 
             activationWidth, activationWidth, BLACK );
-        DrawCircleLines( 
-            pos.x + dim.x / 2,
-            pos.y + dim.y / 2,
-            powerUpActivationRadius, BLACK );
     }
 
 }
@@ -392,58 +391,63 @@ CollisionType Mario::checkCollisionBox( Sprite& sprite ) {
     try {
 
         Box& box = dynamic_cast<Box&>( sprite );
-        Rectangle boxRect = box.getRect();
 
-        for ( size_t i = 0; i < fireballs.size(); i++ ) {
-            Fireball* f = &fireballs[i];
-            switch ( f->checkCollisionTile( box ) ) {
-                case CollisionType::NORTH:
-                    if ( GameWorld::debug ) {
-                        box.setColor( cpN.getColor() );
-                    }
-                    f->setVelY( -f->getVelY() );
-                    break;
-                case CollisionType::SOUTH:
-                    if ( GameWorld::debug ) {
-                        box.setColor( cpS.getColor() );
-                    }
-                    f->setVelY( -300 );
-                    break;
-                case CollisionType::EAST:
-                    if ( GameWorld::debug ) {
-                        box.setColor( cpE.getColor() );
-                    }
-                    f->setState( SpriteState::TO_BE_REMOVED );
-                    break;
-                case CollisionType::WEST:
-                    if ( GameWorld::debug ) {
-                        box.setColor( cpW.getColor() );
-                    }
-                    f->setState( SpriteState::TO_BE_REMOVED );
-                    break;
-            }
-        }
+        if ( box.getState() != SpriteState::NO_COLLIDABLE ) {
 
-        if ( cpN.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpN.getColor() );
+            Rectangle boxRect = box.getRect();
+
+            for ( size_t i = 0; i < fireballs.size(); i++ ) {
+                Fireball* f = &fireballs[i];
+                switch ( f->checkCollisionBox( box ) ) {
+                    case CollisionType::NORTH:
+                        if ( GameWorld::debug ) {
+                            box.setColor( cpN.getColor() );
+                        }
+                        f->setVelY( -f->getVelY() );
+                        break;
+                    case CollisionType::SOUTH:
+                        if ( GameWorld::debug ) {
+                            box.setColor( cpS.getColor() );
+                        }
+                        f->setVelY( -300 );
+                        break;
+                    case CollisionType::EAST:
+                        if ( GameWorld::debug ) {
+                            box.setColor( cpE.getColor() );
+                        }
+                        f->setState( SpriteState::TO_BE_REMOVED );
+                        break;
+                    case CollisionType::WEST:
+                        if ( GameWorld::debug ) {
+                            box.setColor( cpW.getColor() );
+                        }
+                        f->setState( SpriteState::TO_BE_REMOVED );
+                        break;
+                }
             }
-            return CollisionType::NORTH;
-        } else if ( cpS.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpS.getColor() );
+
+            if ( cpN.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpN.getColor() );
+                }
+                return CollisionType::NORTH;
+            } else if ( cpS.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpS.getColor() );
+                }
+                return CollisionType::SOUTH;
+            } else if ( cpE.checkCollision( boxRect ) || cpE1.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpE.getColor() );
+                }
+                return CollisionType::EAST;
+            } else if ( cpW.checkCollision( boxRect ) || cpW1.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpW.getColor() );
+                }
+                return CollisionType::WEST;
             }
-            return CollisionType::SOUTH;
-        } else if ( cpE.checkCollision( boxRect ) || cpE1.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpE.getColor() );
-            }
-            return CollisionType::EAST;
-        } else if ( cpW.checkCollision( boxRect ) || cpW1.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpW.getColor() );
-            }
-            return CollisionType::WEST;
+
         }
 
     } catch ( std::bad_cast const& ) {
@@ -495,10 +499,6 @@ float Mario::getJumpSpeed() {
 
 float Mario::getActivationWidth() {
     return activationWidth;
-}
-
-float Mario::getPowerUpActivationRadius() {
-    return powerUpActivationRadius;
 }
 
 void Mario::setImmortal( bool immortal ) {
@@ -595,8 +595,10 @@ MarioType Mario::getReservedPowerUp() {
 void Mario::consumeReservedPowerUp() {
     if ( reservedPowerUp == MarioType::SUPER ) {
         changeToSuper();
+        PlaySound( ResourceManager::getSounds()["reserveItemRelease"] );
     } else if ( reservedPowerUp == MarioType::FLOWER ) {
         changeToFlower();
+        PlaySound( ResourceManager::getSounds()["reserveItemRelease"] );
     }
     reservedPowerUp = MarioType::SMALL;
 }

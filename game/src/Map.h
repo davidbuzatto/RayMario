@@ -7,6 +7,8 @@
  */
 #pragma once
 
+class Box;
+
 #include "Baddie.h"
 #include "Box.h"
 #include "Drawable.h"

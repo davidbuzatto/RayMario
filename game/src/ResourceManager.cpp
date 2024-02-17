@@ -309,7 +309,10 @@ void ResourceManager::loadSounds() {
         sounds["pipe"] = LoadSound( "resources/sfx/smw_pipe.wav" );
         sounds["powerUp"] = LoadSound( "resources/sfx/smw_power-up.wav" );
         sounds["powerUpAppears"] = LoadSound( "resources/sfx/smw_power-up_appears.wav" );
+        sounds["reserveItemRelease"] = LoadSound( "resources/sfx/smw_reserve_item_release.wav" );
+        sounds["reserveItemStore"] = LoadSound( "resources/sfx/smw_reserve_item_store.wav" );
         sounds["ridingYoshi"] = LoadSound( "resources/sfx/smw_riding_yoshi.wav" );
+        sounds["shellRicochet"] = LoadSound( "resources/sfx/smw_shell_ricochet.wav" );
         sounds["stomp"] = LoadSound( "resources/sfx/smw_stomp.wav" );
         sounds["stompNoDamage"] = LoadSound( "resources/sfx/smw_stomp_no_damage.wav" );
 

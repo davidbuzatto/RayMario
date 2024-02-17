@@ -64,6 +64,7 @@ void Mushroom::updateMario( Mario& mario ) {
             switch ( mario.getReservedPowerUp() ) {
                 case MarioType::SMALL:
                     mario.setReservedPowerUp( MarioType::SUPER );
+                    PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
                 case MarioType::SUPER:
                     break;
@@ -75,6 +76,7 @@ void Mushroom::updateMario( Mario& mario ) {
             switch ( mario.getReservedPowerUp() ) {
                 case MarioType::SMALL:
                     mario.setReservedPowerUp( MarioType::SUPER );
+                    PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
                 case MarioType::SUPER:
                     break;

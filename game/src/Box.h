@@ -7,11 +7,18 @@
  */
 #pragma once
 
+class Map;
+
 #include "raylib.h"
 #include "Sprite.h"
+#include "Mario.h"
+#include "Map.h"
 #include <string>
 
 class Box : public virtual Sprite {
+
+protected:
+    bool hit;
 
 public:
 
@@ -23,5 +30,6 @@ public:
     virtual void update() = 0;
     virtual void draw() = 0;
     virtual CollisionType checkCollision( Sprite& sprite ) = 0;
+    virtual void doHit( Mario &mario, Map *map );
 
 };

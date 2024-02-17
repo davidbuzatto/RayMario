@@ -17,17 +17,13 @@
 #     h: message              (interactive)
 #     !: ! with coin          (interactive)
 #     ?: ? with coin          (interactive)
-#     [: ? with mushroom      (interactive, will be exchanged by m)
-#     ]: ? with fire flower   (interactive, will be exchanged by f)
-#     {: ? with 1-up mushroom (interactive, will be exchanged by u)
-#     }: ? with 3-up moon     (interactive, will be exchanged by +)
+#     m: ? with mushroom      (interactive)
+#     f: ? with fire flower   (interactive)
+#     u: ? with 1-up mushroom (interactive)
+#     +: ? with 3-up moon     (interactive)
 #
 # items:
 #     o: Coin
-#     m: Mushroom             (will turn into a box)
-#     f: Fire Flower          (will turn into a box)
-#     u: 1-Up Mushroom        (will turn into a box)
-#     +: 3-Up Moon            (will turn into a box)
 #     *: Star
 #
 # baddies:
@@ -81,30 +77,30 @@ c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 m: 1              # music id: [1-9]
 t: 20000          # time to finish the map
-/////////////////////////////////////////////////////////////////////////
-/                                                                       /
-/                                                      i               E/
-/                                                     i                C/
-/                                    1               i                 C/
-/                                 iiii              i                  C/
-/                                                  i                   C/
-/                             iiiiiiii            i                    C/
-/                                                i                     C/
-/                         iiiiiiiiiiii          i                      C/
-/                     |               |        i                       C/
-/                      iiiiiiiiiiiiiii        i                        C/
-/                                            i                         C/
-/                                           i                          C/
-/                 i            iiii        i                           C/
-/                 i        1   i   i      i                            C/
-/                 iiiiiiiiiiiiii    i    i                             C/
-/                                       i                              C/
-/                                      i                               C/
-/                iiii  iiii           i                                C/
-/                i        i                                            C/
-/ |           1 |iu + m f i      f f m    |     1                      C/
-/  iyswgch!?[]{} iiiiiiiiii    iiiiiiiii   iiiiiiiii                   C/
-/                                                                      C/
-/  p                                 |                                 C/
-/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
-/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
+///////////////////////////////////////////////////////////////////////////
+/                                                                         /
+/                                                        i               E/
+/                                                       i                C/
+/                                      1               i                 C/
+/                                   iiii              i                  C/
+/                                                    i                   C/
+/                               iiiiiiii            i                    C/
+/                                                  i                     C/
+/                           iiiiiiiiiiii          i                      C/
+/                       |               |        i                       C/
+/                        !?!?!?!?!yyy!?!        i                        C/
+/                                              i                         C/
+/                                             i                          C/
+/                   i            iiii        i                           C/
+/                   i        1   i   i      i                            C/
+/                   iiiiiiiiiiiiii    i    i                             C/
+/                                         i                              C/
+/                                        i                               C/
+/                  iiii  iiii           i                                C/
+/                  i        i                                            C/
+/             1    i        i               |     1                      C/
+/  iyswgch!?mfu+   imifiui+ii    iiiiiiiii   iiiiiiiii                   C/
+/                                                                        C/
+/  p                                   |                                 C/
+/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

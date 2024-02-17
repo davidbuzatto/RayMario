@@ -9,8 +9,14 @@
 
 #include "raylib.h"
 #include "Box.h"
+#include "Mario.h"
+#include "Map.h"
 
 class EyesOpened : public virtual Box {
+
+private:
+    float animationTime;
+    float animationAcum;
 
 public:
 
@@ -21,5 +27,6 @@ public:
     virtual void update();
     virtual void draw();
     virtual CollisionType checkCollision( Sprite& sprite );
+    virtual void doHit( Mario& mario, Map *map );
 
 };

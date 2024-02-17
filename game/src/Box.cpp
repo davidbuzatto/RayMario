@@ -3,7 +3,7 @@
  * @author Prof. Dr. David Buzatto
  * @brief Box class implementation.
  *
- * @copyright Copyright (c) 2024
+ * @copyright Copyright (c) 2024doHit( Mario &mario, Map *map )
  */
 #include "Box.h"
 #include "GameWorld.h"
@@ -17,10 +17,14 @@ Box::Box() :
 }
 
 Box::Box( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, dim, color ) {}
+    Box( pos, dim, color, 0, 1 ) {}
 
 Box::Box( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ) {
+    Sprite( pos, dim, color, frameTime, maxFrames ), hit( false ) {
 }
 
 Box::~Box() {}
+
+void Box::doHit( Mario &mario, Map *map ) {
+
+}

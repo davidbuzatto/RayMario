@@ -40,15 +40,6 @@ CollisionType Item::checkCollision( Sprite& sprite ) {
     return CheckCollisionRecs( getRect(), sprite.getRect() ) ? CollisionType::COLLIDED : CollisionType::NONE;
 }
 
-void Item::activateWithMarioProximity( Mario& mario ) {
-    if ( CheckCollisionCircleRec( 
-        Vector2( mario.getX(), mario.getY() ), 
-        mario.getPowerUpActivationRadius(), getRect() ) ) {
-        state = SpriteState::ACTIVE;
-        setFacingDirection( mario.getFacingDirection() );
-    }
-}
-
 void Item::onSouthCollision() {
 
 }
@@ -88,28 +79,33 @@ CollisionType Item::checkCollisionTile( Sprite& sprite ) {
     try {
 
         Box& box = dynamic_cast<Box&>( sprite );
-        Rectangle boxRect = box.getRect();
 
-        if ( cpN.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpN.getColor() );
+        if ( box.getState() != SpriteState::NO_COLLIDABLE ) {
+
+            Rectangle boxRect = box.getRect();
+
+            if ( cpN.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpN.getColor() );
+                }
+                return CollisionType::NORTH;
+            } else if ( cpS.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpS.getColor() );
+                }
+                return CollisionType::SOUTH;
+            } else if ( cpE.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpE.getColor() );
+                }
+                return CollisionType::EAST;
+            } else if ( cpW.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpW.getColor() );
+                }
+                return CollisionType::WEST;
             }
-            return CollisionType::NORTH;
-        } else if ( cpS.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpS.getColor() );
-            }
-            return CollisionType::SOUTH;
-        } else if ( cpE.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpE.getColor() );
-            }
-            return CollisionType::EAST;
-        } else if ( cpW.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpW.getColor() );
-            }
-            return CollisionType::WEST;
+
         }
 
     } catch ( std::bad_cast const& ) {

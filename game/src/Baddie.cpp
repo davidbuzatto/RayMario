@@ -104,26 +104,30 @@ CollisionType Baddie::checkCollision( Sprite& sprite ) {
         Box& box = dynamic_cast<Box&>( sprite );
         Rectangle boxRect = box.getRect();
 
-        if ( cpN.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpN.getColor() );
+        if ( box.getState() != SpriteState::NO_COLLIDABLE ) {
+
+            if ( cpN.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpN.getColor() );
+                }
+                return CollisionType::NORTH;
+            } else if ( cpS.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpS.getColor() );
+                }
+                return CollisionType::SOUTH;
+            } else if ( cpE.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpE.getColor() );
+                }
+                return CollisionType::EAST;
+            } else if ( cpW.checkCollision( boxRect ) ) {
+                if ( GameWorld::debug ) {
+                    box.setColor( cpW.getColor() );
+                }
+                return CollisionType::WEST;
             }
-            return CollisionType::NORTH;
-        } else if ( cpS.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpS.getColor() );
-            }
-            return CollisionType::SOUTH;
-        } else if ( cpE.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpE.getColor() );
-            }
-            return CollisionType::EAST;
-        } else if ( cpW.checkCollision( boxRect ) ) {
-            if ( GameWorld::debug ) {
-                box.setColor( cpW.getColor() );
-            }
-            return CollisionType::WEST;
+
         }
 
     } catch ( std::bad_cast const& ) {

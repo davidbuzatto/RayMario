@@ -51,6 +51,7 @@ void FireFlower::updateMario( Mario& mario ) {
             switch ( mario.getReservedPowerUp() ) {
                 case MarioType::SMALL:
                     mario.setReservedPowerUp( MarioType::SUPER );
+                    PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
                 case MarioType::SUPER:
                     break;
@@ -62,9 +63,11 @@ void FireFlower::updateMario( Mario& mario ) {
             switch ( mario.getReservedPowerUp() ) {
                 case MarioType::SMALL:
                     mario.setReservedPowerUp( MarioType::FLOWER );
+                    PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
                 case MarioType::SUPER:
                     mario.setReservedPowerUp( MarioType::FLOWER );
+                    PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
                 case MarioType::FLOWER:
                     break;

@@ -21,6 +21,7 @@ enum SpriteState {
     DYING,
     DEAD,
 
-    VICTORY
+    VICTORY,
+    NO_COLLIDABLE
 
 };

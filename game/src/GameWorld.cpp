@@ -58,7 +58,7 @@ GameWorld::GameWorld() :
     camera( nullptr ),
     showControls( ACTIVATE_DEBUG ),
     stateBeforePause( GameState::TITLE_SCREEN ) {
-    //mario.changeToFlower();
+    mario.changeToFlower();
     std::cout << "creating game world..." << std::endl;
 }
 
@@ -79,7 +79,7 @@ void GameWorld::inputAndUpdate() {
     std::vector<Item*> &items = map.getItems();
     std::vector<Baddie*> &baddies = map.getBaddies();
     std::vector<Box*> &boxes = map.getBoxes();
-    std::vector<Tile>& tiles = map.getTiles();
+    std::vector<Tile> &tiles = map.getTiles();
     std::vector<int> collectedIndexes;
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
     std::map<std::string, Music> &musics = ResourceManager::getMusics();
@@ -236,6 +236,7 @@ void GameWorld::inputAndUpdate() {
                     mario.setY( box->getY() + box->getHeight() );
                     mario.setVelY( 0 );
                     mario.updateCollisionProbes();
+                    box->doHit( mario, &map );
                     break;
                 case CollisionType::SOUTH:
                     mario.setY( box->getY() - mario.getHeight() );
@@ -319,17 +320,11 @@ void GameWorld::inputAndUpdate() {
 
         }
 
-        // items activation
+        // mario x items collision resolution and offscreen items removal
         for ( size_t i = 0; i < items.size(); i++ ) {
 
             Item* item = items[i];
 
-            // items activation
-            if ( item->getState() == SpriteState::IDLE ) {
-                item->activateWithMarioProximity( mario );
-            }
-
-            // mario x items collision resolution and offscreen items removal
             if ( item->checkCollision( mario ) == CollisionType::COLLIDED ) {
                 collectedIndexes.push_back( i );
                 item->playCollisionSound();

@@ -295,16 +295,16 @@ void Map::parseMap() {
                     case '?':
                         boxes.push_back( new Question( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
-                    case '[':
+                    case 'm':
                         boxes.push_back( new QuestionMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
-                    case ']':
+                    case 'f':
                         boxes.push_back( new QuestionFireFlower( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
-                    case '{':
+                    case 'u':
                         boxes.push_back( new QuestionOneUpMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
-                    case '}':
+                    case '+':
                         boxes.push_back( new QuestionThreeUpMoon( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
 
@@ -319,7 +319,7 @@ void Map::parseMap() {
                     case 'o':
                         items.push_back( new Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
                         break;
-                    case 'm':
+                    /*case 'm':
                         items.push_back( new Mushroom( Vector2( x, y ), Vector2( 32, 32 ), Vector2( 200, 0 ), RED ) );
                         break;
                     case 'f':
@@ -330,7 +330,7 @@ void Map::parseMap() {
                         break;
                     case '+':
                         items.push_back( new ThreeUpMoon( Vector2( x, y ), Vector2( 30, 32 ), Vector2( 300, 0 ), YELLOW ) );
-                        break;
+                        break;*/
                     case '*':
                         items.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
                         break;
@@ -440,6 +440,11 @@ void Map::reset() {
         delete baddies[i];
     }
     baddies.clear();
+    
+    for ( size_t i = 0; i < boxes.size(); i++ ) {
+        delete boxes[i];
+    }
+    boxes.clear();
 
     StopMusicStream( ResourceManager::getMusics()[std::string( TextFormat( "music%d", musicId ) )] );
     parsed = false;
