@@ -10,12 +10,6 @@
     <Filter Include="Header Files\raylib">
       <UniqueIdentifier>{df6b3998-f6c5-42a4-b40f-9c6049a5ec48}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\boxes">
-      <UniqueIdentifier>{742a6b87-9230-4492-8b53-d6f022f7bb7f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\boxes">
-      <UniqueIdentifier>{c85efaf5-2b02-45a6-ba01-cfa93858f86c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\baddies">
       <UniqueIdentifier>{1d08d023-a399-48ee-af8c-7e76de851bf6}</UniqueIdentifier>
     </Filter>
@@ -33,6 +27,12 @@
     </Filter>
     <Filter Include="Header Files\items">
       <UniqueIdentifier>{f138db41-1ab5-49d8-918d-8f53a375f837}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\blocks">
+      <UniqueIdentifier>{742a6b87-9230-4492-8b53-d6f022f7bb7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\blocks">
+      <UniqueIdentifier>{c85efaf5-2b02-45a6-ba01-cfa93858f86c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -129,47 +129,47 @@
     <ClCompile Include="..\game\src\Fireball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\game\src\Box.cpp">
-      <Filter>Source Files\boxes</Filter>
+    <ClCompile Include="..\game\src\Block.cpp">
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\EyesClosed.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\Cloud.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\Exclamation.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\EyesOpened.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\Glass.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\Message.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\Question.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\QuestionFireFlower.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\QuestionMushroom.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\QuestionOneUpMushroom.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\QuestionThreeUpMoon.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\Stone.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
     <ClCompile Include="..\game\src\Wood.cpp">
-      <Filter>Source Files\boxes</Filter>
+      <Filter>Source Files\blocks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,47 +284,47 @@
     <ClInclude Include="..\game\src\Fireball.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\game\src\Box.h">
-      <Filter>Header Files\boxes</Filter>
+    <ClInclude Include="..\game\src\Block.h">
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\Cloud.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\Exclamation.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\EyesClosed.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\EyesOpened.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\Glass.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\Message.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\Question.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\QuestionFireFlower.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\QuestionMushroom.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\QuestionOneUpMushroom.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\QuestionThreeUpMoon.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\Stone.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\Wood.h">
-      <Filter>Header Files\boxes</Filter>
+      <Filter>Header Files\blocks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

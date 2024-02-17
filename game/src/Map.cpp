@@ -30,7 +30,7 @@
 #include "Rex.h"
 #include "Swooper.h"
 #include "YellowKoopaTroopa.h"
-#include "Box.h"
+#include "Block.h"
 #include "Cloud.h"
 #include "Exclamation.h"
 #include "EyesClosed.h"
@@ -50,7 +50,7 @@
 
 int Map::tileWidth = 32;
 
-Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBoxes, bool parseItems, bool parseBaddies ) :
+Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies ) :
 
     id( id ),
     maxId( 3 ),
@@ -69,7 +69,7 @@ Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBoxes, bool parseIte
     musicId( 1 ),
     maxMusicId( 9 ),
 
-    parseBoxes( parseBoxes ),
+    parseBlocks( parseBlocks ),
     parseItems( parseItems ),
     parseBaddies( parseBaddies ),
 
@@ -91,8 +91,8 @@ Map::~Map() {
         delete baddies[i];
     }
 
-    for ( size_t i = 0; i < boxes.size(); i++ ) {
-        delete boxes[i];
+    for ( size_t i = 0; i < blocks.size(); i++ ) {
+        delete blocks[i];
     }
 
 }
@@ -114,8 +114,8 @@ void Map::draw() {
         tiles[i]->draw();
     }
 
-    for ( size_t i = 0; i < boxes.size(); i++ ) {
-        boxes[i]->draw();
+    for ( size_t i = 0; i < blocks.size(); i++ ) {
+        blocks[i]->draw();
     }
 
     for ( size_t i = 0; i < items.size(); i++ ) {
@@ -132,8 +132,8 @@ std::vector<Tile*> &Map::getTiles() {
     return tiles;
 }
 
-std::vector<Box*>& Map::getBoxes() {
-    return boxes;
+std::vector<Block*>& Map::getBlocks() {
+    return blocks;
 }
 
 std::vector<Item*> &Map::getItems() {
@@ -294,45 +294,45 @@ void Map::parseMap() {
                         tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false, true ) );
                         break;
 
-                    // boxes
+                    // blocks
                     case 'i':
-                        if ( parseBoxes ) boxes.push_back( new EyesClosed( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new EyesClosed( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'y':
-                        if ( parseBoxes ) boxes.push_back( new EyesOpened( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new EyesOpened( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 's':
-                        if ( parseBoxes ) boxes.push_back( new Stone( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new Stone( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'w':
-                        if ( parseBoxes ) boxes.push_back( new Wood( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new Wood( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'g':
-                        if ( parseBoxes ) boxes.push_back( new Glass( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new Glass( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'c':
-                        if ( parseBoxes ) boxes.push_back( new Cloud( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new Cloud( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'h':
-                        if ( parseBoxes ) if ( parseBoxes ) boxes.push_back( new Message( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new Message( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '!':
-                        if ( parseBoxes ) boxes.push_back( new Exclamation( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new Exclamation( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '?':
-                        if ( parseBoxes ) boxes.push_back( new Question( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new Question( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'm':
-                        if ( parseBoxes ) boxes.push_back( new QuestionMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'f':
-                        if ( parseBoxes ) boxes.push_back( new QuestionFireFlower( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionFireFlower( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'u':
-                        if ( parseBoxes ) boxes.push_back( new QuestionOneUpMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionOneUpMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '+':
-                        if ( parseBoxes ) boxes.push_back( new QuestionThreeUpMoon( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionThreeUpMoon( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
 
                     // tiles from A to Z (map dependent - future)
@@ -461,10 +461,10 @@ void Map::reset() {
     }
     tiles.clear();
 
-    for ( size_t i = 0; i < boxes.size(); i++ ) {
-        delete boxes[i];
+    for ( size_t i = 0; i < blocks.size(); i++ ) {
+        delete blocks[i];
     }
-    boxes.clear();
+    blocks.clear();
 
     for ( size_t i = 0; i < items.size(); i++ ) {
         delete items[i];

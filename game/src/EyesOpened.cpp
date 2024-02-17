@@ -47,9 +47,9 @@ void EyesOpened::update() {
 void EyesOpened::draw() {
 
     if ( hit ) {
-        DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "boxEyesOpened%d", currentFrame ) )], pos.x, pos.y, WHITE );
+        DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "blockEyesOpened%d", currentFrame ) )], pos.x, pos.y, WHITE );
     } else {
-        DrawTexture( ResourceManager::getTextures()["boxEyesOpened0"], pos.x, pos.y, WHITE );
+        DrawTexture( ResourceManager::getTextures()["blockEyesOpened0"], pos.x, pos.y, WHITE );
     }
 
     if ( GameWorld::debug && !( color.r == 0 && color.g == 0 && color.b == 0 ) ) {

@@ -1,7 +1,7 @@
 /**
- * @file Box.h
+ * @file Block.h
  * @author Prof. Dr. David Buzatto
- * @brief Box class declaration.
+ * @brief Block class declaration.
  *
  * @copyright Copyright (c) 2024
  */
@@ -15,17 +15,17 @@ class Map;
 #include "Map.h"
 #include <string>
 
-class Box : public virtual Sprite {
+class Block : public virtual Sprite {
 
 protected:
     bool hit;
 
 public:
 
-    Box();
-    Box( Vector2 pos, Vector2 dim, Color color );
-    Box( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
-    ~Box();
+    Block();
+    Block( Vector2 pos, Vector2 dim, Color color );
+    Block( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
+    ~Block();
 
     virtual void update() = 0;
     virtual void draw() = 0;

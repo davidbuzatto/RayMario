@@ -26,7 +26,7 @@
 #include "Baddie.h"
 #include "SpriteState.h"
 #include "Tile.h"
-#include "Box.h"
+#include "Block.h"
 #include "utils.h"
 
 #define ACTIVATE_DEBUG true
@@ -64,7 +64,7 @@ GameWorld::GameWorld() :
     camera( nullptr ),
     showControls( ACTIVATE_DEBUG ),
     stateBeforePause( GameState::TITLE_SCREEN ) {
-    mario.changeToFlower();
+    //mario.changeToFlower();
     std::cout << "creating game world..." << std::endl;
 }
 
@@ -83,7 +83,7 @@ void GameWorld::inputAndUpdate() {
     map.parseMap();
 
     std::vector<Tile*> &tiles = map.getTiles();
-    std::vector<Box*> &boxes = map.getBoxes();
+    std::vector<Block*> &blocks = map.getBlocks();
     std::vector<Item*> &items = map.getItems();
     std::vector<Baddie*> &baddies = map.getBaddies();
 
@@ -122,8 +122,8 @@ void GameWorld::inputAndUpdate() {
             state = GameState::PAUSED;
         }
 
-        for ( size_t i = 0; i < boxes.size(); i++ ) {
-            boxes[i]->update();
+        for ( size_t i = 0; i < blocks.size(); i++ ) {
+            blocks[i]->update();
         }
 
         for ( size_t i = 0; i < items.size(); i++ ) {
@@ -231,33 +231,33 @@ void GameWorld::inputAndUpdate() {
 
         }
 
-        // boxes collision resolution
+        // blocks collision resolution
         mario.updateCollisionProbes();
-        for ( size_t i = 0; i < boxes.size(); i++ ) {
+        for ( size_t i = 0; i < blocks.size(); i++ ) {
 
-            Box *box = boxes[i];
+            Block *block = blocks[i];
 
-            // mario x boxes
-            switch ( mario.checkCollision( box ) ) {
+            // mario x blocks
+            switch ( mario.checkCollision( block ) ) {
                 case CollisionType::NORTH:
-                    mario.setY( box->getY() + box->getHeight() );
+                    mario.setY( block->getY() + block->getHeight() );
                     mario.setVelY( 0 );
                     mario.updateCollisionProbes();
-                    box->doHit( mario, &map );
+                    block->doHit( mario, &map );
                     break;
                 case CollisionType::SOUTH:
-                    mario.setY( box->getY() - mario.getHeight() );
+                    mario.setY( block->getY() - mario.getHeight() );
                     mario.setVelY( 0 );
                     mario.setState( SpriteState::ON_GROUND );
                     mario.updateCollisionProbes();
                     break;
                 case CollisionType::EAST:
-                    mario.setX( box->getX() - mario.getWidth() );
+                    mario.setX( block->getX() - mario.getWidth() );
                     mario.setVelX( 0 );
                     mario.updateCollisionProbes();
                     break;
                 case CollisionType::WEST:
-                    mario.setX( box->getX() + box->getWidth() );
+                    mario.setX( block->getX() + block->getWidth() );
                     mario.setVelX( 0 );
                     mario.updateCollisionProbes();
                     break;
@@ -265,30 +265,30 @@ void GameWorld::inputAndUpdate() {
                     break;
             }
 
-            // baddies x boxes
+            // baddies x blocks
             for ( size_t j = 0; j < baddies.size(); j++ ) {
                 Baddie* baddie = baddies[j];
                 baddie->updateCollisionProbes();
                 if ( baddie->getState() != SpriteState::DYING ) {
-                    switch ( baddie->checkCollision( box ) ) {
+                    switch ( baddie->checkCollision( block ) ) {
                         case CollisionType::NORTH:
-                            baddie->setY( box->getY() + box->getHeight() );
+                            baddie->setY( block->getY() + block->getHeight() );
                             baddie->setVelY( 0 );
                             baddie->updateCollisionProbes();
                             break;
                         case CollisionType::SOUTH:
-                            baddie->setY( box->getY() - baddie->getHeight() );
+                            baddie->setY( block->getY() - baddie->getHeight() );
                             baddie->setVelY( 0 );
                             baddie->onSouthCollision();
                             baddie->updateCollisionProbes();
                             break;
                         case CollisionType::EAST:
-                            baddie->setX( box->getX() - baddie->getWidth() );
+                            baddie->setX( block->getX() - baddie->getWidth() );
                             baddie->setVelX( -baddie->getVelX() );
                             baddie->updateCollisionProbes();
                             break;
                         case CollisionType::WEST:
-                            baddie->setX( box->getX() + box->getWidth() );
+                            baddie->setX( block->getX() + block->getWidth() );
                             baddie->setVelX( -baddie->getVelX() );
                             baddie->updateCollisionProbes();
                             break;
@@ -296,29 +296,29 @@ void GameWorld::inputAndUpdate() {
                 }
             }
 
-            // items x boxes
+            // items x blocks
             for ( size_t j = 0; j < items.size(); j++ ) {
                 Item* item = items[j];
                 item->updateCollisionProbes();
-                switch ( item->checkCollision( box ) ) {
+                switch ( item->checkCollision( block ) ) {
                     case CollisionType::NORTH:
-                        item->setY( box->getY() + box->getHeight() );
+                        item->setY( block->getY() + block->getHeight() );
                         item->setVelY( 0 );
                         item->updateCollisionProbes();
                         break;
                     case CollisionType::SOUTH:
-                        item->setY( box->getY() - item->getHeight() );
+                        item->setY( block->getY() - item->getHeight() );
                         item->setVelY( 0 );
                         item->onSouthCollision();
                         item->updateCollisionProbes();
                         break;
                     case CollisionType::EAST:
-                        item->setX( box->getX() - item->getWidth() );
+                        item->setX( block->getX() - item->getWidth() );
                         item->setVelX( -item->getVelX() );
                         item->updateCollisionProbes();
                         break;
                     case CollisionType::WEST:
-                        item->setX( box->getX() + box->getWidth() );
+                        item->setX( block->getX() + block->getWidth() );
                         item->setVelX( -item->getVelX() );
                         item->updateCollisionProbes();
                         break;
@@ -623,9 +623,9 @@ void GameWorld::draw() {
         int compMargin = 10;
         Rectangle guiPanelRect( GetScreenWidth() - 120, GetScreenHeight() - 140, 100, 120 );
         GuiPanel( guiPanelRect, "Controles" );
-        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 30, 20, 20 ), "debug", &debug );
-        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "fps", &showFPS );
-        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 90, 20, 20 ), "imortal", &immortalMario );
+        GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 30, 20, 20 ), "debug", &debug );
+        GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "fps", &showFPS );
+        GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 90, 20, 20 ), "imortal", &immortalMario );
         mario.setImmortal( immortalMario );
 
         if ( showFPS ) {

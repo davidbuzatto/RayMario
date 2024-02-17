@@ -24,7 +24,7 @@ void EyesClosed::update() {}
 
 void EyesClosed::draw() {
 
-    DrawTexture( ResourceManager::getTextures()["boxEyesClosed"], pos.x, pos.y, WHITE );
+    DrawTexture( ResourceManager::getTextures()["blockEyesClosed"], pos.x, pos.y, WHITE );
 
     if ( GameWorld::debug && !( color.r == 0 && color.g == 0 && color.b == 0 ) ) {
         DrawRectangle( pos.x, pos.y, dim.x, dim.y, Fade( color, 0.5 ) );

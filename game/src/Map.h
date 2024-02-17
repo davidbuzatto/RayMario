@@ -7,10 +7,10 @@
  */
 #pragma once
 
-class Box;
+class Block;
 
 #include "Baddie.h"
-#include "Box.h"
+#include "Block.h"
 #include "Drawable.h"
 #include "Mario.h"
 #include "raylib.h"
@@ -23,7 +23,7 @@ class Box;
 class Map : public virtual Drawable {
 
     std::vector<Tile*> tiles;
-    std::vector<Box*> boxes;
+    std::vector<Block*> blocks;
     std::vector<Item*> items;
     std::vector<Baddie*> baddies;
 
@@ -44,7 +44,7 @@ class Map : public virtual Drawable {
     int musicId;
     int maxMusicId;
 
-    bool parseBoxes;
+    bool parseBlocks;
     bool parseItems;
     bool parseBaddies;
 
@@ -55,11 +55,11 @@ public:
 
     static int tileWidth;
 
-    Map( Mario &mario, int mapNumber, bool loadTestMap, bool parseBoxes, bool parseItems, bool parseBaddies );
+    Map( Mario &mario, int mapNumber, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies );
     ~Map();
     virtual void draw();
     std::vector<Tile*> &getTiles();
-    std::vector<Box*>& getBoxes();
+    std::vector<Block*>& getBlocks();
     std::vector<Item*> &getItems();
     std::vector<Baddie*> &getBaddies();
     void parseMap();

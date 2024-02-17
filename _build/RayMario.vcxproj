@@ -277,7 +277,7 @@
     <ClCompile Include="..\game\src\Baddie.cpp" />
     <ClCompile Include="..\game\src\BlueKoopaTroopa.cpp" />
     <ClCompile Include="..\game\src\BobOmb.cpp" />
-    <ClCompile Include="..\game\src\Box.cpp" />
+    <ClCompile Include="..\game\src\Block.cpp" />
     <ClCompile Include="..\game\src\BulletBill.cpp" />
     <ClCompile Include="..\game\src\BuzzyBeetle.cpp" />
     <ClCompile Include="..\game\src\Cloud.cpp" />
@@ -324,7 +324,7 @@
     <ClInclude Include="..\game\src\Baddie.h" />
     <ClInclude Include="..\game\src\BlueKoopaTroopa.h" />
     <ClInclude Include="..\game\src\BobOmb.h" />
-    <ClInclude Include="..\game\src\Box.h" />
+    <ClInclude Include="..\game\src\Block.h" />
     <ClInclude Include="..\game\src\BulletBill.h" />
     <ClInclude Include="..\game\src\BuzzyBeetle.h" />
     <ClInclude Include="..\game\src\Cloud.h" />

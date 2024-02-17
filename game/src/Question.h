@@ -8,11 +8,11 @@
 #pragma once
 
 #include "raylib.h"
-#include "Box.h"
+#include "Block.h"
 #include "Mario.h"
 #include "Map.h"
 
-class Question : public virtual Box {
+class Question : public virtual Block {
 
 private:
     float coinAnimationTime;

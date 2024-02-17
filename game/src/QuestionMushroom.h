@@ -8,12 +8,12 @@
 #pragma once
 
 #include "raylib.h"
-#include "Box.h"
+#include "Block.h"
 #include "Mario.h"
 #include "Item.h"
 #include "Map.h"
 
-class QuestionMushroom : public virtual Box {
+class QuestionMushroom : public virtual Block {
 
 private:
     Item *item;

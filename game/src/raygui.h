@@ -19,7 +19,7 @@
 *       - Externalize required inputs, allow user easier customization
 *
 *   LIMITATIONS:
-*       - No editable multi-line word-wraped text box supported
+*       - No editable multi-line word-wraped text block supported
 *       - No auto-layout mechanism, up to the user to define controls position and size
 *       - Standalone mode requires library modification and some user work to plug another backend
 *
@@ -32,8 +32,8 @@
 *
 *   CONTROLS PROVIDED:
 *     # Container/separators Controls
-*       - WindowBox     --> StatusBar, Panel
-*       - GroupBox      --> Line
+*       - WindowBlock     --> StatusBar, Panel
+*       - GroupBlock      --> Line
 *       - Line
 *       - Panel         --> StatusBar
 *       - ScrollPanel   --> StatusBar
@@ -46,12 +46,12 @@
 *       - Toggle
 *       - ToggleGroup   --> Toggle
 *       - ToggleSlider
-*       - CheckBox
-*       - ComboBox
-*       - DropdownBox
-*       - TextBox
-*       - ValueBox      --> TextBox
-*       - Spinner       --> Button, ValueBox
+*       - CheckBlock
+*       - ComboBlock
+*       - DropdownBlock
+*       - TextBlock
+*       - ValueBlock      --> TextBlock
+*       - Spinner       --> Button, ValueBlock
 *       - Slider
 *       - SliderBar     --> Slider
 *       - ProgressBar
@@ -62,8 +62,8 @@
 *     # Advance Controls
 *       - ListView
 *       - ColorPicker   --> ColorPanel, ColorBarHue
-*       - MessageBox    --> Window, Label, Button
-*       - TextInputBox  --> Window, Label, TextBox, Button
+*       - MessageBlock    --> Window, Label, Button
+*       - TextInputBlock  --> Window, Label, TextBlock, Button
 *
 *     It also provides a set of functions for styling the controls based on its properties (size, color).
 *
@@ -147,14 +147,14 @@
 *                         ADDED: New DEFAULT properties: TEXT_LINE_SPACING, TEXT_ALIGNMENT_VERTICAL, TEXT_WRAP_MODE
 *                         ADDED: New enum values: GuiTextAlignment, GuiTextAlignmentVertical, GuiTextWrapMode
 *                         ADDED: Support loading styles with custom font charset from external file
-*                         REDESIGNED: GuiTextBox(), support mouse cursor positioning
+*                         REDESIGNED: GuiTextBlock(), support mouse cursor positioning
 *                         REDESIGNED: GuiDrawText(), support multiline and word-wrap modes (read only)
 *                         REDESIGNED: GuiProgressBar() to be more visual, progress affects border color
 *                         REDESIGNED: Global alpha consideration moved to GuiDrawRectangle() and GuiDrawText()
 *                         REDESIGNED: GuiScrollPanel(), get parameters by reference and return result value
 *                         REDESIGNED: GuiToggleGroup(), get parameters by reference and return result value
-*                         REDESIGNED: GuiComboBox(), get parameters by reference and return result value
-*                         REDESIGNED: GuiCheckBox(), get parameters by reference and return result value
+*                         REDESIGNED: GuiComboBlock(), get parameters by reference and return result value
+*                         REDESIGNED: GuiCheckBlock(), get parameters by reference and return result value
 *                         REDESIGNED: GuiSlider(), get parameters by reference and return result value
 *                         REDESIGNED: GuiSliderBar(), get parameters by reference and return result value
 *                         REDESIGNED: GuiProgressBar(), get parameters by reference and return result value
@@ -175,10 +175,10 @@
 *       3.6 (10-May-2023) ADDED: New icon: SAND_TIMER
 *                         ADDED: GuiLoadStyleFromMemory() (binary only)
 *                         REVIEWED: GuiScrollBar() horizontal movement key
-*                         REVIEWED: GuiTextBox() crash on cursor movement
-*                         REVIEWED: GuiTextBox(), additional inputs support
+*                         REVIEWED: GuiTextBlock() crash on cursor movement
+*                         REVIEWED: GuiTextBlock(), additional inputs support
 *                         REVIEWED: GuiLabelButton(), avoid text cut
-*                         REVIEWED: GuiTextInputBox(), password input
+*                         REVIEWED: GuiTextInputBlock(), password input
 *                         REVIEWED: Local GetCodepointNext(), aligned with raylib
 *                         REDESIGNED: GuiSlider*()/GuiScrollBar() to support out-of-bounds
 *
@@ -186,12 +186,12 @@
 *                         ADDED: Helper functions to split text in separate lines
 *                         ADDED: Multiple new icons, useful for code editing tools
 *                         REMOVED: Unneeded icon editing functions
-*                         REMOVED: GuiTextBoxMulti(), very limited and broken
+*                         REMOVED: GuiTextBlockMulti(), very limited and broken
 *                         REMOVED: MeasureTextEx() dependency, logic directly implemented
 *                         REMOVED: DrawTextEx() dependency, logic directly implemented
 *                         REVIEWED: GuiScrollBar(), improve mouse-click behaviour
 *                         REVIEWED: Library header info, more info, better organized
-*                         REDESIGNED: GuiTextBox() to support cursor movement
+*                         REDESIGNED: GuiTextBlock() to support cursor movement
 *                         REDESIGNED: GuiDrawText() to divide drawing by lines
 *
 *       3.2 (22-May-2022) RENAMED: Some enum values, for unification, avoiding prefixes
@@ -202,7 +202,7 @@
 *                         REDESIGNED: GuiColorPanel() to support text parameter
 *                         REDESIGNED: GuiColorBarAlpha() to support text parameter
 *                         REDESIGNED: GuiColorBarHue() to support text parameter
-*                         REDESIGNED: GuiTextInputBox() to support password
+*                         REDESIGNED: GuiTextInputBlock() to support password
 *
 *       3.1 (12-Jan-2022) REVIEWED: Default style for consistency (aligned with rGuiLayout v2.5 tool)
 *                         REVIEWED: GuiLoadStyle() to support compressed font atlas image data and unload previous textures
@@ -213,29 +213,29 @@
 *                         Projects updated and multiple tweaks
 *
 *       3.0 (04-Nov-2021) Integrated ricons data to avoid external file
-*                         REDESIGNED: GuiTextBoxMulti()
+*                         REDESIGNED: GuiTextBlockMulti()
 *                         REMOVED: GuiImageButton*()
 *                         Multiple minor tweaks and bugs corrected
 *
 *       2.9 (17-Mar-2021) REMOVED: Tooltip API
 *       2.8 (03-May-2020) Centralized rectangles drawing to GuiDrawRectangle()
 *       2.7 (20-Feb-2020) ADDED: Possible tooltips API
-*       2.6 (09-Sep-2019) ADDED: GuiTextInputBox()
-*                         REDESIGNED: GuiListView*(), GuiDropdownBox(), GuiSlider*(), GuiProgressBar(), GuiMessageBox()
-*                         REVIEWED: GuiTextBox(), GuiSpinner(), GuiValueBox(), GuiLoadStyle()
+*       2.6 (09-Sep-2019) ADDED: GuiTextInputBlock()
+*                         REDESIGNED: GuiListView*(), GuiDropdownBlock(), GuiSlider*(), GuiProgressBar(), GuiMessageBlock()
+*                         REVIEWED: GuiTextBlock(), GuiSpinner(), GuiValueBlock(), GuiLoadStyle()
 *                         Replaced property INNER_PADDING by TEXT_PADDING, renamed some properties
 *                         ADDED: 8 new custom styles ready to use
 *                         Multiple minor tweaks and bugs corrected
 *
-*       2.5 (28-May-2019) Implemented extended GuiTextBox(), GuiValueBox(), GuiSpinner()
+*       2.5 (28-May-2019) Implemented extended GuiTextBlock(), GuiValueBlock(), GuiSpinner()
 *       2.3 (29-Apr-2019) ADDED: rIcons auxiliar library and support for it, multiple controls reviewed
 *                         Refactor all controls drawing mechanism to use control state
 *       2.2 (05-Feb-2019) ADDED: GuiScrollBar(), GuiScrollPanel(), reviewed GuiListView(), removed Gui*Ex() controls
-*       2.1 (26-Dec-2018) REDESIGNED: GuiCheckBox(), GuiComboBox(), GuiDropdownBox(), GuiToggleGroup() > Use combined text string
+*       2.1 (26-Dec-2018) REDESIGNED: GuiCheckBlock(), GuiComboBlock(), GuiDropdownBlock(), GuiToggleGroup() > Use combined text string
 *                         REDESIGNED: Style system (breaking change)
 *       2.0 (08-Nov-2018) ADDED: Support controls guiLock and custom fonts
-*                         REVIEWED: GuiComboBox(), GuiListView()...
-*       1.9 (09-Oct-2018) REVIEWED: GuiGrid(), GuiTextBox(), GuiTextBoxMulti(), GuiValueBox()...
+*                         REVIEWED: GuiComboBlock(), GuiListView()...
+*       1.9 (09-Oct-2018) REVIEWED: GuiGrid(), GuiTextBlock(), GuiTextBlockMulti(), GuiValueBlock()...
 *       1.8 (01-May-2018) Lot of rework and redesign to align with rGuiStyler and rGuiLayout
 *       1.5 (21-Jun-2017) Working in an improved styles system
 *       1.4 (15-Jun-2017) Rewritten all GUI functions (removed useless ones)
@@ -261,7 +261,7 @@
 *           - bool IsMouseButtonReleased(int button);
 *           - bool IsKeyDown(int key);
 *           - bool IsKeyPressed(int key);
-*           - int GetCharPressed(void);         // -- GuiTextBox(), GuiValueBox()
+*           - int GetCharPressed(void);         // -- GuiTextBlock(), GuiValueBlock()
 *
 *           - void DrawRectangle(int x, int y, int width, int height, Color color); // -- GuiDrawRectangle()
 *           - void DrawRectangleGradientEx(Rectangle rec, Color col1, Color col2, Color col3, Color col4); // -- GuiColorPicker()
@@ -279,7 +279,7 @@
 *
 *   CONTRIBUTORS:
 *       Ramon Santamaria:   Supervision, review, redesign, update and maintenance
-*       Vlad Adrian:        Complete rewrite of GuiTextBox() to support extended features (2019)
+*       Vlad Adrian:        Complete rewrite of GuiTextBlock() to support extended features (2019)
 *       Sergio Martinez:    Review, testing (2015) and redesign of multiple controls (2018)
 *       Adria Arranz:       Testing and implementation of additional controls (2018)
 *       Jordi Jorba:        Testing and implementation of additional controls (2018)
@@ -601,27 +601,27 @@ typedef enum {
     SCROLL_SPEED,               // ScrollBar scrolling speed
 } GuiScrollBarProperty;
 
-// CheckBox
+// CheckBlock
 typedef enum {
-    CHECK_PADDING = 16          // CheckBox internal check padding
-} GuiCheckBoxProperty;
+    CHECK_PADDING = 16          // CheckBlock internal check padding
+} GuiCheckBlockProperty;
 
-// ComboBox
+// ComboBlock
 typedef enum {
-    COMBO_BUTTON_WIDTH = 16,    // ComboBox right button width
-    COMBO_BUTTON_SPACING        // ComboBox button separation
-} GuiComboBoxProperty;
+    COMBO_BUTTON_WIDTH = 16,    // ComboBlock right button width
+    COMBO_BUTTON_SPACING        // ComboBlock button separation
+} GuiComboBlockProperty;
 
-// DropdownBox
+// DropdownBlock
 typedef enum {
-    ARROW_PADDING = 16,         // DropdownBox arrow separation from border and items
-    DROPDOWN_ITEMS_SPACING      // DropdownBox items separation
-} GuiDropdownBoxProperty;
+    ARROW_PADDING = 16,         // DropdownBlock arrow separation from border and items
+    DROPDOWN_ITEMS_SPACING      // DropdownBlock items separation
+} GuiDropdownBlockProperty;
 
-// TextBox/TextBoxMulti/ValueBox/Spinner
+// TextBlock/TextBlockMulti/ValueBlock/Spinner
 typedef enum {
-    TEXT_READONLY = 16,         // TextBox in read-only mode: 0-text editable, 1-text no-editable
-} GuiTextBoxProperty;
+    TEXT_READONLY = 16,         // TextBlock in read-only mode: 0-text editable, 1-text no-editable
+} GuiTextBlockProperty;
 
 // Spinner
 typedef enum {
@@ -702,8 +702,8 @@ RAYGUIAPI void GuiDrawIcon(int iconId, int posX, int posY, int pixelSize, Color 
 // Controls
 //----------------------------------------------------------------------------------------------------------
 // Container/separator controls, useful for controls organization
-RAYGUIAPI int GuiWindowBox(Rectangle bounds, const char *title);                                       // Window Box control, shows a window that can be closed
-RAYGUIAPI int GuiGroupBox(Rectangle bounds, const char *text);                                         // Group Box control with text name
+RAYGUIAPI int GuiWindowBlock(Rectangle bounds, const char *title);                                       // Window Block control, shows a window that can be closed
+RAYGUIAPI int GuiGroupBlock(Rectangle bounds, const char *text);                                         // Group Block control with text name
 RAYGUIAPI int GuiLine(Rectangle bounds, const char *text);                                             // Line separator control, could contain text
 RAYGUIAPI int GuiPanel(Rectangle bounds, const char *text);                                            // Panel control, useful to group controls
 RAYGUIAPI int GuiTabBar(Rectangle bounds, const char **text, int count, int *active);                  // Tab Bar control, returns TAB to be closed or -1
@@ -716,13 +716,13 @@ RAYGUIAPI int GuiLabelButton(Rectangle bounds, const char *text);               
 RAYGUIAPI int GuiToggle(Rectangle bounds, const char *text, bool *active);                             // Toggle Button control, returns true when active
 RAYGUIAPI int GuiToggleGroup(Rectangle bounds, const char *text, int *active);                         // Toggle Group control, returns active toggle index
 RAYGUIAPI int GuiToggleSlider(Rectangle bounds, const char *text, int *active);                        // Toggle Slider control, returns true when clicked
-RAYGUIAPI int GuiCheckBox(Rectangle bounds, const char *text, bool *checked);                          // Check Box control, returns true when active
-RAYGUIAPI int GuiComboBox(Rectangle bounds, const char *text, int *active);                            // Combo Box control, returns selected item index
+RAYGUIAPI int GuiCheckBlock(Rectangle bounds, const char *text, bool *checked);                          // Check Block control, returns true when active
+RAYGUIAPI int GuiComboBlock(Rectangle bounds, const char *text, int *active);                            // Combo Block control, returns selected item index
 
-RAYGUIAPI int GuiDropdownBox(Rectangle bounds, const char *text, int *active, bool editMode);          // Dropdown Box control, returns selected item
+RAYGUIAPI int GuiDropdownBlock(Rectangle bounds, const char *text, int *active, bool editMode);          // Dropdown Block control, returns selected item
 RAYGUIAPI int GuiSpinner(Rectangle bounds, const char *text, int *value, int minValue, int maxValue, bool editMode); // Spinner control, returns selected value
-RAYGUIAPI int GuiValueBox(Rectangle bounds, const char *text, int *value, int minValue, int maxValue, bool editMode); // Value Box control, updates input text with numbers
-RAYGUIAPI int GuiTextBox(Rectangle bounds, char *text, int textSize, bool editMode);                   // Text Box control, updates input text
+RAYGUIAPI int GuiValueBlock(Rectangle bounds, const char *text, int *value, int minValue, int maxValue, bool editMode); // Value Block control, updates input text with numbers
+RAYGUIAPI int GuiTextBlock(Rectangle bounds, char *text, int textSize, bool editMode);                   // Text Block control, updates input text
 
 RAYGUIAPI int GuiSlider(Rectangle bounds, const char *textLeft, const char *textRight, float *value, float minValue, float maxValue); // Slider control, returns selected value
 RAYGUIAPI int GuiSliderBar(Rectangle bounds, const char *textLeft, const char *textRight, float *value, float minValue, float maxValue); // Slider Bar control, returns selected value
@@ -734,8 +734,8 @@ RAYGUIAPI int GuiGrid(Rectangle bounds, const char *text, float spacing, int sub
 // Advance controls set
 RAYGUIAPI int GuiListView(Rectangle bounds, const char *text, int *scrollIndex, int *active);          // List View control, returns selected list item index
 RAYGUIAPI int GuiListViewEx(Rectangle bounds, const char **text, int count, int *scrollIndex, int *active, int *focus); // List View with extended parameters
-RAYGUIAPI int GuiMessageBox(Rectangle bounds, const char *title, const char *message, const char *buttons); // Message Box control, displays a message
-RAYGUIAPI int GuiTextInputBox(Rectangle bounds, const char *title, const char *message, const char *buttons, char *text, int textMaxSize, bool *secretViewActive); // Text Input Box control, ask for text, supports secret
+RAYGUIAPI int GuiMessageBlock(Rectangle bounds, const char *title, const char *message, const char *buttons); // Message Block control, displays a message
+RAYGUIAPI int GuiTextInputBlock(Rectangle bounds, const char *title, const char *message, const char *buttons, char *text, int textMaxSize, bool *secretViewActive); // Text Input Block control, ask for text, supports secret
 RAYGUIAPI int GuiColorPicker(Rectangle bounds, const char *text, Color *color);                        // Color Picker control (multiple color controls)
 RAYGUIAPI int GuiColorPanel(Rectangle bounds, const char *text, Color *color);                         // Color Panel control
 RAYGUIAPI int GuiColorBarAlpha(Rectangle bounds, const char *text, float *alpha);                      // Color Bar Alpha control
@@ -1029,7 +1029,7 @@ typedef enum {
 
 #include <stdio.h>              // Required for: FILE, fopen(), fclose(), fprintf(), feof(), fscanf(), vsprintf() [GuiLoadStyle(), GuiLoadIcons()]
 #include <stdlib.h>             // Required for: malloc(), calloc(), free() [GuiLoadStyle(), GuiLoadIcons()]
-#include <string.h>             // Required for: strlen() [GuiTextBox(), GuiValueBox()], memset(), memcpy()
+#include <string.h>             // Required for: strlen() [GuiTextBlock(), GuiValueBlock()], memset(), memcpy()
 #include <stdarg.h>             // Required for: va_list, va_start(), vfprintf(), va_end() [TextFormat()]
 #include <math.h>               // Required for: roundf() [GuiColorPicker()]
 
@@ -1366,7 +1366,7 @@ static const char *guiTooltipPtr = NULL;        // Tooltip string pointer (strin
 static bool guiSliderDragging = false;          // Gui slider drag state (no inputs processed except dragged slider)
 static Rectangle guiSliderActive = { 0 };       // Gui slider active bounds rectangle, used as an unique identifier
 
-static int textBoxCursorIndex = 0;              // Cursor index, shared by all GuiTextBox*()
+static int textBlockCursorIndex = 0;              // Cursor index, shared by all GuiTextBlock*()
 //static int blinkCursorFrameCounter = 0;       // Frame counter for cursor blinking
 static int autoCursorCooldownCounter = 0;       // Cooldown frame counter for automatic cursor movement on key-down
 static int autoCursorDelayCounter = 0;          // Delay frame counter for automatic cursor movement
@@ -1414,7 +1414,7 @@ static bool IsMouseButtonReleased(int button);
 
 static bool IsKeyDown(int key);
 static bool IsKeyPressed(int key);
-static int GetCharPressed(void);         // -- GuiTextBox(), GuiValueBox()
+static int GetCharPressed(void);         // -- GuiTextBlock(), GuiValueBlock()
 //-------------------------------------------------------------------------------
 
 // Drawing required functions
@@ -1560,11 +1560,11 @@ int GuiGetStyle(int control, int property)
 // Gui Controls Functions Definition
 //----------------------------------------------------------------------------------
 
-// Window Box control
-int GuiWindowBox(Rectangle bounds, const char *title)
+// Window Block control
+int GuiWindowBlock(Rectangle bounds, const char *title)
 {
     // Window title bar height (including borders)
-    // NOTE: This define is also used by GuiMessageBox() and GuiTextInputBox()
+    // NOTE: This define is also used by GuiMessageBlock() and GuiTextInputBlock()
     #if !defined(RAYGUI_WINDOWBOX_STATUSBAR_HEIGHT)
         #define RAYGUI_WINDOWBOX_STATUSBAR_HEIGHT        24
     #endif
@@ -1608,8 +1608,8 @@ int GuiWindowBox(Rectangle bounds, const char *title)
     return result;      // Window close button clicked: result = 1
 }
 
-// Group Box control with text name
-int GuiGroupBox(Rectangle bounds, const char *text)
+// Group Block control with text name
+int GuiGroupBlock(Rectangle bounds, const char *text)
 {
     #if !defined(RAYGUI_GROUPBOX_LINE_THICK)
         #define RAYGUI_GROUPBOX_LINE_THICK     1
@@ -2001,7 +2001,7 @@ int GuiLabelButton(Rectangle bounds, const char *text)
     {
         Vector2 mousePoint = GetMousePosition();
 
-        // Check checkbox state
+        // Check checkblock state
         if (CheckCollisionPointRec(mousePoint, bounds))
         {
             if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) state = STATE_PRESSED;
@@ -2189,8 +2189,8 @@ int GuiToggleSlider(Rectangle bounds, const char *text, int *active)
     return result;
 }
 
-// Check Box control, returns true when active
-int GuiCheckBox(Rectangle bounds, const char *text, bool *checked)
+// Check Block control, returns true when active
+int GuiCheckBlock(Rectangle bounds, const char *text, bool *checked)
 {
     int result = 0;
     GuiState state = guiState;
@@ -2222,7 +2222,7 @@ int GuiCheckBox(Rectangle bounds, const char *text, bool *checked)
             bounds.height,
         };
 
-        // Check checkbox state
+        // Check checkblock state
         if (CheckCollisionPointRec(mousePoint, totalBounds))
         {
             if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) state = STATE_PRESSED;
@@ -2252,8 +2252,8 @@ int GuiCheckBox(Rectangle bounds, const char *text, bool *checked)
     return result;
 }
 
-// Combo Box control, returns selected item codepointIndex
-int GuiComboBox(Rectangle bounds, const char *text, int *active)
+// Combo Block control, returns selected item codepointIndex
+int GuiComboBlock(Rectangle bounds, const char *text, int *active)
 {
     int result = 0;
     GuiState state = guiState;
@@ -2285,7 +2285,7 @@ int GuiComboBox(Rectangle bounds, const char *text, int *active)
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
             {
                 *active += 1;
-                if (*active >= itemCount) *active = 0;      // Cyclic combobox
+                if (*active >= itemCount) *active = 0;      // Cyclic comboblock
             }
 
             if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) state = STATE_PRESSED;
@@ -2296,7 +2296,7 @@ int GuiComboBox(Rectangle bounds, const char *text, int *active)
 
     // Draw control
     //--------------------------------------------------------------------
-    // Draw combo box main
+    // Draw combo block main
     GuiDrawRectangle(bounds, GuiGetStyle(COMBOBOX, BORDER_WIDTH), GetColor(GuiGetStyle(COMBOBOX, BORDER + (state*3))), GetColor(GuiGetStyle(COMBOBOX, BASE + (state*3))));
     GuiDrawText(items[*active], GetTextBounds(COMBOBOX, bounds), GuiGetStyle(COMBOBOX, TEXT_ALIGNMENT), GetColor(GuiGetStyle(COMBOBOX, TEXT + (state*3))));
 
@@ -2316,9 +2316,9 @@ int GuiComboBox(Rectangle bounds, const char *text, int *active)
     return result;
 }
 
-// Dropdown Box control
+// Dropdown Block control
 // NOTE: Returns mouse click
-int GuiDropdownBox(Rectangle bounds, const char *text, int *active, bool editMode)
+int GuiDropdownBlock(Rectangle bounds, const char *text, int *active, bool editMode)
 {
     int result = 0;
     GuiState state = guiState;
@@ -2434,9 +2434,9 @@ int GuiDropdownBox(Rectangle bounds, const char *text, int *active, bool editMod
     return result;   // Mouse click: result = 1
 }
 
-// Text Box control
+// Text Block control
 // NOTE: Returns true on ENTER pressed (useful for data validation)
-int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
+int GuiTextBlock(Rectangle bounds, char *text, int bufferSize, bool editMode)
 {
     #if !defined(RAYGUI_TEXTBOX_AUTO_CURSOR_COOLDOWN)
         #define RAYGUI_TEXTBOX_AUTO_CURSOR_COOLDOWN  40        // Frames to wait for autocursor movement
@@ -2452,8 +2452,8 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
     int wrapMode = GuiGetStyle(DEFAULT, TEXT_WRAP_MODE);
 
     Rectangle textBounds = GetTextBounds(TEXTBOX, bounds);
-    int textWidth = GetTextWidth(text) - GetTextWidth(text + textBoxCursorIndex);
-    int textIndexOffset = 0;    // Text index offset to start drawing in the box
+    int textWidth = GetTextWidth(text) - GetTextWidth(text + textBlockCursorIndex);
+    int textIndexOffset = 0;    // Text index offset to start drawing in the block
 
     // Cursor rectangle
     // NOTE: Position X value should be updated
@@ -2490,7 +2490,7 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
     //--------------------------------------------------------------------
     // WARNING: Text editing is only supported under certain conditions:
     if ((state != STATE_DISABLED) &&                // Control not disabled
-        !GuiGetStyle(TEXTBOX, TEXT_READONLY) &&     // TextBox not on read-only mode
+        !GuiGetStyle(TEXTBOX, TEXT_READONLY) &&     // TextBlock not on read-only mode
         !guiLocked &&                               // Gui not locked
         !guiSliderDragging &&                       // No gui slider on dragging
         (wrapMode == TEXT_WRAP_NONE))               // No wrap mode
@@ -2501,7 +2501,7 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
         {
             state = STATE_PRESSED;
 
-            // If text does not fit in the textbox and current cursor position is out of bounds,
+            // If text does not fit in the textblock and current cursor position is out of bounds,
             // we add an index offset to text for drawing only what requires depending on cursor
             while (textWidth >= textBounds.width)
             {
@@ -2510,14 +2510,14 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
 
                 textIndexOffset += nextCodepointSize;
 
-                textWidth = GetTextWidth(text + textIndexOffset) - GetTextWidth(text + textBoxCursorIndex);
+                textWidth = GetTextWidth(text + textIndexOffset) - GetTextWidth(text + textBlockCursorIndex);
             }
 
             int textLength = (int)strlen(text);     // Get current text length
             int codepoint = GetCharPressed();       // Get Unicode codepoint
             if (multiline && IsKeyPressed(KEY_ENTER)) codepoint = (int)'\n';
 
-            if (textBoxCursorIndex > textLength) textBoxCursorIndex = textLength;
+            if (textBlockCursorIndex > textLength) textBlockCursorIndex = textLength;
 
             // Encode codepoint as UTF-8
             int codepointSize = 0;
@@ -2528,12 +2528,12 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
             if (((multiline && (codepoint == (int)'\n')) || (codepoint >= 32)) && ((textLength + codepointSize) < bufferSize))
             {
                 // Move forward data from cursor position
-                for (int i = (textLength + codepointSize); i > textBoxCursorIndex; i--) text[i] = text[i - codepointSize];
+                for (int i = (textLength + codepointSize); i > textBlockCursorIndex; i--) text[i] = text[i - codepointSize];
 
                 // Add new codepoint in current cursor position
-                for (int i = 0; i < codepointSize; i++) text[textBoxCursorIndex + i] = charEncoded[i];
+                for (int i = 0; i < codepointSize; i++) text[textBlockCursorIndex + i] = charEncoded[i];
 
-                textBoxCursorIndex += codepointSize;
+                textBlockCursorIndex += codepointSize;
                 textLength += codepointSize;
 
                 // Make sure text last character is EOL
@@ -2541,23 +2541,23 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
             }
 
             // Move cursor to start
-            if ((textLength > 0) && IsKeyPressed(KEY_HOME)) textBoxCursorIndex = 0;
+            if ((textLength > 0) && IsKeyPressed(KEY_HOME)) textBlockCursorIndex = 0;
 
             // Move cursor to end
-            if ((textLength > textBoxCursorIndex) && IsKeyPressed(KEY_END)) textBoxCursorIndex = textLength;
+            if ((textLength > textBlockCursorIndex) && IsKeyPressed(KEY_END)) textBlockCursorIndex = textLength;
 
             // Delete codepoint from text, after current cursor position
-            if ((textLength > textBoxCursorIndex) && (IsKeyPressed(KEY_DELETE) || (IsKeyDown(KEY_DELETE) && (autoCursorCooldownCounter >= RAYGUI_TEXTBOX_AUTO_CURSOR_COOLDOWN))))
+            if ((textLength > textBlockCursorIndex) && (IsKeyPressed(KEY_DELETE) || (IsKeyDown(KEY_DELETE) && (autoCursorCooldownCounter >= RAYGUI_TEXTBOX_AUTO_CURSOR_COOLDOWN))))
             {
                 autoCursorDelayCounter++;
 
                 if (IsKeyPressed(KEY_DELETE) || (autoCursorDelayCounter%RAYGUI_TEXTBOX_AUTO_CURSOR_DELAY) == 0)      // Delay every movement some frames
                 {
                     int nextCodepointSize = 0;
-                    GetCodepointNext(text + textBoxCursorIndex, &nextCodepointSize);
+                    GetCodepointNext(text + textBlockCursorIndex, &nextCodepointSize);
 
                     // Move backward text from cursor position
-                    for (int i = textBoxCursorIndex; i < textLength; i++) text[i] = text[i + nextCodepointSize];
+                    for (int i = textBlockCursorIndex; i < textLength; i++) text[i] = text[i + nextCodepointSize];
 
                     textLength -= codepointSize;
 
@@ -2574,15 +2574,15 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
                 if (IsKeyPressed(KEY_BACKSPACE) || (autoCursorDelayCounter%RAYGUI_TEXTBOX_AUTO_CURSOR_DELAY) == 0)      // Delay every movement some frames
                 {
                     int prevCodepointSize = 0;
-                    GetCodepointPrevious(text + textBoxCursorIndex, &prevCodepointSize);
+                    GetCodepointPrevious(text + textBlockCursorIndex, &prevCodepointSize);
 
                     // Move backward text from cursor position
-                    for (int i = (textBoxCursorIndex - prevCodepointSize); i < textLength; i++) text[i] = text[i + prevCodepointSize];
+                    for (int i = (textBlockCursorIndex - prevCodepointSize); i < textLength; i++) text[i] = text[i + prevCodepointSize];
 
                     // Prevent cursor index from decrementing past 0
-                    if (textBoxCursorIndex > 0)
+                    if (textBlockCursorIndex > 0)
                     {
-                        textBoxCursorIndex -= codepointSize;
+                        textBlockCursorIndex -= codepointSize;
                         textLength -= codepointSize;
                     }
 
@@ -2599,9 +2599,9 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
                 if (IsKeyPressed(KEY_LEFT) || (autoCursorDelayCounter%RAYGUI_TEXTBOX_AUTO_CURSOR_DELAY) == 0)      // Delay every movement some frames
                 {
                     int prevCodepointSize = 0;
-                    GetCodepointPrevious(text + textBoxCursorIndex, &prevCodepointSize);
+                    GetCodepointPrevious(text + textBlockCursorIndex, &prevCodepointSize);
 
-                    if (textBoxCursorIndex >= prevCodepointSize) textBoxCursorIndex -= prevCodepointSize;
+                    if (textBlockCursorIndex >= prevCodepointSize) textBlockCursorIndex -= prevCodepointSize;
                 }
             }
             else if (IsKeyPressed(KEY_RIGHT) || (IsKeyDown(KEY_RIGHT) && (autoCursorCooldownCounter > RAYGUI_TEXTBOX_AUTO_CURSOR_COOLDOWN)))
@@ -2611,9 +2611,9 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
                 if (IsKeyPressed(KEY_RIGHT) || (autoCursorDelayCounter%RAYGUI_TEXTBOX_AUTO_CURSOR_DELAY) == 0)      // Delay every movement some frames
                 {
                     int nextCodepointSize = 0;
-                    GetCodepointNext(text + textBoxCursorIndex, &nextCodepointSize);
+                    GetCodepointNext(text + textBlockCursorIndex, &nextCodepointSize);
 
-                    if ((textBoxCursorIndex + nextCodepointSize) <= textLength) textBoxCursorIndex += nextCodepointSize;
+                    if ((textBlockCursorIndex + nextCodepointSize) <= textLength) textBlockCursorIndex += nextCodepointSize;
                 }
             }
 
@@ -2658,20 +2658,20 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
                 if ((mouseCursor.x >= 0) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
                     cursor.x = mouseCursor.x;
-                    textBoxCursorIndex = mouseCursorIndex;
+                    textBlockCursorIndex = mouseCursorIndex;
                 }
             }
             else mouseCursor.x = -1;
 
-            // Recalculate cursor position.y depending on textBoxCursorIndex
-            cursor.x = bounds.x + GuiGetStyle(TEXTBOX, TEXT_PADDING) + GetTextWidth(text + textIndexOffset) - GetTextWidth(text + textBoxCursorIndex) + GuiGetStyle(DEFAULT, TEXT_SPACING);
+            // Recalculate cursor position.y depending on textBlockCursorIndex
+            cursor.x = bounds.x + GuiGetStyle(TEXTBOX, TEXT_PADDING) + GetTextWidth(text + textIndexOffset) - GetTextWidth(text + textBlockCursorIndex) + GuiGetStyle(DEFAULT, TEXT_SPACING);
             //if (multiline) cursor.y = GetTextLines()
 
             // Finish text editing on ENTER or mouse click outside bounds
             if ((!multiline && IsKeyPressed(KEY_ENTER)) ||
                 (!CheckCollisionPointRec(mousePosition, bounds) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)))
             {
-                textBoxCursorIndex = 0;     // GLOBAL: Reset the shared cursor index
+                textBlockCursorIndex = 0;     // GLOBAL: Reset the shared cursor index
                 result = 1;
             }
         }
@@ -2683,7 +2683,7 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
 
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
-                    textBoxCursorIndex = (int)strlen(text);   // GLOBAL: Place cursor index to the end of current text
+                    textBlockCursorIndex = (int)strlen(text);   // GLOBAL: Place cursor index to the end of current text
                     result = 1;
                 }
             }
@@ -2723,9 +2723,9 @@ int GuiTextBox(Rectangle bounds, char *text, int bufferSize, bool editMode)
 }
 
 /*
-// Text Box control with multiple lines and word-wrap
-// NOTE: This text-box is readonly, no editing supported by default
-bool GuiTextBoxMulti(Rectangle bounds, char *text, int bufferSize, bool editMode)
+// Text Block control with multiple lines and word-wrap
+// NOTE: This text-block is readonly, no editing supported by default
+bool GuiTextBlockMulti(Rectangle bounds, char *text, int bufferSize, bool editMode)
 {
     bool pressed = false;
 
@@ -2734,7 +2734,7 @@ bool GuiTextBoxMulti(Rectangle bounds, char *text, int bufferSize, bool editMode
     GuiSetStyle(DEFAULT, TEXT_ALIGNMENT_VERTICAL, TEXT_ALIGN_TOP);
 
     // TODO: Implement methods to calculate cursor position properly
-    pressed = GuiTextBox(bounds, text, bufferSize, editMode);
+    pressed = GuiTextBlock(bounds, text, bufferSize, editMode);
 
     GuiSetStyle(DEFAULT, TEXT_ALIGNMENT_VERTICAL, TEXT_ALIGN_MIDDLE);
     GuiSetStyle(DEFAULT, TEXT_WRAP_MODE, TEXT_WRAP_NONE);
@@ -2798,7 +2798,7 @@ int GuiSpinner(Rectangle bounds, const char *text, int *value, int minValue, int
 
     // Draw control
     //--------------------------------------------------------------------
-    result = GuiValueBox(spinner, NULL, &tempValue, minValue, maxValue, editMode);
+    result = GuiValueBlock(spinner, NULL, &tempValue, minValue, maxValue, editMode);
 
     // Draw value selector custom buttons
     // NOTE: BORDER_WIDTH and TEXT_ALIGNMENT forced values
@@ -2818,9 +2818,9 @@ int GuiSpinner(Rectangle bounds, const char *text, int *value, int minValue, int
     return result;
 }
 
-// Value Box control, updates input text with numbers
+// Value Block control, updates input text with numbers
 // NOTE: Requires static variables: frameCounter
-int GuiValueBox(Rectangle bounds, const char *text, int *value, int minValue, int maxValue, bool editMode)
+int GuiValueBlock(Rectangle bounds, const char *text, int *value, int minValue, int maxValue, bool editMode)
 {
     #if !defined(RAYGUI_VALUEBOX_MAX_CHARS)
         #define RAYGUI_VALUEBOX_MAX_CHARS  32
@@ -2916,7 +2916,7 @@ int GuiValueBox(Rectangle bounds, const char *text, int *value, int minValue, in
     // Draw cursor
     if (editMode)
     {
-        // NOTE: ValueBox internal text is always centered
+        // NOTE: ValueBlock internal text is always centered
         Rectangle cursor = { bounds.x + GetTextWidth(textValue)/2 + bounds.width/2 + 1, bounds.y + 2*GuiGetStyle(VALUEBOX, BORDER_WIDTH), 4, bounds.height - 4*GuiGetStyle(VALUEBOX, BORDER_WIDTH) };
         GuiDrawRectangle(cursor, 0, BLANK, GetColor(GuiGetStyle(VALUEBOX, BORDER_COLOR_PRESSED)));
     }
@@ -3732,8 +3732,8 @@ int GuiColorPanelHSV(Rectangle bounds, const char *text, Vector3 *colorHsv)
     return result;
 }
 
-// Message Box control
-int GuiMessageBox(Rectangle bounds, const char *title, const char *message, const char *buttons)
+// Message Block control
+int GuiMessageBlock(Rectangle bounds, const char *title, const char *message, const char *buttons)
 {
     #if !defined(RAYGUI_MESSAGEBOX_BUTTON_HEIGHT)
         #define RAYGUI_MESSAGEBOX_BUTTON_HEIGHT    24
@@ -3762,7 +3762,7 @@ int GuiMessageBox(Rectangle bounds, const char *title, const char *message, cons
 
     // Draw control
     //--------------------------------------------------------------------
-    if (GuiWindowBox(bounds, title)) result = 0;
+    if (GuiWindowBlock(bounds, title)) result = 0;
 
     int prevTextAlignment = GuiGetStyle(LABEL, TEXT_ALIGNMENT);
     GuiSetStyle(LABEL, TEXT_ALIGNMENT, TEXT_ALIGN_CENTER);
@@ -3784,8 +3784,8 @@ int GuiMessageBox(Rectangle bounds, const char *title, const char *message, cons
     return result;
 }
 
-// Text Input Box control, ask for text
-int GuiTextInputBox(Rectangle bounds, const char *title, const char *message, const char *buttons, char *text, int textMaxSize, bool *secretViewActive)
+// Text Input Block control, ask for text
+int GuiTextInputBlock(Rectangle bounds, const char *title, const char *message, const char *buttons, char *text, int textMaxSize, bool *secretViewActive)
 {
     #if !defined(RAYGUI_TEXTINPUTBOX_BUTTON_HEIGHT)
         #define RAYGUI_TEXTINPUTBOX_BUTTON_HEIGHT      24
@@ -3798,7 +3798,7 @@ int GuiTextInputBox(Rectangle bounds, const char *title, const char *message, co
     #endif
 
     // Used to enable text edit mode
-    // WARNING: No more than one GuiTextInputBox() should be open at the same time
+    // WARNING: No more than one GuiTextInputBlock() should be open at the same time
     static bool textEditMode = false;
 
     int result = -1;
@@ -3824,17 +3824,17 @@ int GuiTextInputBox(Rectangle bounds, const char *title, const char *message, co
         textBounds.height = (float)GuiGetStyle(DEFAULT, TEXT_SIZE);
     }
 
-    Rectangle textBoxBounds = { 0 };
-    textBoxBounds.x = bounds.x + RAYGUI_TEXTINPUTBOX_BUTTON_PADDING;
-    textBoxBounds.y = bounds.y + RAYGUI_WINDOWBOX_STATUSBAR_HEIGHT - RAYGUI_TEXTINPUTBOX_HEIGHT/2;
-    if (message == NULL) textBoxBounds.y = bounds.y + 24 + RAYGUI_TEXTINPUTBOX_BUTTON_PADDING;
-    else textBoxBounds.y += (messageInputHeight/2 + messageInputHeight/4);
-    textBoxBounds.width = bounds.width - RAYGUI_TEXTINPUTBOX_BUTTON_PADDING*2;
-    textBoxBounds.height = RAYGUI_TEXTINPUTBOX_HEIGHT;
+    Rectangle textBlockBounds = { 0 };
+    textBlockBounds.x = bounds.x + RAYGUI_TEXTINPUTBOX_BUTTON_PADDING;
+    textBlockBounds.y = bounds.y + RAYGUI_WINDOWBOX_STATUSBAR_HEIGHT - RAYGUI_TEXTINPUTBOX_HEIGHT/2;
+    if (message == NULL) textBlockBounds.y = bounds.y + 24 + RAYGUI_TEXTINPUTBOX_BUTTON_PADDING;
+    else textBlockBounds.y += (messageInputHeight/2 + messageInputHeight/4);
+    textBlockBounds.width = bounds.width - RAYGUI_TEXTINPUTBOX_BUTTON_PADDING*2;
+    textBlockBounds.height = RAYGUI_TEXTINPUTBOX_HEIGHT;
 
     // Draw control
     //--------------------------------------------------------------------
-    if (GuiWindowBox(bounds, title)) result = 0;
+    if (GuiWindowBlock(bounds, title)) result = 0;
 
     // Draw message if available
     if (message != NULL)
@@ -3848,14 +3848,14 @@ int GuiTextInputBox(Rectangle bounds, const char *title, const char *message, co
     if (secretViewActive != NULL)
     {
         static char stars[] = "****************";
-        if (GuiTextBox(RAYGUI_CLITERAL(Rectangle){ textBoxBounds.x, textBoxBounds.y, textBoxBounds.width - 4 - RAYGUI_TEXTINPUTBOX_HEIGHT, textBoxBounds.height },
+        if (GuiTextBlock(RAYGUI_CLITERAL(Rectangle){ textBlockBounds.x, textBlockBounds.y, textBlockBounds.width - 4 - RAYGUI_TEXTINPUTBOX_HEIGHT, textBlockBounds.height },
             ((*secretViewActive == 1) || textEditMode)? text : stars, textMaxSize, textEditMode)) textEditMode = !textEditMode;
 
-        GuiToggle(RAYGUI_CLITERAL(Rectangle){ textBoxBounds.x + textBoxBounds.width - RAYGUI_TEXTINPUTBOX_HEIGHT, textBoxBounds.y, RAYGUI_TEXTINPUTBOX_HEIGHT, RAYGUI_TEXTINPUTBOX_HEIGHT }, (*secretViewActive == 1)? "#44#" : "#45#", secretViewActive);
+        GuiToggle(RAYGUI_CLITERAL(Rectangle){ textBlockBounds.x + textBlockBounds.width - RAYGUI_TEXTINPUTBOX_HEIGHT, textBlockBounds.y, RAYGUI_TEXTINPUTBOX_HEIGHT, RAYGUI_TEXTINPUTBOX_HEIGHT }, (*secretViewActive == 1)? "#44#" : "#45#", secretViewActive);
     }
     else
     {
-        if (GuiTextBox(textBoxBounds, text, textMaxSize, textEditMode)) textEditMode = !textEditMode;
+        if (GuiTextBlock(textBlockBounds, text, textMaxSize, textEditMode)) textEditMode = !textEditMode;
     }
 
     int prevBtnTextAlignment = GuiGetStyle(BUTTON, TEXT_ALIGNMENT);
@@ -4746,7 +4746,7 @@ static void GuiDrawText(const char *text, Rectangle textBounds, int alignment, C
     //   - Text is processed line per line
     //   - For every line, horizontal alignment is defined
     //   - For all text, vertical alignment is defined (multiline text only)
-    //   - For every line, wordwrap mode is checked (useful for GuitextBox(), read-only)
+    //   - For every line, wordwrap mode is checked (useful for GuitextBlock(), read-only)
 
     // Get text lines (using '\n' as delimiter) to be processed individually
     // WARNING: We can't use GuiTextSplit() function because it can be already used
@@ -4847,7 +4847,7 @@ static void GuiDrawText(const char *text, Rectangle textBounds, int alignment, C
                 if (guiFont.glyphs[index].advanceX == 0) glyphWidth = ((float)guiFont.recs[index].width*scaleFactor);
                 else glyphWidth = (float)guiFont.glyphs[index].advanceX*scaleFactor;
 
-                // Jump to next line if current character reach end of the box limits
+                // Jump to next line if current character reach end of the block limits
                 if ((textOffsetX + glyphWidth) > textBounds.width)
                 {
                     textOffsetX = 0.0f;

@@ -8,11 +8,11 @@
 #pragma once
 
 #include "raylib.h"
-#include "Box.h"
+#include "Block.h"
 #include "Mario.h"
 #include "Map.h"
 
-class Message : public virtual Box {
+class Message : public virtual Block {
 
 public:
 

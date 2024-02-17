@@ -8,9 +8,9 @@
 #pragma once
 
 #include "raylib.h"
-#include "Box.h"
+#include "Block.h"
 
-class Stone : public virtual Box {
+class Stone : public virtual Block {
 
 public:
 

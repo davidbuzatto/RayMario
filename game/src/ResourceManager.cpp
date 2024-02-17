@@ -158,22 +158,22 @@ void ResourceManager::loadTextures() {
             textures[std::string(1, c)] = LoadTexture( TextFormat( "resources/images/tiles/tile_%c.png", c ) );
         }
 
-        // boxes
-        textures["boxCloud"] = LoadTexture( "resources/images/sprites/boxes/Cloud_0.png" );
-        textures["boxExclamation"] = LoadTexture( "resources/images/sprites/boxes/Exclamation_0.png" );
-        textures["boxEyesClosed"] = LoadTexture(  "resources/images/sprites/boxes/EyesClosed_0.png" );
-        textures["boxEyesOpened0"] = LoadTexture( "resources/images/sprites/boxes/EyesOpened_0.png" );
-        textures["boxEyesOpened1"] = LoadTexture( "resources/images/sprites/boxes/EyesOpened_1.png" );
-        textures["boxEyesOpened2"] = LoadTexture( "resources/images/sprites/boxes/EyesOpened_2.png" );
-        textures["boxEyesOpened3"] = LoadTexture( "resources/images/sprites/boxes/EyesOpened_3.png" );
-        textures["boxGlass"] = LoadTexture(   "resources/images/sprites/boxes/Glass_0.png" );
-        textures["boxMessage"] = LoadTexture( "resources/images/sprites/boxes/Message_0.png" );
-        textures["boxQuestion0"] = LoadTexture( "resources/images/sprites/boxes/Question_0.png" );
-        textures["boxQuestion1"] = LoadTexture( "resources/images/sprites/boxes/Question_1.png" );
-        textures["boxQuestion2"] = LoadTexture( "resources/images/sprites/boxes/Question_2.png" );
-        textures["boxQuestion3"] = LoadTexture( "resources/images/sprites/boxes/Question_3.png" );
-        textures["boxStone"] = LoadTexture( "resources/images/sprites/boxes/Stone_0.png" );
-        textures["boxWood"] = LoadTexture( "resources/images/sprites/boxes/Wood_0.png" );
+        // blocks
+        textures["blockCloud"] = LoadTexture( "resources/images/sprites/blocks/Cloud_0.png" );
+        textures["blockExclamation"] = LoadTexture( "resources/images/sprites/blocks/Exclamation_0.png" );
+        textures["blockEyesClosed"] = LoadTexture(  "resources/images/sprites/blocks/EyesClosed_0.png" );
+        textures["blockEyesOpened0"] = LoadTexture( "resources/images/sprites/blocks/EyesOpened_0.png" );
+        textures["blockEyesOpened1"] = LoadTexture( "resources/images/sprites/blocks/EyesOpened_1.png" );
+        textures["blockEyesOpened2"] = LoadTexture( "resources/images/sprites/blocks/EyesOpened_2.png" );
+        textures["blockEyesOpened3"] = LoadTexture( "resources/images/sprites/blocks/EyesOpened_3.png" );
+        textures["blockGlass"] = LoadTexture(   "resources/images/sprites/blocks/Glass_0.png" );
+        textures["blockMessage"] = LoadTexture( "resources/images/sprites/blocks/Message_0.png" );
+        textures["blockQuestion0"] = LoadTexture( "resources/images/sprites/blocks/Question_0.png" );
+        textures["blockQuestion1"] = LoadTexture( "resources/images/sprites/blocks/Question_1.png" );
+        textures["blockQuestion2"] = LoadTexture( "resources/images/sprites/blocks/Question_2.png" );
+        textures["blockQuestion3"] = LoadTexture( "resources/images/sprites/blocks/Question_3.png" );
+        textures["blockStone"] = LoadTexture( "resources/images/sprites/blocks/Stone_0.png" );
+        textures["blockWood"] = LoadTexture( "resources/images/sprites/blocks/Wood_0.png" );
 
         // backgrounds
         textures["background1"] = LoadTexture( "resources/images/backgrounds/background1.png" );
