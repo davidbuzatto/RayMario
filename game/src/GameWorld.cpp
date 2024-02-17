@@ -84,6 +84,7 @@ void GameWorld::inputAndUpdate() {
     std::vector<Tile*> &tiles = map.getTiles();
     std::vector<Block*> &blocks = map.getBlocks();
     std::vector<Item*> &items = map.getItems();
+    std::vector<Item*> &staticItems = map.getStaticItems();
     std::vector<Baddie*> &baddies = map.getBaddies();
 
     std::vector<int> collectedIndexes;
@@ -127,6 +128,10 @@ void GameWorld::inputAndUpdate() {
 
         for ( size_t i = 0; i < items.size(); i++ ) {
             items[i]->update();
+        }
+        
+        for ( size_t i = 0; i < staticItems.size(); i++ ) {
+            staticItems[i]->update();
         }
 
         for ( size_t i = 0; i < baddies.size(); i++ ) {
@@ -344,6 +349,27 @@ void GameWorld::inputAndUpdate() {
         for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
             delete items[collectedIndexes[i]];
             items.erase( items.begin() + collectedIndexes[i] );
+        }
+        
+        // mario x static items collision resolution
+        collectedIndexes.clear();
+        for ( size_t i = 0; i < staticItems.size(); i++ ) {
+
+            Item* item = staticItems[i];
+
+            if ( mario.checkCollision( item ) != CollisionType::NONE ) {
+                collectedIndexes.push_back( i );
+                item->playCollisionSound();
+                item->updateMario( mario );
+            } else if ( item->getY() > map.getMaxHeight() ) {
+                collectedIndexes.push_back( i );
+            }
+
+        }
+
+        for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
+            delete staticItems[collectedIndexes[i]];
+            staticItems.erase( staticItems.begin() + collectedIndexes[i] );
         }
 
         // baddies activation and mario and fireballs x baddies collision resolution and offscreen baddies removal

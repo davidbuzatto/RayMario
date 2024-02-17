@@ -294,6 +294,7 @@
     <ClCompile Include="..\game\src\Glass.cpp" />
     <ClCompile Include="..\game\src\Goomba.cpp" />
     <ClCompile Include="..\game\src\GreenKoopaTroopa.cpp" />
+    <ClCompile Include="..\game\src\Invisible.cpp" />
     <ClCompile Include="..\game\src\Item.cpp" />
     <ClCompile Include="..\game\src\main.cpp" />
     <ClCompile Include="..\game\src\Map.cpp" />
@@ -345,6 +346,7 @@
     <ClInclude Include="..\game\src\Glass.h" />
     <ClInclude Include="..\game\src\Goomba.h" />
     <ClInclude Include="..\game\src\GreenKoopaTroopa.h" />
+    <ClInclude Include="..\game\src\Invisible.h" />
     <ClInclude Include="..\game\src\Item.h" />
     <ClInclude Include="..\game\src\Map.h" />
     <ClInclude Include="..\game\src\MarioType.h" />

@@ -45,7 +45,16 @@ void ThreeUpMoon::update() {
 }
 
 void ThreeUpMoon::draw() {
+
     DrawTexture( ResourceManager::getTextures()["3UpMoon"], pos.x, pos.y, WHITE );
+
+    if ( GameWorld::debug ) {
+        cpN.draw();
+        cpS.draw();
+        cpE.draw();
+        cpW.draw();
+    }
+
 }
 
 void ThreeUpMoon::playCollisionSound() {

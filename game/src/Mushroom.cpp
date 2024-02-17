@@ -45,7 +45,16 @@ void Mushroom::update() {
 }
 
 void Mushroom::draw() {
+
     DrawTexture( ResourceManager::getTextures()["mushroom"], pos.x, pos.y, WHITE );
+
+    if ( GameWorld::debug ) {
+        cpN.draw();
+        cpS.draw();
+        cpE.draw();
+        cpW.draw();
+    }
+
 }
 
 void Mushroom::playCollisionSound() {

@@ -8,6 +8,7 @@
 #include "Coin.h"
 #include "Mario.h"
 #include "Sprite.h"
+#include "GameWorld.h"
 #include "raylib.h"
 #include "ResourceManager.h"
 #include <map>
@@ -32,7 +33,16 @@ void Coin::update() {
 }
 
 void Coin::draw() {
+
     DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "coin%d", currentFrame ))], pos.x, pos.y, WHITE );
+
+    if ( GameWorld::debug ) {
+        cpN.draw();
+        cpS.draw();
+        cpE.draw();
+        cpW.draw();
+    }
+
 }
 
 void Coin::playCollisionSound() {

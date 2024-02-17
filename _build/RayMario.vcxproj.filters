@@ -171,6 +171,9 @@
     <ClCompile Include="..\game\src\Wood.cpp">
       <Filter>Source Files\blocks</Filter>
     </ClCompile>
+    <ClCompile Include="..\game\src\Invisible.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\game\src\GameWorld.h">
@@ -324,6 +327,9 @@
       <Filter>Header Files\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\Wood.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Invisible.h">
       <Filter>Header Files\blocks</Filter>
     </ClInclude>
   </ItemGroup>

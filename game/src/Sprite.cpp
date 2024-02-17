@@ -211,7 +211,7 @@ Rectangle Sprite::getRect() {
 CollisionType Sprite::checkCollision( Sprite* sprite ) {
 
     if ( sprite->getState() != SpriteState::NO_COLLIDABLE ) {
-
+        
         Rectangle rect = sprite->getRect();
 
         if ( cpN.checkCollision( rect ) ) {

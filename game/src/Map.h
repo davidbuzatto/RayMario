@@ -25,6 +25,7 @@ class Map : public virtual Drawable {
     std::vector<Tile*> tiles;
     std::vector<Block*> blocks;
     std::vector<Item*> items;
+    std::vector<Item*> staticItems;
     std::vector<Baddie*> baddies;
 
     int id;
@@ -61,6 +62,7 @@ public:
     std::vector<Tile*> &getTiles();
     std::vector<Block*>& getBlocks();
     std::vector<Item*> &getItems();
+    std::vector<Item*> &getStaticItems();
     std::vector<Baddie*> &getBaddies();
     void parseMap();
     float getMaxWidth();

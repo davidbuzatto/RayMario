@@ -8,6 +8,7 @@
 #include "Star.h"
 #include "Mario.h"
 #include "Sprite.h"
+#include "GameWorld.h"
 #include "raylib.h"
 #include "ResourceManager.h"
 #include <map>
@@ -24,7 +25,16 @@ void Star::update() {
 }
 
 void Star::draw() {
+
     DrawTexture( ResourceManager::getTextures()["star"], pos.x, pos.y, WHITE );
+
+    if ( GameWorld::debug ) {
+        cpN.draw();
+        cpS.draw();
+        cpE.draw();
+        cpW.draw();
+    }
+
 }
 
 void Star::playCollisionSound() {

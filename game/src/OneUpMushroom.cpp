@@ -45,7 +45,16 @@ void OneUpMushroom::update() {
 }
 
 void OneUpMushroom::draw() {
+
     DrawTexture( ResourceManager::getTextures()["1UpMushroom"], pos.x, pos.y, WHITE );
+
+    if ( GameWorld::debug ) {
+        cpN.draw();
+        cpS.draw();
+        cpE.draw();
+        cpW.draw();
+    }
+
 }
 
 void OneUpMushroom::playCollisionSound() {

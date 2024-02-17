@@ -8,6 +8,7 @@
 #include "FireFlower.h"
 #include "Mario.h"
 #include "Sprite.h"
+#include "GameWorld.h"
 #include "raylib.h"
 #include "ResourceManager.h"
 #include <string>
@@ -31,7 +32,16 @@ void FireFlower::update() {
 }
 
 void FireFlower::draw() {
+
     DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "fireFlower%d", currentFrame ) )], pos.x, pos.y, WHITE );
+
+    if ( GameWorld::debug ) {
+        cpN.draw();
+        cpS.draw();
+        cpE.draw();
+        cpW.draw();
+    }
+
 }
 
 void FireFlower::playCollisionSound() {

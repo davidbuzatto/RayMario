@@ -36,6 +36,7 @@
 #include "EyesClosed.h"
 #include "EyesOpened.h"
 #include "Glass.h"
+#include "Invisible.h"
 #include "Message.h"
 #include "Question.h"
 #include "QuestionFireFlower.h"
@@ -86,6 +87,10 @@ Map::~Map() {
     for ( size_t i = 0; i < items.size(); i++ ) {
         delete items[i];
     }
+    
+    for ( size_t i = 0; i < staticItems.size(); i++ ) {
+        delete staticItems[i];
+    }
 
     for ( size_t i = 0; i < baddies.size(); i++ ) {
         delete baddies[i];
@@ -121,6 +126,10 @@ void Map::draw() {
     for ( size_t i = 0; i < items.size(); i++ ) {
         items[i]->draw();
     }
+    
+    for ( size_t i = 0; i < staticItems.size(); i++ ) {
+        staticItems[i]->draw();
+    }
 
     for ( size_t i = 0; i < baddies.size(); i++ ) {
         baddies[i]->draw();
@@ -138,6 +147,10 @@ std::vector<Block*>& Map::getBlocks() {
 
 std::vector<Item*> &Map::getItems() {
     return items;
+}
+
+std::vector<Item*> &Map::getStaticItems() {
+    return staticItems;
 }
 
 std::vector<Baddie*> &Map::getBaddies() {
@@ -313,6 +326,9 @@ void Map::parseMap() {
                     case 'c':
                         if ( parseBlocks ) blocks.push_back( new Cloud( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
+                    case 'v':
+                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new Invisible( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        break;
                     case 'h':
                         if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new Message( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
@@ -344,10 +360,10 @@ void Map::parseMap() {
 
                     // items
                     case 'o':
-                        if ( parseItems ) items.push_back( new Coin( Vector2( x, y ), Vector2( 25, 32 ), YELLOW ) );
+                        if ( parseItems ) staticItems.push_back( new Coin( Vector2( x + 4, y ), Vector2( 25, 32 ), YELLOW ) );
                         break;
                     case '*':
-                        if ( parseItems ) items.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
+                        if ( parseItems ) staticItems.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
                         break;
                     /*case 'm':
                         items.push_back( new Mushroom( Vector2( x, y ), Vector2( 32, 32 ), Vector2( 200, 0 ), RED ) );
@@ -470,6 +486,11 @@ void Map::reset() {
         delete items[i];
     }
     items.clear();
+    
+    for ( size_t i = 0; i < staticItems.size(); i++ ) {
+        delete staticItems[i];
+    }
+    staticItems.clear();
 
     for ( size_t i = 0; i < baddies.size(); i++ ) {
         delete baddies[i];

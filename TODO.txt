@@ -1,13 +1,10 @@
 para versão final:
     
-    - otimizações:
-        - diminuir a quantidade de loops no GameWorld (muitos podem ser condensados)
-        - colisão apenas para tiles e baddies que estão a uma certa distância (depende de organização matricial)
-        - a partir da segunda fase o jogo está muito pesado (muitas iterações)
-        - há muitas chamadas de funções desnecessárias
-        - o gargalo está na detectção de colisão. ao remover os baddies o jogo flui bem
+    - caixa invisível não colível quando invisível
     
-    - atualizar mapas
+    - otimizações:
+        - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo
+          que estiverem dentro de um raio ou retângulo de ação
     
     - implementar caixa interativa de mensagem
     
