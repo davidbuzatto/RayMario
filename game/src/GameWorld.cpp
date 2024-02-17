@@ -32,9 +32,9 @@
 #define ACTIVATE_DEBUG true
 
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
+#define LOAD_TEST_MAP false
 
-#define PARSE_BOXES true
+#define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
 
@@ -59,7 +59,7 @@ GameWorld::GameWorld() :
         -600,
         ACTIVATE_DEBUG
     ),
-    map( mario, INITIAL_MAP_ID, LOAD_TEST_MAP, PARSE_BOXES, PARSE_ITEMS, PARSE_BADDIES ),
+    map( mario, INITIAL_MAP_ID, LOAD_TEST_MAP, PARSE_BLOCKS, PARSE_ITEMS, PARSE_BADDIES ),
     camera( nullptr ),
     showControls( ACTIVATE_DEBUG ),
     stateBeforePause( GameState::TITLE_SCREEN ) {
