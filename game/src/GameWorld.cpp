@@ -31,7 +31,7 @@
 
 #define RELEASE
 
-#ifdef RELEASE 
+#ifdef RELEASE
 #define ACTIVATE_DEBUG false
 #define ALLOW_ENABLE_CONTROLS false
 #define INITIAL_MAP_ID 1
