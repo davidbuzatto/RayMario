@@ -1,5 +1,7 @@
 para versão final:
     
+    - fogo matando rex em um hit 
+    
     - caixa invisível não colível quando invisível
     
     - otimizações:

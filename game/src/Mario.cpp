@@ -355,6 +355,7 @@ CollisionType Mario::checkCollisionBaddie( Sprite *sprite ) {
                 case CollisionType::WEST:
                     f->setState( SpriteState::TO_BE_REMOVED );
                     sprite->setState( SpriteState::DYING );
+                    //reinterpret_cast<Baddie*>( sprite )->onHit();
                     PlaySound( ResourceManager::getSounds()["stomp"] );
                     break;
             }
