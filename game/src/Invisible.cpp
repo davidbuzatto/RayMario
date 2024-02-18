@@ -7,6 +7,7 @@
  */
 #include "Invisible.h"
 #include "GameWorld.h"
+#include "SpriteState.h"
 #include "ResourceManager.h"
 #include "raylib.h"
 #include <iostream>
@@ -22,7 +23,10 @@ Invisible::Invisible( Vector2 pos, Vector2 dim, Color color, float frameTime, in
     coinAnimationFrame( 0 ),
     coinAnimationStarted( false ),
     coinY( 0 ),
-    coinVelY( -400 ) {}
+    coinVelY( -400 ) {
+    setState( SpriteState::NO_COLLIDABLE );
+    setAuxiliaryState( SpriteState::INVISIBLE );
+}
 
 Invisible::~Invisible() {}
 
@@ -76,5 +80,7 @@ void Invisible::doHit( Mario& mario, Map *map ) {
         coinAnimationStarted = true;
         coinY = pos.y;
         mario.addCoins( 1 );
+        state = SpriteState::IDLE;
+        auxiliaryState = SpriteState::NEITHER;
     }
 }

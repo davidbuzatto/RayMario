@@ -70,6 +70,7 @@ Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
     currentFrame( 0 ),
     maxFrames( maxFrames ),
     state( SpriteState::IDLE ),
+    auxiliaryState( SpriteState::NEITHER ),
     facingDirection( facingDirection ),
     hitsToDie( hitsToDie ) {
     cpN.setColor( color );
@@ -144,6 +145,10 @@ void Sprite::setState( SpriteState state ) {
     this->state = state;
 }
 
+void Sprite::setAuxiliaryState( SpriteState auxiliaryState ) {
+    this->auxiliaryState = auxiliaryState;
+}
+
 void Sprite::setFacingDirection( Direction facingDirection ) {
     this->facingDirection = facingDirection;
 }
@@ -198,6 +203,10 @@ Color &Sprite::getColor() {
 
 SpriteState Sprite::getState() {
     return state;
+}
+
+SpriteState Sprite::getAuxiliaryState() {
+    return auxiliaryState;
 }
 
 Direction Sprite::getFacingDirection() {

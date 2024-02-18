@@ -9,14 +9,15 @@
 #include "GameWorld.h"
 #include "ResourceManager.h"
 #include "raylib.h"
+#include "utils.h"
 #include <iostream>
 #include <string>
 
-Message::Message( Vector2 pos, Vector2 dim, Color color ) :
-    Message( pos, dim, color, 0, 1 ) {}
+Message::Message( Vector2 pos, Vector2 dim, Color color, std::string message ) :
+    Message( pos, dim, color, 0, 1, message ) {}
 
-Message::Message( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ) {}
+Message::Message( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, std::string message ) :
+    Sprite( pos, dim, color, frameTime, maxFrames ), message( message ) {}
 
 Message::~Message() {}
 
@@ -38,5 +39,5 @@ void Message::doHit( Mario& mario, Map *map ) {
         hit = true;
     }
     // TODO: show message and make hittable again
-    hit = false;
+    //hit = false;
 }

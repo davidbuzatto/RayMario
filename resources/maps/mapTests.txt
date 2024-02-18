@@ -80,28 +80,28 @@ m: 1              # music id: [1-9]
 t: 20000          # time to finish the map
 ///////////////////////////////////////////////////////////////////////////
 /                                                                         /
-/                                                        i               E/
-/                                                       i                C/
-/                                      1               i                 C/
-/                                   iiii              i                  C/
-/                                                    i                   C/
-/                               iiiiiiii            i                    C/
-/                                                  i                     C/
-/                           iiiiiiiiiiii          i                      C/
-/                       |               |        i                       C/
-/                        !?!?!?!?!yyy!?!        i                        C/
-/                                              i                         C/
-/                                             i                          C/
-/                   i            iiii        i                           C/
-/                   i        1   i   i      i                            C/
-/                   iiiiiiiiiiiiii    i    i                             C/
-/                                         i                              C/
-/                                        i                               C/
-/                  iiii  iiii           i                                C/
-/                  i        i                                            C/
-/ |           1 |  i        i               |     1                      C/
-/  iyswgch!?mfu+   imifiui+ii    iiiiiiiii   iiiiiiiii                   C/
+/                                                                        E/
 /                                                                        C/
-/  p   o                               |                                 C/
-/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBF      EBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
-/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/  m                                                                     C/
+/                                                                        C/
+/  p        1  1  1                                                     C/
+/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

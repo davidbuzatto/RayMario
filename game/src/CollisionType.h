@@ -13,5 +13,6 @@ enum CollisionType {
     SOUTH,
     EAST,
     WEST,
-    COLLIDED
+    COLLIDED,
+    FIREBALL
 };

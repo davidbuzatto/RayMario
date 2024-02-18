@@ -446,6 +446,11 @@ void GameWorld::inputAndUpdate() {
                             }
                         }
                         break;
+                    case CollisionType::FIREBALL:
+                        baddie->onHit();
+                        PlaySound( sounds["stomp"] );
+                        mario.addPoints( 200 );
+                        break;
                     default:
                         if ( baddie->getY() > map.getMaxHeight() ) {
                             baddie->setState( SpriteState::TO_BE_REMOVED );

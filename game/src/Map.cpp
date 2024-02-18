@@ -330,7 +330,7 @@ void Map::parseMap() {
                         if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new Invisible( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'h':
-                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new Message( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new Message( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "bem-vindo ao jogo raymario!" ));
                         break;
                     case '!':
                         if ( parseBlocks ) blocks.push_back( new Exclamation( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );

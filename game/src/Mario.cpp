@@ -334,6 +334,15 @@ CollisionType Mario::checkCollision( Sprite *sprite ) {
             return CollisionType::WEST;
         }
 
+        // invisible blocks
+    } else if ( sprite->getAuxiliaryState() == SpriteState::INVISIBLE && state != SpriteState::FALLING ) {
+        Rectangle rect = sprite->getRect();
+        if ( cpN.checkCollision( rect ) ) {
+            if ( GameWorld::debug ) {
+                sprite->setColor( cpN.getColor() );
+            }
+            return CollisionType::NORTH;
+        }
     }
 
     return CollisionType::NONE;
@@ -348,16 +357,10 @@ CollisionType Mario::checkCollisionBaddie( Sprite *sprite ) {
 
         for ( size_t i = 0; i < fireballs.size(); i++ ) {
             Fireball* f = &fireballs[i];
-            switch ( f->checkCollision( sprite ) ) {
-                case CollisionType::NORTH:
-                case CollisionType::SOUTH:
-                case CollisionType::EAST:
-                case CollisionType::WEST:
-                    f->setState( SpriteState::TO_BE_REMOVED );
-                    sprite->setState( SpriteState::DYING );
-                    //reinterpret_cast<Baddie*>( sprite )->onHit();
-                    PlaySound( ResourceManager::getSounds()["stomp"] );
-                    break;
+            if ( f->checkCollision( sprite ) && 
+                 sprite->getState() != SpriteState::DYING ) {
+                f->setState( SpriteState::TO_BE_REMOVED );
+                return CollisionType::FIREBALL; 
             }
         }
 

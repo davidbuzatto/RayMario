@@ -35,7 +35,6 @@ Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
 
 Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, vel, color, frameTime, maxFrames ) {
-    //TraceLog( LOG_INFO, "a %d", hitsToDie );
 }
 
 Baddie::~Baddie() {

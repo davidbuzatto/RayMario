@@ -24,6 +24,7 @@ protected:
     int hitsToDie;
     Color color;
     SpriteState state;
+    SpriteState auxiliaryState;
 
     float frameTime;
     float frameAcum;
@@ -77,6 +78,7 @@ public:
 
     void setColor( Color color );
     void setState( SpriteState state );
+    void setAuxiliaryState( SpriteState auxiliaryState );
     void setFacingDirection( Direction facingDirection );
 
     Vector2 &getPos();
@@ -96,6 +98,7 @@ public:
 
     Color &getColor();
     SpriteState getState();
+    SpriteState getAuxiliaryState();
     Direction getFacingDirection();
 
     Rectangle getRect();

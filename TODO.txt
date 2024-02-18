@@ -1,15 +1,5 @@
 para versão final:
     
-    - fogo matando rex em um hit 
-    
-    - caixa invisível não colível quando invisível
-    
-    - otimizações:
-        - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo
-          que estiverem dentro de um raio ou retângulo de ação
-    
-    - implementar caixa interativa de mensagem
-    
     - transformação/transição
         small->super;
         small->flower;
@@ -21,6 +11,12 @@ para versão final:
         - efeito funil
         - contagem de pontos:
             1 segundo equivale a 50 pontos
+            
+    - implementar caixa interativa de mensagem
+    
+    - otimizações:
+        - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo
+          que estiverem dentro de um raio ou retângulo de ação
             
 futuro:
     separar tiles de cenário, fundo etc
