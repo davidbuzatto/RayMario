@@ -10,6 +10,7 @@
 #include "ResourceManager.h"
 #include "Item.h"
 #include "Coin.h"
+#include "CourseClearToken.h"
 #include "Mushroom.h"
 #include "FireFlower.h"
 #include "OneUpMushroom.h"
@@ -84,6 +85,14 @@ Map::~Map() {
         delete tiles[i];
     }
     
+    for ( size_t i = 0; i < backScenarioTiles.size(); i++ ) {
+        delete backScenarioTiles[i];
+    }
+    
+    for ( size_t i = 0; i < frontScenarioTiles.size(); i++ ) {
+        delete frontScenarioTiles[i];
+    }
+    
     for ( size_t i = 0; i < items.size(); i++ ) {
         delete items[i];
     }
@@ -115,6 +124,10 @@ void Map::draw() {
             WHITE );
     }
 
+    for ( size_t i = 0; i < backScenarioTiles.size(); i++ ) {
+        backScenarioTiles[i]->draw();
+    }
+
     for ( size_t i = 0; i < tiles.size(); i++ ) {
         tiles[i]->draw();
     }
@@ -133,6 +146,12 @@ void Map::draw() {
 
     for ( size_t i = 0; i < baddies.size(); i++ ) {
         baddies[i]->draw();
+    }
+
+    mario.draw();
+
+    for ( size_t i = 0; i < frontScenarioTiles.size(); i++ ) {
+        frontScenarioTiles[i]->draw();
     }
 
 }
@@ -299,14 +318,6 @@ void Map::parseMap() {
                         tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), ORANGE, "", true ) );
                         break;*/
 
-                    // bondarie tiles
-                    case '/':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false ) );
-                        break;
-                    case '|':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false, true ) );
-                        break;
-
                     // blocks
                     case 'i':
                         if ( parseBlocks ) blocks.push_back( new EyesClosed( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
@@ -351,6 +362,24 @@ void Map::parseMap() {
                         if ( parseBlocks ) blocks.push_back( new QuestionThreeUpMoon( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
 
+                    // bondarie tiles
+                    case '/':
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false ) );
+                        break;
+                    case '|':
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false, true ) );
+                        break;
+
+                    // scenario tiles
+                    case '{': backScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "tileCourseClearPoleBackTop", true) );
+                        break;
+                    case '[': backScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "tileCourseClearPoleBackBody", true ) );
+                        break;
+                    case '}': frontScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "tileCourseClearPoleFrontTop", true ) );
+                        break;
+                    case ']': frontScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "tileCourseClearPoleFrontBody", true ) );
+                        break;
+
                     // tiles from A to Z (map dependent - future)
                     default:
                         if ( *mapData >= 'A' && *mapData <= 'Z' ) {
@@ -364,6 +393,9 @@ void Map::parseMap() {
                         break;
                     case '*':
                         if ( parseItems ) staticItems.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
+                        break;
+                    case '=':
+                        if ( parseItems ) staticItems.push_back( new CourseClearToken( Vector2( x - tileWidth, y ), Vector2( 64, 32 ), LIGHTGRAY ) );
                         break;
                     /*case 'm':
                         items.push_back( new Mushroom( Vector2( x, y ), Vector2( 32, 32 ), Vector2( 200, 0 ), RED ) );
@@ -476,6 +508,16 @@ void Map::reset() {
         delete tiles[i];
     }
     tiles.clear();
+    
+    for ( size_t i = 0; i < backScenarioTiles.size(); i++ ) {
+        delete backScenarioTiles[i];
+    }
+    backScenarioTiles.clear();
+    
+    for ( size_t i = 0; i < frontScenarioTiles.size(); i++ ) {
+        delete frontScenarioTiles[i];
+    }
+    frontScenarioTiles.clear();
 
     for ( size_t i = 0; i < blocks.size(); i++ ) {
         delete blocks[i];

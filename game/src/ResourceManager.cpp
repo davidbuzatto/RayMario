@@ -157,6 +157,10 @@ void ResourceManager::loadTextures() {
         for ( char c = 'A'; c <= 'Z'; c++ ) {
             textures[std::string(1, c)] = LoadTexture( TextFormat( "resources/images/tiles/tile_%c.png", c ) );
         }
+        textures["tileCourseClearPoleBackTop"] = LoadTexture( "resources/images/tiles/tile_CourseClearPoleBackTop.png" );
+        textures["tileCourseClearPoleBackBody"] = LoadTexture( "resources/images/tiles/tile_CourseClearPoleBackBody.png" );
+        textures["tileCourseClearPoleFrontTop"] = LoadTexture( "resources/images/tiles/tile_CourseClearPoleFrontTop.png" );
+        textures["tileCourseClearPoleFrontBody"] = LoadTexture( "resources/images/tiles/tile_CourseClearPoleFrontBody.png" );
 
         // blocks
         textures["blockCloud"] = LoadTexture( "resources/images/sprites/blocks/Cloud_0.png" );
@@ -194,6 +198,7 @@ void ResourceManager::loadTextures() {
 
         textures["1UpMushroom"] = LoadTexture(  "resources/images/sprites/items/1UpMushroom.png" );
         textures["3UpMoon"] = LoadTexture( "resources/images/sprites/items/3UpMoon.png" );
+        textures["courseClearToken"] = LoadTexture( "resources/images/sprites/items/CourseClearToken.png" );
         textures["fireFlower0"] = LoadTexture( "resources/images/sprites/items/FireFlower_0.png" );
         textures["fireFlower1"] = LoadTexture( "resources/images/sprites/items/FireFlower_1.png" );
         textures["mushroom"] = LoadTexture( "resources/images/sprites/items/Mushroom.png" );

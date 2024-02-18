@@ -283,6 +283,7 @@
     <ClCompile Include="..\game\src\Cloud.cpp" />
     <ClCompile Include="..\game\src\Coin.cpp" />
     <ClCompile Include="..\game\src\CollisionProbe.cpp" />
+    <ClCompile Include="..\game\src\CourseClearToken.cpp" />
     <ClCompile Include="..\game\src\Exclamation.cpp" />
     <ClCompile Include="..\game\src\EyesClosed.cpp" />
     <ClCompile Include="..\game\src\EyesOpened.cpp" />
@@ -332,6 +333,7 @@
     <ClInclude Include="..\game\src\Coin.h" />
     <ClInclude Include="..\game\src\CollisionProbe.h" />
     <ClInclude Include="..\game\src\CollisionType.h" />
+    <ClInclude Include="..\game\src\CourseClearToken.h" />
     <ClInclude Include="..\game\src\Direction.h" />
     <ClInclude Include="..\game\src\Drawable.h" />
     <ClInclude Include="..\game\src\Exclamation.h" />

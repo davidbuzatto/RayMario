@@ -23,6 +23,8 @@ class Block;
 class Map : public virtual Drawable {
 
     std::vector<Tile*> tiles;
+    std::vector<Tile*> backScenarioTiles;
+    std::vector<Tile*> frontScenarioTiles;
     std::vector<Block*> blocks;
     std::vector<Item*> items;
     std::vector<Item*> staticItems;
@@ -60,6 +62,8 @@ public:
     ~Map();
     virtual void draw();
     std::vector<Tile*> &getTiles();
+    std::vector<Tile*> &getBackScenarioTiles();
+    std::vector<Tile*> &getFrontScenarioTiles();
     std::vector<Block*>& getBlocks();
     std::vector<Item*> &getItems();
     std::vector<Item*> &getStaticItems();

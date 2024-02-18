@@ -2,10 +2,15 @@
 # Lines that starts with '#' are comments
 #
 # tiles:
-#     <space>: Empty tile
-#           /: Invisible tile               (used for map/player/boundaries boundaries)
-#           |: Baddie invisible tile        (used only for baddies boundaries)
-#        A..Z: Tiles A through Z            (depends on the selected map)
+#               <space>: Empty tile
+#                     /: Invisible tile               (used for map/player/boundaries boundaries)
+#                     |: Baddie invisible tile        (used only for baddies boundaries)
+#                  A..Z: Tiles A through Z            (depends on the selected map)
+#     Course Clear Pole:
+#                        {: back top
+#                        [: back body
+#                        }: front top
+#                        ]: front body
 # 
 # boxes:
 #     i: eyes closed
@@ -26,6 +31,7 @@
 # items:
 #     o: Coin
 #     *: Star
+#     =: course clear token
 #
 # baddies:
 #     1: Goomba
@@ -95,13 +101,13 @@ t: 20000          # time to finish the map
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/  m                                                                     C/
-/                                                                        C/
-/  p        1  1  1                                                     C/
+/           {=}                                                          C/
+/           [ ]                                                          C/
+/           [ ]                                                          C/
+/           [ ]                                                          C/
+/           [ ]                                                          C/
+/  m        [ ]                                                          C/
+/           [ ]                                                          C/
+/  p        [ ]                                                          C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

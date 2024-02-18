@@ -575,7 +575,6 @@ void GameWorld::draw() {
         BeginMode2D( *camera );
 
         map.draw();
-        mario.draw();
 
         if ( debug ) {
             for ( int i = -20; i <= lines + 20; i++ ) {
