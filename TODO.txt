@@ -6,11 +6,6 @@ para versão final:
         super->flower;
         super->small;
         flower->small.
-    
-    - tela de transição entre fases
-        - efeito funil
-        - contagem de pontos:
-            1 segundo equivale a 50 pontos
             
     - implementar caixa interativa de mensagem
     

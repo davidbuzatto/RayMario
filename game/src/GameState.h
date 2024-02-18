@@ -14,4 +14,6 @@ enum GameState {
     PAUSED,
     TIME_UP,
     GAME_OVER,
+    COUNTING_POINTS,
+    GO_TO_NEXT_MAP
 };

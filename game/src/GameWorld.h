@@ -21,6 +21,7 @@ class GameWorld : public virtual Drawable {
     Camera2D *camera;
     bool showControls;
     GameState stateBeforePause;
+    int remainingTimePointCount;
     
 public:
 

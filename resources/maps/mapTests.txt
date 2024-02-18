@@ -2,11 +2,11 @@
 # Lines that starts with '#' are comments
 #
 # tiles:
-#               <space>: Empty tile
-#                     /: Invisible tile               (used for map/player/boundaries boundaries)
-#                     |: Baddie invisible tile        (used only for baddies boundaries)
-#                  A..Z: Tiles A through Z            (depends on the selected map)
-#     Course Clear Pole:
+#               <space>: empty tile
+#                     /: invisible tile               (used for map/player/boundaries boundaries)
+#                     |: baddie invisible tile        (used only for baddies boundaries)
+#                  A..Z: tiles A through Z            (depends on the selected map)
+#     course clear pole:
 #                        {: back top
 #                        [: back body
 #                        }: front top
@@ -29,23 +29,23 @@
 #     +: ? with 3-up moon     (interactive)
 #
 # items:
-#     o: Coin
-#     *: Star
+#     o: coin
+#     *: star
 #     =: course clear token
 #
 # baddies:
-#     1: Goomba
-#     2: Flying Goomba
-#     3: Green Koopa Troopa
-#     4: Red Koopa Troopa
-#     5: Blue Koopa Troopa
-#     6: Yellow Koopa Troopa
-#     7: Bob-omb
-#     8: Bullet Bill
-#     9: Swooper
-#     @: Buzzy Beetle
-#     $: Mummy Beetle
-#     %: Rex
+#     1: goomba
+#     2: flying goomba
+#     3: green koopa troopa
+#     4: red koopa troopa
+#     5: blue koopa troopa
+#     6: yellow koopa troopa
+#     7: bob-omb
+#     8: bullet bill
+#     9: swooper
+#     @: buzzy beetle
+#     $: mummy beetle
+#     %: rex
 #
 # colors: 
 #     - 0xf8e0b0ff (beige)
@@ -83,7 +83,7 @@
 c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 m: 1              # music id: [1-9]
-t: 20000          # time to finish the map
+t: 200            # time to finish the map
 ///////////////////////////////////////////////////////////////////////////
 /                                                                         /
 /                                                                        E/

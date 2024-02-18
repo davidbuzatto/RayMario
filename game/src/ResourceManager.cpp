@@ -279,6 +279,7 @@ void ResourceManager::loadTextures() {
         textures["yellowKoopaTroopa1L"] = texture2DFlipHorizontal( textures["yellowKoopaTroopa1R"] );
 
         // gui
+        textures["guiClock"] = LoadTexture( "resources/images/gui/guiClock.png" );
         textures["guiCoin"] = LoadTexture( "resources/images/gui/guiCoin.png" );
         textures["guiCredits"] = LoadTexture( "resources/images/gui/guiCredits.png" );
         textures["guiGameOver"] = LoadTexture( "resources/images/gui/guiGameOver.png" );

@@ -29,20 +29,32 @@
 #include "Block.h"
 #include "utils.h"
 
-#define ACTIVATE_DEBUG true
+#define RELEASE
 
+#ifdef RELEASE
+#define ACTIVATE_DEBUG false
+#define ALLOW_ENABLE_CONTROLS false
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
-
+#define LOAD_TEST_MAP false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
+GameState GameWorld::state = GameState::TITLE_SCREEN;
+#else
+
+#define ACTIVATE_DEBUG true
+#define ALLOW_ENABLE_CONTROLS true
+#define INITIAL_MAP_ID 1
+#define LOAD_TEST_MAP true
+#define PARSE_BLOCKS true
+#define PARSE_ITEMS true
+#define PARSE_BADDIES true
+GameState GameWorld::state = GameState::PLAYING;
+#endif
 
 bool GameWorld::debug = ACTIVATE_DEBUG;
 bool GameWorld::showFPS = ACTIVATE_DEBUG;
 bool GameWorld::immortalMario = ACTIVATE_DEBUG;
-//GameState GameWorld::state = GameState::TITLE_SCREEN;
-GameState GameWorld::state = GameState::PLAYING;
 float GameWorld::gravity = 20;
 
 /**
@@ -62,7 +74,8 @@ GameWorld::GameWorld() :
     map( mario, INITIAL_MAP_ID, LOAD_TEST_MAP, PARSE_BLOCKS, PARSE_ITEMS, PARSE_BADDIES ),
     camera( nullptr ),
     showControls( ACTIVATE_DEBUG ),
-    stateBeforePause( GameState::TITLE_SCREEN ) {
+    stateBeforePause( GameState::TITLE_SCREEN ),
+    remainingTimePointCount( 0 ) {
     //mario.changeToFlower();
     std::cout << "creating game world..." << std::endl;
 }
@@ -91,12 +104,13 @@ void GameWorld::inputAndUpdate() {
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
     std::map<std::string, Music> &musics = ResourceManager::getMusics();
 
-    if ( IsKeyPressed( KEY_LEFT_ALT ) ) {
+    if ( IsKeyPressed( KEY_LEFT_ALT ) && ALLOW_ENABLE_CONTROLS ) {
         showControls = !showControls;
     }
 
     if ( mario.getState() != SpriteState::DYING && 
          mario.getState() != SpriteState::VICTORY &&
+         mario.getState() != SpriteState::WAITING_TO_NEXT_MAP &&
          state != GameState::TITLE_SCREEN &&
          state != GameState::FINISHED && 
          state != GameState::PAUSED ) {
@@ -112,6 +126,7 @@ void GameWorld::inputAndUpdate() {
 
     if ( mario.getState() != SpriteState::DYING && 
          mario.getState() != SpriteState::VICTORY &&
+         mario.getState() != SpriteState::WAITING_TO_NEXT_MAP &&
          state != GameState::TITLE_SCREEN &&
          state != GameState::FINISHED &&
          state != GameState::PAUSED ) {
@@ -374,7 +389,9 @@ void GameWorld::inputAndUpdate() {
 
         // baddies activation and mario and fireballs x baddies collision resolution and offscreen baddies removal
         collectedIndexes.clear();
-        if ( mario.getState() != SpriteState::DYING && mario.getState() != SpriteState::VICTORY ) {
+        if ( mario.getState() != SpriteState::DYING && 
+             mario.getState() != SpriteState::VICTORY &&
+             mario.getState() != SpriteState::WAITING_TO_NEXT_MAP ) {
 
             mario.updateCollisionProbes();
 
@@ -489,11 +506,31 @@ void GameWorld::inputAndUpdate() {
 
         }
 
-    } else if ( mario.getState() == SpriteState::VICTORY ) {
+    } else if ( state == GameState::COUNTING_POINTS ) {
+
+        remainingTimePointCount--;
+        mario.addPoints( 50 );
+
+        if ( remainingTimePointCount % 3 == 0 ) {
+            PlaySound( sounds["coin"] );
+        }
+
+        if ( remainingTimePointCount == 0 ) {
+            state = GameState::GO_TO_NEXT_MAP;
+        }
+
+    } else if ( state == GameState::GO_TO_NEXT_MAP ) {
 
         if ( !IsSoundPlaying( sounds["courseClear"] ) ) {
             nextMap();
         }
+
+    } else if ( mario.getState() == SpriteState::VICTORY ) {
+
+        remainingTimePointCount = mario.getRemainingTime();
+        state = GameState::COUNTING_POINTS;
+        map.setDrawBlackScreen( true );
+        mario.setState( SpriteState::WAITING_TO_NEXT_MAP );
 
     } else if ( state == GameState::PAUSED ) {
         if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
@@ -569,6 +606,7 @@ void GameWorld::draw() {
 
     int columns = GetScreenWidth() / Map::tileWidth;
     int lines = GetScreenHeight() / Map::tileWidth;
+    std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
 
     if ( state != GameState::GAME_OVER && state != GameState::TITLE_SCREEN ) {
 
@@ -590,8 +628,36 @@ void GameWorld::draw() {
         mario.drawHud();
 
         if ( state == GameState::TIME_UP ) {
-            Texture2D* t = &ResourceManager::getTextures()["guiTimeUp"];
+
+            Texture2D* t = &textures["guiTimeUp"];
             DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height / 2, WHITE );
+
+        } else if ( state == GameState::COUNTING_POINTS || state == GameState::GO_TO_NEXT_MAP ) {
+
+            Vector2 sc( GetScreenWidth() / 2, GetScreenHeight() / 2 );
+            DrawTexture( textures["guiMario"], sc.x - textures["guiMario"].width / 2, sc.y - 120, WHITE);
+
+            std::string message1 = "course clear!";
+            drawString( message1, sc.x - getDrawStringWidth( message1 ) / 2, sc.y - 80, textures );
+
+            int wc = textures["guiClock"].width;
+            int rt = getSmallNumberWidth( mario.getRemainingTime() );
+            int p = getSmallNumberWidth( 50 );
+            int x = textures["guiX"].width;
+            int eq = getDrawStringWidth( "=" );
+            int total = mario.getRemainingTime() * 50;
+            int wt = getSmallNumberWidth( total );
+            int cw = wc + rt + p + x + eq + wt;
+            int st = sc.x - (cw/2);
+            int py = sc.y - 40;
+
+            DrawTexture( textures["guiClock"], st, py, WHITE );
+            drawWhiteSmallNumber( mario.getRemainingTime(), st + wc, py, textures );
+            DrawTexture( textures["guiX"], st + wc + rt, py, WHITE );
+            drawWhiteSmallNumber( 50, st + wc + rt + x, py, textures );
+            drawString( "=", st + wc + rt + x + p, py, textures );
+            drawWhiteSmallNumber( total, st + wc + rt + x + p + eq, py, textures );
+
         } else if ( state == GameState::FINISHED ) {
 
             if ( !IsMusicStreamPlaying( ResourceManager::getMusics()["ending"] ) ) {
@@ -601,19 +667,19 @@ void GameWorld::draw() {
             }
 
             if ( GetKeyPressed() ) {
-                PlayMusicStream( ResourceManager::getMusics()["ending"] );
+                StopMusicStream( ResourceManager::getMusics()["ending"] );
                 resetGame();
             }
 
             DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( RAYWHITE, 0.9 ) );
-            Texture2D* t = &ResourceManager::getTextures()["guiCredits"];
+            Texture2D* t = &textures["guiCredits"];
             DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, 20, WHITE );
 
             std::string message1 = "Thank you for playing!!!";
             std::string message2 = "Press any key to restart!";
 
-            drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, t->height + 40, ResourceManager::getTextures() );
-            drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, t->height + 65, ResourceManager::getTextures() );
+            drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, t->height + 40, textures );
+            drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, t->height + 65, textures );
 
         } else if ( state == GameState::PAUSED ) {
             DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( BLACK, 0.3 ) );
@@ -622,17 +688,17 @@ void GameWorld::draw() {
     } else if ( state == GameState::TITLE_SCREEN ) {
 
         DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), RAYWHITE );
-        Texture2D* t = &ResourceManager::getTextures()["guiRayMarioLogo"];
+        Texture2D* t = &textures["guiRayMarioLogo"];
         DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height, WHITE );
 
         std::string message1 = "Press any key to start!";
         std::string message2 = "Developed by:";
         std::string message3 = "Prof. Dr. David Buzatto - IFSP";
         std::string message4 = "2024";
-        drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() + 30, ResourceManager::getTextures());
-        drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 5 + 30, ResourceManager::getTextures());
-        drawString( message3, GetScreenWidth() / 2 - getDrawStringWidth( message3 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 6 + 35, ResourceManager::getTextures());
-        drawWhiteSmallNumber( 2024, GetScreenWidth() / 2 - getSmallNumberWidth( 2024 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 7 + 40, ResourceManager::getTextures() );
+        drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() + 30, textures );
+        drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 5 + 30, textures );
+        drawString( message3, GetScreenWidth() / 2 - getDrawStringWidth( message3 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 6 + 35, textures );
+        drawWhiteSmallNumber( 2024, GetScreenWidth() / 2 - getSmallNumberWidth( 2024 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 7 + 40, textures );
         
         Rectangle r( 40, 40, 70, 70 );
         DrawRectangle( r.x, r.y, r.width, r.height, Fade( RAYWHITE, 0.5 ) );
@@ -642,7 +708,7 @@ void GameWorld::draw() {
     } else if ( state == GameState::GAME_OVER ) {
 
         DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), BLACK );
-        Texture2D* t = &ResourceManager::getTextures()["guiGameOver"];
+        Texture2D* t = &textures["guiGameOver"];
         DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height / 2, WHITE );
 
     }
@@ -651,10 +717,10 @@ void GameWorld::draw() {
 
         int compMargin = 10;
         Rectangle guiPanelRect( GetScreenWidth() - 120, GetScreenHeight() - 140, 100, 120 );
-        GuiPanel( guiPanelRect, "Controles" );
+        GuiPanel( guiPanelRect, "Controls" );
         GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 30, 20, 20 ), "debug", &debug );
         GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "fps", &showFPS );
-        GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 90, 20, 20 ), "imortal", &immortalMario );
+        GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 90, 20, 20 ), "immortal", &immortalMario );
         mario.setImmortal( immortalMario );
 
         if ( showFPS ) {

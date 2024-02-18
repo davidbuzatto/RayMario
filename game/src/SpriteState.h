@@ -22,6 +22,7 @@ enum SpriteState {
     DEAD,
 
     VICTORY,
+    WAITING_TO_NEXT_MAP,
     NO_COLLIDABLE,
     INVISIBLE,
     NEITHER

@@ -43,6 +43,8 @@ class Map : public virtual Drawable {
     int maxBackgroundId;
     Color backgroundColor;
     Texture2D backgroundTexture;
+    bool drawBlackScreen;
+    float drawBlackScreenFadeAcum;
     
     int musicId;
     int maxMusicId;
@@ -62,8 +64,6 @@ public:
     ~Map();
     virtual void draw();
     std::vector<Tile*> &getTiles();
-    std::vector<Tile*> &getBackScenarioTiles();
-    std::vector<Tile*> &getFrontScenarioTiles();
     std::vector<Block*>& getBlocks();
     std::vector<Item*> &getItems();
     std::vector<Item*> &getStaticItems();
@@ -72,6 +72,7 @@ public:
     float getMaxWidth();
     float getMaxHeight();
     void setMarioOffset( float marioOffset );
+    void setDrawBlackScreen( bool drawBlackScreen );
     void playMusic();
     void reset();
     bool next();

@@ -67,6 +67,8 @@ Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseIt
     maxBackgroundId( 10 ),
     backgroundColor( WHITE ),
     backgroundTexture( Texture( 0 ) ),
+    drawBlackScreen( false ),
+    drawBlackScreenFadeAcum( 0 ),
 
     musicId( 1 ),
     maxMusicId( 9 ),
@@ -117,9 +119,9 @@ void Map::draw() {
     DrawRectangle( 0, 0, maxWidth, maxHeight, backgroundColor );
 
     for ( int i = 0; i <= repeats; i++ ) {
-        DrawTexture( 
-            backgroundTexture, 
-            -backgroundTexture.width + i * backgroundTexture.width - marioOffset * 0.06, 
+        DrawTexture(
+            backgroundTexture,
+            -backgroundTexture.width + i * backgroundTexture.width - marioOffset * 0.06,
             0,
             WHITE );
     }
@@ -139,7 +141,7 @@ void Map::draw() {
     for ( size_t i = 0; i < items.size(); i++ ) {
         items[i]->draw();
     }
-    
+
     for ( size_t i = 0; i < staticItems.size(); i++ ) {
         staticItems[i]->draw();
     }
@@ -148,10 +150,17 @@ void Map::draw() {
         baddies[i]->draw();
     }
 
+    if ( drawBlackScreen ) {
+        drawBlackScreenFadeAcum += GetFrameTime();
+        DrawRectangle( 0, 0, maxWidth, maxHeight, Fade( BLACK, 1 * drawBlackScreenFadeAcum ) );
+    }
+
     mario.draw();
 
-    for ( size_t i = 0; i < frontScenarioTiles.size(); i++ ) {
-        frontScenarioTiles[i]->draw();
+    if ( !drawBlackScreen ) {
+        for ( size_t i = 0; i < frontScenarioTiles.size(); i++ ) {
+            frontScenarioTiles[i]->draw();
+        }
     }
 
 }
@@ -498,11 +507,17 @@ void Map::setMarioOffset( float marioOffset ) {
     this->marioOffset = marioOffset;
 }
 
+void Map::setDrawBlackScreen( bool drawBlackScreen ) {
+    this->drawBlackScreen = drawBlackScreen;
+}
+
 void Map::reset() {
 
     maxWidth = 0;
     maxHeight = 0;
     marioOffset = 0;
+    drawBlackScreen = false;
+    drawBlackScreenFadeAcum = 0;
 
     for ( size_t i = 0; i < tiles.size(); i++ ) {
         delete tiles[i];

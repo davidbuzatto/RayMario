@@ -90,6 +90,7 @@ public:
     int getLives();
     int getCoins();
     int getPoints();
+    int getRemainingTime();
 
     void addLives( int lives );
     void removeLives( int lives );
