@@ -99,6 +99,7 @@ void GameWindow::init() {
         }
 
         InitWindow( width, height, title.c_str() );
+        SetWindowIcon( LoadImage( "resources/images/gui/appIcon.png" ) );
         SetExitKey( 0 );
         
         if ( initAudio ) {
