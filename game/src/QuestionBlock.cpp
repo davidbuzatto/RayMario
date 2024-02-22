@@ -1,21 +1,21 @@
 /**
- * @file Question.cpp
+ * @file QuestionBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Question class implementation.
+ * @brief QuestionBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "Question.h"
 #include "GameWorld.h"
-#include "ResourceManager.h"
+#include "QuestionBlock.h"
 #include "raylib.h"
+#include "ResourceManager.h"
 #include <iostream>
 #include <string>
 
-Question::Question( Vector2 pos, Vector2 dim, Color color ) :
-    Question( pos, dim, color, 0.1, 4 ) {}
+QuestionBlock::QuestionBlock( Vector2 pos, Vector2 dim, Color color ) :
+    QuestionBlock( pos, dim, color, 0.1, 4 ) {}
 
-Question::Question( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+QuestionBlock::QuestionBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ),
     coinAnimationTime( 0.5 ),
     coinAnimationAcum( 0 ),
@@ -25,11 +25,11 @@ Question::Question( Vector2 pos, Vector2 dim, Color color, float frameTime, int 
     coinY( 0 ),
     coinVelY( -400 ) {}
 
-Question::~Question() {}
+QuestionBlock::~QuestionBlock() = default;
 
-void Question::update() {
+void QuestionBlock::update() {
 
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
     if ( hit && coinAnimationStarted ) {
 
@@ -63,7 +63,7 @@ void Question::update() {
 
 }
 
-void Question::draw() {
+void QuestionBlock::draw() {
 
     if ( coinAnimationStarted ) {
         DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "coin%d", coinAnimationFrame ) )], pos.x + 4, coinY, WHITE );
@@ -81,7 +81,7 @@ void Question::draw() {
 
 }
 
-void Question::doHit( Mario& mario, Map *map ) {
+void QuestionBlock::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["coin"] );
         hit = true;

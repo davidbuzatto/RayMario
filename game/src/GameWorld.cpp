@@ -5,31 +5,26 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "GameWorld.h"
+#include "Baddie.h"
+#include "Block.h"
 #include "GameState.h"
+#include "GameWorld.h"
+#include "Item.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "ResourceManager.h"
-#include <cassert>
-#include <cmath>
-#include <cstring>
-#include <ctime>
+#include "SpriteState.h"
+#include "Tile.h"
+#include "utils.h"
 #include <iostream>
 #include <string>
 #include <vector>
-//#include "raymath.h"
+
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
 #undef RAYGUI_IMPLEMENTATION
 
-#include "Mario.h"
-#include "Item.h"
-#include "Baddie.h"
-#include "SpriteState.h"
-#include "Tile.h"
-#include "Block.h"
-#include "utils.h"
-
-#define RELEASE
+//#define RELEASE
 
 #ifdef RELEASE
 #define ACTIVATE_DEBUG false
@@ -39,7 +34,7 @@
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
-GameState GameWorld::state = GameState::TITLE_SCREEN;
+GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #else
 
 #define ACTIVATE_DEBUG true
@@ -49,7 +44,7 @@ GameState GameWorld::state = GameState::TITLE_SCREEN;
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
-GameState GameWorld::state = GameState::PLAYING;
+GameState GameWorld::state = GAME_STATE_PLAYING;
 #endif
 
 bool GameWorld::debug = ACTIVATE_DEBUG;
@@ -74,7 +69,7 @@ GameWorld::GameWorld() :
     map( mario, INITIAL_MAP_ID, LOAD_TEST_MAP, PARSE_BLOCKS, PARSE_ITEMS, PARSE_BADDIES ),
     camera( nullptr ),
     showControls( ACTIVATE_DEBUG ),
-    stateBeforePause( GameState::TITLE_SCREEN ),
+    stateBeforePause( GAME_STATE_TITLE_SCREEN ),
     remainingTimePointCount( 0 ) {
     //mario.changeToFlower();
     std::cout << "creating game world..." << std::endl;
@@ -94,13 +89,12 @@ void GameWorld::inputAndUpdate() {
 
     map.parseMap();
 
-    std::vector<Tile*> &tiles = map.getTiles();
-    std::vector<Block*> &blocks = map.getBlocks();
+    const std::vector<Tile*> &tiles = map.getTiles();
+    const std::vector<Block*> &blocks = map.getBlocks();
     std::vector<Item*> &items = map.getItems();
     std::vector<Item*> &staticItems = map.getStaticItems();
     std::vector<Baddie*> &baddies = map.getBaddies();
 
-    std::vector<int> collectedIndexes;
     std::map<std::string, Sound> &sounds = ResourceManager::getSounds();
     std::map<std::string, Music> &musics = ResourceManager::getMusics();
 
@@ -108,240 +102,253 @@ void GameWorld::inputAndUpdate() {
         showControls = !showControls;
     }
 
-    if ( mario.getState() != SpriteState::DYING && 
-         mario.getState() != SpriteState::VICTORY &&
-         mario.getState() != SpriteState::WAITING_TO_NEXT_MAP &&
-         state != GameState::TITLE_SCREEN &&
-         state != GameState::FINISHED && 
-         state != GameState::PAUSED ) {
+    if ( mario.getState() != SPRITE_STATE_DYING && 
+         mario.getState() != SPRITE_STATE_VICTORY &&
+         mario.getState() != SPRITE_STATE_WAITING_TO_NEXT_MAP &&
+         state != GAME_STATE_TITLE_SCREEN &&
+         state != GAME_STATE_FINISHED && 
+         state != GAME_STATE_PAUSED ) {
         map.playMusic();
     }
 
-    if ( state != GameState::TITLE_SCREEN &&
-         state != GameState::FINISHED &&
-         state != GameState::PAUSED ) {
+    if ( state != GAME_STATE_TITLE_SCREEN &&
+         state != GAME_STATE_FINISHED &&
+         state != GAME_STATE_PAUSED ) {
         mario.setActivationWidth( GetScreenWidth() * 2 );
         mario.update();
     }
 
-    if ( mario.getState() != SpriteState::DYING && 
-         mario.getState() != SpriteState::VICTORY &&
-         mario.getState() != SpriteState::WAITING_TO_NEXT_MAP &&
-         state != GameState::TITLE_SCREEN &&
-         state != GameState::FINISHED &&
-         state != GameState::PAUSED ) {
+    if ( mario.getState() != SPRITE_STATE_DYING && 
+         mario.getState() != SPRITE_STATE_VICTORY &&
+         mario.getState() != SPRITE_STATE_WAITING_TO_NEXT_MAP &&
+         state != GAME_STATE_TITLE_SCREEN &&
+         state != GAME_STATE_FINISHED &&
+         state != GAME_STATE_PAUSED ) {
+
+        std::vector<int> collectedIndexes;
 
         if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
             PlaySound( sounds["pause"] );
             stateBeforePause = state;
-            state = GameState::PAUSED;
+            state = GAME_STATE_PAUSED;
         }
 
-        for ( size_t i = 0; i < blocks.size(); i++ ) {
-            blocks[i]->update();
+        for ( auto block : blocks ) {
+            block->update();
         }
 
-        for ( size_t i = 0; i < items.size(); i++ ) {
-            items[i]->update();
+        for ( auto& item : items ) {
+            item->update();
         }
         
-        for ( size_t i = 0; i < staticItems.size(); i++ ) {
-            staticItems[i]->update();
+        for ( auto& staticItem : staticItems ) {
+            staticItem->update();
         }
 
-        for ( size_t i = 0; i < baddies.size(); i++ ) {
-            baddies[i]->update();
+        for (const auto& baddie : baddies ) {
+            baddie->update();
         }
 
         // tiles collision resolution
         mario.updateCollisionProbes();
-        for ( size_t i = 0; i < tiles.size(); i++ ) {
-
-            Tile *tile = tiles[i];
+        for ( const auto tile : tiles ) {
 
             // mario x tiles
             if ( !tile->isOnlyBaddies() ) {
                 switch ( mario.checkCollision( tile ) ) {
-                    case CollisionType::NORTH:
+                    case COLLISION_TYPE_NORTH:
                         mario.setY( tile->getY() + tile->getHeight() );
                         mario.setVelY( 0 );
                         mario.updateCollisionProbes();
                         break;
-                    case CollisionType::SOUTH:
+                    case COLLISION_TYPE_SOUTH:
                         mario.setY( tile->getY() - mario.getHeight() );
                         mario.setVelY( 0 );
-                        mario.setState( SpriteState::ON_GROUND );
+                        mario.setState( SPRITE_STATE_ON_GROUND );
                         mario.updateCollisionProbes();
                         break;
-                    case CollisionType::EAST:
+                    case COLLISION_TYPE_EAST:
                         mario.setX( tile->getX() - mario.getWidth() );
                         mario.setVelX( 0 );
                         mario.updateCollisionProbes();
                         break;
-                    case CollisionType::WEST:
+                    case COLLISION_TYPE_WEST:
                         mario.setX( tile->getX() + tile->getWidth() );
                         mario.setVelX( 0 );
                         mario.updateCollisionProbes();
                         break;
-                    case CollisionType::NONE:
+                    default: 
                         break;
                 }
             }
 
             // baddies x tiles
-            for ( size_t j = 0; j < baddies.size(); j++ ) {
-                Baddie* baddie = baddies[j];
+            for ( const auto baddie : baddies ) {
+
                 baddie->updateCollisionProbes();
-                if ( baddie->getState() != SpriteState::DYING ) {
+
+                if ( baddie->getState() != SPRITE_STATE_DYING ) {
                     switch ( baddie->checkCollision( tile ) ) {
-                        case CollisionType::NORTH:
+                        case COLLISION_TYPE_NORTH:
                             baddie->setY( tile->getY() + tile->getHeight() );
                             baddie->setVelY( 0 );
                             baddie->updateCollisionProbes();
                             break;
-                        case CollisionType::SOUTH:
+                        case COLLISION_TYPE_SOUTH:
                             baddie->setY( tile->getY() - baddie->getHeight() );
                             baddie->setVelY( 0 );
                             baddie->onSouthCollision();
                             baddie->updateCollisionProbes();
                             break;
-                        case CollisionType::EAST:
+                        case COLLISION_TYPE_EAST:
                             baddie->setX( tile->getX() - baddie->getWidth() );
                             baddie->setVelX( -baddie->getVelX() );
                             baddie->updateCollisionProbes();
                             break;
-                        case CollisionType::WEST:
+                        case COLLISION_TYPE_WEST:
                             baddie->setX( tile->getX() + tile->getWidth() );
                             baddie->setVelX( -baddie->getVelX() );
                             baddie->updateCollisionProbes();
                             break;
+                        default:
+                            break;
                     }
                 }
+
             }
 
             // items x tiles
-            for ( size_t j = 0; j < items.size(); j++ ) {
-                Item* item = items[j];
+            for ( const auto item : items ) {
+
                 item->updateCollisionProbes();
+
                 switch ( item->checkCollision( tile ) ) {
-                    case CollisionType::NORTH:
+                    case COLLISION_TYPE_NORTH:
                         item->setY( tile->getY() + tile->getHeight() );
                         item->setVelY( 0 );
                         item->updateCollisionProbes();
                         break;
-                    case CollisionType::SOUTH:
+                    case COLLISION_TYPE_SOUTH:
                         item->setY( tile->getY() - item->getHeight() );
                         item->setVelY( 0 );
                         item->onSouthCollision();
                         item->updateCollisionProbes();
                         break;
-                    case CollisionType::EAST:
+                    case COLLISION_TYPE_EAST:
                         item->setX( tile->getX() - item->getWidth() );
                         item->setVelX( -item->getVelX() );
                         item->updateCollisionProbes();
                         break;
-                    case CollisionType::WEST:
+                    case COLLISION_TYPE_WEST:
                         item->setX( tile->getX() + tile->getWidth() );
                         item->setVelX( -item->getVelX() );
                         item->updateCollisionProbes();
                         break;
+                    default:
+                        break;
                 }
+
             }
 
         }
 
         // blocks collision resolution
         mario.updateCollisionProbes();
-        for ( size_t i = 0; i < blocks.size(); i++ ) {
 
-            Block *block = blocks[i];
+        for ( const auto block : blocks ) {
 
             // mario x blocks
             switch ( mario.checkCollision( block ) ) {
-                case CollisionType::NORTH:
+                case COLLISION_TYPE_NORTH:
                     mario.setY( block->getY() + block->getHeight() );
                     mario.setVelY( 0 );
                     mario.updateCollisionProbes();
                     block->doHit( mario, &map );
                     break;
-                case CollisionType::SOUTH:
+                case COLLISION_TYPE_SOUTH:
                     mario.setY( block->getY() - mario.getHeight() );
                     mario.setVelY( 0 );
-                    mario.setState( SpriteState::ON_GROUND );
+                    mario.setState( SPRITE_STATE_ON_GROUND );
                     mario.updateCollisionProbes();
                     break;
-                case CollisionType::EAST:
+                case COLLISION_TYPE_EAST:
                     mario.setX( block->getX() - mario.getWidth() );
                     mario.setVelX( 0 );
                     mario.updateCollisionProbes();
                     break;
-                case CollisionType::WEST:
+                case COLLISION_TYPE_WEST:
                     mario.setX( block->getX() + block->getWidth() );
                     mario.setVelX( 0 );
                     mario.updateCollisionProbes();
                     break;
-                case CollisionType::NONE:
+                default:
                     break;
             }
 
             // baddies x blocks
-            for ( size_t j = 0; j < baddies.size(); j++ ) {
-                Baddie* baddie = baddies[j];
+            for ( const auto baddie : baddies ) {
+
                 baddie->updateCollisionProbes();
-                if ( baddie->getState() != SpriteState::DYING ) {
+
+                if ( baddie->getState() != SPRITE_STATE_DYING ) {
                     switch ( baddie->checkCollision( block ) ) {
-                        case CollisionType::NORTH:
+                        case COLLISION_TYPE_NORTH:
                             baddie->setY( block->getY() + block->getHeight() );
                             baddie->setVelY( 0 );
                             baddie->updateCollisionProbes();
                             break;
-                        case CollisionType::SOUTH:
+                        case COLLISION_TYPE_SOUTH:
                             baddie->setY( block->getY() - baddie->getHeight() );
                             baddie->setVelY( 0 );
                             baddie->onSouthCollision();
                             baddie->updateCollisionProbes();
                             break;
-                        case CollisionType::EAST:
+                        case COLLISION_TYPE_EAST:
                             baddie->setX( block->getX() - baddie->getWidth() );
                             baddie->setVelX( -baddie->getVelX() );
                             baddie->updateCollisionProbes();
                             break;
-                        case CollisionType::WEST:
+                        case COLLISION_TYPE_WEST:
                             baddie->setX( block->getX() + block->getWidth() );
                             baddie->setVelX( -baddie->getVelX() );
                             baddie->updateCollisionProbes();
                             break;
+                        default:
+                            break;
                     }
                 }
+
             }
 
             // items x blocks
-            for ( size_t j = 0; j < items.size(); j++ ) {
-                Item* item = items[j];
+            for ( const auto item : items ) {
+
                 item->updateCollisionProbes();
+
                 switch ( item->checkCollision( block ) ) {
-                    case CollisionType::NORTH:
+                    case COLLISION_TYPE_NORTH:
                         item->setY( block->getY() + block->getHeight() );
                         item->setVelY( 0 );
                         item->updateCollisionProbes();
                         break;
-                    case CollisionType::SOUTH:
+                    case COLLISION_TYPE_SOUTH:
                         item->setY( block->getY() - item->getHeight() );
                         item->setVelY( 0 );
                         item->onSouthCollision();
                         item->updateCollisionProbes();
                         break;
-                    case CollisionType::EAST:
+                    case COLLISION_TYPE_EAST:
                         item->setX( block->getX() - item->getWidth() );
                         item->setVelX( -item->getVelX() );
                         item->updateCollisionProbes();
                         break;
-                    case CollisionType::WEST:
+                    case COLLISION_TYPE_WEST:
                         item->setX( block->getX() + block->getWidth() );
                         item->setVelX( -item->getVelX() );
                         item->updateCollisionProbes();
                         break;
                 }
+
             }
 
         }
@@ -351,7 +358,7 @@ void GameWorld::inputAndUpdate() {
 
             Item* item = items[i];
 
-            if ( item->checkCollision( &mario ) != CollisionType::NONE ) {
+            if ( item->checkCollision( &mario ) != COLLISION_TYPE_NONE ) {
                 collectedIndexes.push_back( i );
                 item->playCollisionSound();
                 item->updateMario( mario );
@@ -372,7 +379,7 @@ void GameWorld::inputAndUpdate() {
 
             Item* item = staticItems[i];
 
-            if ( mario.checkCollision( item ) != CollisionType::NONE ) {
+            if ( mario.checkCollision( item ) != COLLISION_TYPE_NONE ) {
                 collectedIndexes.push_back( i );
                 item->playCollisionSound();
                 item->updateMario( mario );
@@ -389,9 +396,9 @@ void GameWorld::inputAndUpdate() {
 
         // baddies activation and mario and fireballs x baddies collision resolution and offscreen baddies removal
         collectedIndexes.clear();
-        if ( mario.getState() != SpriteState::DYING && 
-             mario.getState() != SpriteState::VICTORY &&
-             mario.getState() != SpriteState::WAITING_TO_NEXT_MAP ) {
+        if ( mario.getState() != SPRITE_STATE_DYING && 
+             mario.getState() != SPRITE_STATE_VICTORY &&
+             mario.getState() != SPRITE_STATE_WAITING_TO_NEXT_MAP ) {
 
             mario.updateCollisionProbes();
 
@@ -400,29 +407,29 @@ void GameWorld::inputAndUpdate() {
                 Baddie* baddie = baddies[i];
 
                 // baddies activation
-                if ( baddie->getState() == SpriteState::IDLE ) {
+                if ( baddie->getState() == SPRITE_STATE_IDLE ) {
                     baddie->activateWithMarioProximity( mario );
                 }
 
                 // mario and fireballs x baddies collision resolution and offscreen baddies removal
                 switch ( mario.checkCollisionBaddie( baddie ) ) {
-                    case CollisionType::NORTH:
-                    case CollisionType::EAST:
-                    case CollisionType::WEST:
+                    case COLLISION_TYPE_NORTH:
+                    case COLLISION_TYPE_EAST:
+                    case COLLISION_TYPE_WEST:
                         if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
                             switch ( mario.getType() ) {
-                                case MarioType::SMALL:
-                                    mario.setState( SpriteState::DYING );
+                                case MARIO_TYPE_SMALL:
+                                    mario.setState( SPRITE_STATE_DYING );
                                     PlaySound( sounds["playerDown"] );
                                     mario.removeLives( 1 );
                                     break;
-                                case MarioType::SUPER:
+                                case MARIO_TYPE_SUPER:
                                     PlaySound( sounds["pipe"] );
                                     mario.changeToSmall();
                                     mario.setInvulnerable( true );
                                     mario.consumeReservedPowerUp();
                                     break;
-                                case MarioType::FLOWER:
+                                case MARIO_TYPE_FLOWER:
                                     PlaySound( sounds["pipe"] );
                                     mario.changeToSmall();
                                     mario.setInvulnerable( true );
@@ -431,29 +438,29 @@ void GameWorld::inputAndUpdate() {
                             }
                         }
                         break;
-                    case CollisionType::SOUTH:
-                        if ( mario.getState() == SpriteState::FALLING && baddie->getState() != SpriteState::DYING ) {
+                    case COLLISION_TYPE_SOUTH:
+                        if ( mario.getState() == SPRITE_STATE_FALLING && baddie->getState() != SPRITE_STATE_DYING ) {
                             mario.setY( baddie->getY() - mario.getHeight() );
                             mario.setVelY( -200 );
-                            mario.setState( SpriteState::JUMPING );
+                            mario.setState( SPRITE_STATE_JUMPING );
                             baddie->onHit();
                             PlaySound( sounds["stomp"] );
                             mario.addPoints( 200 );
                         } else {
                             if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
                                 switch ( mario.getType() ) {
-                                    case MarioType::SMALL:
-                                        mario.setState( SpriteState::DYING );
+                                    case MARIO_TYPE_SMALL:
+                                        mario.setState( SPRITE_STATE_DYING );
                                         PlaySound( sounds["playerDown"] );
                                         mario.removeLives( 1 );
                                         break;
-                                    case MarioType::SUPER:
+                                    case MARIO_TYPE_SUPER:
                                         PlaySound( sounds["pipe"] );
                                         mario.changeToSmall();
                                         mario.setInvulnerable( true );
                                         mario.consumeReservedPowerUp();
                                         break;
-                                    case MarioType::FLOWER:
+                                    case MARIO_TYPE_FLOWER:
                                         PlaySound( sounds["pipe"] );
                                         mario.changeToSmall();
                                         mario.setInvulnerable( true );
@@ -463,19 +470,19 @@ void GameWorld::inputAndUpdate() {
                             }
                         }
                         break;
-                    case CollisionType::FIREBALL:
+                    case COLLISION_TYPE_FIREBALL:
                         baddie->onHit();
                         PlaySound( sounds["stomp"] );
                         mario.addPoints( 200 );
                         break;
                     default:
                         if ( baddie->getY() > map.getMaxHeight() ) {
-                            baddie->setState( SpriteState::TO_BE_REMOVED );
+                            baddie->setState( SPRITE_STATE_TO_BE_REMOVED );
                         }
                         break;
                 }
 
-                if ( baddie->getState() == SpriteState::TO_BE_REMOVED ) {
+                if ( baddie->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
                     collectedIndexes.push_back( i );
                 }
 
@@ -490,7 +497,7 @@ void GameWorld::inputAndUpdate() {
             baddies.erase( baddies.begin() + collectedIndexes[i] );
         }
 
-    } else if ( mario.getState() == SpriteState::DYING ) {
+    } else if ( mario.getState() == SPRITE_STATE_DYING ) {
 
         if ( !IsSoundPlaying( sounds["playerDown"] ) && !IsSoundPlaying( sounds["gameOver"] ) ) {
             
@@ -500,13 +507,13 @@ void GameWorld::inputAndUpdate() {
                 resetGame();
             } else {
                 PlaySound( sounds["gameOver"] );
-                state = GameState::GAME_OVER;
+                state = GAME_STATE_GAME_OVER;
                 mario.setLives( -1 );
             }
 
         }
 
-    } else if ( state == GameState::COUNTING_POINTS ) {
+    } else if ( state == GAME_STATE_COUNTING_POINTS ) {
 
         remainingTimePointCount--;
         mario.addPoints( 50 );
@@ -516,30 +523,30 @@ void GameWorld::inputAndUpdate() {
         }
 
         if ( remainingTimePointCount == 0 ) {
-            state = GameState::GO_TO_NEXT_MAP;
+            state = GAME_STATE_GO_TO_NEXT_MAP;
         }
 
-    } else if ( state == GameState::GO_TO_NEXT_MAP ) {
+    } else if ( state == GAME_STATE_GO_TO_NEXT_MAP ) {
 
         if ( !IsSoundPlaying( sounds["courseClear"] ) ) {
             nextMap();
         }
 
-    } else if ( mario.getState() == SpriteState::VICTORY ) {
+    } else if ( mario.getState() == SPRITE_STATE_VICTORY ) {
 
         remainingTimePointCount = mario.getRemainingTime();
-        state = GameState::COUNTING_POINTS;
+        state = GAME_STATE_COUNTING_POINTS;
         map.setDrawBlackScreen( true );
-        mario.setState( SpriteState::WAITING_TO_NEXT_MAP );
+        mario.setState( SPRITE_STATE_WAITING_TO_NEXT_MAP );
 
-    } else if ( state == GameState::PAUSED ) {
+    } else if ( state == GAME_STATE_PAUSED ) {
         if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
             state = stateBeforePause;
         }
     }
 
-    if ( mario.getState() != SpriteState::DYING && mario.getY() > map.getMaxHeight() ) {
-        mario.setState( SpriteState::DYING );
+    if ( mario.getState() != SPRITE_STATE_DYING && mario.getY() > map.getMaxHeight() ) {
+        mario.setState( SPRITE_STATE_DYING );
         PlaySound( sounds["playerDown"] );
         mario.removeLives( 1 );
     }
@@ -550,10 +557,10 @@ void GameWorld::inputAndUpdate() {
         }
     }
 
-    float xc = GetScreenWidth() / 2.0;
-    float yc = GetScreenHeight() / 2.0;
-    float pxc = mario.getX() + mario.getWidth() / 2.0;
-    float pyc = mario.getY() + mario.getHeight() / 2.0;
+    const float xc = GetScreenWidth() / 2.0;
+    const float yc = GetScreenHeight() / 2.0;
+    const float pxc = mario.getX() + mario.getWidth() / 2.0;
+    const float pyc = mario.getY() + mario.getHeight() / 2.0;
     
     camera->offset.x = xc;
 
@@ -579,7 +586,7 @@ void GameWorld::inputAndUpdate() {
         camera->target.y = pyc + Map::tileWidth;
     }
 
-    if ( state == GameState::TITLE_SCREEN ) {
+    if ( state == GAME_STATE_TITLE_SCREEN ) {
 
         if ( !IsMusicStreamPlaying( musics["title"] ) ) {
             PlayMusicStream( musics["title"] );
@@ -589,7 +596,7 @@ void GameWorld::inputAndUpdate() {
 
         if ( GetKeyPressed() && !IsKeyPressed( KEY_LEFT_ALT ) ) {
             StopMusicStream( musics["title"] );
-            state = GameState::PLAYING;
+            state = GAME_STATE_PLAYING;
         }
 
     }
@@ -608,7 +615,7 @@ void GameWorld::draw() {
     int lines = GetScreenHeight() / Map::tileWidth;
     std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
 
-    if ( state != GameState::GAME_OVER && state != GameState::TITLE_SCREEN ) {
+    if ( state != GAME_STATE_GAME_OVER && state != GAME_STATE_TITLE_SCREEN ) {
 
         BeginMode2D( *camera );
 
@@ -627,12 +634,12 @@ void GameWorld::draw() {
 
         mario.drawHud();
 
-        if ( state == GameState::TIME_UP ) {
+        if ( state == GAME_STATE_TIME_UP ) {
 
             Texture2D* t = &textures["guiTimeUp"];
             DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height / 2, WHITE );
 
-        } else if ( state == GameState::COUNTING_POINTS || state == GameState::GO_TO_NEXT_MAP ) {
+        } else if ( state == GAME_STATE_COUNTING_POINTS || state == GAME_STATE_GO_TO_NEXT_MAP ) {
 
             Vector2 sc( GetScreenWidth() / 2, GetScreenHeight() / 2 );
             DrawTexture( textures["guiMario"], sc.x - textures["guiMario"].width / 2, sc.y - 120, WHITE);
@@ -640,25 +647,25 @@ void GameWorld::draw() {
             std::string message1 = "course clear!";
             drawString( message1, sc.x - getDrawStringWidth( message1 ) / 2, sc.y - 80, textures );
 
-            int wc = textures["guiClock"].width;
-            int rt = getSmallNumberWidth( mario.getRemainingTime() );
-            int p = getSmallNumberWidth( 50 );
-            int x = textures["guiX"].width;
-            int eq = getDrawStringWidth( "=" );
-            int total = mario.getRemainingTime() * 50;
-            int wt = getSmallNumberWidth( total );
-            int cw = wc + rt + p + x + eq + wt;
-            int st = sc.x - (cw/2);
-            int py = sc.y - 40;
+            int clockWidth = textures["guiClock"].width;
+            int remainingTimeWidth = getSmallNumberWidth( mario.getRemainingTime() );
+            int pointsPerSecondWidth = getSmallNumberWidth( 50 );
+            int timesWidth = textures["guiX"].width;
+            int equalSignWidth = getDrawStringWidth( "=" );
+            int totalTimePoints = mario.getRemainingTime() * 50;
+            int totalTimePointsWidth = getSmallNumberWidth( totalTimePoints );
+            int completeMessageWidth = clockWidth + remainingTimeWidth + pointsPerSecondWidth + timesWidth + equalSignWidth + totalTimePointsWidth;
+            int completeMessageStart = sc.x - (completeMessageWidth/2);
+            int completeMessageY = sc.y - 40;
 
-            DrawTexture( textures["guiClock"], st, py, WHITE );
-            drawWhiteSmallNumber( mario.getRemainingTime(), st + wc, py, textures );
-            DrawTexture( textures["guiX"], st + wc + rt, py, WHITE );
-            drawWhiteSmallNumber( 50, st + wc + rt + x, py, textures );
-            drawString( "=", st + wc + rt + x + p, py, textures );
-            drawWhiteSmallNumber( total, st + wc + rt + x + p + eq, py, textures );
+            DrawTexture( textures["guiClock"], completeMessageStart, completeMessageY, WHITE );
+            drawWhiteSmallNumber( mario.getRemainingTime(), completeMessageStart + clockWidth, completeMessageY, textures );
+            DrawTexture( textures["guiX"], completeMessageStart + clockWidth + remainingTimeWidth, completeMessageY, WHITE );
+            drawWhiteSmallNumber( 50, completeMessageStart + clockWidth + remainingTimeWidth + timesWidth, completeMessageY, textures );
+            drawString( "=", completeMessageStart + clockWidth + remainingTimeWidth + timesWidth + pointsPerSecondWidth, completeMessageY, textures );
+            drawWhiteSmallNumber( totalTimePoints, completeMessageStart + clockWidth + remainingTimeWidth + timesWidth + pointsPerSecondWidth + equalSignWidth, completeMessageY, textures );
 
-        } else if ( state == GameState::FINISHED ) {
+        } else if ( state == GAME_STATE_FINISHED ) {
 
             if ( !IsMusicStreamPlaying( ResourceManager::getMusics()["ending"] ) ) {
                 PlayMusicStream( ResourceManager::getMusics()["ending"] );
@@ -681,11 +688,11 @@ void GameWorld::draw() {
             drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, t->height + 40, textures );
             drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, t->height + 65, textures );
 
-        } else if ( state == GameState::PAUSED ) {
+        } else if ( state == GAME_STATE_PAUSED ) {
             DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( BLACK, 0.3 ) );
         }
 
-    } else if ( state == GameState::TITLE_SCREEN ) {
+    } else if ( state == GAME_STATE_TITLE_SCREEN ) {
 
         DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), RAYWHITE );
         Texture2D* t = &textures["guiRayMarioLogo"];
@@ -705,7 +712,7 @@ void GameWorld::draw() {
         DrawRectangleLinesEx( r, 5, BLACK );
         DrawText( "ray", r.x + r.width - 50, r.y + r.height - 35, 20, BLACK );
 
-    } else if ( state == GameState::GAME_OVER ) {
+    } else if ( state == GAME_STATE_GAME_OVER ) {
 
         DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), BLACK );
         Texture2D* t = &textures["guiGameOver"];
@@ -764,21 +771,21 @@ void GameWorld::setCamera( Camera2D *camera ) {
 void GameWorld::resetMap() {
     mario.reset( true );
     map.reset();
-    state = GameState::PLAYING;
+    state = GAME_STATE_PLAYING;
 }
 
 void GameWorld::resetGame() {
     mario.resetAll();
     map.first();
     map.reset();
-    state = GameState::TITLE_SCREEN;
+    state = GAME_STATE_TITLE_SCREEN;
 }
 
 void GameWorld::nextMap() {
     if ( map.next() ) {
         mario.reset( false );
-        state = GameState::PLAYING;
+        state = GAME_STATE_PLAYING;
     } else {
-        state = GameState::FINISHED;
+        state = GAME_STATE_FINISHED;
     }
 }

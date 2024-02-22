@@ -7,23 +7,18 @@
  */
 #pragma once
 
-#include "CollisionProbe.h"
 #include "Baddie.h"
-#include "Direction.h"
-#include "Mario.h"
 #include "raylib.h"
-#include "Sprite.h"
-#include <vector>
 
 class Rex : public virtual Baddie {
     
 public:
 
     Rex( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
-    ~Rex();
+    ~Rex() override;
 
-    virtual void update();
-    virtual void draw();
-    virtual void onHit();
+    void update() override;
+    void draw() override;
+    void onHit() override;
 
 };

@@ -19,16 +19,15 @@ Mushroom::Mushroom( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color, 0, 0 ) {
 }
 
-Mushroom::~Mushroom() {
-}
+Mushroom::~Mushroom() = default;
 
 void Mushroom::update() {
 
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
-    if ( state == SpriteState::ACTIVE ) {
+    if ( state == SPRITE_STATE_ACTIVE ) {
 
-        if ( facingDirection == Direction::RIGHT ) {
+        if ( facingDirection == DIRECTION_RIGHT ) {
             pos.x += vel.x * delta;
         } else {
             pos.x -= vel.x * delta;
@@ -66,30 +65,30 @@ void Mushroom::updateMario( Mario& mario ) {
     mario.addPoints( 1000 );
 
     switch ( mario.getType() ) {
-        case MarioType::SMALL:
+        case MARIO_TYPE_SMALL:
             mario.changeToSuper();
             break;
-        case MarioType::SUPER:
+        case MARIO_TYPE_SUPER:
             switch ( mario.getReservedPowerUp() ) {
-                case MarioType::SMALL:
-                    mario.setReservedPowerUp( MarioType::SUPER );
+                case MARIO_TYPE_SMALL:
+                    mario.setReservedPowerUp( MARIO_TYPE_SUPER );
                     PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
-                case MarioType::SUPER:
+                case MARIO_TYPE_SUPER:
                     break;
-                case MarioType::FLOWER:
+                case MARIO_TYPE_FLOWER:
                     break;
             }
             break;
-        case MarioType::FLOWER:
+        case MARIO_TYPE_FLOWER:
             switch ( mario.getReservedPowerUp() ) {
-                case MarioType::SMALL:
-                    mario.setReservedPowerUp( MarioType::SUPER );
+                case MARIO_TYPE_SMALL:
+                    mario.setReservedPowerUp( MARIO_TYPE_SUPER );
                     PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
-                case MarioType::SUPER:
+                case MARIO_TYPE_SUPER:
                     break;
-                case MarioType::FLOWER:
+                case MARIO_TYPE_FLOWER:
                     break;
             }
             break;

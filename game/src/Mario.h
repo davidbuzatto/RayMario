@@ -9,12 +9,10 @@
 
 #include "CollisionProbe.h"
 #include "CollisionType.h"
-#include "Direction.h"
 #include "Fireball.h"
 #include "MarioType.h"
 #include "raylib.h"
 #include "Sprite.h"
-#include "Tile.h"
 #include <vector>
 
 class Mario : public virtual Sprite {
@@ -63,14 +61,14 @@ class Mario : public virtual Sprite {
 public:
 
     Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed, bool immortal );
-    ~Mario();
+    ~Mario() override;
 
-    virtual void update();
-    virtual void draw();
-    virtual void updateCollisionProbes();
+    void update() override;
+    void draw() override;
+    void updateCollisionProbes() override;
     void drawHud();
 
-    virtual CollisionType checkCollision( Sprite *sprite );
+    CollisionType checkCollision( Sprite *sprite ) override;
     CollisionType checkCollisionBaddie( Sprite *sprite );
 
     void setImmortal( bool immortal );

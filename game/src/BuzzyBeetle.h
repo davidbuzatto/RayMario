@@ -7,22 +7,17 @@
  */
 #pragma once
 
-#include "CollisionProbe.h"
 #include "Baddie.h"
-#include "Direction.h"
-#include "Mario.h"
 #include "raylib.h"
-#include "Sprite.h"
-#include <vector>
 
 class BuzzyBeetle : public virtual Baddie {
     
 public:
 
     BuzzyBeetle( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
-    ~BuzzyBeetle();
+    ~BuzzyBeetle() override;
 
-    virtual void update();
-    virtual void draw();
+    void update() override;
+    void draw() override;
 
 };

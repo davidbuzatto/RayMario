@@ -1,33 +1,33 @@
 /**
- * @file QuestionMushroom.cpp
+ * @file QuestionFireFlowerBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief QuestionMushroom class implementation.
+ * @brief QuestionFireFlowerBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "QuestionMushroom.h"
+#include "FireFlower.h"
 #include "GameWorld.h"
-#include "Mushroom.h"
-#include "ResourceManager.h"
+#include "QuestionFireFlowerBlock.h"
 #include "raylib.h"
+#include "ResourceManager.h"
 #include <iostream>
 #include <string>
 
-QuestionMushroom::QuestionMushroom( Vector2 pos, Vector2 dim, Color color ) :
-    QuestionMushroom( pos, dim, color, 0.1, 4 ) {}
+QuestionFireFlowerBlock::QuestionFireFlowerBlock( Vector2 pos, Vector2 dim, Color color ) :
+    QuestionFireFlowerBlock( pos, dim, color, 0.1, 4 ) {}
 
-QuestionMushroom::QuestionMushroom( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+QuestionFireFlowerBlock::QuestionFireFlowerBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ),
     item( nullptr ),
     itemVelY( -80 ),
     itemMinY( 0 ),
     map( nullptr ) {}
 
-QuestionMushroom::~QuestionMushroom() {}
+QuestionFireFlowerBlock::~QuestionFireFlowerBlock()  = default;
 
-void QuestionMushroom::update() {
+void QuestionFireFlowerBlock::update() {
 
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
     if ( !hit ) {
         frameAcum += delta;
@@ -42,7 +42,7 @@ void QuestionMushroom::update() {
         item->setY( item->getY() + itemVelY * delta );
         if ( item->getY() <= itemMinY ) {
             item->setY( itemMinY );
-            item->setState( SpriteState::ACTIVE );
+            item->setState( SPRITE_STATE_ACTIVE );
             map->getItems().push_back( item );
             item = nullptr;
         }
@@ -50,7 +50,7 @@ void QuestionMushroom::update() {
 
 }
 
-void QuestionMushroom::draw() {
+void QuestionFireFlowerBlock::draw() {
 
     if ( item != nullptr ) {
         item->draw();
@@ -68,11 +68,11 @@ void QuestionMushroom::draw() {
 
 }
 
-void QuestionMushroom::doHit( Mario& mario, Map *map ) {
+void QuestionFireFlowerBlock::doHit( Mario& mario, Map* map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["powerUpAppears"] );
         hit = true;
-        item = new Mushroom( Vector2( pos.x, pos.y ), Vector2( 32, 32 ), Vector2( 200, 0 ), RED );
+        item = new FireFlower( Vector2( pos.x, pos.y ), Vector2( 32, 32 ), ORANGE );
         item->setFacingDirection( mario.getFacingDirection() );
         itemMinY = pos.y - 32;
         this->map = map;

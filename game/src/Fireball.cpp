@@ -5,28 +5,25 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "Fireball.h"
-#include "CollisionType.h"
-#include "Sprite.h"
 #include "Direction.h"
+#include "Fireball.h"
 #include "GameWorld.h"
 #include "raylib.h"
 #include "ResourceManager.h"
+#include "Sprite.h"
 #include <map>
 #include <string>
-#include <typeinfo>
 
 Fireball::Fireball( Vector2 pos, Vector2 dim, Vector2 vel, Color color, Direction facingDirection, float timeSpan ) :
     Sprite( pos, dim, vel, color, 0.05, 4, facingDirection ), timeSpan( timeSpan ), timeSpanAcum( 0 ) {
-    setState( SpriteState::ACTIVE );
+    setState( SPRITE_STATE_ACTIVE );
 }
 
-Fireball::~Fireball() {
-}
+Fireball::~Fireball() = default;
 
 void Fireball::update() {
     
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
     frameAcum += delta;
     if ( frameAcum >= frameTime ) {
@@ -35,10 +32,10 @@ void Fireball::update() {
         currentFrame %= maxFrames;
     }
 
-    if ( state != SpriteState::TO_BE_REMOVED ) {
+    if ( state != SPRITE_STATE_TO_BE_REMOVED ) {
         timeSpanAcum += delta;
         if ( timeSpanAcum >= timeSpan ) {
-            state = SpriteState::TO_BE_REMOVED;
+            state = SPRITE_STATE_TO_BE_REMOVED;
         }
     }
 
@@ -53,7 +50,7 @@ void Fireball::update() {
 
 void Fireball::draw() {
 
-    char dir = facingDirection == Direction::RIGHT ? 'R' : 'L';
+    const char dir = facingDirection == DIRECTION_RIGHT ? 'R' : 'L';
     DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "fireball%d%c", currentFrame, dir ))], pos.x, pos.y, WHITE );
 
     if ( GameWorld::debug ) {

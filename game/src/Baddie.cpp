@@ -6,16 +6,9 @@
  * @copyright Copyright (c) 2024
  */
 #include "Baddie.h"
-#include "CollisionProbe.h"
-#include "Direction.h"
-#include "GameWorld.h"
 #include "Mario.h"
 #include "raylib.h"
-#include "ResourceManager.h"
 #include "SpriteState.h"
-#include <iostream>
-#include <map>
-#include <vector>
 
 Baddie::Baddie() :
     Baddie( Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), BLACK, 0, 0 ) {
@@ -37,8 +30,7 @@ Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
     Sprite( pos, dim, vel, color, frameTime, maxFrames ) {
 }
 
-Baddie::~Baddie() {
-}
+Baddie::~Baddie() = default;
 
 void Baddie::activateWithMarioProximity( Mario &mario ) {
     if ( CheckCollisionPointRec( 
@@ -48,7 +40,7 @@ void Baddie::activateWithMarioProximity( Mario &mario ) {
             mario.getY() + mario.getHeight() / 2 - mario.getActivationWidth() / 2,
             mario.getActivationWidth(),
             mario.getActivationWidth() ) ) ) {
-        state = SpriteState::ACTIVE;
+        state = SPRITE_STATE_ACTIVE;
     }
 }
 
@@ -62,6 +54,6 @@ void Baddie::onSouthCollision() {
 }
 
 void Baddie::onHit() {
-    state = SpriteState::DYING;
+    state = SPRITE_STATE_DYING;
     setAttributesOnDying();
 }

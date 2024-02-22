@@ -5,47 +5,43 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "Map.h"
-#include "GameWorld.h"
-#include "ResourceManager.h"
-#include "Item.h"
-#include "Coin.h"
-#include "CourseClearToken.h"
-#include "Mushroom.h"
-#include "FireFlower.h"
-#include "OneUpMushroom.h"
-#include "ThreeUpMoon.h"
-#include "Star.h"
 #include "Baddie.h"
-#include "raylib.h"
-#include "Sprite.h"
+#include "Block.h"
 #include "BlueKoopaTroopa.h"
 #include "BobOmb.h"
 #include "BulletBill.h"
 #include "BuzzyBeetle.h"
+#include "CloudBlock.h"
+#include "Coin.h"
+#include "CourseClearToken.h"
+#include "ExclamationBlock.h"
+#include "EyesClosedBlock.h"
+#include "EyesOpenedBlock.h"
 #include "FlyingGoomba.h"
+#include "GameWorld.h"
+#include "GlassBlock.h"
 #include "Goomba.h"
 #include "GreenKoopaTroopa.h"
+#include "InvisibleBlock.h"
+#include "Item.h"
+#include "Map.h"
+#include "MessageBlock.h"
 #include "MummyBeetle.h"
+#include "QuestionBlock.h"
+#include "QuestionFireFlowerBlock.h"
+#include "QuestionMushroomBlock.h"
+#include "QuestionOneUpMushroomBlock.h"
+#include "QuestionThreeUpMoonBlock.h"
+#include "raylib.h"
 #include "RedKoopaTroopa.h"
+#include "ResourceManager.h"
 #include "Rex.h"
+#include "Sprite.h"
+#include "Star.h"
+#include "StoneBlock.h"
 #include "Swooper.h"
+#include "WoodBlock.h"
 #include "YellowKoopaTroopa.h"
-#include "Block.h"
-#include "Cloud.h"
-#include "Exclamation.h"
-#include "EyesClosed.h"
-#include "EyesOpened.h"
-#include "Glass.h"
-#include "Invisible.h"
-#include "Message.h"
-#include "Question.h"
-#include "QuestionFireFlower.h"
-#include "QuestionMushroom.h"
-#include "QuestionOneUpMushroom.h"
-#include "QuestionThreeUpMoon.h"
-#include "Stone.h"
-#include "Wood.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -66,7 +62,7 @@ Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseIt
     backgroundId( 1 ),
     maxBackgroundId( 10 ),
     backgroundColor( WHITE ),
-    backgroundTexture( Texture( 0 ) ),
+    backgroundTexture( Texture() ),
     drawBlackScreen( false ),
     drawBlackScreenFadeAcum( 0 ),
 
@@ -83,39 +79,39 @@ Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseIt
 
 Map::~Map() {
 
-    for ( size_t i = 0; i < tiles.size(); i++ ) {
-        delete tiles[i];
+    for ( const auto& tile : tiles ) {
+        delete tile;
     }
     
-    for ( size_t i = 0; i < backScenarioTiles.size(); i++ ) {
-        delete backScenarioTiles[i];
+    for ( const auto& backScenarioTile : backScenarioTiles ) {
+        delete backScenarioTile;
     }
     
-    for ( size_t i = 0; i < frontScenarioTiles.size(); i++ ) {
-        delete frontScenarioTiles[i];
+    for ( const auto& frontScenarioTile : frontScenarioTiles ) {
+        delete frontScenarioTile;
     }
     
-    for ( size_t i = 0; i < items.size(); i++ ) {
-        delete items[i];
+    for ( const auto& item : items ) {
+        delete item;
     }
     
-    for ( size_t i = 0; i < staticItems.size(); i++ ) {
-        delete staticItems[i];
+    for ( const auto& staticItem : staticItems ) {
+        delete staticItem;
     }
 
-    for ( size_t i = 0; i < baddies.size(); i++ ) {
-        delete baddies[i];
+    for ( const auto& baddie : baddies ) {
+        delete baddie;
     }
 
-    for ( size_t i = 0; i < blocks.size(); i++ ) {
-        delete blocks[i];
+    for ( const auto& block : blocks ) {
+        delete block;
     }
 
 }
 
 void Map::draw() {
 
-    int repeats = maxWidth / backgroundTexture.width + 2;
+    const int repeats = maxWidth / backgroundTexture.width + 2;
     DrawRectangle( 0, 0, maxWidth, maxHeight, backgroundColor );
 
     for ( int i = 0; i <= repeats; i++ ) {
@@ -126,28 +122,28 @@ void Map::draw() {
             WHITE );
     }
 
-    for ( size_t i = 0; i < backScenarioTiles.size(); i++ ) {
-        backScenarioTiles[i]->draw();
+    for ( const auto& backScenarioTile : backScenarioTiles ) {
+        backScenarioTile->draw();
     }
 
-    for ( size_t i = 0; i < tiles.size(); i++ ) {
-        tiles[i]->draw();
+    for ( const auto& tile : tiles ) {
+        tile->draw();
     }
 
-    for ( size_t i = 0; i < blocks.size(); i++ ) {
-        blocks[i]->draw();
+    for ( const auto& block : blocks ) {
+        block->draw();
     }
 
-    for ( size_t i = 0; i < items.size(); i++ ) {
-        items[i]->draw();
+    for ( const auto& item : items ) {
+        item->draw();
     }
 
-    for ( size_t i = 0; i < staticItems.size(); i++ ) {
-        staticItems[i]->draw();
+    for ( const auto& staticItem : staticItems ) {
+        staticItem->draw();
     }
 
-    for ( size_t i = 0; i < baddies.size(); i++ ) {
-        baddies[i]->draw();
+    for ( const auto& baddie : baddies ) {
+        baddie->draw();
     }
 
     if ( drawBlackScreen ) {
@@ -158,8 +154,8 @@ void Map::draw() {
     mario.draw();
 
     if ( !drawBlackScreen ) {
-        for ( size_t i = 0; i < frontScenarioTiles.size(); i++ ) {
-            frontScenarioTiles[i]->draw();
+        for ( const auto& frontScenarioTile : frontScenarioTiles ) {
+            frontScenarioTile->draw();
         }
     }
 
@@ -185,10 +181,10 @@ std::vector<Baddie*> &Map::getBaddies() {
     return baddies;
 }
 
-void Map::playMusic() {
+void Map::playMusic() const {
 
     std::map<std::string, Music> musics = ResourceManager::getMusics();
-    std::string key(TextFormat( "music%d", musicId ));
+    const std::string key(TextFormat( "music%d", musicId ));
 
     if ( !IsMusicStreamPlaying( musics[key] ) ) {
         PlayMusicStream( musics[key] );
@@ -218,8 +214,8 @@ void Map::parseMap() {
 
         while ( *mapData != '\0' ) {
 
-            float x = currentColumn*tileWidth;
-            float y = currentLine*tileWidth;
+            const float x = currentColumn * tileWidth;
+            const float y = currentLine * tileWidth;
 
             if ( *mapData == '#' ) {
                 ignoreLine = true;
@@ -231,7 +227,7 @@ void Map::parseMap() {
 
                     ignoreLine = true;
                     mapData += 3;
-                    std::string hexColor = "";
+                    std::string hexColor;
 
                     while ( *mapData != ' ' ) {
                         hexColor += std::string( 1, *mapData );
@@ -245,7 +241,7 @@ void Map::parseMap() {
 
                     ignoreLine = true;
                     mapData += 3;
-                    std::string number = "";
+                    std::string number;
 
                     while ( *mapData != ' ' ) {
                         number += std::string( 1, *mapData );
@@ -265,7 +261,7 @@ void Map::parseMap() {
 
                     ignoreLine = true;
                     mapData += 3;
-                    std::string number = "";
+                    std::string number;
 
                     while ( *mapData != ' ' ) {
                         number += std::string( 1, *mapData );
@@ -284,7 +280,7 @@ void Map::parseMap() {
 
                     ignoreLine = true;
                     mapData += 3;
-                    std::string number = "";
+                    std::string number;
 
                     while ( *mapData != ' ' ) {
                         number += std::string( 1, *mapData );
@@ -300,7 +296,7 @@ void Map::parseMap() {
 
             if ( !ignoreLine ) {
 
-                // processing boundarie tiles when used as first column
+                // processing boundary tiles when used as first column
                 // for camera adjustment
                 if ( *mapData != '/' ) {
                     if ( maxWidth < x ) {
@@ -329,46 +325,46 @@ void Map::parseMap() {
 
                     // blocks
                     case 'i':
-                        if ( parseBlocks ) blocks.push_back( new EyesClosed( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new EyesClosedBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'y':
-                        if ( parseBlocks ) blocks.push_back( new EyesOpened( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new EyesOpenedBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 's':
-                        if ( parseBlocks ) blocks.push_back( new Stone( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new StoneBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'w':
-                        if ( parseBlocks ) blocks.push_back( new Wood( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new WoodBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'g':
-                        if ( parseBlocks ) blocks.push_back( new Glass( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new GlassBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'c':
-                        if ( parseBlocks ) blocks.push_back( new Cloud( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new CloudBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'v':
-                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new Invisible( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new InvisibleBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'h':
-                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new Message( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "bem-vindo ao jogo raymario!" ));
+                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new MessageBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "bem-vindo ao jogo raymario!" ));
                         break;
                     case '!':
-                        if ( parseBlocks ) blocks.push_back( new Exclamation( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new ExclamationBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '?':
-                        if ( parseBlocks ) blocks.push_back( new Question( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'm':
-                        if ( parseBlocks ) blocks.push_back( new QuestionMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionMushroomBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'f':
-                        if ( parseBlocks ) blocks.push_back( new QuestionFireFlower( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionFireFlowerBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'u':
-                        if ( parseBlocks ) blocks.push_back( new QuestionOneUpMushroom( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionOneUpMushroomBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case '+':
-                        if ( parseBlocks ) blocks.push_back( new QuestionThreeUpMoon( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionThreeUpMoonBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
 
                     // bondarie tiles
@@ -495,11 +491,11 @@ void Map::parseMap() {
 
 }
 
-float Map::getMaxWidth() {
+float Map::getMaxWidth() const {
     return maxWidth;
 }
 
-float Map::getMaxHeight() {
+float Map::getMaxHeight() const {
     return maxHeight;
 }
 
@@ -519,38 +515,38 @@ void Map::reset() {
     drawBlackScreen = false;
     drawBlackScreenFadeAcum = 0;
 
-    for ( size_t i = 0; i < tiles.size(); i++ ) {
-        delete tiles[i];
+    for ( const auto& tile : tiles ) {
+        delete tile;
     }
     tiles.clear();
     
-    for ( size_t i = 0; i < backScenarioTiles.size(); i++ ) {
-        delete backScenarioTiles[i];
+    for ( const auto& backScenarioTile : backScenarioTiles ) {
+        delete backScenarioTile;
     }
     backScenarioTiles.clear();
     
-    for ( size_t i = 0; i < frontScenarioTiles.size(); i++ ) {
-        delete frontScenarioTiles[i];
+    for ( const auto& frontScenarioTile : frontScenarioTiles ) {
+        delete frontScenarioTile;
     }
     frontScenarioTiles.clear();
 
-    for ( size_t i = 0; i < blocks.size(); i++ ) {
-        delete blocks[i];
+    for ( const auto& block : blocks ) {
+        delete block;
     }
     blocks.clear();
 
-    for ( size_t i = 0; i < items.size(); i++ ) {
-        delete items[i];
+    for ( const auto& item : items ) {
+        delete item;
     }
     items.clear();
     
-    for ( size_t i = 0; i < staticItems.size(); i++ ) {
-        delete staticItems[i];
+    for ( const auto& staticItem : staticItems ) {
+        delete staticItem;
     }
     staticItems.clear();
 
-    for ( size_t i = 0; i < baddies.size(); i++ ) {
-        delete baddies[i];
+    for ( const auto& baddie : baddies ) {
+        delete baddie;
     }
     baddies.clear();
 

@@ -1,28 +1,27 @@
 /**
- * @file Wood.cpp
+ * @file WoodBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Wood class implementation.
+ * @brief WoodBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "Wood.h"
 #include "GameWorld.h"
-#include "ResourceManager.h"
 #include "raylib.h"
+#include "ResourceManager.h"
+#include "WoodBlock.h"
 #include <iostream>
-#include <string>
 
-Wood::Wood( Vector2 pos, Vector2 dim, Color color ) :
-    Wood( pos, dim, color, 0, 1 ) {}
+WoodBlock::WoodBlock( Vector2 pos, Vector2 dim, Color color ) :
+    WoodBlock( pos, dim, color, 0, 1 ) {}
 
-Wood::Wood( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+WoodBlock::WoodBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ) {}
 
-Wood::~Wood() {}
+WoodBlock::~WoodBlock() = default;
 
-void Wood::update() {}
+void WoodBlock::update() {}
 
-void Wood::draw() {
+void WoodBlock::draw() {
 
     DrawTexture( ResourceManager::getTextures()["blockWood"], pos.x, pos.y, WHITE );
 

@@ -33,8 +33,7 @@ Item::Item( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime,
     Sprite( pos, dim, vel, color, frameTime, maxFrames ) {
 }
 
-Item::~Item() {
-}
+Item::~Item() = default;
 
 void Item::onSouthCollision() {
 

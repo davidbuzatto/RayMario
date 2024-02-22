@@ -1,33 +1,33 @@
 /**
- * @file QuestionFireFlower.cpp
+ * @file QuestionThreeUpMoonBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief QuestionFireFlower class implementation.
+ * @brief QuestionThreeUpMoonBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "QuestionFireFlower.h"
 #include "GameWorld.h"
-#include "FireFlower.h"
-#include "ResourceManager.h"
+#include "QuestionThreeUpMoonBlock.h"
 #include "raylib.h"
+#include "ResourceManager.h"
+#include "ThreeUpMoon.h"
 #include <iostream>
 #include <string>
 
-QuestionFireFlower::QuestionFireFlower( Vector2 pos, Vector2 dim, Color color ) :
-    QuestionFireFlower( pos, dim, color, 0.1, 4 ) {}
+QuestionThreeUpMoonBlock::QuestionThreeUpMoonBlock( Vector2 pos, Vector2 dim, Color color ) :
+    QuestionThreeUpMoonBlock( pos, dim, color, 0.1, 4 ) {}
 
-QuestionFireFlower::QuestionFireFlower( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+QuestionThreeUpMoonBlock::QuestionThreeUpMoonBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ),
     item( nullptr ),
     itemVelY( -80 ),
     itemMinY( 0 ),
     map( nullptr ) {}
 
-QuestionFireFlower::~QuestionFireFlower() {}
+QuestionThreeUpMoonBlock::~QuestionThreeUpMoonBlock() = default;
 
-void QuestionFireFlower::update() {
+void QuestionThreeUpMoonBlock::update() {
 
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
     if ( !hit ) {
         frameAcum += delta;
@@ -42,7 +42,7 @@ void QuestionFireFlower::update() {
         item->setY( item->getY() + itemVelY * delta );
         if ( item->getY() <= itemMinY ) {
             item->setY( itemMinY );
-            item->setState( SpriteState::ACTIVE );
+            item->setState( SPRITE_STATE_ACTIVE );
             map->getItems().push_back( item );
             item = nullptr;
         }
@@ -50,7 +50,7 @@ void QuestionFireFlower::update() {
 
 }
 
-void QuestionFireFlower::draw() {
+void QuestionThreeUpMoonBlock::draw() {
 
     if ( item != nullptr ) {
         item->draw();
@@ -68,11 +68,11 @@ void QuestionFireFlower::draw() {
 
 }
 
-void QuestionFireFlower::doHit( Mario& mario, Map* map ) {
+void QuestionThreeUpMoonBlock::doHit( Mario& mario, Map* map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["powerUpAppears"] );
         hit = true;
-        item = new FireFlower( Vector2( pos.x, pos.y ), Vector2( 32, 32 ), ORANGE );
+        item = new ThreeUpMoon( Vector2( pos.x, pos.y ), Vector2( 32, 32 ), Vector2( 300, 0 ), YELLOW );
         item->setFacingDirection( mario.getFacingDirection() );
         itemMinY = pos.y - 32;
         this->map = map;

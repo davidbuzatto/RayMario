@@ -7,22 +7,17 @@
  */
 #pragma once
 
-#include "CollisionProbe.h"
 #include "Baddie.h"
-#include "Direction.h"
-#include "Mario.h"
 #include "raylib.h"
-#include "Sprite.h"
-#include <vector>
 
 class GreenKoopaTroopa : public virtual Baddie {
     
 public:
 
     GreenKoopaTroopa( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
-    ~GreenKoopaTroopa();
+    ~GreenKoopaTroopa() override;
 
-    virtual void update();
-    virtual void draw();
+    void update() override;
+    void draw() override;
 
 };

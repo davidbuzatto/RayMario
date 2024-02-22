@@ -1,33 +1,33 @@
 /**
- * @file QuestionOneUpMushroom.cpp
+ * @file QuestionOneUpMushroomBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief QuestionOneUpMushroom class implementation.
+ * @brief QuestionOneUpMushroomBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "QuestionOneUpMushroom.h"
 #include "GameWorld.h"
 #include "OneUpMushroom.h"
-#include "ResourceManager.h"
+#include "QuestionOneUpMushroomBlock.h"
 #include "raylib.h"
+#include "ResourceManager.h"
 #include <iostream>
 #include <string>
 
-QuestionOneUpMushroom::QuestionOneUpMushroom( Vector2 pos, Vector2 dim, Color color ) :
-    QuestionOneUpMushroom( pos, dim, color, 0.1, 4 ) {}
+QuestionOneUpMushroomBlock::QuestionOneUpMushroomBlock( Vector2 pos, Vector2 dim, Color color ) :
+    QuestionOneUpMushroomBlock( pos, dim, color, 0.1, 4 ) {}
 
-QuestionOneUpMushroom::QuestionOneUpMushroom( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+QuestionOneUpMushroomBlock::QuestionOneUpMushroomBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ),
     item( nullptr ),
     itemVelY( -80 ),
     itemMinY( 0 ),
     map( nullptr ) {}
 
-QuestionOneUpMushroom::~QuestionOneUpMushroom() {}
+QuestionOneUpMushroomBlock::~QuestionOneUpMushroomBlock() = default;
 
-void QuestionOneUpMushroom::update() {
+void QuestionOneUpMushroomBlock::update() {
 
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
     if ( !hit ) {
         frameAcum += delta;
@@ -42,7 +42,7 @@ void QuestionOneUpMushroom::update() {
         item->setY( item->getY() + itemVelY * delta );
         if ( item->getY() <= itemMinY ) {
             item->setY( itemMinY );
-            item->setState( SpriteState::ACTIVE );
+            item->setState( SPRITE_STATE_ACTIVE );
             map->getItems().push_back( item );
             item = nullptr;
         }
@@ -50,7 +50,7 @@ void QuestionOneUpMushroom::update() {
 
 }
 
-void QuestionOneUpMushroom::draw() {
+void QuestionOneUpMushroomBlock::draw() {
 
     if ( item != nullptr ) {
         item->draw();
@@ -68,7 +68,7 @@ void QuestionOneUpMushroom::draw() {
 
 }
 
-void QuestionOneUpMushroom::doHit( Mario& mario, Map* map ) {
+void QuestionOneUpMushroomBlock::doHit( Mario& mario, Map* map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["powerUpAppears"] );
         hit = true;

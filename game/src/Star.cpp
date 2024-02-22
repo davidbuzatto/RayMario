@@ -18,8 +18,7 @@ Star::Star( Vector2 pos, Vector2 dim, Color color ) :
     Sprite( pos, dim, color, 0, 0 ) {
 }
 
-Star::~Star() {
-}
+Star::~Star() = default;
 
 void Star::update() {
 }
@@ -43,5 +42,5 @@ void Star::playCollisionSound() {
 
 void Star::updateMario( Mario& mario ) {
     mario.addPoints( 10000 );
-    mario.setState( SpriteState::VICTORY );
+    mario.setState( SPRITE_STATE_VICTORY );
 }

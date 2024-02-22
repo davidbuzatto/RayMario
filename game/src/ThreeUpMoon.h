@@ -7,21 +7,21 @@
  */
 #pragma once
 
-#include "raylib.h"
 #include "Item.h"
 #include "Mario.h"
+#include "raylib.h"
 
 class ThreeUpMoon : public virtual Item {
     
 public:
 
     ThreeUpMoon( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
-    ~ThreeUpMoon();
+    ~ThreeUpMoon() override;
 
-    virtual void update();
-    virtual void draw();
-    virtual void playCollisionSound();
-    virtual void updateMario( Mario& mario );
-    virtual void onSouthCollision();
+    void update() override;
+    void draw() override;
+    void playCollisionSound() override;
+    void updateMario( Mario& mario ) override;
+    void onSouthCollision() override;
 
 };

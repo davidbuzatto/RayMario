@@ -7,8 +7,8 @@
  */
 #pragma once
 
-#include "raylib.h"
 #include "Direction.h"
+#include "raylib.h"
 #include "Sprite.h"
 
 class Fireball : public virtual Sprite {
@@ -19,10 +19,10 @@ class Fireball : public virtual Sprite {
 public:
 
     Fireball( Vector2 pos, Vector2 dim, Vector2 vel, Color color, Direction facingDirection, float timeSpan );
-    ~Fireball();
+    ~Fireball() override;
 
-    virtual void update();
-    virtual void draw();
-    virtual void updateCollisionProbes();
+    void update() override;
+    void draw() override;
+    void updateCollisionProbes() override;
 
 };

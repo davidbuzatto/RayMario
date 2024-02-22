@@ -21,10 +21,10 @@ public:
 
     CollisionProbe();
     CollisionProbe( Vector2 pos, Vector2 dim, Color color );
-    ~CollisionProbe();
+    ~CollisionProbe() override;
 
-    virtual void draw();
-    CollisionType checkCollision( Rectangle &rect );
+    void draw() override;
+    CollisionType checkCollision( Rectangle &rect ) const;
 
     void setPos( Vector2 pos );
     void setPos( float x, float y );
@@ -39,14 +39,14 @@ public:
     void setColor( Color color );
 
     Vector2& getPos();
-    float getX();
-    float getY();
+    float getX() const;
+    float getY() const;
 
     Vector2& getDim();
-    float getWidth();
-    float getHeight();
+    float getWidth() const;
+    float getHeight() const;
 
     Color& getColor();
-    Rectangle getRect();
+    Rectangle getRect() const;
 
 };

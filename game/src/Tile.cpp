@@ -5,26 +5,26 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "Tile.h"
 #include "GameWorld.h"
-#include "ResourceManager.h"
 #include "raylib.h"
+#include "ResourceManager.h"
+#include "Tile.h"
 #include <iostream>
 #include <string>
+#include <utility>
 
 Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible ) :
-    Tile( pos, dim, color, key, visible, false ) {
+    Tile( pos, dim, color, std::move(key), visible, false ) {
 }
 
 Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, bool onlyBaddies ) :
     Sprite( pos, dim, color ),
-    key( key ),
+    key( std::move(key) ),
     visible( visible ),
     onlyBaddies( onlyBaddies ) {
 }
 
-Tile::~Tile() {
-}
+Tile::~Tile() = default;
 
 void Tile::update() {
 }
@@ -49,6 +49,6 @@ void Tile::draw() {
 
 }
 
-bool Tile::isOnlyBaddies() {
+bool Tile::isOnlyBaddies() const {
     return onlyBaddies;
 }

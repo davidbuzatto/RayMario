@@ -1,28 +1,27 @@
 /**
- * @file Stone.cpp
+ * @file StoneBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Stone class implementation.
+ * @brief StoneBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "Stone.h"
 #include "GameWorld.h"
-#include "ResourceManager.h"
 #include "raylib.h"
+#include "ResourceManager.h"
+#include "StoneBlock.h"
 #include <iostream>
-#include <string>
 
-Stone::Stone( Vector2 pos, Vector2 dim, Color color ) :
-    Stone( pos, dim, color, 0, 1 ) {}
+StoneBlock::StoneBlock( Vector2 pos, Vector2 dim, Color color ) :
+    StoneBlock( pos, dim, color, 0, 1 ) {}
 
-Stone::Stone( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+StoneBlock::StoneBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ) {}
 
-Stone::~Stone() {}
+StoneBlock::~StoneBlock() = default;
 
-void Stone::update() {}
+void StoneBlock::update() {}
 
-void Stone::draw() {
+void StoneBlock::draw() {
 
     DrawTexture( ResourceManager::getTextures()["blockStone"], pos.x, pos.y, WHITE );
 

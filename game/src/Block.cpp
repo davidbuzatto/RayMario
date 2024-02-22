@@ -23,7 +23,7 @@ Block::Block( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFra
     Sprite( pos, dim, color, frameTime, maxFrames ), hit( false ) {
 }
 
-Block::~Block() {}
+Block::~Block() = default;
 
 void Block::doHit( Mario &mario, Map *map ) {
 

@@ -9,6 +9,7 @@
 #include "raylib.h"
 #include <iostream>
 #include <string>
+#include <utility>
 
 /**
  * @brief Construct a new GameWindow object
@@ -22,19 +23,19 @@ GameWindow::GameWindow( bool initAudio ) :
 }
 
 GameWindow::GameWindow( int width, int height, std::string title, bool initAudio ) : 
-    GameWindow( width, height, title, 60, true, false, false, false, false, false, initAudio ) {
+    GameWindow( width, height, std::move(title), 60, true, false, false, false, false, false, initAudio ) {
 }
 
 GameWindow::GameWindow( int width, int height, std::string title, int targetFPS, bool initAudio ) : 
-    GameWindow( width, height, title, targetFPS, true, false, false, false, false, false, initAudio ) {
+    GameWindow( width, height, std::move(title), targetFPS, true, false, false, false, false, false, initAudio ) {
 }
 
 GameWindow::GameWindow( int width, int height, std::string title, bool antialiasing, bool initAudio ) : 
-    GameWindow( width, height, title, 60, antialiasing, false, false, false, false, false, initAudio ) {
+    GameWindow( width, height, std::move(title), 60, antialiasing, false, false, false, false, false, initAudio ) {
 }
 
 GameWindow::GameWindow( int width, int height, std::string title, int targetFPS, bool antialiasing, bool initAudio ) : 
-    GameWindow( width, height, title, targetFPS, antialiasing, false, false, false, false, false, initAudio ) {
+    GameWindow( width, height, std::move(title), targetFPS, antialiasing, false, false, false, false, false, initAudio ) {
 }
 
 GameWindow::GameWindow( int width, int height, std::string title, int targetFPS,
@@ -42,7 +43,7 @@ GameWindow::GameWindow( int width, int height, std::string title, int targetFPS,
                         bool undecorated, bool alwaysOnTop, bool alwaysRun, bool initAudio ) :
                         width( width ),
                         height( height ),
-                        title( title ),
+                        title( std::move(title)),
                         targetFPS( targetFPS ),
                         antialiasing( antialiasing ),
                         resizable( resizable ),
@@ -51,6 +52,7 @@ GameWindow::GameWindow( int width, int height, std::string title, int targetFPS,
                         alwaysOnTop( alwaysOnTop ),
                         alwaysRun( alwaysRun ),
                         initAudio( initAudio ),
+                        camera( Camera2D() ),
                         initialized( false ) {
 
     std::cout << "creating game window..." << std::endl;
@@ -198,7 +200,7 @@ void GameWindow::setHeight( int height ) {
 
 void GameWindow::setTitle( std::string title ) {
     if ( !initialized ) {
-        this->title = title;
+        this->title = std::move(title);
     }
 }
 

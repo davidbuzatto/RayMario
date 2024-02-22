@@ -1,28 +1,28 @@
 /**
- * @file EyesOpened.cpp
+ * @file EyesOpenedBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief EyesOpened class implementation.
+ * @brief EyesOpenedBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "EyesOpened.h"
+#include "EyesOpenedBlock.h"
 #include "GameWorld.h"
-#include "ResourceManager.h"
 #include "raylib.h"
+#include "ResourceManager.h"
 #include <iostream>
 #include <string>
 
-EyesOpened::EyesOpened( Vector2 pos, Vector2 dim, Color color ) :
-    EyesOpened( pos, dim, color, 0.1, 4 ) {}
+EyesOpenedBlock::EyesOpenedBlock( Vector2 pos, Vector2 dim, Color color ) :
+    EyesOpenedBlock( pos, dim, color, 0.1, 4 ) {}
 
-EyesOpened::EyesOpened( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+EyesOpenedBlock::EyesOpenedBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ), animationTime( 3 ), animationAcum( 0 ) {}
 
-EyesOpened::~EyesOpened() {}
+EyesOpenedBlock::~EyesOpenedBlock() = default;
 
-void EyesOpened::update() {
+void EyesOpenedBlock::update() {
 
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
     frameAcum += delta;
 
@@ -38,13 +38,13 @@ void EyesOpened::update() {
             hit = false;
             animationAcum = 0;
             currentFrame = 0;
-            state = SpriteState::IDLE;
+            state = SPRITE_STATE_IDLE;
         }
     }
 
 }
 
-void EyesOpened::draw() {
+void EyesOpenedBlock::draw() {
 
     if ( hit ) {
         DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "blockEyesOpened%d", currentFrame ) )], pos.x, pos.y, WHITE );
@@ -58,10 +58,10 @@ void EyesOpened::draw() {
 
 }
 
-void EyesOpened::doHit( Mario& mario, Map *map ) {
+void EyesOpenedBlock::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["shellRicochet"] );
         hit = true;
-        state = SpriteState::NO_COLLIDABLE;
+        state = SPRITE_STATE_NO_COLLIDABLE;
     }
 }

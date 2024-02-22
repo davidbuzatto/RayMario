@@ -1,33 +1,33 @@
 /**
- * @file QuestionThreeUpMoon.cpp
+ * @file QuestionMushroomBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief QuestionThreeUpMoon class implementation.
+ * @brief QuestionMushroomBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "QuestionThreeUpMoon.h"
 #include "GameWorld.h"
-#include "ThreeUpMoon.h"
-#include "ResourceManager.h"
+#include "Mushroom.h"
+#include "QuestionMushroomBlock.h"
 #include "raylib.h"
+#include "ResourceManager.h"
 #include <iostream>
 #include <string>
 
-QuestionThreeUpMoon::QuestionThreeUpMoon( Vector2 pos, Vector2 dim, Color color ) :
-    QuestionThreeUpMoon( pos, dim, color, 0.1, 4 ) {}
+QuestionMushroomBlock::QuestionMushroomBlock( Vector2 pos, Vector2 dim, Color color ) :
+    QuestionMushroomBlock( pos, dim, color, 0.1, 4 ) {}
 
-QuestionThreeUpMoon::QuestionThreeUpMoon( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+QuestionMushroomBlock::QuestionMushroomBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ),
     item( nullptr ),
     itemVelY( -80 ),
     itemMinY( 0 ),
     map( nullptr ) {}
 
-QuestionThreeUpMoon::~QuestionThreeUpMoon() {}
+QuestionMushroomBlock::~QuestionMushroomBlock() = default;
 
-void QuestionThreeUpMoon::update() {
+void QuestionMushroomBlock::update() {
 
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
     if ( !hit ) {
         frameAcum += delta;
@@ -42,7 +42,7 @@ void QuestionThreeUpMoon::update() {
         item->setY( item->getY() + itemVelY * delta );
         if ( item->getY() <= itemMinY ) {
             item->setY( itemMinY );
-            item->setState( SpriteState::ACTIVE );
+            item->setState( SPRITE_STATE_ACTIVE );
             map->getItems().push_back( item );
             item = nullptr;
         }
@@ -50,7 +50,7 @@ void QuestionThreeUpMoon::update() {
 
 }
 
-void QuestionThreeUpMoon::draw() {
+void QuestionMushroomBlock::draw() {
 
     if ( item != nullptr ) {
         item->draw();
@@ -68,11 +68,11 @@ void QuestionThreeUpMoon::draw() {
 
 }
 
-void QuestionThreeUpMoon::doHit( Mario& mario, Map* map ) {
+void QuestionMushroomBlock::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["powerUpAppears"] );
         hit = true;
-        item = new ThreeUpMoon( Vector2( pos.x, pos.y ), Vector2( 32, 32 ), Vector2( 300, 0 ), YELLOW );
+        item = new Mushroom( Vector2( pos.x, pos.y ), Vector2( 32, 32 ), Vector2( 200, 0 ), RED );
         item->setFacingDirection( mario.getFacingDirection() );
         itemMinY = pos.y - 32;
         this->map = map;

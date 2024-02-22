@@ -17,8 +17,7 @@ FireFlower::FireFlower( Vector2 pos, Vector2 dim, Color color ) :
     Sprite( pos, dim, color, 0.2, 2 ) {
 }
 
-FireFlower::~FireFlower() {
-}
+FireFlower::~FireFlower() = default;
 
 void FireFlower::update() {
 
@@ -53,33 +52,33 @@ void FireFlower::updateMario( Mario& mario ) {
     mario.addPoints( 1000 );
 
     switch ( mario.getType() ) {
-        case MarioType::SMALL:
+        case MARIO_TYPE_SMALL:
             mario.changeToFlower();
             break;
-        case MarioType::SUPER:
+        case MARIO_TYPE_SUPER:
             mario.changeToFlower();
             switch ( mario.getReservedPowerUp() ) {
-                case MarioType::SMALL:
-                    mario.setReservedPowerUp( MarioType::SUPER );
+                case MARIO_TYPE_SMALL:
+                    mario.setReservedPowerUp( MARIO_TYPE_SUPER );
                     PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
-                case MarioType::SUPER:
+                case MARIO_TYPE_SUPER:
                     break;
-                case MarioType::FLOWER:
+                case MARIO_TYPE_FLOWER:
                     break;
             }
             break;
-        case MarioType::FLOWER:
+        case MARIO_TYPE_FLOWER:
             switch ( mario.getReservedPowerUp() ) {
-                case MarioType::SMALL:
-                    mario.setReservedPowerUp( MarioType::FLOWER );
+                case MARIO_TYPE_SMALL:
+                    mario.setReservedPowerUp( MARIO_TYPE_FLOWER );
                     PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
-                case MarioType::SUPER:
-                    mario.setReservedPowerUp( MarioType::FLOWER );
+                case MARIO_TYPE_SUPER:
+                    mario.setReservedPowerUp( MARIO_TYPE_FLOWER );
                     PlaySound( ResourceManager::getSounds()["reserveItemStore"] );
                     break;
-                case MarioType::FLOWER:
+                case MARIO_TYPE_FLOWER:
                     break;
             }
             break;

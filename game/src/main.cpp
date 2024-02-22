@@ -6,7 +6,6 @@
  * @copyright Copyright (c) 2024
  */
 #include "GameWindow.h"
-#include <vector>
 
 int main( void ) {
 

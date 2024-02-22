@@ -1,28 +1,28 @@
 /**
- * @file Cloud.cpp
+ * @file CloudBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Cloud class implementation.
+ * @brief CloudBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "Cloud.h"
+#include "CloudBlock.h"
 #include "GameWorld.h"
 #include "ResourceManager.h"
 #include "raylib.h"
 #include <iostream>
 #include <string>
 
-Cloud::Cloud( Vector2 pos, Vector2 dim, Color color ) :
-    Cloud( pos, dim, color, 0, 1 ) {}
+CloudBlock::CloudBlock( Vector2 pos, Vector2 dim, Color color ) :
+    CloudBlock( pos, dim, color, 0, 1 ) {}
 
-Cloud::Cloud( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+CloudBlock::CloudBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ) {}
 
-Cloud::~Cloud() {}
+CloudBlock::~CloudBlock() = default;
 
-void Cloud::update() {}
+void CloudBlock::update() {}
 
-void Cloud::draw() {
+void CloudBlock::draw() {
 
     DrawTexture( ResourceManager::getTextures()["blockCloud"], pos.x, pos.y, WHITE );
 

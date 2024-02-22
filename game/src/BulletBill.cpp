@@ -5,24 +5,21 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "Baddie.h"
 #include "BulletBill.h"
 #include "CollisionProbe.h"
 #include "Direction.h"
 #include "GameWorld.h"
-#include "Mario.h"
-#include "Sprite.h"
 #include "raylib.h"
 #include "ResourceManager.h"
+#include "Sprite.h"
 #include "SpriteState.h"
 #include <iostream>
 #include <map>
-#include <vector>
 
 BulletBill::BulletBill( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color, 0.2, 1, 1 ) {
 
-    facingDirection = Direction::LEFT;
+    facingDirection = DIRECTION_LEFT;
     
     Color c = ColorFromHSV( GetRandomValue( 0, 360 ), 1, 0.9 );
     cpN.setColor( c );
@@ -32,14 +29,13 @@ BulletBill::BulletBill( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     
 }
 
-BulletBill::~BulletBill() {
-}
+BulletBill::~BulletBill() = default;
 
 void BulletBill::update() {
     
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
-    if ( state == SpriteState::ACTIVE ) {
+    if ( state == SPRITE_STATE_ACTIVE ) {
 
         frameAcum += delta;
         if ( frameAcum >= frameTime ) {
@@ -49,15 +45,15 @@ void BulletBill::update() {
         }
 
         if ( vel.x >= 0 ) {
-            facingDirection = Direction::RIGHT;
+            facingDirection = DIRECTION_RIGHT;
         } else {
-            facingDirection = Direction::LEFT;
+            facingDirection = DIRECTION_LEFT;
         }
 
         pos.x = pos.x + vel.x * delta;
         pos.y = pos.y + vel.y * delta;
 
-    } else if ( state == SpriteState::DYING ) {
+    } else if ( state == SPRITE_STATE_DYING ) {
 
         angle += ( vel.x >= 0 ? 600 : -600 ) * delta;
 
@@ -75,7 +71,7 @@ void BulletBill::update() {
 void BulletBill::draw() {
 
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
-    char dir = facingDirection == Direction::RIGHT ? 'R' : 'L';
+    const char dir = facingDirection == DIRECTION_RIGHT ? 'R' : 'L';
 
     DrawTexturePro( textures[std::string( TextFormat( "bulletBill%d%c", currentFrame, dir ) )],
                     Rectangle( 0, 0, dim.x, dim.y ),

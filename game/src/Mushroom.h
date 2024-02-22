@@ -7,20 +7,20 @@
  */
 #pragma once
 
-#include "raylib.h"
 #include "Item.h"
 #include "Mario.h"
+#include "raylib.h"
 
 class Mushroom : public virtual Item {
     
 public:
 
     Mushroom( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
-    ~Mushroom();
+    ~Mushroom() override;
 
-    virtual void update();
-    virtual void draw();
-    virtual void playCollisionSound();
-    virtual void updateMario( Mario& mario );
+    void update() override;
+    void draw() override;
+    void playCollisionSound() override;
+    void updateMario( Mario& mario ) override;
 
 };

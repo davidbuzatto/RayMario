@@ -21,12 +21,11 @@ CourseClearToken::CourseClearToken( Vector2 pos, Vector2 dim, Color color ) :
     vel.y = 100;
 }
 
-CourseClearToken::~CourseClearToken() {
-}
+CourseClearToken::~CourseClearToken() = default;
 
 void CourseClearToken::update() {
 
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
     if ( pos.y < minY ) {
         pos.y = minY;
@@ -59,5 +58,5 @@ void CourseClearToken::playCollisionSound() {
 
 void CourseClearToken::updateMario( Mario& mario ) {
     mario.addPoints( 10000 );
-    mario.setState( SpriteState::VICTORY );
+    mario.setState( SPRITE_STATE_VICTORY );
 }

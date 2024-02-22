@@ -1,7 +1,7 @@
 /**
  * @file utils.h
  * @author Prof. Dr. David Buzatto
- * @brief Utilitary functions and constants declarations.
+ * @brief Utility functions and constants declarations.
  * 
  * @copyright Copyright (c) 2024
  */

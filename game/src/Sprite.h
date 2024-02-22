@@ -7,8 +7,8 @@
  */
 #pragma once
 
-#include "CollisionType.h"
 #include "CollisionProbe.h"
+#include "CollisionType.h"
 #include "Direction.h"
 #include "Drawable.h"
 #include "raylib.h"
@@ -52,10 +52,10 @@ public:
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int hitsToDie );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie );
-    virtual ~Sprite();   // virtual destructor enables polimorphism
+    ~Sprite() override;   // virtual destructor enables polimorphism
 
     virtual void update() = 0;
-    virtual void draw() = 0;
+    void draw() override = 0;
     virtual CollisionType checkCollision( Sprite *sprite );
     virtual void updateCollisionProbes();
 
@@ -82,25 +82,25 @@ public:
     void setFacingDirection( Direction facingDirection );
 
     Vector2 &getPos();
-    float getX();
-    float getY();
-    Vector2 getCenter();
+    float getX() const;
+    float getY() const;
+    Vector2 getCenter() const;
 
     Vector2 &getDim();
-    float getWidth();
-    float getHeight();
+    float getWidth() const;
+    float getHeight() const;
 
     Vector2 &getVel();
-    float getVelX();
-    float getVelY();
+    float getVelX() const;
+    float getVelY() const;
     
-    float getAngle();
+    float getAngle() const;
 
     Color &getColor();
-    SpriteState getState();
-    SpriteState getAuxiliaryState();
-    Direction getFacingDirection();
+    SpriteState getState() const;
+    SpriteState getAuxiliaryState() const;
+    Direction getFacingDirection() const;
 
-    Rectangle getRect();
+    Rectangle getRect() const;
 
 };

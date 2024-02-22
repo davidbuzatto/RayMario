@@ -1,5 +1,11 @@
 para versão final:
     
+    - chamar construtores um nível acima
+    - isOnlyBaddies em Tile (mudar)
+    - cor invisível teste colisão (mudar)
+    - ao matar um baddie segurando ctrl, pular mais alto
+    - implementar estrela de power-up
+    
     - transformação/transição
         small->super;
         small->flower;

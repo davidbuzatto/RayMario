@@ -1,28 +1,27 @@
 /**
- * @file Glass.cpp
+ * @file GlassBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Glass class implementation.
+ * @brief GlassBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "Glass.h"
 #include "GameWorld.h"
-#include "ResourceManager.h"
+#include "GlassBlock.h"
 #include "raylib.h"
+#include "ResourceManager.h"
 #include <iostream>
-#include <string>
 
-Glass::Glass( Vector2 pos, Vector2 dim, Color color ) :
-    Glass( pos, dim, color, 0, 1 ) {}
+GlassBlock::GlassBlock( Vector2 pos, Vector2 dim, Color color ) :
+    GlassBlock( pos, dim, color, 0, 1 ) {}
 
-Glass::Glass( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
+GlassBlock::GlassBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
     Sprite( pos, dim, color, frameTime, maxFrames ) {}
 
-Glass::~Glass() {}
+GlassBlock::~GlassBlock() = default;
 
-void Glass::update() {}
+void GlassBlock::update() {}
 
-void Glass::draw() {
+void GlassBlock::draw() {
 
     DrawTexture( ResourceManager::getTextures()["blockGlass"], pos.x, pos.y, WHITE );
 

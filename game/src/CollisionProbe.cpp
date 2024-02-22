@@ -19,7 +19,7 @@ CollisionProbe::CollisionProbe( Vector2 pos, Vector2 dim, Color color ) :
     color( color ) {
 }
 
-CollisionProbe::~CollisionProbe() {}
+CollisionProbe::~CollisionProbe() = default;
 
 void CollisionProbe::setPos( Vector2 pos ) {
     this->pos = pos;
@@ -63,11 +63,11 @@ Vector2& CollisionProbe::getPos() {
     return pos;
 }
 
-float CollisionProbe::getX() {
+float CollisionProbe::getX() const {
     return pos.x;
 }
 
-float CollisionProbe::getY() {
+float CollisionProbe::getY() const {
     return pos.y;
 }
 
@@ -75,11 +75,11 @@ Vector2& CollisionProbe::getDim() {
     return dim;
 }
 
-float CollisionProbe::getWidth() {
+float CollisionProbe::getWidth() const {
     return dim.x;
 }
 
-float CollisionProbe::getHeight() {
+float CollisionProbe::getHeight() const {
     return dim.y;
 }
 
@@ -87,7 +87,7 @@ Color& CollisionProbe::getColor() {
     return color;
 }
 
-Rectangle CollisionProbe::getRect() {
+Rectangle CollisionProbe::getRect() const {
     return Rectangle( pos.x, pos.y, dim.x, dim.y );
 }
 
@@ -95,6 +95,6 @@ void CollisionProbe::draw() {
     DrawRectangle( pos.x, pos.y, dim.x, dim.y, color );
 }
 
-CollisionType CollisionProbe::checkCollision( Rectangle& rect ) {
-    return CheckCollisionRecs( rect, getRect() ) ? CollisionType::COLLIDED : CollisionType::NONE;
+CollisionType CollisionProbe::checkCollision( Rectangle& rect ) const {
+    return CheckCollisionRecs( rect, getRect() ) ? COLLISION_TYPE_COLLIDED : COLLISION_TYPE_NONE;
 }

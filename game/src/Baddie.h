@@ -7,12 +7,9 @@
  */
 #pragma once
 
-#include "CollisionProbe.h"
-#include "Direction.h"
 #include "Mario.h"
 #include "raylib.h"
 #include "Sprite.h"
-#include <vector>
 
 class Baddie : public virtual Sprite {
 
@@ -23,10 +20,10 @@ public:
     Baddie( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
     Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
     Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames );
-    ~Baddie();
+    ~Baddie() override;
 
-    virtual void update() = 0;
-    virtual void draw() = 0;
+    void update() override = 0;
+    void draw() override = 0;
     void activateWithMarioProximity( Mario &mario );
     void setAttributesOnDying();
     virtual void onSouthCollision();

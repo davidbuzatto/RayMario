@@ -8,7 +8,9 @@
 #pragma once
 
 enum MarioType {
-    SMALL,
-    SUPER,
-    FLOWER
+
+    MARIO_TYPE_SMALL,
+    MARIO_TYPE_SUPER,
+    MARIO_TYPE_FLOWER
+
 };

@@ -19,16 +19,15 @@ ThreeUpMoon::ThreeUpMoon( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color, 0, 0 ) {
 }
 
-ThreeUpMoon::~ThreeUpMoon() {
-}
+ThreeUpMoon::~ThreeUpMoon() = default;
 
 void ThreeUpMoon::update() {
 
-    float delta = GetFrameTime();
+    const float delta = GetFrameTime();
 
-    if ( state == SpriteState::ACTIVE ) {
+    if ( state == SPRITE_STATE_ACTIVE ) {
 
-        if ( facingDirection == Direction::RIGHT ) {
+        if ( facingDirection == DIRECTION_RIGHT ) {
             pos.x += vel.x * delta;
         } else {
             pos.x -= vel.x * delta;

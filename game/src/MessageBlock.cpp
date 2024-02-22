@@ -1,29 +1,28 @@
 /**
- * @file Message.cpp
+ * @file MessageBlock.cpp
  * @author Prof. Dr. David Buzatto
- * @brief Message class implementation.
+ * @brief MessageBlock class implementation.
  *
  * @copyright Copyright (c) 2024
  */
-#include "Message.h"
 #include "GameWorld.h"
-#include "ResourceManager.h"
+#include "MessageBlock.h"
 #include "raylib.h"
-#include "utils.h"
+#include "ResourceManager.h"
 #include <iostream>
 #include <string>
 
-Message::Message( Vector2 pos, Vector2 dim, Color color, std::string message ) :
-    Message( pos, dim, color, 0, 1, message ) {}
+MessageBlock::MessageBlock( Vector2 pos, Vector2 dim, Color color, std::string message ) :
+    MessageBlock( pos, dim, color, 0, 1, message ) {}
 
-Message::Message( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, std::string message ) :
+MessageBlock::MessageBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, std::string message ) :
     Sprite( pos, dim, color, frameTime, maxFrames ), message( message ) {}
 
-Message::~Message() {}
+MessageBlock::~MessageBlock() = default;
 
-void Message::update() {}
+void MessageBlock::update() {}
 
-void Message::draw() {
+void MessageBlock::draw() {
 
     DrawTexture( ResourceManager::getTextures()["blockMessage"], pos.x, pos.y, WHITE );
 
@@ -33,7 +32,7 @@ void Message::draw() {
 
 }
 
-void Message::doHit( Mario& mario, Map *map ) {
+void MessageBlock::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["messageBlock"] );
         hit = true;

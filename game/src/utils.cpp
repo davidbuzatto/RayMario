@@ -7,8 +7,8 @@
  */
 #include "raylib.h"
 #include "utils.h"
-#include <string>
 #include <map>
+#include <string>
 #include <vector>
 
 double toRadians( double degrees ) {

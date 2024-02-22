@@ -39,7 +39,7 @@ public:
     /**
      * @brief Destroy the GameWorld object.
      */
-    ~GameWorld();
+    ~GameWorld() override;
 
     /**
      * @brief Reads user input and updates the state of the game.
@@ -49,7 +49,7 @@ public:
     /**
      * @brief Draws the state of the game.
      */
-    virtual void draw();
+    void draw() override;
 
     /**
      * @brief Load game resources like images, textures, sounds, fonts, shaders,

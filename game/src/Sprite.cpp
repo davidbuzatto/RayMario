@@ -6,53 +6,53 @@
  * @copyright Copyright (c) 2024
  */
 #include "Direction.h"
-#include "Sprite.h"
 #include "GameWorld.h"
 #include "raylib.h"
+#include "Sprite.h"
 #include "SpriteState.h"
 
 Sprite::Sprite() :
-    Sprite( Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), BLACK, 0, 0, Direction::RIGHT ) {
+    Sprite( Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), BLACK, 0, 0, DIRECTION_RIGHT ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT, 1 ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, 1 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, int hitsToDie ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT, hitsToDie ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, Direction::RIGHT, 1 ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, DIRECTION_RIGHT, 1 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, int hitsToDie ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, Direction::RIGHT, hitsToDie ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, DIRECTION_RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, Direction facingDirection ) : 
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT, 1 ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, 1 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, Direction::RIGHT, hitsToDie ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Sprite( pos, dim, vel, color, 0, 0, Direction::RIGHT, 1 ) {
+    Sprite( pos, dim, vel, color, 0, 0, DIRECTION_RIGHT, 1 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, int hitsToDie ) :
-    Sprite( pos, dim, vel, color, 0, 0, Direction::RIGHT, hitsToDie ) {
+    Sprite( pos, dim, vel, color, 0, 0, DIRECTION_RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, vel, color, frameTime, maxFrames, Direction::RIGHT, 1 ) {
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, DIRECTION_RIGHT, 1 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int hitsToDie ) :
-    Sprite( pos, dim, vel, color, frameTime, maxFrames, Direction::RIGHT, hitsToDie ) {
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, DIRECTION_RIGHT, hitsToDie ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection ) :
@@ -64,23 +64,22 @@ Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
     dim( dim ),
     vel( vel ),
     angle( 0 ),
+    hitsToDie( hitsToDie ),
     color( color ),
+    state( SPRITE_STATE_IDLE ),
+    auxiliaryState( SPRITE_STATE_NEITHER ),
     frameTime( frameTime ),
     frameAcum( 0 ),
     currentFrame( 0 ),
     maxFrames( maxFrames ),
-    state( SpriteState::IDLE ),
-    auxiliaryState( SpriteState::NEITHER ),
-    facingDirection( facingDirection ),
-    hitsToDie( hitsToDie ) {
+    facingDirection( facingDirection ) {
     cpN.setColor( color );
     cpS.setColor( color );
     cpE.setColor( color );
     cpW.setColor( color );
 }
 
-Sprite::~Sprite() {
-}
+Sprite::~Sprite() = default;
 
 void Sprite::setPos( Vector2 pos ) {
     this->pos = pos;
@@ -157,15 +156,15 @@ Vector2 &Sprite::getPos() {
     return pos;
 }
 
-float Sprite::getX() {
+float Sprite::getX() const {
     return pos.x;
 }
 
-float Sprite::getY() {
+float Sprite::getY() const {
     return pos.y;
 }
 
-Vector2 Sprite::getCenter() {
+Vector2 Sprite::getCenter() const {
     return Vector2( pos.x + dim.x / 2, pos.y + dim.y / 2 );
 }
 
@@ -173,11 +172,11 @@ Vector2 &Sprite::getDim() {
     return dim;
 }
 
-float Sprite::getWidth() {
+float Sprite::getWidth() const {
     return dim.x;
 }
 
-float Sprite::getHeight() {
+float Sprite::getHeight() const {
     return dim.y;
 }
 
@@ -185,15 +184,15 @@ Vector2 &Sprite::getVel() {
     return vel;
 }
 
-float Sprite::getVelX() {
+float Sprite::getVelX() const {
     return vel.x;
 }
 
-float Sprite::getVelY() {
+float Sprite::getVelY() const {
     return vel.y;
 }
 
-float Sprite::getAngle() {
+float Sprite::getAngle() const {
     return angle;
 }
 
@@ -201,25 +200,25 @@ Color &Sprite::getColor() {
     return color;
 }
 
-SpriteState Sprite::getState() {
+SpriteState Sprite::getState() const {
     return state;
 }
 
-SpriteState Sprite::getAuxiliaryState() {
+SpriteState Sprite::getAuxiliaryState() const {
     return auxiliaryState;
 }
 
-Direction Sprite::getFacingDirection() {
+Direction Sprite::getFacingDirection() const {
     return facingDirection;
 }
 
-Rectangle Sprite::getRect() {
+Rectangle Sprite::getRect() const {
     return Rectangle( pos.x, pos.y, dim.x, dim.y );
 }
 
 CollisionType Sprite::checkCollision( Sprite* sprite ) {
 
-    if ( sprite->getState() != SpriteState::NO_COLLIDABLE ) {
+    if ( sprite->getState() != SPRITE_STATE_NO_COLLIDABLE ) {
         
         Rectangle rect = sprite->getRect();
 
@@ -227,27 +226,27 @@ CollisionType Sprite::checkCollision( Sprite* sprite ) {
             if ( GameWorld::debug ) {
                 sprite->setColor( cpN.getColor() );
             }
-            return CollisionType::NORTH;
+            return COLLISION_TYPE_NORTH;
         } else if ( cpS.checkCollision( rect ) ) {
             if ( GameWorld::debug ) {
                 sprite->setColor( cpS.getColor() );
             }
-            return CollisionType::SOUTH;
+            return COLLISION_TYPE_SOUTH;
         } else if ( cpE.checkCollision( rect ) ) {
             if ( GameWorld::debug ) {
                 sprite->setColor( cpE.getColor() );
             }
-            return CollisionType::EAST;
+            return COLLISION_TYPE_EAST;
         } else if ( cpW.checkCollision( rect ) ) {
             if ( GameWorld::debug ) {
                 sprite->setColor( cpW.getColor() );
             }
-            return CollisionType::WEST;
+            return COLLISION_TYPE_WEST;
         }
 
     }
 
-    return CollisionType::NONE;
+    return COLLISION_TYPE_NONE;
 
 }
 

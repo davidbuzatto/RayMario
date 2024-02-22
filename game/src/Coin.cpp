@@ -18,8 +18,7 @@ Coin::Coin( Vector2 pos, Vector2 dim, Color color ) :
     Sprite( pos, dim, color, 0.1, 4 ) {
 }
 
-Coin::~Coin() {
-}
+Coin::~Coin() = default;
 
 void Coin::update() {
     
