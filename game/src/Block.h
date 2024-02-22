@@ -28,5 +28,6 @@ public:
     void update() override = 0;
     void draw() override = 0;
     virtual void doHit( Mario &mario, Map *map );
+    void resetHit();
 
 };

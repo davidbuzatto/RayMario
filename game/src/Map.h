@@ -8,10 +8,12 @@
 #pragma once
 
 class Block;
+class GameWorld;
 
 #include "Baddie.h"
 #include "Block.h"
 #include "Drawable.h"
+#include "GameWorld.h"
 #include "Item.h"
 #include "Mario.h"
 #include "raylib.h"
@@ -24,6 +26,7 @@ class Map : public virtual Drawable {
     std::vector<Tile*> backScenarioTiles;
     std::vector<Tile*> frontScenarioTiles;
     std::vector<Block*> blocks;
+    std::vector<Block*> messageBlocks;
     std::vector<Item*> items;
     std::vector<Item*> staticItems;
     std::vector<Baddie*> baddies;
@@ -54,11 +57,16 @@ class Map : public virtual Drawable {
     bool loadTestMap;
     bool parsed;
 
+    bool drawMessage;
+    std::string message;
+    Camera2D *camera;
+    GameWorld *gw;
+
 public:
 
     static int tileWidth;
 
-    Map( Mario &mario, int mapNumber, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies );
+    Map( Mario &mario, int mapNumber, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies, GameWorld* gw );
     ~Map() override;
     void draw() override;
 
@@ -66,6 +74,10 @@ public:
 
     void setMarioOffset( float marioOffset );
     void setDrawBlackScreen( bool drawBlackScreen );
+    void setDrawMessage( bool drawMessage );
+    void setMessage( std::string message );
+    void setCamera( Camera2D* camera );
+    void setGameWorld( GameWorld *gw );
 
     std::vector<Tile*> &getTiles();
     std::vector<Block*>& getBlocks();
@@ -79,5 +91,6 @@ public:
     void reset();
     bool next();
     void first();
+    void pauseGameToShowMessage() const;
 
 };

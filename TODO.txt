@@ -1,8 +1,10 @@
 para versão final:
     
-    - chamar construtores um nível acima
+    - melhorar função de desenho para suportar acentos e números
     - isOnlyBaddies em Tile (mudar)
     - cor invisível teste colisão (mudar)
+    - chamar construtores um nível acima
+    
     - ao matar um baddie segurando ctrl, pular mais alto
     - implementar estrela de power-up
     
@@ -12,8 +14,6 @@ para versão final:
         super->flower;
         super->small;
         flower->small.
-            
-    - implementar caixa interativa de mensagem
     
     - otimizações:
         - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo

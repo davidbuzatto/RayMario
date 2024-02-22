@@ -7,10 +7,9 @@
  */
 #include "CloudBlock.h"
 #include "GameWorld.h"
-#include "ResourceManager.h"
 #include "raylib.h"
+#include "ResourceManager.h"
 #include <iostream>
-#include <string>
 
 CloudBlock::CloudBlock( Vector2 pos, Vector2 dim, Color color ) :
     CloudBlock( pos, dim, color, 0, 1 ) {}

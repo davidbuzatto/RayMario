@@ -31,3 +31,6 @@ int getBigNumberHeight();
 void drawString( std::string str, int x, int y, std::map<std::string, Texture2D>& textures );
 int getDrawStringWidth( std::string str );
 int getDrawStringHeight();
+
+std::vector<std::string> split( std::string s, std::string delimiter = "\n" );
+std::vector<std::string> split( const std::string& s, char delim );

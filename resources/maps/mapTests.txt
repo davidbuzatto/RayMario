@@ -84,7 +84,10 @@ c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 m: 1              # music id: [1-9]
 t: 200            # time to finish the map
-///////////////////////////////////////////////////////////////////////////
+h: welcome to raymario!\ntest
+h: mensagem dois
+h: mensagem tres
+///////////////////////////////////////////////////////////////////////////
 /                                                                         /
 /                                                                        E/
 /                                                                        C/
@@ -101,13 +104,13 @@ t: 200            # time to finish the map
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/           {=}                                                          C/
-/           [ ]                                                          C/
-/           [ ]                                                          C/
-/           [ ]                                                          C/
-/           [ ]                                                          C/
-/  m        [ ]                                                          C/
-/           [ ]                                                          C/
-/  p    1   [ ]                                                          C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/  h h i i i i i i i i i                                                 C/
+/                                                                        C/
+/  p                                                                     C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

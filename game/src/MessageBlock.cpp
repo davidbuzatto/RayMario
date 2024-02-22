@@ -11,12 +11,15 @@
 #include "ResourceManager.h"
 #include <iostream>
 #include <string>
+#include <utility>
 
 MessageBlock::MessageBlock( Vector2 pos, Vector2 dim, Color color, std::string message ) :
-    MessageBlock( pos, dim, color, 0, 1, message ) {}
+    MessageBlock( pos, dim, color, 0, 1, std::move(message) ) {
+}
 
 MessageBlock::MessageBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, std::string message ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ), message( message ) {}
+    Sprite( pos, dim, color, frameTime, maxFrames ), message( std::move(message) ) {
+}
 
 MessageBlock::~MessageBlock() = default;
 
@@ -36,7 +39,8 @@ void MessageBlock::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["messageBlock"] );
         hit = true;
+        map->setDrawMessage( true );
+        map->setMessage( message );
+        map->pauseGameToShowMessage();
     }
-    // TODO: show message and make hittable again
-    //hit = false;
 }

@@ -69,5 +69,6 @@ public:
     void resetMap();
     void resetGame();
     void nextMap();
+    void pauseGame( bool playPauseSFX );
     
 };

@@ -40,7 +40,7 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP false
+#define LOAD_TEST_MAP true
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
@@ -66,7 +66,7 @@ GameWorld::GameWorld() :
         -600,
         ACTIVATE_DEBUG
     ),
-    map( mario, INITIAL_MAP_ID, LOAD_TEST_MAP, PARSE_BLOCKS, PARSE_ITEMS, PARSE_BADDIES ),
+    map( mario, INITIAL_MAP_ID, LOAD_TEST_MAP, PARSE_BLOCKS, PARSE_ITEMS, PARSE_BADDIES, this ),
     camera( nullptr ),
     showControls( ACTIVATE_DEBUG ),
     stateBeforePause( GAME_STATE_TITLE_SCREEN ),
@@ -128,24 +128,22 @@ void GameWorld::inputAndUpdate() {
         std::vector<int> collectedIndexes;
 
         if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
-            PlaySound( sounds["pause"] );
-            stateBeforePause = state;
-            state = GAME_STATE_PAUSED;
+            pauseGame( true );
         }
 
-        for ( auto block : blocks ) {
+        for ( const auto block : blocks ) {
             block->update();
         }
 
-        for ( auto& item : items ) {
+        for ( const auto& item : items ) {
             item->update();
         }
         
-        for ( auto& staticItem : staticItems ) {
+        for ( const auto& staticItem : staticItems ) {
             staticItem->update();
         }
 
-        for (const auto& baddie : baddies ) {
+        for ( const auto& baddie : baddies ) {
             baddie->update();
         }
 
@@ -542,6 +540,7 @@ void GameWorld::inputAndUpdate() {
     } else if ( state == GAME_STATE_PAUSED ) {
         if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
             state = stateBeforePause;
+            map.setDrawMessage( false );
         }
     }
 
@@ -766,6 +765,7 @@ void GameWorld::unloadResources() {
 
 void GameWorld::setCamera( Camera2D *camera ) {
     this->camera = camera;
+    this->map.setCamera( camera );
 }
 
 void GameWorld::resetMap() {
@@ -788,4 +788,12 @@ void GameWorld::nextMap() {
     } else {
         state = GAME_STATE_FINISHED;
     }
+}
+
+void GameWorld::pauseGame( bool playPauseSFX ) {
+    if ( playPauseSFX ) {
+        PlaySound( ResourceManager::getSounds()["pause"] );
+    }
+    stateBeforePause = state;
+    state = GAME_STATE_PAUSED;
 }

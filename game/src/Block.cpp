@@ -7,10 +7,7 @@
  */
 #include "Block.h"
 #include "GameWorld.h"
-#include "ResourceManager.h"
 #include "raylib.h"
-#include <iostream>
-#include <string>
 
 Block::Block() :
     Block( Vector2( 0, 0 ), Vector2( 0, 0 ), BLACK, 0, 0 ) {
@@ -27,4 +24,8 @@ Block::~Block() = default;
 
 void Block::doHit( Mario &mario, Map *map ) {
 
+}
+
+void Block::resetHit() {
+    this->hit = false;
 }

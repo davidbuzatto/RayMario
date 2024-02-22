@@ -40,6 +40,7 @@
 #include "Star.h"
 #include "StoneBlock.h"
 #include "Swooper.h"
+#include "utils.h"
 #include "WoodBlock.h"
 #include "YellowKoopaTroopa.h"
 #include <iostream>
@@ -48,7 +49,7 @@
 
 int Map::tileWidth = 32;
 
-Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies ) :
+Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies, GameWorld *gw ) :
 
     id( id ),
     maxId( 3 ),
@@ -74,7 +75,11 @@ Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseIt
     parseBaddies( parseBaddies ),
 
     loadTestMap( loadTestMap ),
-    parsed( false ) {
+    parsed( false ),
+
+    drawMessage( false ),
+    camera( nullptr ),
+    gw( gw ) {
 }
 
 Map::~Map() {
@@ -159,6 +164,39 @@ void Map::draw() {
         }
     }
 
+    if ( drawMessage ) {
+
+        std::vector<std::string> messages = split( message, "\\n" );
+        const Vector2 center = GetScreenToWorld2D( Vector2( GetScreenWidth() / 2, GetScreenHeight() / 2 ), *camera );
+        int currentLine = 0;
+        const int margin = 10;
+        const int vSpacing = 5;
+
+        int maxWidth = 0;
+        int maxHeight = messages.size() * getDrawStringHeight() + ( messages.size() - 1 ) * vSpacing;
+
+        for ( const auto& m : messages ) {
+            const int w = getDrawStringWidth( m );
+            if ( maxWidth < w ) {
+                maxWidth = w;
+            }
+        }
+
+        const int xStart = center.x - maxWidth / 2 + margin;
+        const int yStart = center.y - maxHeight / 2 + margin - 50;
+
+        DrawRectangle( xStart - margin, yStart - margin, maxWidth + margin * 2, maxHeight + margin * 2, BLACK );
+
+        for ( const auto& m : messages ) {
+            drawString( m, 
+                        xStart, 
+                        yStart + currentLine * getDrawStringHeight() + ( currentLine < messages.size() ? currentLine * vSpacing : 0 ),
+                        ResourceManager::getTextures() );
+            currentLine++;
+        }
+
+    }
+
 }
 
 std::vector<Tile*> &Map::getTiles() {
@@ -199,7 +237,9 @@ void Map::parseMap() {
     if ( !parsed ) {
 
         char *mapData;
-        
+        std::vector<std::string> blockMessages;
+        int messagePosition = 0;
+
         if ( loadTestMap ) {
             mapData = LoadFileText( TextFormat( "resources/maps/mapTests.txt" ) );
         } else {
@@ -290,11 +330,28 @@ void Map::parseMap() {
 
                     currentColumn = 1;
 
+                } else if ( *mapData == 'h' ) {     // parse map messages
+
+                    ignoreLine = true;
+                    mapData += 3;
+                    std::string currentMessage;
+
+                    while ( *mapData != '\n' ) {
+                        currentMessage += std::string( 1, *mapData );
+                        mapData++;
+                    }
+
+                    blockMessages.push_back( currentMessage );
+                    currentColumn = 1;
+
                 }
 
             }
 
             if ( !ignoreLine ) {
+
+                std::string blockMessage;
+                MessageBlock *newMessageBlock;
 
                 // processing boundary tiles when used as first column
                 // for camera adjustment
@@ -346,8 +403,22 @@ void Map::parseMap() {
                         if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new InvisibleBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
                     case 'h':
-                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new MessageBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "bem-vindo ao jogo raymario!" ));
+
+                        if ( messagePosition >= 0 && messagePosition < blockMessages.size() ){
+                            blockMessage = blockMessages[messagePosition];
+                        }
+
+                        newMessageBlock = new MessageBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, blockMessage );
+
+                        if ( parseBlocks ) {
+                            blocks.push_back( newMessageBlock );
+                            messageBlocks.push_back( newMessageBlock );
+                        }
+
+                        messagePosition++;
+
                         break;
+
                     case '!':
                         if ( parseBlocks ) blocks.push_back( new ExclamationBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
                         break;
@@ -507,6 +578,25 @@ void Map::setDrawBlackScreen( bool drawBlackScreen ) {
     this->drawBlackScreen = drawBlackScreen;
 }
 
+void Map::setDrawMessage( bool drawMessage ) {
+    this->drawMessage = drawMessage;
+    for ( const auto& mb : messageBlocks ) {
+        mb->resetHit();
+    }
+}
+
+void Map::setMessage( std::string message ) {
+    this->message = std::move( message );
+}
+
+void Map::setCamera( Camera2D* camera ) {
+    this->camera = camera;
+}
+
+void Map::setGameWorld( GameWorld* gw ) {
+    this->gw = gw;
+}
+
 void Map::reset() {
 
     maxWidth = 0;
@@ -534,6 +624,7 @@ void Map::reset() {
         delete block;
     }
     blocks.clear();
+    messageBlocks.clear();
 
     for ( const auto& item : items ) {
         delete item;
@@ -572,4 +663,8 @@ bool Map::next() {
 
 void Map::first() {
     id = 1;
+}
+
+void Map::pauseGameToShowMessage() const {
+    gw->pauseGame( false );
 }
