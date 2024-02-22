@@ -40,7 +40,7 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
+#define LOAD_TEST_MAP false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true

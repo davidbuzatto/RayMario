@@ -5,15 +5,14 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "OneUpMushroom.h"
-#include "Mario.h"
-#include "Sprite.h"
 #include "GameWorld.h"
+#include "Mario.h"
+#include "OneUpMushroom.h"
 #include "raylib.h"
 #include "ResourceManager.h"
+#include "Sprite.h"
 #include <map>
 #include <string>
-#include <typeinfo>
 
 OneUpMushroom::OneUpMushroom( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color, 0, 0 ) {

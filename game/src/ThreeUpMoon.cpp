@@ -5,15 +5,14 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "ThreeUpMoon.h"
-#include "Mario.h"
-#include "Sprite.h"
 #include "GameWorld.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "ResourceManager.h"
+#include "Sprite.h"
+#include "ThreeUpMoon.h"
 #include <map>
 #include <string>
-#include <typeinfo>
 
 ThreeUpMoon::ThreeUpMoon( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Sprite( pos, dim, vel, color, 0, 0 ) {

@@ -5,12 +5,12 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "Star.h"
-#include "Mario.h"
-#include "Sprite.h"
 #include "GameWorld.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "ResourceManager.h"
+#include "Sprite.h"
+#include "Star.h"
 #include <map>
 #include <string>
 

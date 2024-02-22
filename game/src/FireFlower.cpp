@@ -6,11 +6,11 @@
  * @copyright Copyright (c) 2024
  */
 #include "FireFlower.h"
-#include "Mario.h"
-#include "Sprite.h"
 #include "GameWorld.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "ResourceManager.h"
+#include "Sprite.h"
 #include <string>
 
 FireFlower::FireFlower( Vector2 pos, Vector2 dim, Color color ) :

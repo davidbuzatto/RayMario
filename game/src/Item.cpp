@@ -5,13 +5,9 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "CollisionType.h"
 #include "Item.h"
-#include "Mario.h"
-#include "GameWorld.h"
 #include "raylib.h"
 #include "Sprite.h"
-#include <typeinfo>
 
 Item::Item() :
     Item( Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), BLACK, 0, 0 ) {

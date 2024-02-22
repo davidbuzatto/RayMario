@@ -6,11 +6,11 @@
  * @copyright Copyright (c) 2024
  */
 #include "CourseClearToken.h"
-#include "Mario.h"
-#include "Sprite.h"
 #include "GameWorld.h"
+#include "Mario.h"
 #include "raylib.h"
 #include "ResourceManager.h"
+#include "Sprite.h"
 #include <map>
 #include <string>
 
