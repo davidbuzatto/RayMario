@@ -394,18 +394,18 @@ void Mario::drawHud() {
 
     DrawTexture( textures["guiMario"], 34, 32, WHITE );
     DrawTexture( textures["guiX"], 54, 49, WHITE );
-    drawWhiteSmallNumber( lives < 0 ? 0 : lives, 68, 49, textures );
+    drawWhiteSmallNumber( lives < 0 ? 0 : lives, 68, 49 );
     
     DrawTexture( textures["guiCoin"], GetScreenWidth() - 115, 32, WHITE );
     DrawTexture( textures["guiX"], GetScreenWidth() - 97, 34, WHITE );
-    drawWhiteSmallNumber( coins, GetScreenWidth() - 34 - getSmallNumberWidth( coins ), 34, textures);
-    drawWhiteSmallNumber( points, GetScreenWidth() - 34 - getSmallNumberWidth( points ), 50, textures );
+    drawWhiteSmallNumber( coins, GetScreenWidth() - 34 - getSmallNumberWidth( coins ), 34 );
+    drawWhiteSmallNumber( points, GetScreenWidth() - 34 - getSmallNumberWidth( points ), 50 );
 
     int t = getRemainingTime();
     t = t < 0 ? 0 : t;
 
     DrawTexture( textures["guiTime"], GetScreenWidth() - 34 - 176, 32, WHITE );
-    drawYellowSmallNumber( t, GetScreenWidth() - 34 - 128 - getSmallNumberWidth( t ), 50, textures );
+    drawYellowSmallNumber( t, GetScreenWidth() - 34 - 128 - getSmallNumberWidth( t ), 50 );
 
     if ( reservedPowerUp == MARIO_TYPE_SUPER ) {
         DrawTexture( textures["mushroom"], GetScreenWidth() / 2 - textures["mushroom"].width / 2, 32, WHITE );

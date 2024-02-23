@@ -644,7 +644,7 @@ void GameWorld::draw() {
             DrawTexture( textures["guiMario"], sc.x - textures["guiMario"].width / 2, sc.y - 120, WHITE);
 
             std::string message1 = "course clear!";
-            drawString( message1, sc.x - getDrawStringWidth( message1 ) / 2, sc.y - 80, textures );
+            drawString( message1, sc.x - getDrawStringWidth( message1 ) / 2, sc.y - 80 );
 
             int clockWidth = textures["guiClock"].width;
             int remainingTimeWidth = getSmallNumberWidth( mario.getRemainingTime() );
@@ -658,11 +658,11 @@ void GameWorld::draw() {
             int completeMessageY = sc.y - 40;
 
             DrawTexture( textures["guiClock"], completeMessageStart, completeMessageY, WHITE );
-            drawWhiteSmallNumber( mario.getRemainingTime(), completeMessageStart + clockWidth, completeMessageY, textures );
+            drawWhiteSmallNumber( mario.getRemainingTime(), completeMessageStart + clockWidth, completeMessageY );
             DrawTexture( textures["guiX"], completeMessageStart + clockWidth + remainingTimeWidth, completeMessageY, WHITE );
-            drawWhiteSmallNumber( 50, completeMessageStart + clockWidth + remainingTimeWidth + timesWidth, completeMessageY, textures );
-            drawString( "=", completeMessageStart + clockWidth + remainingTimeWidth + timesWidth + pointsPerSecondWidth, completeMessageY, textures );
-            drawWhiteSmallNumber( totalTimePoints, completeMessageStart + clockWidth + remainingTimeWidth + timesWidth + pointsPerSecondWidth + equalSignWidth, completeMessageY, textures );
+            drawWhiteSmallNumber( 50, completeMessageStart + clockWidth + remainingTimeWidth + timesWidth, completeMessageY );
+            drawString( "=", completeMessageStart + clockWidth + remainingTimeWidth + timesWidth + pointsPerSecondWidth, completeMessageY - 4 );
+            drawWhiteSmallNumber( totalTimePoints, completeMessageStart + clockWidth + remainingTimeWidth + timesWidth + pointsPerSecondWidth + equalSignWidth, completeMessageY );
 
         } else if ( state == GAME_STATE_FINISHED ) {
 
@@ -684,8 +684,8 @@ void GameWorld::draw() {
             std::string message1 = "Thank you for playing!!!";
             std::string message2 = "Press any key to restart!";
 
-            drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, t->height + 40, textures );
-            drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, t->height + 65, textures );
+            drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, t->height + 40 );
+            drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, t->height + 65 );
 
         } else if ( state == GAME_STATE_PAUSED ) {
             DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( BLACK, 0.3 ) );
@@ -701,10 +701,10 @@ void GameWorld::draw() {
         std::string message2 = "Developed by:";
         std::string message3 = "Prof. Dr. David Buzatto - IFSP";
         std::string message4 = "2024";
-        drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() + 30, textures );
-        drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 5 + 30, textures );
-        drawString( message3, GetScreenWidth() / 2 - getDrawStringWidth( message3 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 6 + 35, textures );
-        drawWhiteSmallNumber( 2024, GetScreenWidth() / 2 - getSmallNumberWidth( 2024 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 7 + 40, textures );
+        drawString( message1, GetScreenWidth() / 2 - getDrawStringWidth( message1 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() + 30 );
+        drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 5 + 30 );
+        drawString( message3, GetScreenWidth() / 2 - getDrawStringWidth( message3 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 6 + 35 );
+        drawWhiteSmallNumber( 2024, GetScreenWidth() / 2 - getSmallNumberWidth( 2024 ) / 2, GetScreenHeight() / 2 + getDrawStringHeight() * 7 + 40 );
         
         Rectangle r( 40, 40, 70, 70 );
         DrawRectangle( r.x, r.y, r.width, r.height, Fade( RAYWHITE, 0.5 ) );

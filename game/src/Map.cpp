@@ -185,17 +185,22 @@ void Map::draw() {
         const int xStart = center.x - maxWidth / 2 + margin;
         const int yStart = center.y - maxHeight / 2 + margin - 50;
 
-        DrawRectangle( xStart - margin, yStart - margin, maxWidth + margin * 2, maxHeight + margin * 2, BLACK );
+        DrawRectangle( xStart - margin, yStart - margin, maxWidth + margin * 2, maxHeight + margin * 2 + 4, BLACK );
 
         for ( const auto& m : messages ) {
             drawString( m, 
                         xStart, 
-                        yStart + currentLine * getDrawStringHeight() + ( currentLine < messages.size() ? currentLine * vSpacing : 0 ),
-                        ResourceManager::getTextures() );
+                        yStart + currentLine * getDrawStringHeight() + ( currentLine < messages.size() ? currentLine * vSpacing : 0 ) );
             currentLine++;
         }
 
     }
+
+    /*const Vector2 c = GetScreenToWorld2D( Vector2( 50, 50 ), *camera );
+    drawString( L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", c.x, c.y + 50 );
+    drawString( L"ÀÁÂÃÇÉÊÍÔÕÚ", c.x, c.y + 100 );
+    drawString( L".,-!?=:'\"", c.x, c.y + 150 );
+    drawString( L"0123456789", c.x, c.y + 200 );*/
 
 }
 
