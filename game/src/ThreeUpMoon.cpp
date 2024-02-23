@@ -62,7 +62,3 @@ void ThreeUpMoon::playCollisionSound() {
 void ThreeUpMoon::updateMario( Mario& mario ) {
     mario.addLives( 3 );
 }
-
-void ThreeUpMoon::onSouthCollision() {
-    vel.y = -400;
-}

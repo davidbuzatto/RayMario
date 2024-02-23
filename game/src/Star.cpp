@@ -14,13 +14,31 @@
 #include <map>
 #include <string>
 
-Star::Star( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, dim, color, 0, 0 ) {
-}
+Star::Star( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
+    Sprite( pos, dim, vel, color, 0, 0 ) {}
 
 Star::~Star() = default;
 
 void Star::update() {
+
+    const float delta = GetFrameTime();
+
+    if ( state == SPRITE_STATE_ACTIVE ) {
+
+        if ( facingDirection == DIRECTION_RIGHT ) {
+            pos.x += vel.x * delta;
+        } else {
+            pos.x -= vel.x * delta;
+        }
+
+        pos.y += vel.y * delta;
+
+        vel.y += GameWorld::gravity;
+
+    }
+
+    updateCollisionProbes();
+
 }
 
 void Star::draw() {
@@ -37,10 +55,13 @@ void Star::draw() {
 }
 
 void Star::playCollisionSound() {
-    PlaySound( ResourceManager::getSounds()["courseClear"] );
+    PlaySound( ResourceManager::getSounds()["1up"] );
 }
 
 void Star::updateMario( Mario& mario ) {
-    mario.addPoints( 10000 );
-    mario.setState( SPRITE_STATE_VICTORY );
+    mario.addLives( 3 );
+}
+
+void Star::onSouthCollision() {
+    vel.y = -400;
 }

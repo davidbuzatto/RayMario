@@ -65,7 +65,7 @@ void Mario::update() {
     
     running = ( IsKeyDown( KEY_LEFT_CONTROL ) || 
                 IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) &&
-                vel.x != 0;
+                vel.x != 0.0f;
 
     if ( running ) {
         runningAcum += GetFrameTime();
@@ -83,9 +83,9 @@ void Mario::update() {
         ellapsedTime += GetFrameTime();
     }
 
-    float delta = GetFrameTime();
-    float currentSpeedX = running ? ( drawRunningFrames ? maxSpeedX * 1.3 : maxSpeedX ) : speedX;
-    float currentFrameTime = running && state != SPRITE_STATE_DYING ? frameTimeRunning : frameTimeWalking;
+    const float delta = GetFrameTime();
+    const float currentSpeedX = running ? ( drawRunningFrames ? maxSpeedX * 1.3f : maxSpeedX ) : speedX;
+    const float currentFrameTime = running && state != SPRITE_STATE_DYING ? frameTimeRunning : frameTimeWalking;
     std::map<std::string, Sound>& sounds = ResourceManager::getSounds();
 
     if ( ellapsedTime >= maxTime && 

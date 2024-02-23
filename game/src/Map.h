@@ -13,7 +13,6 @@ class GameWorld;
 #include "Baddie.h"
 #include "Block.h"
 #include "Drawable.h"
-#include "GameWorld.h"
 #include "Item.h"
 #include "Mario.h"
 #include "raylib.h"
@@ -64,9 +63,10 @@ class Map : public virtual Drawable {
 
 public:
 
-    static int tileWidth;
+    static constexpr int TILE_WIDTH = 32;
+    static constexpr Color DEBUGGABLE_TILE_COLOR = Color( 0, 0, 0, 0 );
 
-    Map( Mario &mario, int mapNumber, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies, GameWorld* gw );
+    Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies, GameWorld* gw );
     ~Map() override;
     void draw() override;
 

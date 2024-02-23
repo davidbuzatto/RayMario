@@ -17,6 +17,7 @@ protected:
     std::string key;
     bool visible;
     bool onlyBaddies;
+    bool showCollisionOnDebug;
 
 public:
 

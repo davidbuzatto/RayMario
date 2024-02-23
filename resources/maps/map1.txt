@@ -2,6 +2,7 @@ c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 m: 1              # music id: [1-3]
 t: 200            # time to finish the map
+h: welcome to raymario!\n\n\nProf. Dr. David Buzatto
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                                                                                                                                                                               /
 /                                                                                                                                                                                                                                               /
@@ -21,7 +22,7 @@ t: 200            # time to finish the map
 /D                                                 iiiiiiii                                          o            sssssssssssssssssssssssssssss                      1  WX                                                   QR o o o oCAAAAAAAA/
 /D                                            iiiiiiii                                              o o                                                           EBBBBBBBBBBF                                               STQRo o o CAAAAAAAA/
 /D                          iiiiiiiiimiiiiiiiiiiiii                     MN                         o o o                                2                      o  CAAAAAAAAAAD                                              YSTST o o oCAAAAAAAA/
-/D                                                                      OPIJ                        o o                              o o o o                  o o CAAAAAAAAAAHBBBBBF                                        ZSTSTY o o CAAAAAAAA/
+/D   h                                                                  OPIJ                        o o                              o o o o                  o o CAAAAAAAAAAHBBBBBF                                        ZSTSTY o o CAAAAAAAA/
 /D                                                     o o o            OPKL                         o                                                      EBBBBBGAAAAAAAAAAAAAAAAHBBBBBBF                                 ZSTSTZY o oCAAAAAAAA/
 /D   p      o o o o             1        1            o o o o           OPKL                    4       4       4       4                                   CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBF         3    4    5    6      ZSTSTZZ  o CAAAAAAAA/
 /HBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAA/

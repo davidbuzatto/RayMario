@@ -308,6 +308,7 @@
     <ClCompile Include="..\game\src\QuestionFireFlowerBlock.cpp" />
     <ClCompile Include="..\game\src\QuestionMushroomBlock.cpp" />
     <ClCompile Include="..\game\src\QuestionOneUpMushroomBlock.cpp" />
+    <ClCompile Include="..\game\src\QuestionStarBlock.cpp" />
     <ClCompile Include="..\game\src\QuestionThreeUpMoonBlock.cpp" />
     <ClCompile Include="..\game\src\RedKoopaTroopa.cpp" />
     <ClCompile Include="..\game\src\ResourceManager.cpp" />
@@ -361,6 +362,7 @@
     <ClInclude Include="..\game\src\QuestionFireFlowerBlock.h" />
     <ClInclude Include="..\game\src\QuestionMushroomBlock.h" />
     <ClInclude Include="..\game\src\QuestionOneUpMushroomBlock.h" />
+    <ClInclude Include="..\game\src\QuestionStarBlock.h" />
     <ClInclude Include="..\game\src\QuestionThreeUpMoonBlock.h" />
     <ClInclude Include="..\game\src\RedKoopaTroopa.h" />
     <ClInclude Include="..\game\src\Rex.h" />

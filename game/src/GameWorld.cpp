@@ -36,11 +36,10 @@
 #define PARSE_BADDIES true
 GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #else
-
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
+#define LOAD_TEST_MAP false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
@@ -218,32 +217,36 @@ void GameWorld::inputAndUpdate() {
             // items x tiles
             for ( const auto item : items ) {
 
-                item->updateCollisionProbes();
+                if ( !tile->isOnlyBaddies() ) {
 
-                switch ( item->checkCollision( tile ) ) {
-                    case COLLISION_TYPE_NORTH:
-                        item->setY( tile->getY() + tile->getHeight() );
-                        item->setVelY( 0 );
-                        item->updateCollisionProbes();
-                        break;
-                    case COLLISION_TYPE_SOUTH:
-                        item->setY( tile->getY() - item->getHeight() );
-                        item->setVelY( 0 );
-                        item->onSouthCollision();
-                        item->updateCollisionProbes();
-                        break;
-                    case COLLISION_TYPE_EAST:
-                        item->setX( tile->getX() - item->getWidth() );
-                        item->setVelX( -item->getVelX() );
-                        item->updateCollisionProbes();
-                        break;
-                    case COLLISION_TYPE_WEST:
-                        item->setX( tile->getX() + tile->getWidth() );
-                        item->setVelX( -item->getVelX() );
-                        item->updateCollisionProbes();
-                        break;
-                    default:
-                        break;
+                    item->updateCollisionProbes();
+
+                    switch ( item->checkCollision( tile ) ) {
+                        case COLLISION_TYPE_NORTH:
+                            item->setY( tile->getY() + tile->getHeight() );
+                            item->setVelY( 0 );
+                            item->updateCollisionProbes();
+                            break;
+                        case COLLISION_TYPE_SOUTH:
+                            item->setY( tile->getY() - item->getHeight() );
+                            item->setVelY( 0 );
+                            item->onSouthCollision();
+                            item->updateCollisionProbes();
+                            break;
+                        case COLLISION_TYPE_EAST:
+                            item->setX( tile->getX() - item->getWidth() );
+                            item->setVelX( -item->getVelX() );
+                            item->updateCollisionProbes();
+                            break;
+                        case COLLISION_TYPE_WEST:
+                            item->setX( tile->getX() + tile->getWidth() );
+                            item->setVelX( -item->getVelX() );
+                            item->updateCollisionProbes();
+                            break;
+                        default:
+                            break;
+                    }
+
                 }
 
             }
@@ -439,7 +442,12 @@ void GameWorld::inputAndUpdate() {
                     case COLLISION_TYPE_SOUTH:
                         if ( mario.getState() == SPRITE_STATE_FALLING && baddie->getState() != SPRITE_STATE_DYING ) {
                             mario.setY( baddie->getY() - mario.getHeight() );
-                            mario.setVelY( -200 );
+                            if ( ( IsKeyDown( KEY_LEFT_CONTROL ) ||
+                                   IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) ) {
+                                mario.setVelY( -400 );
+                            } else {
+                                mario.setVelY( -200 );
+                            }
                             mario.setState( SPRITE_STATE_JUMPING );
                             baddie->onHit();
                             PlaySound( sounds["stomp"] );
@@ -564,25 +572,25 @@ void GameWorld::inputAndUpdate() {
     camera->offset.x = xc;
 
     if ( pxc < xc ) {
-        camera->target.x = xc + Map::tileWidth;
+        camera->target.x = xc + Map::TILE_WIDTH;
         map.setMarioOffset( 0 );         // x parallax
-    } else if ( pxc >= map.getMaxWidth() - xc - Map::tileWidth ) {
+    } else if ( pxc >= map.getMaxWidth() - xc - Map::TILE_WIDTH ) {
         camera->target.x = map.getMaxWidth() - GetScreenWidth();
         camera->offset.x = 0;
     } else {
-        camera->target.x = pxc + Map::tileWidth;
+        camera->target.x = pxc + Map::TILE_WIDTH;
         map.setMarioOffset( pxc - xc );  // x parallax
     }
 
     camera->offset.y = yc;
 
     if ( pyc < yc ) {
-        camera->target.y = yc + Map::tileWidth;
-    } else if ( pyc >= map.getMaxHeight() - yc - Map::tileWidth ) {
+        camera->target.y = yc + Map::TILE_WIDTH;
+    } else if ( pyc >= map.getMaxHeight() - yc - Map::TILE_WIDTH ) {
         camera->target.y = map.getMaxHeight() - GetScreenHeight();
         camera->offset.y = 0;
     } else {
-        camera->target.y = pyc + Map::tileWidth;
+        camera->target.y = pyc + Map::TILE_WIDTH;
     }
 
     if ( state == GAME_STATE_TITLE_SCREEN ) {
@@ -610,8 +618,8 @@ void GameWorld::draw() {
     BeginDrawing();
     ClearBackground( WHITE );
 
-    int columns = GetScreenWidth() / Map::tileWidth;
-    int lines = GetScreenHeight() / Map::tileWidth;
+    int columns = GetScreenWidth() / Map::TILE_WIDTH;
+    int lines = GetScreenHeight() / Map::TILE_WIDTH;
     std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
 
     if ( state != GAME_STATE_GAME_OVER && state != GAME_STATE_TITLE_SCREEN ) {
@@ -622,10 +630,10 @@ void GameWorld::draw() {
 
         if ( debug ) {
             for ( int i = -20; i <= lines + 20; i++ ) {
-                DrawLine( -2000, i * Map::tileWidth, 10000, i * Map::tileWidth, GRAY );
+                DrawLine( -2000, i * Map::TILE_WIDTH, 10000, i * Map::TILE_WIDTH, GRAY );
             }
             for ( int i = -20; i <= columns + 250; i++ ) {
-                DrawLine( i * Map::tileWidth, -2000, i * Map::tileWidth, 2000, GRAY );
+                DrawLine( i * Map::TILE_WIDTH, -2000, i * Map::TILE_WIDTH, 2000, GRAY );
             }
         }
 

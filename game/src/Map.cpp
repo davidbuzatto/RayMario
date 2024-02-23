@@ -31,13 +31,13 @@
 #include "QuestionFireFlowerBlock.h"
 #include "QuestionMushroomBlock.h"
 #include "QuestionOneUpMushroomBlock.h"
+#include "QuestionStarBlock.h"
 #include "QuestionThreeUpMoonBlock.h"
 #include "raylib.h"
 #include "RedKoopaTroopa.h"
 #include "ResourceManager.h"
 #include "Rex.h"
 #include "Sprite.h"
-#include "Star.h"
 #include "StoneBlock.h"
 #include "Swooper.h"
 #include "utils.h"
@@ -46,8 +46,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-int Map::tileWidth = 32;
 
 Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies, GameWorld *gw ) :
 
@@ -259,8 +257,8 @@ void Map::parseMap() {
 
         while ( *mapData != '\0' ) {
 
-            const float x = currentColumn * tileWidth;
-            const float y = currentLine * tileWidth;
+            const float x = currentColumn * TILE_WIDTH;
+            const float y = currentLine * TILE_WIDTH;
 
             if ( *mapData == '#' ) {
                 ignoreLine = true;
@@ -373,39 +371,39 @@ void Map::parseMap() {
 
                     // test tiles
                     /*case 'a':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), GREEN, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), GREEN, "", true ) );
                         break;
                     case 'b':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLUE, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), BLUE, "", true ) );
                         break;
                     case 'c':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), RED, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), RED, "", true ) );
                         break;
                     case 'd':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), ORANGE, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), ORANGE, "", true ) );
                         break;*/
 
                     // blocks
                     case 'i':
-                        if ( parseBlocks ) blocks.push_back( new EyesClosedBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new EyesClosedBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 'y':
-                        if ( parseBlocks ) blocks.push_back( new EyesOpenedBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new EyesOpenedBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 's':
-                        if ( parseBlocks ) blocks.push_back( new StoneBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new StoneBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 'w':
-                        if ( parseBlocks ) blocks.push_back( new WoodBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new WoodBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 'g':
-                        if ( parseBlocks ) blocks.push_back( new GlassBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new GlassBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 'c':
-                        if ( parseBlocks ) blocks.push_back( new CloudBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new CloudBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 'v':
-                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new InvisibleBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) if ( parseBlocks ) blocks.push_back( new InvisibleBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 'h':
 
@@ -413,7 +411,7 @@ void Map::parseMap() {
                             blockMessage = blockMessages[messagePosition];
                         }
 
-                        newMessageBlock = new MessageBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, blockMessage );
+                        newMessageBlock = new MessageBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR, blockMessage );
 
                         if ( parseBlocks ) {
                             blocks.push_back( newMessageBlock );
@@ -425,46 +423,49 @@ void Map::parseMap() {
                         break;
 
                     case '!':
-                        if ( parseBlocks ) blocks.push_back( new ExclamationBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new ExclamationBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case '?':
-                        if ( parseBlocks ) blocks.push_back( new QuestionBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 'm':
-                        if ( parseBlocks ) blocks.push_back( new QuestionMushroomBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionMushroomBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 'f':
-                        if ( parseBlocks ) blocks.push_back( new QuestionFireFlowerBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionFireFlowerBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case 'u':
-                        if ( parseBlocks ) blocks.push_back( new QuestionOneUpMushroomBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionOneUpMushroomBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
                     case '+':
-                        if ( parseBlocks ) blocks.push_back( new QuestionThreeUpMoonBlock( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK ) );
+                        if ( parseBlocks ) blocks.push_back( new QuestionThreeUpMoonBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
+                        break;
+                    case '*':
+                        if ( parseBlocks ) blocks.push_back( new QuestionStarBlock( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR ) );
                         break;
 
                     // bondarie tiles
                     case '/':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), WHITE, "", false ) );
                         break;
                     case '|':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), WHITE, "", false, true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), WHITE, "", false, true ) );
                         break;
 
                     // scenario tiles
-                    case '{': backScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "tileCourseClearPoleBackTop", true) );
+                    case '{': backScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR, "tileCourseClearPoleBackTop", true ) );
                         break;
-                    case '[': backScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "tileCourseClearPoleBackBody", true ) );
+                    case '[': backScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR, "tileCourseClearPoleBackBody", true ) );
                         break;
-                    case '}': frontScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "tileCourseClearPoleFrontTop", true ) );
+                    case '}': frontScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR, "tileCourseClearPoleFrontTop", true ) );
                         break;
-                    case ']': frontScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, "tileCourseClearPoleFrontBody", true ) );
+                    case ']': frontScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR, "tileCourseClearPoleFrontBody", true ) );
                         break;
 
                     // tiles from A to Z (map dependent - future)
                     default:
                         if ( *mapData >= 'A' && *mapData <= 'Z' ) {
-                            tiles.push_back( new Tile( Vector2( x, y ), Vector2( tileWidth, tileWidth ), BLACK, std::string( 1, *mapData ), true ) );
+                            tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR, std::string( 1, *mapData ), true ) );
                         }
                         break;
 
@@ -472,11 +473,8 @@ void Map::parseMap() {
                     case 'o':
                         if ( parseItems ) staticItems.push_back( new Coin( Vector2( x + 4, y ), Vector2( 25, 32 ), YELLOW ) );
                         break;
-                    case '*':
-                        if ( parseItems ) staticItems.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), YELLOW ) );
-                        break;
                     case '=':
-                        if ( parseItems ) staticItems.push_back( new CourseClearToken( Vector2( x - tileWidth, y ), Vector2( 64, 32 ), LIGHTGRAY ) );
+                        if ( parseItems ) staticItems.push_back( new CourseClearToken( Vector2( x - TILE_WIDTH, y ), Vector2( 64, 32 ), LIGHTGRAY ) );
                         break;
                     /*case 'm':
                         items.push_back( new Mushroom( Vector2( x, y ), Vector2( 32, 32 ), Vector2( 200, 0 ), RED ) );
@@ -489,6 +487,9 @@ void Map::parseMap() {
                         break;
                     case '+':
                         items.push_back( new ThreeUpMoon( Vector2( x, y ), Vector2( 30, 32 ), Vector2( 300, 0 ), YELLOW ) );
+                        break;
+                    case '*':
+                        if ( parseItems ) staticItems.push_back( new Star( Vector2( x, y ), Vector2( 30, 32 ), Vector2( 300, 0 ), YELLOW ) );
                         break;*/
 
                     // baddies
@@ -559,8 +560,8 @@ void Map::parseMap() {
             
         }
 
-        maxWidth -= tileWidth;
-        maxHeight += tileWidth;
+        maxWidth -= TILE_WIDTH;
+        maxHeight += TILE_WIDTH;
         parsed = true;
 
     }

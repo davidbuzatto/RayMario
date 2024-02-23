@@ -52,7 +52,7 @@ void EyesOpenedBlock::draw() {
         DrawTexture( ResourceManager::getTextures()["blockEyesOpened0"], pos.x, pos.y, WHITE );
     }
 
-    if ( GameWorld::debug && !( color.r == 0 && color.g == 0 && color.b == 0 ) ) {
+    if ( GameWorld::debug && color.a != 0 ) {
         DrawRectangle( pos.x, pos.y, dim.x, dim.y, Fade( color, 0.5 ) );
     }
 
