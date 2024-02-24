@@ -155,7 +155,7 @@ void ResourceManager::loadTextures() {
 
         // tiles
         for ( char c = 'A'; c <= 'Z'; c++ ) {
-            textures[std::string(1, c)] = LoadTexture( TextFormat( "resources/images/tiles/tile_%c.png", c ) );
+            textures[std::string(1, c)] = LoadTexture( TextFormat( "resources/images/tiles/tile_%c1.png", c ) );
         }
         textures["tileCourseClearPoleBackTop"] = LoadTexture( "resources/images/tiles/tile_CourseClearPoleBackTop.png" );
         textures["tileCourseClearPoleBackBody"] = LoadTexture( "resources/images/tiles/tile_CourseClearPoleBackBody.png" );

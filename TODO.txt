@@ -1,6 +1,4 @@
 para versão final:
-
-    - efeito funil ao terminar a fase
     
     - transformação/transição
         small->super;
@@ -14,6 +12,8 @@ para versão final:
     - otimizações:
         - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo
           que estiverem dentro de um raio ou retângulo de ação
+          
+    - criar mais fases
             
 futuro:
     separar tiles de cenário, fundo etc
