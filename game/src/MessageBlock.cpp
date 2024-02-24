@@ -18,7 +18,11 @@ MessageBlock::MessageBlock( Vector2 pos, Vector2 dim, Color color, std::string m
 }
 
 MessageBlock::MessageBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, std::string message ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ), message( std::move(message) ) {
+    Sprite( pos, dim, color, frameTime, maxFrames ), message( std::move(message) ),
+    moveAnimationTime( 0.1 ),
+    moveAnimationAcum( 0 ),
+    moveAnimationStarted( false ),
+    moveY( 0 ) {
 }
 
 MessageBlock::~MessageBlock() = default;
@@ -27,7 +31,22 @@ void MessageBlock::update() {}
 
 void MessageBlock::draw() {
 
-    DrawTexture( ResourceManager::getTextures()["blockMessage"], pos.x, pos.y, WHITE );
+    if ( moveAnimationStarted ) {
+
+        const float delta = GetFrameTime();
+        moveAnimationAcum += delta;
+
+        if ( moveAnimationAcum >= moveAnimationTime ) {
+            moveY = 0;
+            moveAnimationAcum = 0;
+            moveAnimationStarted = false;
+        } else {
+            moveY += 100 * delta;
+        }
+
+    }
+
+    DrawTexture( ResourceManager::getTextures()["blockMessage"], pos.x, pos.y - moveY, WHITE );
 
     if ( GameWorld::debug && color.a != 0 ) {
         DrawRectangle( pos.x, pos.y, dim.x, dim.y, Fade( color, 0.5 ) );
@@ -39,6 +58,7 @@ void MessageBlock::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["messageBlock"] );
         hit = true;
+        moveAnimationStarted = true;
         map->setDrawMessage( true );
         map->setMessage( message );
         map->pauseGameToShowMessage();

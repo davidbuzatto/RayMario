@@ -16,6 +16,10 @@ class MessageBlock : public virtual Block {
 
 private:
     std::string message;
+    float moveAnimationTime;
+    float moveAnimationAcum;
+    bool moveAnimationStarted;
+    float moveY;
 
 public:
 
