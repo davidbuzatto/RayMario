@@ -55,11 +55,11 @@ void Star::draw() {
 }
 
 void Star::playCollisionSound() {
-    PlaySound( ResourceManager::getSounds()["1up"] );
+    //PlaySound( ResourceManager::getSounds()["1up"] );
 }
 
 void Star::updateMario( Mario& mario ) {
-    mario.addLives( 3 );
+    mario.setInvincible( true );
 }
 
 void Star::onSouthCollision() {

@@ -2,15 +2,16 @@ c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 2              # background id: [1-10]
 m: 2              # music id: [1-3]
 t: 200            # time to finish the map
+h: test
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                                                                                                                                                                               /
-/   ?u?                                                                                                                                                                                                                                         /
+/  ?u?                                                                                                                                                                                                                                          /
 /                                                                                                                                                                                                                                               /
 /                                                                        cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc???+??cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc               /
-/   yyy                                                                                           ooo          oo                                                                                                                             EB/
+/  yyy                                                                                            ooo          oo                                                                                                                             EB/
 /F                                            oo   wwwwwwwwwwwwww  wwwwwwwwwwwwww                 o  o        o  o                                                                                               {=}                  gg      CA/
 /D                                          oo     w    ooo             oooo    w                 ooo         o  o            ooo        oo              QR                                                      [ ]                         gCA/
-/D  !!!                                    o       w    o  o            o       w                 o o         o  o            o  o      o  o             ST                                                      [ ]                          CA/
+/D !!! h                                   o       w    o  o            o       w                 o o         o  o            o  o      o  o             ST                                                      [ ]                          CA/
 /D                                        oo       w    f  o     yy     uoo     w         m       o  o         oo             ooo       oooo          ssssssss       2            2                              [ ]                          CA/
 /D   p                                     o       w    o  o            o       w                iiiiii      iiiiii           o o       o  o       ssssssssssssss                                                [ ]                        ggCA/
 /HBBBBBBF                                   oo     w    ooo             o       w                                             o  o      o  o    ssssssssssssssssssss    1         1                            w [ ] w                        CA/

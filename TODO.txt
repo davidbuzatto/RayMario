@@ -1,7 +1,5 @@
 para versão final:
     
-    - implementar estrela de power-up
-    
     - transformação/transição
         small->super;
         small->flower;

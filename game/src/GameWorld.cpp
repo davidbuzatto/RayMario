@@ -38,8 +38,8 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #else
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
-#define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
+#define INITIAL_MAP_ID 2
+#define LOAD_TEST_MAP false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
@@ -71,14 +71,12 @@ GameWorld::GameWorld() :
     stateBeforePause( GAME_STATE_TITLE_SCREEN ),
     remainingTimePointCount( 0 ) {
     //mario.changeToFlower();
-    std::cout << "creating game world..." << std::endl;
 }
 
 /**
  * @brief Destroy the GameWorld object
  */
 GameWorld::~GameWorld() {
-    std::cout << "destroying game world..." << std::endl;
 }
 
 /**
@@ -412,47 +410,18 @@ void GameWorld::inputAndUpdate() {
                     baddie->activateWithMarioProximity( mario );
                 }
 
-                // mario and fireballs x baddies collision resolution and offscreen baddies removal
-                switch ( mario.checkCollisionBaddie( baddie ) ) {
-                    case COLLISION_TYPE_NORTH:
-                    case COLLISION_TYPE_EAST:
-                    case COLLISION_TYPE_WEST:
-                        if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
-                            switch ( mario.getType() ) {
-                                case MARIO_TYPE_SMALL:
-                                    mario.setState( SPRITE_STATE_DYING );
-                                    PlaySound( sounds["playerDown"] );
-                                    mario.removeLives( 1 );
-                                    break;
-                                case MARIO_TYPE_SUPER:
-                                    PlaySound( sounds["pipe"] );
-                                    mario.changeToSmall();
-                                    mario.setInvulnerable( true );
-                                    mario.consumeReservedPowerUp();
-                                    break;
-                                case MARIO_TYPE_FLOWER:
-                                    PlaySound( sounds["pipe"] );
-                                    mario.changeToSmall();
-                                    mario.setInvulnerable( true );
-                                    mario.consumeReservedPowerUp();
-                                    break;
-                            }
-                        }
-                        break;
-                    case COLLISION_TYPE_SOUTH:
-                        if ( mario.getState() == SPRITE_STATE_FALLING && baddie->getState() != SPRITE_STATE_DYING ) {
-                            mario.setY( baddie->getY() - mario.getHeight() );
-                            if ( ( IsKeyDown( KEY_LEFT_CONTROL ) ||
-                                   IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) ) {
-                                mario.setVelY( -400 );
-                            } else {
-                                mario.setVelY( -200 );
-                            }
-                            mario.setState( SPRITE_STATE_JUMPING );
-                            baddie->onHit();
-                            PlaySound( sounds["stomp"] );
-                            mario.addPoints( 200 );
-                        } else {
+                CollisionType col = mario.checkCollisionBaddie( baddie );
+
+                if ( mario.isInvincible() && col && baddie->getState() != SPRITE_STATE_DYING ) {
+                    baddie->onHit();
+                    PlaySound( sounds["stomp"] );
+                    mario.addPoints( 200 );
+                } else {
+                    // mario and fireballs x baddies collision resolution and offscreen baddies removal
+                    switch ( col ) {
+                        case COLLISION_TYPE_NORTH:
+                        case COLLISION_TYPE_EAST:
+                        case COLLISION_TYPE_WEST:
                             if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
                                 switch ( mario.getType() ) {
                                     case MARIO_TYPE_SMALL:
@@ -474,18 +443,56 @@ void GameWorld::inputAndUpdate() {
                                         break;
                                 }
                             }
-                        }
-                        break;
-                    case COLLISION_TYPE_FIREBALL:
-                        baddie->onHit();
-                        PlaySound( sounds["stomp"] );
-                        mario.addPoints( 200 );
-                        break;
-                    default:
-                        if ( baddie->getY() > map.getMaxHeight() ) {
-                            baddie->setState( SPRITE_STATE_TO_BE_REMOVED );
-                        }
-                        break;
+                            break;
+                        case COLLISION_TYPE_SOUTH:
+                            if ( mario.getState() == SPRITE_STATE_FALLING && baddie->getState() != SPRITE_STATE_DYING ) {
+                                mario.setY( baddie->getY() - mario.getHeight() );
+                                if ( ( IsKeyDown( KEY_LEFT_CONTROL ) ||
+                                       IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) ) {
+                                    mario.setVelY( -400 );
+                                } else {
+                                    mario.setVelY( -200 );
+                                }
+                                mario.setState( SPRITE_STATE_JUMPING );
+                                baddie->onHit();
+                                PlaySound( sounds["stomp"] );
+                                mario.addPoints( 200 );
+                            } else {
+                                if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
+                                    switch ( mario.getType() ) {
+                                        case MARIO_TYPE_SMALL:
+                                            mario.setState( SPRITE_STATE_DYING );
+                                            PlaySound( sounds["playerDown"] );
+                                            mario.removeLives( 1 );
+                                            break;
+                                        case MARIO_TYPE_SUPER:
+                                            PlaySound( sounds["pipe"] );
+                                            mario.changeToSmall();
+                                            mario.setInvulnerable( true );
+                                            mario.consumeReservedPowerUp();
+                                            break;
+                                        case MARIO_TYPE_FLOWER:
+                                            PlaySound( sounds["pipe"] );
+                                            mario.changeToSmall();
+                                            mario.setInvulnerable( true );
+                                            mario.consumeReservedPowerUp();
+                                            break;
+                                    }
+                                }
+                            }
+                            break;
+                        case COLLISION_TYPE_FIREBALL:
+                            baddie->onHit();
+                            PlaySound( sounds["stomp"] );
+                            mario.addPoints( 200 );
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                if ( baddie->getY() > map.getMaxHeight() ) {
+                    baddie->setState( SPRITE_STATE_TO_BE_REMOVED );
                 }
 
                 if ( baddie->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
@@ -754,7 +761,6 @@ void GameWorld::draw() {
  * Should be called inside the constructor.
  */
 void GameWorld::loadResources() {
-    std::cout << "loading resources..." << std::endl;
     ResourceManager::loadTextures();
     ResourceManager::loadSounds();
     ResourceManager::loadMusics();
@@ -765,7 +771,6 @@ void GameWorld::loadResources() {
  * Should be called inside the destructor.
  */
 void GameWorld::unloadResources() {
-    std::cout << "unloading resources..." << std::endl;
     ResourceManager::unloadTextures();
     ResourceManager::unloadSounds();
     ResourceManager::unloadMusics();

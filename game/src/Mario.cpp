@@ -5,16 +5,14 @@
  * 
  * @copyright Copyright (c) 2024
  */
-#include "Mario.h"
 #include "Direction.h"
-#include "GameWorld.h"
 #include "GameState.h"
+#include "GameWorld.h"
+#include "Mario.h"
 #include "MarioType.h"
 #include "raylib.h"
 #include "ResourceManager.h"
-#include "Tile.h"
 #include <iostream>
-#include <typeinfo>
 #include <utils.h>
 
 Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed, bool immortal ) :
@@ -28,13 +26,14 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     invulnerableTimeAcum( 0 ),
     invulnerableBlink( false ),
     ducking( false ),
-    lookigUp( false ),
+    lookingUp( false ),
     running( false ),
+    invincible( false ),
     frameTimeWalking( 0.1 ),
     frameTimeRunning( 0.05 ),
     activationWidth( 0 ),
-    coins( 0 ),
     lives( 5 ),
+    coins( 0 ),
     points( 0 ),
     maxTime( 0 ),
     ellapsedTime( 0.0f ),
@@ -43,7 +42,9 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     runningAcum( 0 ),
     runningTime( 0.5 ),
     drawRunningFrames( false ),
-    movinAcum( 0 ),
+    movingAcum( 0 ),
+    invincibleTime( 8 ),
+    invincibleAcum( 0 ),
     lastPos( pos ) {
 
     setState( SPRITE_STATE_ON_GROUND );
@@ -54,21 +55,21 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     cpE1.setColor( YELLOW );
     cpW.setColor( LIME );
     cpW1.setColor( LIME );
-
-    updateCollisionProbes();
     
 }
 
 Mario::~Mario() = default;
 
 void Mario::update() {
-    
+
+    const float delta = GetFrameTime();
+
     running = ( IsKeyDown( KEY_LEFT_CONTROL ) || 
                 IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) &&
                 vel.x != 0.0f;
 
     if ( running ) {
-        runningAcum += GetFrameTime();
+        runningAcum += delta;
         if ( runningAcum >= runningTime ) {
             drawRunningFrames = true;
         }
@@ -77,13 +78,20 @@ void Mario::update() {
         drawRunningFrames = false;
     }
 
+    if ( invincible ) {
+        invincibleAcum += delta;
+        if ( invincibleAcum >= invincibleTime ) {
+            invincible = false;
+            invincibleAcum = 0;
+        }
+    }
+
     if ( state != SPRITE_STATE_DYING && 
          state != SPRITE_STATE_VICTORY &&
          state != SPRITE_STATE_WAITING_TO_NEXT_MAP ) {
-        ellapsedTime += GetFrameTime();
+        ellapsedTime += delta;
     }
 
-    const float delta = GetFrameTime();
     const float currentSpeedX = running ? ( drawRunningFrames ? maxSpeedX * 1.3f : maxSpeedX ) : speedX;
     const float currentFrameTime = running && state != SPRITE_STATE_DYING ? frameTimeRunning : frameTimeWalking;
     std::map<std::string, Sound>& sounds = ResourceManager::getSounds();
@@ -127,16 +135,16 @@ void Mario::update() {
              IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT ) ||
              GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) > 0 ) {
             facingDirection = DIRECTION_RIGHT;
-            movinAcum += delta * 2;
-            vel.x = currentSpeedX * ( movinAcum < 1 ? movinAcum : 1);
+            movingAcum += delta * 2;
+            vel.x = currentSpeedX * ( movingAcum < 1 ? movingAcum : 1);
         } else if ( IsKeyDown( KEY_LEFT ) ||
                     IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_LEFT ) ||
                     GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) < 0 ) {
             facingDirection = DIRECTION_LEFT;
-            movinAcum += delta * 2;
-            vel.x = -currentSpeedX * ( movinAcum < 1 ? movinAcum : 1 );
+            movingAcum += delta * 2;
+            vel.x = -currentSpeedX * ( movingAcum < 1 ? movingAcum : 1 );
         } else {
-            movinAcum = 0;
+            movingAcum = 0;
             if ( vel.x >= -10 && vel.x <= 10 ) {
                 vel.x = 0;
             } else {
@@ -194,7 +202,7 @@ void Mario::update() {
 
         vel.y += GameWorld::gravity;
 
-        if ( (int) lastPos.y < (int) pos.y ) {
+        if ( static_cast<int>(lastPos.y) < static_cast<int>(pos.y) ) {
             state = SPRITE_STATE_FALLING;
         }
         lastPos = pos;
@@ -225,38 +233,44 @@ void Mario::draw() {
         DrawTexture( textures[std::string( TextFormat( "smallMario%dDy", currentFrame))], pos.x, pos.y, WHITE);
     } else {
 
+        Color tint = WHITE;
+
+        if ( invincible ) {
+            tint = ColorFromHSV( 360 * ( invincibleAcum / invincibleTime * 20 ), 0.3, 1 );
+        }
+
         char dir = facingDirection == DIRECTION_RIGHT ? 'R' : 'L';
 
         if ( !invulnerableBlink ) {
 
             if ( state == SPRITE_STATE_ON_GROUND ) {
 
-                if ( lookigUp ) {
-                    DrawTexture( textures[std::string( TextFormat( "%sMario0Lu%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
+                if ( lookingUp ) {
+                    DrawTexture( textures[std::string( TextFormat( "%sMario0Lu%c", prefix.c_str(), dir ) )], pos.x, pos.y, tint );
                 } else if ( ducking ) {
-                    DrawTexture( textures[std::string( TextFormat( "%sMario0Du%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
+                    DrawTexture( textures[std::string( TextFormat( "%sMario0Du%c", prefix.c_str(), dir ) )], pos.x, pos.y, tint );
                 } else if ( drawRunningFrames ) {
-                    DrawTexture( textures[std::string( TextFormat( "%sMario%dRu%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, WHITE );
+                    DrawTexture( textures[std::string( TextFormat( "%sMario%dRu%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, tint );
                 } else { // iddle
                     if ( ( IsKeyPressed( KEY_LEFT_CONTROL ) ||
                            IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) && 
                            type == MARIO_TYPE_FLOWER ) {
-                        DrawTexture( textures[std::string( TextFormat( "%sMario%dTf%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, WHITE );
+                        DrawTexture( textures[std::string( TextFormat( "%sMario%dTf%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, tint );
                     } else {
-                        DrawTexture( textures[std::string( TextFormat( "%sMario%d%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, WHITE );
+                        DrawTexture( textures[std::string( TextFormat( "%sMario%d%c", prefix.c_str(), currentFrame, dir ) )], pos.x, pos.y, tint );
                     }
                 }
 
             } else if ( state == SPRITE_STATE_JUMPING ) {
                 if ( drawRunningFrames ) {
-                    DrawTexture( textures[std::string( TextFormat( "%sMario0JuRu%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
+                    DrawTexture( textures[std::string( TextFormat( "%sMario0JuRu%c", prefix.c_str(), dir ) )], pos.x, pos.y, tint );
                 } else {
-                    DrawTexture( textures[std::string( TextFormat( "%sMario0Ju%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
+                    DrawTexture( textures[std::string( TextFormat( "%sMario0Ju%c", prefix.c_str(), dir ) )], pos.x, pos.y, tint );
                 }
             } else if ( state == SPRITE_STATE_FALLING ) {
-                DrawTexture( textures[std::string( TextFormat( "%sMario0Fa%c", prefix.c_str(), dir ) )], pos.x, pos.y, WHITE );
+                DrawTexture( textures[std::string( TextFormat( "%sMario0Fa%c", prefix.c_str(), dir ) )], pos.x, pos.y, tint );
             } else if ( state == SPRITE_STATE_VICTORY || state == SPRITE_STATE_WAITING_TO_NEXT_MAP ) {
-                DrawTexture( textures[std::string( TextFormat( "%sMario0Vic", prefix.c_str() ) )], pos.x, pos.y, WHITE );
+                DrawTexture( textures[std::string( TextFormat( "%sMario0Vic", prefix.c_str() ) )], pos.x, pos.y, tint );
             }
 
         }
@@ -550,6 +564,14 @@ bool Mario::isInvulnerable() {
     return invulnerable;
 }
 
+void Mario::setInvincible( bool invincible ) {
+    this->invincible = invincible;
+}
+
+bool Mario::isInvincible() {
+    return invincible;
+}
+
 void Mario::updateCollisionProbes() {
 
     cpN.setX( pos.x + dim.x / 2 - cpN.getWidth() / 2 );
@@ -610,7 +632,7 @@ void Mario::reset( bool removePowerUps ) {
     state = SPRITE_STATE_ON_GROUND;
     facingDirection = DIRECTION_RIGHT;
     ducking = false;
-    lookigUp = false;
+    lookingUp = false;
     running = false;
     ellapsedTime = 0;
     invulnerable = false;

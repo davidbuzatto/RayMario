@@ -27,8 +27,9 @@ class Mario : public virtual Sprite {
     bool invulnerableBlink;
 
     bool ducking;
-    bool lookigUp;
+    bool lookingUp;
     bool running;
+    bool invincible;
 
     float frameTimeWalking;
     float frameTimeRunning;
@@ -54,7 +55,10 @@ class Mario : public virtual Sprite {
     float runningTime;
     bool drawRunningFrames;
 
-    float movinAcum;
+    float movingAcum;
+
+    float invincibleTime;
+    float invincibleAcum;
 
     Vector2 lastPos;
     
@@ -107,6 +111,9 @@ public:
     MarioType getType();
     void setInvulnerable( bool invulnerable );
     bool isInvulnerable();
+
+    void setInvincible( bool invincible );
+    bool isInvincible();
 
     void reset( bool removePowerUps );
     void resetAll();

@@ -227,10 +227,23 @@ void Map::playMusic() const {
     std::map<std::string, Music> musics = ResourceManager::getMusics();
     const std::string key(TextFormat( "music%d", musicId ));
 
-    if ( !IsMusicStreamPlaying( musics[key] ) ) {
-        PlayMusicStream( musics[key] );
+    if ( mario.isInvincible() ) {
+        if ( IsMusicStreamPlaying( musics[key] ) ) {
+            StopMusicStream( musics[key] );
+        }
+        if ( !IsMusicStreamPlaying( musics["invincible"] ) ) {
+            PlayMusicStream( musics["invincible"] );
+            SeekMusicStream( musics["invincible"], 1 );
+        } else {
+            UpdateMusicStream( musics["invincible"] );
+        }
     } else {
-        UpdateMusicStream( musics[key] );
+        if ( !IsMusicStreamPlaying( musics[key] ) ) {
+            StopMusicStream( musics["invincible"] );
+            PlayMusicStream( musics[key] );
+        } else {
+            UpdateMusicStream( musics[key] );
+        }
     }
 
 }

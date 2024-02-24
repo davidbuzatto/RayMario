@@ -84,7 +84,6 @@ c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 m: 1              # music id: [1-9]
 t: 200            # time to finish the map
-h: WELCOME TO RAYMARIO!
 ///////////////////////////////////////////////////////////////////////////
 /                                                                         /
 /                                                                        E/
@@ -107,8 +106,8 @@ h: WELCOME TO RAYMARIO!
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/   h   +*                                                               C/
 /                                                                        C/
+/i                                                                       C/
 /   p                                                                    C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
