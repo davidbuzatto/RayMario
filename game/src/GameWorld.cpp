@@ -38,8 +38,8 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #else
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
-#define INITIAL_MAP_ID 2
-#define LOAD_TEST_MAP false
+#define INITIAL_MAP_ID 1
+#define LOAD_TEST_MAP true
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
@@ -70,6 +70,7 @@ GameWorld::GameWorld() :
     showControls( ACTIVATE_DEBUG ),
     stateBeforePause( GAME_STATE_TITLE_SCREEN ),
     remainingTimePointCount( 0 ) {
+    //mario.changeToSuper();
     //mario.changeToFlower();
 }
 

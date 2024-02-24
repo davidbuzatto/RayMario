@@ -106,8 +106,8 @@ t: 200            # time to finish the map
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
+/   *                                                                    C/
 /                                                                        C/
-/i                                                                       C/
 /   p                                                                    C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

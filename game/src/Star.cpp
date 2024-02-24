@@ -55,7 +55,6 @@ void Star::draw() {
 }
 
 void Star::playCollisionSound() {
-    //PlaySound( ResourceManager::getSounds()["1up"] );
 }
 
 void Star::updateMario( Mario& mario ) {
