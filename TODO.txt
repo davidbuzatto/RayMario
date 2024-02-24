@@ -1,5 +1,8 @@
 para versão final:
     
+    - ladrilhos parametrizados (tipo na fase)
+        - novo parâmetro variando de 1 a 4
+    
     - transformação/transição
         small->super;
         small->flower;
@@ -17,6 +20,5 @@ para versão final:
             
 futuro:
     separar tiles de cenário, fundo etc
-    ladrilhos parametrizados (tipo na fase)
     refatorar
     editor de fases - salvar e carregar, usar formato binário
