@@ -1,5 +1,8 @@
 para versão final:
     
+    - ao abrir mensagem para a música?
+    - ao abrir mensagem usar overlay da pausa?
+    
     - transformação/transição
         small->super;
         small->flower;

@@ -280,6 +280,7 @@ void ResourceManager::loadTextures() {
 
         // gui
         textures["guiAlfa"] = LoadTexture( "resources/images/gui/guiAlfa.png" );
+        textures["guiAlfaLowerUpper"] = LoadTexture( "resources/images/gui/guiAlfaLowerUpper.png" );
         textures["guiClock"] = LoadTexture( "resources/images/gui/guiClock.png" );
         textures["guiCoin"] = LoadTexture( "resources/images/gui/guiCoin.png" );
         textures["guiCredits"] = LoadTexture( "resources/images/gui/guiCredits.png" );

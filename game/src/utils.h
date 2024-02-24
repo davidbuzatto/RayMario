@@ -33,5 +33,9 @@ void drawString( std::wstring str, int x, int y );
 int getDrawStringWidth( std::string str );
 int getDrawStringHeight();
 
+void drawMessageString( std::string str, int x, int y );
+int getDrawMessageStringWidth( std::string str );
+int getDrawMessageStringHeight();
+
 std::vector<std::string> split( std::string s, std::string delimiter = "\n" );
 std::vector<std::string> split( const std::string& s, char delim );

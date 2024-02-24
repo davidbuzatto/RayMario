@@ -84,6 +84,7 @@ c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 m: 1              # music id: [1-9]
 t: 200            # time to finish the map
+h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"#()ááá
 ///////////////////////////////////////////////////////////////////////////
 /                                                                         /
 /                                                                        E/
@@ -106,7 +107,7 @@ t: 200            # time to finish the map
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/   *                                                                    C/
+/   h                                                                    C/
 /                                                                        C/
 /   p                                                                    C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/

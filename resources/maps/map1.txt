@@ -2,7 +2,7 @@ c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 m: 1              # music id: [1-3]
 t: 200            # time to finish the map
-h: welcome to raymario!\n\n\nProf. Dr. David Buzatto
+h: Welcome to RayMario!\n\n\nProf. Dr. David Buzatto
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                                                                                                                                                                               /
 /                                                                                                                                                                                                                                               /

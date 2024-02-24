@@ -8,10 +8,7 @@
 #include "raylib.h"
 #include "ResourceManager.h"
 #include "utils.h"
-#include <cwctype>
-#include <algorithm>
 #include <map>
-#include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -107,7 +104,7 @@ void drawString( std::string str, int x, int y ) {
                 case ':':  code = 6; break;
                 case '\'': code = 7; break;
                 case '"':  code = 8; break;
-                //case ' ':  space = true; break;
+                case ' ':  space = true; break;
                 default:   undefined = true; break;
             }
             textureY = 60;
@@ -118,7 +115,7 @@ void drawString( std::string str, int x, int y ) {
             textureY = 60;
         }
 
-        if ( !undefined && !space ) {
+        if ( !space ) {
             DrawTextureRec( texture, Rectangle( code * w, textureY, w, h ), Vector2( px, y ), WHITE );
         }
 
@@ -187,7 +184,7 @@ void drawString( std::wstring str, int x, int y ) {
             textureY = 60;
         }
 
-        if ( !undefined || !space ) {
+        if ( !space ) {
             DrawTextureRec( texture, Rectangle( code * w, textureY, w, h ), Vector2( px, y ), WHITE );
         }
 
@@ -219,6 +216,72 @@ int getDrawStringWidth( std::string str ) {
 
 int getDrawStringHeight() {
     return 20;
+}
+
+void drawMessageString( std::string str, int x, int y ) {
+
+    Texture2D texture = ResourceManager::getTextures()["guiAlfaLowerUpper"];
+    int w = 16;
+    int h = 16;
+    int px = x;
+
+    for ( size_t i = 0; i < str.length(); i++ ) {
+
+        int code = str[i];
+        bool space = false;
+        int textureY;
+        bool undefined = false;
+
+        if ( code >= 48 && code <= 57 ) {          // number
+            code -= 48;
+            textureY = 0;
+        } else if ( code >= 65 && code <= 90 ) {   // upper case letters
+            code -= 'A';
+            textureY = 16;
+        } else if ( code >= 97 && code <= 122 ) {   // lowe case letters
+            code -= 'a';
+            textureY = 32;
+        } else {
+            switch ( code ) {                      // punctuation
+                case '.':  code = 0; break;
+                case ',':  code = 1; break;
+                case '-':  code = 2; break;
+                case '!':  code = 3; break;
+                case '?':  code = 4; break;
+                case '=':  code = 5; break;
+                case ':':  code = 6; break;
+                case '\'': code = 7; break;
+                case '"':  code = 8; break;
+                case '#':  code = 9; break;
+                case '(':  code = 10; break;
+                case ')':  code = 11; break;
+                case ' ':  space = true; break;
+                default:   undefined = true; break;
+            }
+            textureY = 48;
+        }
+
+        if ( undefined ) {
+            code = 4;       // question mark
+            textureY = 48;
+        }
+
+        if ( !space ) {
+            DrawTextureRec( texture, Rectangle( code * w, textureY, w, h ), Vector2( px, y ), WHITE );
+        }
+
+        px += w - 2;
+
+    }
+
+}
+
+int getDrawMessageStringWidth( std::string str ) {
+    return 16 * str.length();
+}
+
+int getDrawMessageStringHeight() {
+    return 16;
 }
 
 std::vector<std::string> split( std::string s, std::string delimiter ) {

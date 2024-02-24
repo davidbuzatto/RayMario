@@ -171,10 +171,10 @@ void Map::draw() {
         const int vSpacing = 5;
 
         int maxWidth = 0;
-        int maxHeight = messages.size() * getDrawStringHeight() + ( messages.size() - 1 ) * vSpacing;
+        int maxHeight = messages.size() * getDrawMessageStringHeight() + ( messages.size() - 1 ) * vSpacing;
 
         for ( const auto& m : messages ) {
-            const int w = getDrawStringWidth( m );
+            const int w = getDrawMessageStringWidth( m );
             if ( maxWidth < w ) {
                 maxWidth = w;
             }
@@ -183,12 +183,12 @@ void Map::draw() {
         const int xStart = center.x - maxWidth / 2 + margin;
         const int yStart = center.y - maxHeight / 2 + margin - 50;
 
-        DrawRectangle( xStart - margin, yStart - margin, maxWidth + margin * 2, maxHeight + margin * 2 + 4, BLACK );
+        DrawRectangle( xStart - margin, yStart - margin, maxWidth + margin * 2, maxHeight + margin * 2, BLACK );
 
         for ( const auto& m : messages ) {
-            drawString( m, 
+            drawMessageString( m, 
                         xStart, 
-                        yStart + currentLine * getDrawStringHeight() + ( currentLine < messages.size() ? currentLine * vSpacing : 0 ) );
+                        yStart + currentLine * getDrawMessageStringHeight() + ( currentLine < messages.size() ? currentLine * vSpacing : 0 ) );
             currentLine++;
         }
 
