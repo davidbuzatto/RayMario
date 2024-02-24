@@ -25,6 +25,10 @@ class GameWorld : public virtual Drawable {
 
     bool pauseMusic;
     bool showOverlayOnPause;
+
+    bool irisOutFinished;
+    float irisOutTime;
+    float irisOutAcum;
     
 public:
 

@@ -45,6 +45,7 @@ class Map : public virtual Drawable {
     Texture2D backgroundTexture;
     bool drawBlackScreen;
     float drawBlackScreenFadeAcum;
+    float drawBlackScreenFadeTime;
     
     int musicId;
     int maxMusicId;

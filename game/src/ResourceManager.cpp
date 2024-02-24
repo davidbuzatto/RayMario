@@ -309,7 +309,7 @@ void ResourceManager::loadSounds() {
         sounds["coin"] = LoadSound( "resources/sfx/smw_coin.wav" );
         sounds["chuckWhistle"] = LoadSound( "resources/sfx/smw_chuck_whistle.wav" );
         sounds["fireball"] = LoadSound( "resources/sfx/smw_fireball.wav" );
-        sounds["goalIris"] = LoadSound( "resources/sfx/smw_goal_iris-out.wav" );
+        sounds["goalIrisOut"] = LoadSound( "resources/sfx/smw_goal_iris-out.wav" );
         sounds["jump"] = LoadSound( "resources/sfx/smw_jump.wav" );
         sounds["kick"] = LoadSound( "resources/sfx/smw_kick.wav" );
         sounds["messageBlock"] = LoadSound( "resources/sfx/smw_message_block.wav" );

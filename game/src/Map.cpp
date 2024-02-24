@@ -64,6 +64,7 @@ Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseIt
     backgroundTexture( Texture() ),
     drawBlackScreen( false ),
     drawBlackScreenFadeAcum( 0 ),
+    drawBlackScreenFadeTime( 1.5 ),
 
     musicId( 1 ),
     maxMusicId( 9 ),
@@ -149,17 +150,17 @@ void Map::draw() {
         baddie->draw();
     }
 
-    if ( drawBlackScreen ) {
-        drawBlackScreenFadeAcum += GetFrameTime();
-        DrawRectangle( 0, 0, maxWidth, maxHeight, Fade( BLACK, 1 * drawBlackScreenFadeAcum ) );
-    }
-
     mario.draw();
 
-    if ( !drawBlackScreen ) {
-        for ( const auto& frontScenarioTile : frontScenarioTiles ) {
-            frontScenarioTile->draw();
+    for ( const auto& frontScenarioTile : frontScenarioTiles ) {
+        frontScenarioTile->draw();
+    }
+
+    if ( drawBlackScreen ) {
+        if ( drawBlackScreenFadeAcum < drawBlackScreenFadeTime ) {
+            drawBlackScreenFadeAcum += GetFrameTime();
         }
+        DrawRectangle( 0, 0, maxWidth, maxHeight, Fade( BLACK, 0.5 * drawBlackScreenFadeAcum / drawBlackScreenFadeTime ) );
     }
 
     if ( drawMessage ) {
@@ -187,18 +188,12 @@ void Map::draw() {
 
         for ( const auto& m : messages ) {
             drawMessageString( m, 
-                        xStart, 
-                        yStart + currentLine * getDrawMessageStringHeight() + ( currentLine < messages.size() ? currentLine * vSpacing : 0 ) );
+                               xStart, 
+                               yStart + currentLine * getDrawMessageStringHeight() + ( currentLine < messages.size() ? currentLine * vSpacing : 0 ) );
             currentLine++;
         }
 
     }
-
-    /*const Vector2 c = GetScreenToWorld2D( Vector2( 50, 50 ), *camera );
-    drawString( L"ABCDEFGHIJKLMNOPQRSTUVWXYZ", c.x, c.y + 50 );
-    drawString( L"ÀÁÂÃÇÉÊÍÔÕÚ", c.x, c.y + 100 );
-    drawString( L".,-!?=:'\"", c.x, c.y + 150 );
-    drawString( L"0123456789", c.x, c.y + 200 );*/
 
 }
 

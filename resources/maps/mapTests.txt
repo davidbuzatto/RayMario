@@ -102,13 +102,13 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/   h                                                                    C/
-/                                                                        C/
-/   p                                                                    C/
+/       {=}                                                              C/
+/       [ ]                                                              C/
+/       [ ]                                                              C/
+/       [ ]                                                              C/
+/       [ ]                                                              C/
+/   h   [ ]                                                              C/
+/       [ ]                                                              C/
+/   p   [ ]                                                              C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

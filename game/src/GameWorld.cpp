@@ -39,7 +39,7 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP false
+#define LOAD_TEST_MAP true
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
@@ -71,7 +71,10 @@ GameWorld::GameWorld() :
     stateBeforePause( GAME_STATE_TITLE_SCREEN ),
     remainingTimePointCount( 0 ),
     pauseMusic( false ),
-    showOverlayOnPause( true ){
+    showOverlayOnPause( true ),
+    irisOutFinished( false ),
+    irisOutTime( 1 ),
+    irisOutAcum( 0 ) {
     //mario.changeToSuper();
     //mario.changeToFlower();
 }
@@ -538,12 +541,27 @@ void GameWorld::inputAndUpdate() {
         }
 
         if ( remainingTimePointCount == 0 ) {
+            state = GAME_STATE_IRIS_OUT;
+        }
+
+    } else if ( state == GAME_STATE_IRIS_OUT ) {
+
+        if ( !IsSoundPlaying( sounds["courseClear"] ) ) {
+            PlaySound( sounds["goalIrisOut"] );
             state = GAME_STATE_GO_TO_NEXT_MAP;
+            irisOutAcum = 0;
         }
 
     } else if ( state == GAME_STATE_GO_TO_NEXT_MAP ) {
 
-        if ( !IsSoundPlaying( sounds["courseClear"] ) ) {
+        irisOutAcum += GetFrameTime();
+        if ( irisOutAcum >= irisOutTime ) {
+            irisOutFinished = true;
+        }
+
+        if ( irisOutFinished ) {
+            irisOutAcum = 0;
+            irisOutFinished = false;
             nextMap();
         }
 
@@ -638,6 +656,7 @@ void GameWorld::draw() {
 
         map.draw();
 
+        // TODO: upgrade grid drawing
         if ( debug ) {
             for ( int i = -20; i <= lines + 20; i++ ) {
                 DrawLine( -2000, i * Map::TILE_WIDTH, 10000, i * Map::TILE_WIDTH, GRAY );
@@ -656,7 +675,7 @@ void GameWorld::draw() {
             Texture2D* t = &textures["guiTimeUp"];
             DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height / 2, WHITE );
 
-        } else if ( state == GAME_STATE_COUNTING_POINTS || state == GAME_STATE_GO_TO_NEXT_MAP ) {
+        } else if ( state == GAME_STATE_COUNTING_POINTS || state == GAME_STATE_IRIS_OUT || state == GAME_STATE_GO_TO_NEXT_MAP ) {
 
             Vector2 sc( GetScreenWidth() / 2, GetScreenHeight() / 2 );
             DrawTexture( textures["guiMario"], sc.x - textures["guiMario"].width / 2, sc.y - 120, WHITE);
@@ -681,6 +700,12 @@ void GameWorld::draw() {
             drawWhiteSmallNumber( 50, completeMessageStart + clockWidth + remainingTimeWidth + timesWidth, completeMessageY );
             drawString( "=", completeMessageStart + clockWidth + remainingTimeWidth + timesWidth + pointsPerSecondWidth, completeMessageY - 4 );
             drawWhiteSmallNumber( totalTimePoints, completeMessageStart + clockWidth + remainingTimeWidth + timesWidth + pointsPerSecondWidth + equalSignWidth, completeMessageY );
+
+            Vector2 centerFunnel = GetWorldToScreen2D( mario.getCenter(), *camera );
+            DrawRing( centerFunnel, 
+                      sqrt( GetScreenWidth() * GetScreenWidth() + GetScreenHeight() * GetScreenHeight() ) * ( 1 - irisOutAcum / irisOutTime ),
+                      GetScreenWidth() * 2, 
+                      0, 360, 100, BLACK );
 
         } else if ( state == GAME_STATE_FINISHED ) {
 
