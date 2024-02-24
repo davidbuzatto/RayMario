@@ -22,6 +22,9 @@ class GameWorld : public virtual Drawable {
     bool showControls;
     GameState stateBeforePause;
     int remainingTimePointCount;
+
+    bool pauseMusic;
+    bool showOverlayOnPause;
     
 public:
 
@@ -69,6 +72,9 @@ public:
     void resetMap();
     void resetGame();
     void nextMap();
-    void pauseGame( bool playPauseSFX );
+    void pauseGame( bool playPauseSFX, bool pauseMusic, bool showOverlay );
+
+    bool isPauseMusicOnPause() const;
+    bool isShowOverlayOnPause() const;
     
 };

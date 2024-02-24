@@ -39,7 +39,7 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
+#define LOAD_TEST_MAP false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
@@ -69,7 +69,9 @@ GameWorld::GameWorld() :
     camera( nullptr ),
     showControls( ACTIVATE_DEBUG ),
     stateBeforePause( GAME_STATE_TITLE_SCREEN ),
-    remainingTimePointCount( 0 ) {
+    remainingTimePointCount( 0 ),
+    pauseMusic( false ),
+    showOverlayOnPause( true ){
     //mario.changeToSuper();
     //mario.changeToFlower();
 }
@@ -77,8 +79,7 @@ GameWorld::GameWorld() :
 /**
  * @brief Destroy the GameWorld object
  */
-GameWorld::~GameWorld() {
-}
+GameWorld::~GameWorld() = default;
 
 /**
  * @brief Reads user input and updates the state of the game.
@@ -105,7 +106,7 @@ void GameWorld::inputAndUpdate() {
          mario.getState() != SPRITE_STATE_WAITING_TO_NEXT_MAP &&
          state != GAME_STATE_TITLE_SCREEN &&
          state != GAME_STATE_FINISHED && 
-         state != GAME_STATE_PAUSED ) {
+         !pauseMusic ) {
         map.playMusic();
     }
 
@@ -126,7 +127,7 @@ void GameWorld::inputAndUpdate() {
         std::vector<int> collectedIndexes;
 
         if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
-            pauseGame( true );
+            pauseGame( true, true, true );
         }
 
         for ( const auto block : blocks ) {
@@ -557,6 +558,7 @@ void GameWorld::inputAndUpdate() {
         if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
             state = stateBeforePause;
             map.setDrawMessage( false );
+            pauseMusic = false;
         }
     }
 
@@ -704,7 +706,9 @@ void GameWorld::draw() {
             drawString( message2, GetScreenWidth() / 2 - getDrawStringWidth( message2 ) / 2, t->height + 65 );
 
         } else if ( state == GAME_STATE_PAUSED ) {
-            DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( BLACK, 0.3 ) );
+            if ( showOverlayOnPause ) {
+                DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), Fade( BLACK, 0.3 ) );
+            }
         }
 
     } else if ( state == GAME_STATE_TITLE_SCREEN ) {
@@ -804,10 +808,20 @@ void GameWorld::nextMap() {
     }
 }
 
-void GameWorld::pauseGame( bool playPauseSFX ) {
+void GameWorld::pauseGame( bool playPauseSFX, bool pauseMusic, bool showOverlay ) {
     if ( playPauseSFX ) {
         PlaySound( ResourceManager::getSounds()["pause"] );
     }
+    this->pauseMusic = pauseMusic;
+    showOverlayOnPause = showOverlay;
     stateBeforePause = state;
     state = GAME_STATE_PAUSED;
+}
+
+bool GameWorld::isPauseMusicOnPause() const {
+    return pauseMusic;
+}
+
+bool GameWorld::isShowOverlayOnPause() const {
+    return showOverlayOnPause;
 }

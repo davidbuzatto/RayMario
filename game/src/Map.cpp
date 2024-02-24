@@ -685,5 +685,5 @@ void Map::first() {
 }
 
 void Map::pauseGameToShowMessage() const {
-    gw->pauseGame( false );
+    gw->pauseGame( false, false, false );
 }

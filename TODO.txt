@@ -1,7 +1,6 @@
 para versão final:
-    
-    - ao abrir mensagem para a música?
-    - ao abrir mensagem usar overlay da pausa?
+
+    - efeito funil ao terminar a fase
     
     - transformação/transição
         small->super;
