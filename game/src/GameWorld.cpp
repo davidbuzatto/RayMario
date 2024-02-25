@@ -415,7 +415,7 @@ void GameWorld::inputAndUpdate() {
                     baddie->activateWithMarioProximity( mario );
                 }
 
-                CollisionType col = mario.checkCollisionBaddie( baddie );
+                const CollisionType col = mario.checkCollisionBaddie( baddie );
 
                 if ( mario.isInvincible() && col && baddie->getState() != SPRITE_STATE_DYING ) {
                     baddie->onHit();

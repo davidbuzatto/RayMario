@@ -70,7 +70,7 @@ public:
     void update() override;
     void draw() override;
     void updateCollisionProbes() override;
-    void drawHud();
+    void drawHud() const;
 
     CollisionType checkCollision( Sprite *sprite ) override;
     CollisionType checkCollisionBaddie( Sprite *sprite );
@@ -78,21 +78,21 @@ public:
     void setImmortal( bool immortal );
     void setActivationWidth( float activationWidth );
     
-    float getSpeedX();
-    float getMaxSpeedX();
-    float getJumpSpeed();
-    bool isImmortal();
-    float getActivationWidth();
+    float getSpeedX() const;
+    float getMaxSpeedX() const;
+    float getJumpSpeed() const;
+    bool isImmortal() const;
+    float getActivationWidth() const;
 
     void setLives( int lives );
     void setCoins( int coins );
     void setPoints( int points );
     void setMaxTime( float maxTime );
     
-    int getLives();
-    int getCoins();
-    int getPoints();
-    int getRemainingTime();
+    int getLives() const;
+    int getCoins() const;
+    int getPoints() const;
+    int getRemainingTime() const;
 
     void addLives( int lives );
     void removeLives( int lives );
@@ -105,15 +105,15 @@ public:
     void changeToSuper();
     void changeToFlower();
     void setReservedPowerUp( MarioType reservedPowerUp );
-    MarioType getReservedPowerUp();
+    MarioType getReservedPowerUp() const;
     void consumeReservedPowerUp();
 
-    MarioType getType();
+    MarioType getType() const;
     void setInvulnerable( bool invulnerable );
-    bool isInvulnerable();
+    bool isInvulnerable() const;
 
     void setInvincible( bool invincible );
-    bool isInvincible();
+    bool isInvincible() const;
 
     void reset( bool removePowerUps );
     void resetAll();

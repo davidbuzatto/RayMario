@@ -239,7 +239,7 @@ void Mario::draw() {
             tint = ColorFromHSV( 360 * ( invincibleAcum / invincibleTime * 20 ), 0.3, 1 );
         }
 
-        char dir = facingDirection == DIRECTION_RIGHT ? 'R' : 'L';
+        const char dir = facingDirection == DIRECTION_RIGHT ? 'R' : 'L';
 
         if ( !invulnerableBlink ) {
 
@@ -275,8 +275,8 @@ void Mario::draw() {
 
         }
 
-        for ( size_t i = 0; i < fireballs.size(); i++ ) {
-            fireballs[i].draw();
+        for ( auto& fireball : fireballs ) {
+            fireball.draw();
         }
 
     }
@@ -302,8 +302,10 @@ CollisionType Mario::checkCollision( Sprite *sprite ) {
 
         Rectangle rect = sprite->getRect();
 
-        for ( size_t i = 0; i < fireballs.size(); i++ ) {
-            Fireball* f = &fireballs[i];
+        for ( auto& fireball : fireballs ) {
+
+            Fireball* f = &fireball;
+
             switch ( f->checkCollision( sprite ) ) {
                 case COLLISION_TYPE_NORTH:
                     if ( GameWorld::debug ) {
@@ -328,6 +330,8 @@ CollisionType Mario::checkCollision( Sprite *sprite ) {
                         sprite->setColor( cpW.getColor() );
                     }
                     f->setState( SPRITE_STATE_TO_BE_REMOVED );
+                    break;
+                default:
                     break;
             }
         }
@@ -375,8 +379,8 @@ CollisionType Mario::checkCollisionBaddie( Sprite *sprite ) {
 
         Rectangle rect = sprite->getRect();
 
-        for ( size_t i = 0; i < fireballs.size(); i++ ) {
-            Fireball* f = &fireballs[i];
+        for ( auto& fireball : fireballs ) {
+            Fireball* f = &fireball;
             if ( f->checkCollision( sprite ) && 
                  sprite->getState() != SPRITE_STATE_DYING ) {
                 f->setState( SPRITE_STATE_TO_BE_REMOVED );
@@ -402,7 +406,7 @@ CollisionType Mario::checkCollisionBaddie( Sprite *sprite ) {
 
 }
 
-void Mario::drawHud() {
+void Mario::drawHud() const {
 
     std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
 
@@ -430,19 +434,19 @@ void Mario::drawHud() {
 
 }
 
-float Mario::getSpeedX() {
+float Mario::getSpeedX() const {
     return speedX;
 }
 
-float Mario::getMaxSpeedX() {
+float Mario::getMaxSpeedX() const {
     return maxSpeedX;
 }
 
-float Mario::getJumpSpeed() {
+float Mario::getJumpSpeed() const {
     return jumpSpeed;
 }
 
-float Mario::getActivationWidth() {
+float Mario::getActivationWidth() const {
     return activationWidth;
 }
 
@@ -450,7 +454,7 @@ void Mario::setImmortal( bool immortal ) {
     this->immortal = immortal;
 }
 
-bool Mario::isImmortal() {
+bool Mario::isImmortal() const {
     return immortal;
 }
 
@@ -470,23 +474,23 @@ void Mario::setPoints( int points ) {
     this->points = points;
 }
 
-int Mario::getRemainingTime() {
-    return (int) ( maxTime - ellapsedTime );
+int Mario::getRemainingTime() const {
+    return static_cast<int>(maxTime - ellapsedTime);
 }
 
 void Mario::setMaxTime( float maxTime ) {
     this->maxTime = maxTime;
 }
 
-int Mario::getLives() {
+int Mario::getLives() const {
     return lives;
 }
 
-int Mario::getCoins() {
+int Mario::getCoins() const {
     return coins;
 }
 
-int Mario::getPoints() {
+int Mario::getPoints() const {
     return points;
 }
 
@@ -537,7 +541,7 @@ void Mario::setReservedPowerUp( MarioType reservedPowerUp ) {
     this->reservedPowerUp = reservedPowerUp;
 }
 
-MarioType Mario::getReservedPowerUp() {
+MarioType Mario::getReservedPowerUp() const {
     return reservedPowerUp;
 }
 
@@ -552,7 +556,7 @@ void Mario::consumeReservedPowerUp() {
     reservedPowerUp = MARIO_TYPE_SMALL;
 }
 
-MarioType Mario::getType() {
+MarioType Mario::getType() const {
     return type;
 }
 
@@ -560,7 +564,7 @@ void Mario::setInvulnerable( bool invulnerable ) {
     this->invulnerable = invulnerable;
 }
 
-bool Mario::isInvulnerable() {
+bool Mario::isInvulnerable() const {
     return invulnerable;
 }
 
@@ -568,7 +572,7 @@ void Mario::setInvincible( bool invincible ) {
     this->invincible = invincible;
 }
 
-bool Mario::isInvincible() {
+bool Mario::isInvincible() const {
     return invincible;
 }
 
