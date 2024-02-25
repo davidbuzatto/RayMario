@@ -1,5 +1,7 @@
 para versão final:
     
+    - implementar piranha e muncher
+    
     - transformação/transição
         small->super;
         small->flower;

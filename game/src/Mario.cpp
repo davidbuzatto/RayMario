@@ -45,6 +45,8 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     movingAcum( 0 ),
     invincibleTime( 8 ),
     invincibleAcum( 0 ),
+    playerDownMusicStreamPlaying( false ),
+    gameOverMusicStreamPlaying( false ),
     lastPos( pos ) {
 
     setState( SPRITE_STATE_ON_GROUND );
@@ -101,7 +103,7 @@ void Mario::update() {
          state != SPRITE_STATE_VICTORY &&
          state != SPRITE_STATE_WAITING_TO_NEXT_MAP ) {
         state = SPRITE_STATE_DYING;
-        PlaySound( sounds["playerDown"] );
+        playPlayerDownMusicStream();
         removeLives( 1 );
         GameWorld::state = GAME_STATE_TIME_UP;
     }
@@ -279,6 +281,12 @@ void Mario::draw() {
             fireball.draw();
         }
 
+    }
+
+    if ( playerDownMusicStreamPlaying ) {
+        playPlayerDownMusicStream();
+    } else if ( gameOverMusicStreamPlaying ) {
+        playGameOverMusicStream();
     }
 
     if ( GameWorld::debug ) {
@@ -650,4 +658,53 @@ void Mario::resetAll() {
     coins = 0;
     points = 0;
     reset( true );
+}
+
+void Mario::playPlayerDownMusicStream() {
+
+    std::map<std::string, Music> musics = ResourceManager::getMusics();
+
+    if ( !playerDownMusicStreamPlaying ) {
+        playerDownMusicStreamPlaying = true;
+    } else {
+        if ( !IsMusicStreamPlaying( musics["playerDown"] ) ) {
+            PlayMusicStream( musics["playerDown"] );
+        } else {
+            UpdateMusicStream( musics["playerDown"] );
+            if ( static_cast<int>( GetMusicTimeLength( musics["playerDown"] ) ) == static_cast<int>( GetMusicTimePlayed( musics["playerDown"] ) ) ) {
+                StopMusicStream( musics["playerDown"] );
+                playerDownMusicStreamPlaying = false;
+            }
+        }
+    }
+    
+
+}
+
+void Mario::playGameOverMusicStream() {
+
+    std::map<std::string, Music> musics = ResourceManager::getMusics();
+
+    if ( !gameOverMusicStreamPlaying ) {
+        gameOverMusicStreamPlaying = true;
+    } else {
+        if ( !IsMusicStreamPlaying( musics["gameOver"] ) ) {
+            PlayMusicStream( musics["gameOver"] );
+        } else {
+            UpdateMusicStream( musics["gameOver"] );
+            if ( static_cast<int>( GetMusicTimeLength( musics["gameOver"] ) ) == static_cast<int>( GetMusicTimePlayed( musics["gameOver"] ) ) ) {
+                StopMusicStream( musics["gameOver"] );
+                gameOverMusicStreamPlaying = false;
+            }
+        }
+    }
+
+}
+
+bool Mario::isPlayerDownMusicStreamPlaying() const {
+    return playerDownMusicStreamPlaying;
+}
+
+bool Mario::isGameOverMusicStreamPlaying() const {
+    return gameOverMusicStreamPlaying;
 }

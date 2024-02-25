@@ -60,6 +60,9 @@ class Mario : public virtual Sprite {
     float invincibleTime;
     float invincibleAcum;
 
+    bool playerDownMusicStreamPlaying;
+    bool gameOverMusicStreamPlaying;
+
     Vector2 lastPos;
     
 public:
@@ -117,5 +120,10 @@ public:
 
     void reset( bool removePowerUps );
     void resetAll();
+
+    void playPlayerDownMusicStream();
+    void playGameOverMusicStream();
+    bool isPlayerDownMusicStreamPlaying() const;
+    bool isGameOverMusicStreamPlaying() const;
 
 };

@@ -350,5 +350,11 @@
     <ClInclude Include="..\game\src\QuestionStarBlock.h">
       <Filter>Header Files\blocks</Filter>
     </ClInclude>
+    <ClInclude Include="..\game\src\rres.h">
+      <Filter>Header Files\raylib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\rres-raylib.h">
+      <Filter>Header Files\raylib</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

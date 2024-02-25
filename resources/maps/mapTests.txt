@@ -103,13 +103,13 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/                                                                        C/
-/  IJ MN Q S UVVVW                                                       C/
-/  KL OP R T  XYZ                                                        C/
-/ iiiiiiiiiiiiiiiii                                                      C/
-/                                                                        C/
-/   h                                                                    C/
-/       EBF                                                              C/
-/   p   CAD                                                              C/
-/BBBBBBBGAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
-/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
+/                     {=}                                                C/
+/  IJ MN Q S UVVVW    [ ]                                                C/
+/  KL OP R T  XYZ     [ ]                                                C/
+/ iiiiiiiiiiiiiiiif   [ ]                                                C/
+/                     [ ]                                                C/
+/   h                 [ ]     iyswgcvh!?mfu+*                            C/
+/            EBF      [ ]                                                C/
+/   p       1CAD      [ ]      1                                         C/
+/BBBBBBB    BBBBBGAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/AAAAAAA    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

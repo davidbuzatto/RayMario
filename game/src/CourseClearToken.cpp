@@ -53,7 +53,6 @@ void CourseClearToken::draw() {
 }
 
 void CourseClearToken::playCollisionSound() {
-    PlaySound( ResourceManager::getSounds()["courseClear"] );
 }
 
 void CourseClearToken::updateMario( Mario& mario ) {

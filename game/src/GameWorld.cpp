@@ -431,7 +431,7 @@ void GameWorld::inputAndUpdate() {
                                 switch ( mario.getType() ) {
                                     case MARIO_TYPE_SMALL:
                                         mario.setState( SPRITE_STATE_DYING );
-                                        PlaySound( sounds["playerDown"] );
+                                        mario.playPlayerDownMusicStream();
                                         mario.removeLives( 1 );
                                         break;
                                     case MARIO_TYPE_SUPER:
@@ -467,7 +467,7 @@ void GameWorld::inputAndUpdate() {
                                     switch ( mario.getType() ) {
                                         case MARIO_TYPE_SMALL:
                                             mario.setState( SPRITE_STATE_DYING );
-                                            PlaySound( sounds["playerDown"] );
+                                            mario.playPlayerDownMusicStream();
                                             mario.removeLives( 1 );
                                             break;
                                         case MARIO_TYPE_SUPER:
@@ -517,14 +517,14 @@ void GameWorld::inputAndUpdate() {
 
     } else if ( mario.getState() == SPRITE_STATE_DYING ) {
 
-        if ( !IsSoundPlaying( sounds["playerDown"] ) && !IsSoundPlaying( sounds["gameOver"] ) ) {
+        if ( !mario.isPlayerDownMusicStreamPlaying() && !mario.isGameOverMusicStreamPlaying() ) {
             
             if ( mario.getLives() > 0 ) {
                 resetMap();
             } else if ( mario.getLives() < 0 ) {
                 resetGame();
             } else {
-                PlaySound( sounds["gameOver"] );
+                mario.playGameOverMusicStream();
                 state = GAME_STATE_GAME_OVER;
                 mario.setLives( -1 );
             }
@@ -532,6 +532,12 @@ void GameWorld::inputAndUpdate() {
         }
 
     } else if ( state == GAME_STATE_COUNTING_POINTS ) {
+
+        if ( !IsMusicStreamPlaying( musics["courseClear"] ) ) {
+            PlayMusicStream( ResourceManager::getMusics()["courseClear"] );
+        } else {
+            UpdateMusicStream( musics["courseClear"] );
+        }
 
         remainingTimePointCount--;
         mario.addPoints( 50 );
@@ -546,10 +552,16 @@ void GameWorld::inputAndUpdate() {
 
     } else if ( state == GAME_STATE_IRIS_OUT ) {
 
-        if ( !IsSoundPlaying( sounds["courseClear"] ) ) {
+        if ( !IsMusicStreamPlaying( musics["courseClear"] ) ) {
+            StopMusicStream( musics["courseClear"] );
             PlaySound( sounds["goalIrisOut"] );
             state = GAME_STATE_GO_TO_NEXT_MAP;
             irisOutAcum = 0;
+        } else {
+            UpdateMusicStream( musics["courseClear"] );
+            if ( static_cast<int>(GetMusicTimeLength( musics["courseClear"] )) == static_cast<int>(GetMusicTimePlayed( musics["courseClear"] )) ) {
+                StopMusicStream( musics["courseClear"] );
+            }
         }
 
     } else if ( state == GAME_STATE_GO_TO_NEXT_MAP ) {
@@ -582,7 +594,7 @@ void GameWorld::inputAndUpdate() {
 
     if ( mario.getState() != SPRITE_STATE_DYING && mario.getY() > map.getMaxHeight() ) {
         mario.setState( SPRITE_STATE_DYING );
-        PlaySound( sounds["playerDown"] );
+        mario.playPlayerDownMusicStream();
         mario.removeLives( 1 );
     }
 
@@ -634,6 +646,10 @@ void GameWorld::inputAndUpdate() {
             state = GAME_STATE_PLAYING;
         }
 
+    }
+
+    if ( state == GAME_STATE_GAME_OVER ) {
+        mario.playGameOverMusicStream();
     }
 
 }
@@ -791,9 +807,7 @@ void GameWorld::draw() {
  * Should be called inside the constructor.
  */
 void GameWorld::loadResources() {
-    ResourceManager::loadTextures();
-    ResourceManager::loadSounds();
-    ResourceManager::loadMusics();
+    ResourceManager::loadResources();
 }
 
 /**
@@ -801,9 +815,7 @@ void GameWorld::loadResources() {
  * Should be called inside the destructor.
  */
 void GameWorld::unloadResources() {
-    ResourceManager::unloadTextures();
-    ResourceManager::unloadSounds();
-    ResourceManager::unloadMusics();
+    ResourceManager::unloadResources();
 }
 
 void GameWorld::setCamera( Camera2D *camera ) {
