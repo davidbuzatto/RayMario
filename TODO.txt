@@ -2,21 +2,22 @@ para versão final:
     
     - implementar piranha e muncher
     
+    - conferir fases atuais
+    
+    - criar mais fases
+    
+    - chamar construtores um nível acima
+    
     - transformação/transição
         small->super;
         small->flower;
         super->flower;
         super->small;
         flower->small.
-    
-    - chamar construtores um nível acima
-    
-    - otimizações:
-        - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo
-          que estiverem dentro de um raio ou retângulo de ação
-          
-    - criar mais fases
             
 futuro:
     separar tiles de cenário, fundo etc
     editor de fases - salvar e carregar, usar formato binário?
+    - otimizações:
+        - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo
+          que estiverem dentro de um raio ou retângulo de ação
