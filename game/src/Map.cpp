@@ -44,6 +44,7 @@
 #include "WoodBlock.h"
 #include "YellowKoopaTroopa.h"
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -65,6 +66,9 @@ Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseIt
     drawBlackScreen( false ),
     drawBlackScreenFadeAcum( 0 ),
     drawBlackScreenFadeTime( 1.5 ),
+
+    tileSetId( 1 ),
+    maxTileSetId( 4 ),
 
     musicId( 1 ),
     maxMusicId( 9 ),
@@ -297,7 +301,7 @@ void Map::parseMap() {
                     while ( *mapData != ' ' ) {
                         number += std::string( 1, *mapData );
                         mapData++;
-                    }                    
+                    }
                     backgroundId = std::stoi( number );
                     if ( backgroundId <= 0 ) {
                         backgroundId = 1;
@@ -306,6 +310,25 @@ void Map::parseMap() {
                     }
 
                     backgroundTexture = textures[TextFormat( "background%d", backgroundId )];
+                    currentColumn = 1;
+
+                } else if ( *mapData == 't' ) {     // parse tile set id
+
+                    ignoreLine = true;
+                    mapData += 3;
+                    std::string number;
+
+                    while ( *mapData != ' ' ) {
+                        number += std::string( 1, *mapData );
+                        mapData++;
+                    }
+                    tileSetId = std::stoi( number );
+                    if ( tileSetId <= 0 ) {
+                        tileSetId = 1;
+                    } else if ( tileSetId > maxTileSetId ) {
+                        tileSetId = maxTileSetId;
+                    }
+
                     currentColumn = 1;
 
                 } else if ( *mapData == 'm' ) {     // parse music id
@@ -327,7 +350,7 @@ void Map::parseMap() {
 
                     currentColumn = 1;
 
-                } else if ( *mapData == 't' ) {     // parse music id
+                } else if ( *mapData == 'f' ) {     // parse time to finish
 
                     ignoreLine = true;
                     mapData += 3;
@@ -470,10 +493,12 @@ void Map::parseMap() {
                     case ']': frontScenarioTiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR, "tileCourseClearPoleFrontBody", true ) );
                         break;
 
-                    // tiles from A to Z (map dependent - future)
+                    // tiles from A to Z (depends on tile set parameter)
                     default:
                         if ( *mapData >= 'A' && *mapData <= 'Z' ) {
-                            tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR, std::string( 1, *mapData ), true ) );
+                            std::stringstream ss;
+                            ss << *mapData << tileSetId;
+                            tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), DEBUGGABLE_TILE_COLOR, ss.str(), true ) );
                         }
                         break;
 

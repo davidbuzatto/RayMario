@@ -1,7 +1,90 @@
+# map file
+# lines that start with '#' are comments.
+#
+# tiles:
+#               <space>: empty tile
+#                     /: invisible tile               (used for map/player/boundaries boundaries)
+#                     |: baddie invisible tile        (used only for baddies boundaries)
+#                  A..Z: tiles A through Z            (depends on the selected map)
+#     course clear pole:
+#                        {: back top
+#                        [: back body
+#                        }: front top
+#                        ]: front body
+# 
+# boxes:
+#     i: eyes closed
+#     y: eyes opened          (interactive)
+#     s: stone
+#     w: wood
+#     g: glass
+#     c: cloud
+#     v: invisible/visible    (interactive)
+#     h: message              (interactive)
+#     !: ! with coin          (interactive)
+#     ?: ? with coin          (interactive)
+#     m: ? with mushroom      (interactive)
+#     f: ? with fire flower   (interactive)
+#     u: ? with 1-up mushroom (interactive)
+#     +: ? with 3-up moon     (interactive)
+#     *: ? with star          (interactive)
+#
+# items:
+#     o: coin
+#     =: course clear token
+#
+# baddies:
+#     1: goomba
+#     2: flying goomba
+#     3: green koopa troopa
+#     4: red koopa troopa
+#     5: blue koopa troopa
+#     6: yellow koopa troopa
+#     7: bob-omb
+#     8: bullet bill
+#     9: swooper
+#     @: buzzy beetle
+#     $: mummy beetle
+#     %: rex
+#
+# colors: 
+#     - 0xf8e0b0ff (beige)
+#     - 0xd8f8d8ff (light green)
+#     - 0x0060b8ff (blue)
+#     - 0x000000ff (black)
+#     - 0x104838ff (dark green)
+#     - 0x183048ff (dark blue)
+#     - 0x98e0e0ff (light blue)
+#     - 0xf8f8f8ff (white)
+#
+# backgrounds:
+#     -  1) mountains and clouds
+#     -  2) forest
+#     -  3) rocky mountains
+#     -  4) clouds
+#     -  5) sharp rocky mountains
+#     -  6) fields of grass
+#     -  7) desert mountains
+#     -  8) sea
+#     -  9) wrecked ship
+#     - 10) castle
+#
+# musics:
+#     - 1) overworld
+#     - 2) athletic
+#     - 3) bonus
+#     - 4) underground
+#     - 5) swimming
+#     - 6) haunted house
+#     - 7) sub castle
+#     - 8) koopa junior
+#     - 9) the evil koopa
+#
 c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 2              # background id: [1-10]
+t: 3              # tile set id: [1-4]
 m: 2              # music id: [1-3]
-t: 200            # time to finish the map
+f: 200            # time to finish the map
 h: map 2 message
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                                                                                                                                                                               /
@@ -10,20 +93,20 @@ h: map 2 message
 /                                                                        cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc???+??cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc               /
 /         yyy                                                                                     ooo          oo                                                                                                                             EB/
 /F                                            oo   wwwwwwwwwwwwww  wwwwwwwwwwwwww                 o  o        o  o                                                                                               {=}                  gg      CA/
-/D                                          oo     w    ooo             oooo    w                 ooo         o  o            ooo        oo              QR                                                      [ ]                         gCA/
-/D   h    !!!                              o       w    o  o            o       w                 o o         o  o            o  o      o  o             ST                                                      [ ]                          CA/
+/D                                          oo     w    ooo             oooo    w                 ooo         o  o            ooo        oo              IJ                                                      [ ]                         gCA/
+/D   h    !!!                              o       w    o  o            o       w                 o o         o  o            o  o      o  o             KL                                                      [ ]                          CA/
 /D                                        oo       w    f  o     yy     uoo     w         m       o  o         oo             ooo       oooo          ssssssss       2            2                              [ ]                          CA/
 /D   p                                     o       w    o  o            o       w                iiiiii      iiiiii           o o       o  o       ssssssssssssss                                                [ ]                        ggCA/
 /HBBBBBBF !!!                               oo     w    ooo             o       w                                             o  o      o  o    ssssssssssssssssssss    1         1                            w [ ] w                        CA/
 /AAAAAAAD                                     oo   wwwwwwwwwwwwwwwwwwwwwwwwwwwwww       iiiii                              ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss                    wwww  [ ]  wwww                    CA/
-/AAAAAAAD  o                                                           oo                              UV                                                                                                    ww  [ ]  ww        sss       MN  CA/
-/AAAAAAAD o o                                                         o  o            o  o           UVWX                                               ?m               1          1                         wwwwwwwww                   OP  CA/
-/AAAAAAAD  o                     o                                    oooo            o  o           WXWXUV                                                       iiiiiiiiiiiiiiiiiiiiiiiiiii                                             OP  CA/
+/AAAAAAAD  o                                                           oo                              MN                                                                                                    ww  [ ]  ww        sss       MN  CA/
+/AAAAAAAD o o                                                         o  o            o  o           MNOP                                               ?m               1          1                         wwwwwwwww                   OP  CA/
+/AAAAAAAD  o                     o                                    oooo            o  o           OPOPMN                                                       iiiiiiiiiiiiiiiiiiiiiiiiiii                                             OP  CA/
 /AAAAAAAHBBBBF                  o o                                   o  o            o  o       EBBBBBBBBBBBBBBF                                                                                                                 o    EBBBBBBGA/
-/AAAAAAAAAAAAD                 o o o                                  o  o            o  o       CAAAAAAAAAAAAAAD                                       QR                                   oo       8                          o o   CAAAAAAAA/
-/AAAAAAAAAAAAD               iiiiiiiii                            EBBBBBBBBBBBF        oo        CAAAAAAAAAAAAAAD              oo                       STQR                               oo  oo8                                 %   CAAAAAAAA/
-/AAAAAAAAAAAAD  QR                                         QR o o CAAAAAAAAAAAD    @   @   @     CAAAAAAAAAAAAAAHBBBBBBF      oooo           UV     MN  STSTQR                          8oo  oo  oo                            EBBBBBBBGAAAAAAAA/
-/AAAAAAAAAAAAD  ST                           EBBBF        YST  o  CAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAAAAAAAD      oooo           WXY    OP  STSTSTQR                 8     oo  oo  oo  oo                          CAAAAAAAAAAAAAAAA/
-/AAAAAAAAAAAAD  ST          %    %    %      CAAAD       YZST o7o CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD    $  oo  $    $    WXZY   OP  STSTSTSTQR        8                                   %     %          CAAAAAAAAAAAAAAAA/
+/AAAAAAAAAAAAD                 o o o                                  o  o            o  o       CAAAAAAAAAAAAAAD                                       IJ                                   oo       8                          o o   CAAAAAAAA/
+/AAAAAAAAAAAAD               iiiiiiiii                            EBBBBBBBBBBBF        oo        CAAAAAAAAAAAAAAD              oo                       KLIJ                               oo  oo8                                 %   CAAAAAAAA/
+/AAAAAAAAAAAAD  IJ                                         IJ o o CAAAAAAAAAAAD    @   @   @     CAAAAAAAAAAAAAAHBBBBBBF      oooo           MN     MN  KLKLIJ                          8oo  oo  oo                            EBBBBBBBGAAAAAAAA/
+/AAAAAAAAAAAAD  KL                           EBBBF        QKL  o  CAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAAAAAAAD      oooo           OPQ    OP  KLKLKLIJ                 8     oo  oo  oo  oo                          CAAAAAAAAAAAAAAAA/
+/AAAAAAAAAAAAD  KL          %    %    %      CAAAD       QRKL o7o CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD    $  oo  $    $    OPRQ   OP  KLKLKLKLIJ        8                                   %     %          CAAAAAAAAAAAAAAAA/
 /AAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAHBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAA/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

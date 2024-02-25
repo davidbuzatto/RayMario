@@ -1,7 +1,90 @@
+# map file
+# lines that start with '#' are comments.
+#
+# tiles:
+#               <space>: empty tile
+#                     /: invisible tile               (used for map/player/boundaries boundaries)
+#                     |: baddie invisible tile        (used only for baddies boundaries)
+#                  A..Z: tiles A through Z            (depends on the selected map)
+#     course clear pole:
+#                        {: back top
+#                        [: back body
+#                        }: front top
+#                        ]: front body
+# 
+# boxes:
+#     i: eyes closed
+#     y: eyes opened          (interactive)
+#     s: stone
+#     w: wood
+#     g: glass
+#     c: cloud
+#     v: invisible/visible    (interactive)
+#     h: message              (interactive)
+#     !: ! with coin          (interactive)
+#     ?: ? with coin          (interactive)
+#     m: ? with mushroom      (interactive)
+#     f: ? with fire flower   (interactive)
+#     u: ? with 1-up mushroom (interactive)
+#     +: ? with 3-up moon     (interactive)
+#     *: ? with star          (interactive)
+#
+# items:
+#     o: coin
+#     =: course clear token
+#
+# baddies:
+#     1: goomba
+#     2: flying goomba
+#     3: green koopa troopa
+#     4: red koopa troopa
+#     5: blue koopa troopa
+#     6: yellow koopa troopa
+#     7: bob-omb
+#     8: bullet bill
+#     9: swooper
+#     @: buzzy beetle
+#     $: mummy beetle
+#     %: rex
+#
+# colors: 
+#     - 0xf8e0b0ff (beige)
+#     - 0xd8f8d8ff (light green)
+#     - 0x0060b8ff (blue)
+#     - 0x000000ff (black)
+#     - 0x104838ff (dark green)
+#     - 0x183048ff (dark blue)
+#     - 0x98e0e0ff (light blue)
+#     - 0xf8f8f8ff (white)
+#
+# backgrounds:
+#     -  1) mountains and clouds
+#     -  2) forest
+#     -  3) rocky mountains
+#     -  4) clouds
+#     -  5) sharp rocky mountains
+#     -  6) fields of grass
+#     -  7) desert mountains
+#     -  8) sea
+#     -  9) wrecked ship
+#     - 10) castle
+#
+# musics:
+#     - 1) overworld
+#     - 2) athletic
+#     - 3) bonus
+#     - 4) underground
+#     - 5) swimming
+#     - 6) haunted house
+#     - 7) sub castle
+#     - 8) koopa junior
+#     - 9) the evil koopa
+#
 c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
+t: 1              # tile set id: [1-4]
 m: 1              # music id: [1-3]
-t: 200            # time to finish the map
+f: 200            # time to finish the map
 h: Welcome to RayMario!\n\n\nProf. Dr. David Buzatto
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                                                                                                                                                                               /
@@ -16,14 +99,14 @@ h: Welcome to RayMario!\n\n\nProf. Dr. David Buzatto
 /D                                                 ssssss                                                                     ?f                                                                                             ssssssssss   [ ]   /
 /D                                                      sssssss                                                                                                                   iiii                                       ssssssssssEBBBBBBBB/
 /D                                                            sssssss                             o o o o o o o                                                                                         8                              CAAAAAAAA/
-/D                                                                                                                            QR                                                                    8                                  CAAAAAAAA/
-/D                                                             o o o o o o o    3         |          5      5         |      YSTQR                                      UV                       8                                     CAAAAAAAA/
-/D                                                     iiiiiiiiiiiiiiiiiiiiiiiiiiii        sssssssssssssssssssssssssss       ZSTST    1   1                             WX                    8                                    m   CAAAAAAAA/
-/D                                                 iiiiiiii                                          o            sssssssssssssssssssssssssssss                      1  WX                                                   QR o o o oCAAAAAAAA/
-/D                                            iiiiiiii                                              o o                                                           EBBBBBBBBBBF                                               STQRo o o CAAAAAAAA/
-/D                          iiiiiiiiimiiiiiiiiiiiii                     MN                         o o o                                2                      o  CAAAAAAAAAAD                                              YSTST o o oCAAAAAAAA/
-/D   h                                                                  OPIJ                        o o                              o o o o                  o o CAAAAAAAAAAHBBBBBF                                        ZSTSTY o o CAAAAAAAA/
-/D                                                     o o o            OPKL                         o                                                      EBBBBBGAAAAAAAAAAAAAAAAHBBBBBBF                                 ZSTSTZY o oCAAAAAAAA/
-/D   p      o o o o             1        1            o o o o           OPKL                    4       4       4       4                                   CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBF         3    4    5    6      ZSTSTZZ  o CAAAAAAAA/
+/D                                                                                                                            IJ                                                                    8                                  CAAAAAAAA/
+/D                                                             o o o o o o o    3         |          5      5         |      QKLIJ                                      MN                       8                                     CAAAAAAAA/
+/D                                                     iiiiiiiiiiiiiiiiiiiiiiiiiiii        sssssssssssssssssssssssssss       RKLKL    1   1                             OP                    8                                    m   CAAAAAAAA/
+/D                                                 iiiiiiii                                          o            sssssssssssssssssssssssssssss                      1  OP                                                   IJ o o o oCAAAAAAAA/
+/D                                            iiiiiiii                                              o o                                                           EBBBBBBBBBBF                                               KLIJo o o CAAAAAAAA/
+/D                          iiiiiiiiimiiiiiiiiiiiii                     MN                         o o o                                2                      o  CAAAAAAAAAAD                                              QKLKL o o oCAAAAAAAA/
+/D   h                                                                  OPIJ                        o o                              o o o o                  o o CAAAAAAAAAAHBBBBBF                                        RKLKLQ o o CAAAAAAAA/
+/D                                                     o o o            OPKL                         o                                                      EBBBBBGAAAAAAAAAAAAAAAAHBBBBBBF                                 RKLKLRQ o oCAAAAAAAA/
+/D   p      o o o o             1        1            o o o o           OPKL                    4       4       4       4                                   CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBF         3    4    5    6      RKLKLRR  o CAAAAAAAA/
 /HBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAA/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

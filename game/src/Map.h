@@ -46,7 +46,10 @@ class Map : public virtual Drawable {
     bool drawBlackScreen;
     float drawBlackScreenFadeAcum;
     float drawBlackScreenFadeTime;
-    
+
+    int tileSetId;
+    int maxTileSetId;
+
     int musicId;
     int maxMusicId;
 

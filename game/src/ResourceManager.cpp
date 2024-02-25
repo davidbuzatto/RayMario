@@ -8,6 +8,7 @@
 #include "raylib.h"
 #include "ResourceManager.h"
 #include <map>
+#include <sstream>
 #include <string>
 #include <utils.h>
 #include <vector>
@@ -154,9 +155,14 @@ void ResourceManager::loadTextures() {
         textures["fireball3L"] = texture2DFlipHorizontal( textures["fireball3R"] );
 
         // tiles
-        for ( char c = 'A'; c <= 'Z'; c++ ) {
-            textures[std::string(1, c)] = LoadTexture( TextFormat( "resources/images/tiles/tile_%c1.png", c ) );
+        for ( int i = 1; i <= 4; i++ ) {
+            for ( char c = 'A'; c <= 'Z'; c++ ) {
+                std::stringstream ss;
+                ss << c << i;
+                textures[ss.str()] = LoadTexture(TextFormat("resources/images/tiles/tile_%c%d.png", c, i));
+            }
         }
+
         textures["tileCourseClearPoleBackTop"] = LoadTexture( "resources/images/tiles/tile_CourseClearPoleBackTop.png" );
         textures["tileCourseClearPoleBackBody"] = LoadTexture( "resources/images/tiles/tile_CourseClearPoleBackBody.png" );
         textures["tileCourseClearPoleFrontTop"] = LoadTexture( "resources/images/tiles/tile_CourseClearPoleFrontTop.png" );

@@ -1,5 +1,5 @@
-# Map file
-# Lines that starts with '#' are comments
+# map file
+# lines that start with '#' are comments.
 #
 # tiles:
 #               <space>: empty tile
@@ -63,7 +63,7 @@
 #     -  3) rocky mountains
 #     -  4) clouds
 #     -  5) sharp rocky mountains
-#     -  6) fields os grass
+#     -  6) fields of grass
 #     -  7) desert mountains
 #     -  8) sea
 #     -  9) wrecked ship
@@ -82,8 +82,9 @@
 #
 c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
+t: 1              # tile set id: [1-4]
 m: 1              # music id: [1-9]
-t: 200            # time to finish the map
+f: 200            # time to finish the map
 h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"#()ááá
 ///////////////////////////////////////////////////////////////////////////
 /                                                                         /
@@ -102,13 +103,13 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/       {=}                                                              C/
-/       [ ]                                                              C/
-/       [ ]                                                              C/
-/       [ ]                                                              C/
-/       [ ]                                                              C/
-/   h   [ ]                                                              C/
-/       [ ]                                                              C/
-/   p   [ ]                                                              C/
-/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/                                                                        C/
+/  IJ MN Q S UVVVW                                                       C/
+/  KL OP R T  XYZ                                                        C/
+/ iiiiiiiiiiiiiiiii                                                      C/
+/                                                                        C/
+/   h                                                                    C/
+/       EBF                                                              C/
+/   p   CAD                                                              C/
+/BBBBBBBGAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
