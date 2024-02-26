@@ -46,6 +46,8 @@
 #     @: buzzy beetle
 #     $: mummy beetle
 #     %: rex
+#     &: muncher
+#     ~: piranha
 #
 # colors: 
 #     - 0xf8e0b0ff (beige)
@@ -104,8 +106,8 @@ h: map 3 message
 /ADv                                                                                  CAAD                 o                                                           o o o                                    EBBBBBBBBBBBBBF      o o o   CA/
 /AD                                                    oo                             CAAD                o o                                                         iiiiiii                                   CAAAAAAAAAAAAAD     o o o o  CA/
 /AD                                                   iiii                           iCAAD               o o o                                                                     9                            CAAAAAAAAAAAAAHF     o o o   CA/
-/AD           o                                oo                                     CAAD                o o                                                                           9                       CAAAAAAAAAAAAAAD       1     CA/
-/ADv         o o             EBBBF            iiii                         u          CAAD                 o                                                EBBBBBBF                                          IJCAAAAAAAAAAAAAAHF   ???+???  CA/
+/AD           o                                oo                                     CAAD                o o                                                                           9                     ~ CAAAAAAAAAAAAAAD       1     CA/
+/ADv         o o             EBBBF            iiii                         u          CAAD              ~ ~o~                                               EBBBBBBF                                          IJCAAAAAAAAAAAAAAHF   ???+???  CA/
 /AD   h     o o o            CAAAD                                                   iCAAD o            MNMNMNQ                    o o o        EBBBBF      CAAAAAAD   @    @       !?!?!?!?!?!?!?!?!?!?      KLCAAAAAAAAAAAAAAAD    o o o   CA/
 /AD                          CAAAD         o        o         o                       CAAD o IJ         OPOPOPRQ                 EBBBBBBBF      CAAAAD      CAAAAAAHBBBBBBBBBBBBF                             KLCAAAAAAAAAAAAAAAHF  o o1o o  CA/
 /AD   p          |     1     CAAAD        iii      iii       iii          iii         CAAD o KLQ  7  7  OPOPOPRRQ     %    %     CAAAAAAAD      CAAAAD      CAAAAAAAAAAAAAAAAAAAD      %     %     %       sssssCAAAAAAAAAAAAAAAAD   o o o   CA/

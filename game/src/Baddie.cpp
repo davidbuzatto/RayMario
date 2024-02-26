@@ -54,7 +54,6 @@ void Baddie::setAttributesOnDying() {
 }
 
 void Baddie::onSouthCollision() {
-
 }
 
 void Baddie::onHit() {

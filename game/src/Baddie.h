@@ -26,7 +26,7 @@ public:
     void update() override = 0;
     void draw() override = 0;
     void activateWithMarioProximity( Mario &mario );
-    void setAttributesOnDying();
+    virtual void setAttributesOnDying();
     virtual void onSouthCollision();
     virtual void onHit();
 

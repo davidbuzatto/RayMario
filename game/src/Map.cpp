@@ -48,6 +48,9 @@
 #include <string>
 #include <vector>
 
+#include "Muncher.h"
+#include "PiranhaPlant.h"
+
 Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies, GameWorld *gw ) :
 
     id( id ),
@@ -134,6 +137,10 @@ void Map::draw() {
         backScenarioTile->draw();
     }
 
+    for ( const auto& baddie : backBaddies ) {
+        baddie->draw();
+    }
+
     for ( const auto& tile : tiles ) {
         tile->draw();
     }
@@ -150,7 +157,7 @@ void Map::draw() {
         staticItem->draw();
     }
 
-    for ( const auto& baddie : baddies ) {
+    for ( const auto& baddie : frontBaddies ) {
         baddie->draw();
     }
 
@@ -386,6 +393,7 @@ void Map::parseMap() {
 
                 std::string blockMessage;
                 MessageBlock *newMessageBlock;
+                Baddie *newBaddie;
 
                 // processing boundary tiles when used as first column
                 // for camera adjustment
@@ -527,40 +535,102 @@ void Map::parseMap() {
 
                     // baddies
                     case '1':
-                        if ( parseBaddies ) baddies.push_back( new Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), MAROON ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new Goomba( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -100, 0 ), MAROON );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '2':
-                        if ( parseBaddies ) baddies.push_back( new FlyingGoomba( Vector2( x, y ), Vector2( 66, 48 ), Vector2( -100, 0 ), MAROON ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new FlyingGoomba( Vector2( x, y ), Vector2( 66, 48 ), Vector2( -100, 0 ), MAROON );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '3':
-                        if ( parseBaddies ) baddies.push_back( new GreenKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), GREEN ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new GreenKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), GREEN );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '4':
-                        if ( parseBaddies ) baddies.push_back( new RedKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), RED ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new RedKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), RED );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '5':
-                        if ( parseBaddies ) baddies.push_back( new BlueKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), BLUE ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new BlueKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), BLUE );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '6':
-                        if ( parseBaddies ) baddies.push_back( new YellowKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new YellowKoopaTroopa( Vector2( x, y ), Vector2( 32, 54 ), Vector2( -100, 0 ), YELLOW );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '7':
-                        if ( parseBaddies ) baddies.push_back( new BobOmb( Vector2( x, y ), Vector2( 24, 30 ), Vector2( -100, 0 ), BLACK ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new BobOmb( Vector2( x, y ), Vector2( 24, 30 ), Vector2( -100, 0 ), BLACK );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '8':
-                        if ( parseBaddies ) baddies.push_back( new BulletBill( Vector2( x, y ), Vector2( 32, 28 ), Vector2( -200, 0 ), BLACK ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new BulletBill( Vector2( x, y ), Vector2( 32, 28 ), Vector2( -200, 0 ), BLACK );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '9':
-                        if ( parseBaddies ) baddies.push_back( new Swooper( Vector2( x, y ), Vector2( 32, 34 ), Vector2( -100, 0 ), GREEN ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new Swooper( Vector2( x, y ), Vector2( 32, 34 ), Vector2( -100, 0 ), GREEN );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '@':
-                        if ( parseBaddies ) baddies.push_back( new BuzzyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), BLUE ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new BuzzyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), BLUE );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '$':
-                        if ( parseBaddies ) baddies.push_back( new MummyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), GRAY ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new MummyBeetle( Vector2( x, y ), Vector2( 32, 32 ), Vector2( -80, 0 ), GRAY );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
                         break;
                     case '%':
-                        if ( parseBaddies ) baddies.push_back( new Rex( Vector2( x, y ), Vector2( 40, 64 ), Vector2( -100, 0 ), VIOLET ) );
+                        if ( parseBaddies ) {
+                            newBaddie = new Rex( Vector2( x, y ), Vector2( 40, 64 ), Vector2( -100, 0 ), VIOLET );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
+                        break;
+                    case '&':
+                        if ( parseBaddies ) {
+                            newBaddie = new Muncher( Vector2( x, y ), Vector2( 32, 30 ), BROWN );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
+                        break;
+                    case '~':
+                        if ( parseBaddies ) {
+                            newBaddie = new PiranhaPlant( Vector2( x + 16, y + 36 ), Vector2( 32, 66 ), RED );
+                            baddies.push_back( newBaddie );
+                            backBaddies.push_back( newBaddie );
+                        }
                         break;
 
                     // no tile
@@ -679,6 +749,8 @@ void Map::reset() {
         delete baddie;
     }
     baddies.clear();
+    frontBaddies.clear();
+    backBaddies.clear();
 
     StopMusicStream( ResourceManager::getMusics()[std::string( TextFormat( "music%d", musicId ) )] );
     parsed = false;
@@ -706,4 +778,22 @@ void Map::first() {
 
 void Map::pauseGameToShowMessage() const {
     gw->pauseGame( false, false, false );
+}
+
+void Map::eraseBaddieFromDrawingVectors( Baddie* baddie ) {
+
+    for ( size_t i = 0; i < frontBaddies.size(); i++ ) {
+        if ( frontBaddies[i] == baddie ) {
+            frontBaddies.erase( frontBaddies.begin() + i );
+            return;
+        }
+    }
+
+    for ( size_t i = 0; i < backBaddies.size(); i++ ) {
+        if ( backBaddies[i] == baddie ) {
+            backBaddies.erase( backBaddies.begin() + i );
+            return;
+        }
+    }
+
 }

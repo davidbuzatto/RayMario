@@ -46,6 +46,8 @@
 #     @: buzzy beetle
 #     $: mummy beetle
 #     %: rex
+#     &: muncher
+#     ~: piranha
 #
 # colors: 
 #     - 0xf8e0b0ff (beige)
@@ -86,7 +88,7 @@ t: 1              # tile set id: [1-4]
 m: 1              # music id: [1-9]
 f: 200            # time to finish the map
 h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"#()ááá
-///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 /                                                                         /
 /                                                                        E/
 /                                                                        C/
@@ -103,13 +105,15 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/                     {=}                                                C/
-/  IJ MN Q S UVVVW    [ ]                                                C/
-/  KL OP R T  XYZ     [ ]                                                C/
-/ iiiiiiiiiiiiiiiif   [ ]                                                C/
-/                     [ ]                                                C/
-/   h                 [ ]     iyswgcvh!?mfu+*                            C/
-/            EBF      [ ]                                                C/
-/   p        CAD      [ ]                                                C/
-/BBBBBBBBBBBBGAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/                            {=}                                         C/
+/                            [ ]                                         C/
+/                            [ ]                                         C/
+/                            [ ]                                         C/
+/                            [ ]                                         C/
+/                            [ ]                                         C/
+/                            [ ]                                         C/
+/    mf*    ~&~&~&~&~&~&~&~  [ ]                                         C/
+/           MNMNMNMNMNMNMNMNMNMNMNMNMNMNMNMNMN                           C/
+/    p      OPOPOPOPOPOPOPOPOPOPOPOPOPOPOPOPOP                           C/
+/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

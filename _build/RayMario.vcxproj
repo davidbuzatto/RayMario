@@ -301,9 +301,11 @@
     <ClCompile Include="..\game\src\Map.cpp" />
     <ClCompile Include="..\game\src\MessageBlock.cpp" />
     <ClCompile Include="..\game\src\MummyBeetle.cpp" />
+    <ClCompile Include="..\game\src\Muncher.cpp" />
     <ClCompile Include="..\game\src\Mushroom.cpp" />
     <ClCompile Include="..\game\src\OneUpMushroom.cpp" />
     <ClCompile Include="..\game\src\Mario.cpp" />
+    <ClCompile Include="..\game\src\PiranhaPlant.cpp" />
     <ClCompile Include="..\game\src\QuestionBlock.cpp" />
     <ClCompile Include="..\game\src\QuestionFireFlowerBlock.cpp" />
     <ClCompile Include="..\game\src\QuestionMushroomBlock.cpp" />
@@ -355,9 +357,11 @@
     <ClInclude Include="..\game\src\MarioType.h" />
     <ClInclude Include="..\game\src\MessageBlock.h" />
     <ClInclude Include="..\game\src\MummyBeetle.h" />
+    <ClInclude Include="..\game\src\Muncher.h" />
     <ClInclude Include="..\game\src\Mushroom.h" />
     <ClInclude Include="..\game\src\OneUpMushroom.h" />
     <ClInclude Include="..\game\src\Mario.h" />
+    <ClInclude Include="..\game\src\PiranhaPlant.h" />
     <ClInclude Include="..\game\src\QuestionBlock.h" />
     <ClInclude Include="..\game\src\QuestionFireFlowerBlock.h" />
     <ClInclude Include="..\game\src\QuestionMushroomBlock.h" />

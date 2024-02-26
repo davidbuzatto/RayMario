@@ -363,11 +363,11 @@ void GameWorld::inputAndUpdate() {
             Item* item = items[i];
 
             if ( item->checkCollision( &mario ) != COLLISION_TYPE_NONE ) {
-                collectedIndexes.push_back( i );
+                collectedIndexes.push_back( static_cast<int>( i ) );
                 item->playCollisionSound();
                 item->updateMario( mario );
             } else if ( item->getY() > map.getMaxHeight() ) {
-                collectedIndexes.push_back( i );
+                collectedIndexes.push_back( static_cast<int>( i ) );
             }
 
         }
@@ -384,11 +384,11 @@ void GameWorld::inputAndUpdate() {
             Item* item = staticItems[i];
 
             if ( mario.checkCollision( item ) != COLLISION_TYPE_NONE ) {
-                collectedIndexes.push_back( i );
+                collectedIndexes.push_back( static_cast<int>( i ) );
                 item->playCollisionSound();
                 item->updateMario( mario );
             } else if ( item->getY() > map.getMaxHeight() ) {
-                collectedIndexes.push_back( i );
+                collectedIndexes.push_back( static_cast<int>( i ) );
             }
 
         }
@@ -415,93 +415,135 @@ void GameWorld::inputAndUpdate() {
                     baddie->activateWithMarioProximity( mario );
                 }
 
-                const CollisionType col = mario.checkCollisionBaddie( baddie );
+                if ( baddie->getState() != SPRITE_STATE_DYING ) {
 
-                if ( mario.isInvincible() && col && baddie->getState() != SPRITE_STATE_DYING ) {
-                    baddie->onHit();
-                    PlaySound( sounds["stomp"] );
-                    mario.addPoints( 200 );
-                } else {
-                    // mario and fireballs x baddies collision resolution and offscreen baddies removal
-                    switch ( col ) {
-                        case COLLISION_TYPE_NORTH:
-                        case COLLISION_TYPE_EAST:
-                        case COLLISION_TYPE_WEST:
-                            if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
-                                switch ( mario.getType() ) {
-                                    case MARIO_TYPE_SMALL:
-                                        mario.setState( SPRITE_STATE_DYING );
-                                        mario.playPlayerDownMusicStream();
-                                        mario.removeLives( 1 );
-                                        break;
-                                    case MARIO_TYPE_SUPER:
-                                        PlaySound( sounds["pipe"] );
-                                        mario.changeToSmall();
-                                        mario.setInvulnerable( true );
-                                        mario.consumeReservedPowerUp();
-                                        break;
-                                    case MARIO_TYPE_FLOWER:
-                                        PlaySound( sounds["pipe"] );
-                                        mario.changeToSmall();
-                                        mario.setInvulnerable( true );
-                                        mario.consumeReservedPowerUp();
-                                        break;
-                                }
+                    const CollisionType col = mario.checkCollisionBaddie( baddie );
+
+                    if ( mario.isInvincible() && col && baddie->getState() != SPRITE_STATE_DYING ) {
+                        baddie->onHit();
+                        PlaySound( sounds["stomp"] );
+                        mario.addPoints( 200 );
+                    } else {
+
+                        if ( baddie->getAuxiliaryState() != SPRITE_STATE_INVULNERABLE ) {
+
+                            // mario and fireballs x baddies collision resolution and offscreen baddies removal
+                            switch ( col ) {
+                                case COLLISION_TYPE_NORTH:
+                                case COLLISION_TYPE_EAST:
+                                case COLLISION_TYPE_WEST:
+                                    if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
+                                        switch ( mario.getType() ) {
+                                            case MARIO_TYPE_SMALL:
+                                                mario.setState( SPRITE_STATE_DYING );
+                                                mario.playPlayerDownMusicStream();
+                                                mario.removeLives( 1 );
+                                                break;
+                                            case MARIO_TYPE_SUPER:
+                                                PlaySound( sounds["pipe"] );
+                                                mario.changeToSmall();
+                                                mario.setInvulnerable( true );
+                                                mario.consumeReservedPowerUp();
+                                                break;
+                                            case MARIO_TYPE_FLOWER:
+                                                PlaySound( sounds["pipe"] );
+                                                mario.changeToSmall();
+                                                mario.setInvulnerable( true );
+                                                mario.consumeReservedPowerUp();
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case COLLISION_TYPE_SOUTH:
+                                    if ( mario.getState() == SPRITE_STATE_FALLING && baddie->getState() != SPRITE_STATE_DYING ) {
+                                        mario.setY( baddie->getY() - mario.getHeight() );
+                                        if ( ( IsKeyDown( KEY_LEFT_CONTROL ) ||
+                                               IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) ) {
+                                            mario.setVelY( -400 );
+                                        } else {
+                                            mario.setVelY( -200 );
+                                        }
+                                        mario.setState( SPRITE_STATE_JUMPING );
+                                        baddie->onHit();
+                                        PlaySound( sounds["stomp"] );
+                                        mario.addPoints( 200 );
+                                    } else {
+                                        if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
+                                            switch ( mario.getType() ) {
+                                                case MARIO_TYPE_SMALL:
+                                                    mario.setState( SPRITE_STATE_DYING );
+                                                    mario.playPlayerDownMusicStream();
+                                                    mario.removeLives( 1 );
+                                                    break;
+                                                case MARIO_TYPE_SUPER:
+                                                    PlaySound( sounds["pipe"] );
+                                                    mario.changeToSmall();
+                                                    mario.setInvulnerable( true );
+                                                    mario.consumeReservedPowerUp();
+                                                    break;
+                                                case MARIO_TYPE_FLOWER:
+                                                    PlaySound( sounds["pipe"] );
+                                                    mario.changeToSmall();
+                                                    mario.setInvulnerable( true );
+                                                    mario.consumeReservedPowerUp();
+                                                    break;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                case COLLISION_TYPE_FIREBALL:
+                                    baddie->onHit();
+                                    PlaySound( sounds["stomp"] );
+                                    mario.addPoints( 200 );
+                                    break;
+                                default:
+                                    break;
+
                             }
-                            break;
-                        case COLLISION_TYPE_SOUTH:
-                            if ( mario.getState() == SPRITE_STATE_FALLING && baddie->getState() != SPRITE_STATE_DYING ) {
-                                mario.setY( baddie->getY() - mario.getHeight() );
-                                if ( ( IsKeyDown( KEY_LEFT_CONTROL ) ||
-                                       IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) ) {
-                                    mario.setVelY( -400 );
+
+                        } else {
+
+                            if ( col ) {
+                                if ( col == COLLISION_TYPE_FIREBALL ) {
+                                    baddie->onHit();
+                                    PlaySound( sounds["stomp"] );
+                                    mario.addPoints( 200 );
                                 } else {
-                                    mario.setVelY( -200 );
-                                }
-                                mario.setState( SPRITE_STATE_JUMPING );
-                                baddie->onHit();
-                                PlaySound( sounds["stomp"] );
-                                mario.addPoints( 200 );
-                            } else {
-                                if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
-                                    switch ( mario.getType() ) {
-                                        case MARIO_TYPE_SMALL:
-                                            mario.setState( SPRITE_STATE_DYING );
-                                            mario.playPlayerDownMusicStream();
-                                            mario.removeLives( 1 );
-                                            break;
-                                        case MARIO_TYPE_SUPER:
-                                            PlaySound( sounds["pipe"] );
-                                            mario.changeToSmall();
-                                            mario.setInvulnerable( true );
-                                            mario.consumeReservedPowerUp();
-                                            break;
-                                        case MARIO_TYPE_FLOWER:
-                                            PlaySound( sounds["pipe"] );
-                                            mario.changeToSmall();
-                                            mario.setInvulnerable( true );
-                                            mario.consumeReservedPowerUp();
-                                            break;
+                                    if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
+                                        switch ( mario.getType() ) {
+                                            case MARIO_TYPE_SMALL:
+                                                mario.setState( SPRITE_STATE_DYING );
+                                                mario.playPlayerDownMusicStream();
+                                                mario.removeLives( 1 );
+                                                break;
+                                            case MARIO_TYPE_SUPER:
+                                                PlaySound( sounds["pipe"] );
+                                                mario.changeToSmall();
+                                                mario.setInvulnerable( true );
+                                                mario.consumeReservedPowerUp();
+                                                break;
+                                            case MARIO_TYPE_FLOWER:
+                                                PlaySound( sounds["pipe"] );
+                                                mario.changeToSmall();
+                                                mario.setInvulnerable( true );
+                                                mario.consumeReservedPowerUp();
+                                                break;
+                                        }
                                     }
                                 }
                             }
-                            break;
-                        case COLLISION_TYPE_FIREBALL:
-                            baddie->onHit();
-                            PlaySound( sounds["stomp"] );
-                            mario.addPoints( 200 );
-                            break;
-                        default:
-                            break;
+
+                        }
+
                     }
-                }
 
-                if ( baddie->getY() > map.getMaxHeight() ) {
-                    baddie->setState( SPRITE_STATE_TO_BE_REMOVED );
-                }
-
-                if ( baddie->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
-                    collectedIndexes.push_back( i );
+                } else {
+                    if ( baddie->getY() > map.getMaxHeight() ) {
+                        baddie->setState( SPRITE_STATE_TO_BE_REMOVED );
+                    }
+                    if ( baddie->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
+                        collectedIndexes.push_back( static_cast<int>( i ) );
+                    }
                 }
 
                 mario.updateCollisionProbes();
@@ -511,8 +553,18 @@ void GameWorld::inputAndUpdate() {
         }
 
         for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
-            delete baddies[collectedIndexes[i]];
+
+            Baddie *baddie = baddies[collectedIndexes[i]];
+            delete baddie;
             baddies.erase( baddies.begin() + collectedIndexes[i] );
+
+            // the map draws baddies in two layers
+            // the baddies are stored in three vectors:
+            //     one for baddies management (all baddies)
+            //     one for drawing in front of the scenario
+            //     one for drawing in back of the scenario
+            map.eraseBaddieFromDrawingVectors( baddie );
+
         }
 
     } else if ( mario.getState() == SPRITE_STATE_DYING ) {

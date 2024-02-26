@@ -29,6 +29,8 @@ class Map : public virtual Drawable {
     std::vector<Item*> items;
     std::vector<Item*> staticItems;
     std::vector<Baddie*> baddies;
+    std::vector<Baddie*> frontBaddies;  // auxiliary drawing vector for map placement
+    std::vector<Baddie*> backBaddies;   // auxiliary drawing vector for map placement
 
     int id;
     int maxId;
@@ -96,5 +98,7 @@ public:
     bool next();
     void first();
     void pauseGameToShowMessage() const;
+
+    void eraseBaddieFromDrawingVectors( Baddie *baddie );
 
 };

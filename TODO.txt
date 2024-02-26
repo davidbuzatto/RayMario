@@ -1,7 +1,5 @@
 para versão final:
     
-    - implementar piranha e muncher
-    
     - conferir fases atuais
     
     - criar mais fases

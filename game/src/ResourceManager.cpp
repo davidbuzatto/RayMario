@@ -387,19 +387,15 @@ void ResourceManager::loadTextures() {
         textures["mummyBeetle0L"] = texture2DFlipHorizontal( textures["mummyBeetle0R"] );
         textures["mummyBeetle1L"] = texture2DFlipHorizontal( textures["mummyBeetle1R"] );
 
-        //textures["muncher0R"] = LoadTexture( "resources/images/sprites/baddies/Muncher_0.png" );
-        //textures["muncher1R"] = LoadTexture( "resources/images/sprites/baddies/Muncher_1.png" );
-        loadTextureFromResource( "resources/images/sprites/baddies/Muncher_0.png", "muncher0R" );
-        loadTextureFromResource( "resources/images/sprites/baddies/Muncher_1.png", "muncher1R" );
-        textures["muncher0L"] = texture2DFlipHorizontal( textures["muncher0R"] );
-        textures["muncher1L"] = texture2DFlipHorizontal( textures["muncher1R"] );
+        //textures["muncher0"] = LoadTexture( "resources/images/sprites/baddies/Muncher_0.png" );
+        //textures["muncher1"] = LoadTexture( "resources/images/sprites/baddies/Muncher_1.png" );
+        loadTextureFromResource( "resources/images/sprites/baddies/Muncher_0.png", "muncher0" );
+        loadTextureFromResource( "resources/images/sprites/baddies/Muncher_1.png", "muncher1" );
 
-        //textures["piranhaPlant0R"] = LoadTexture( "resources/images/sprites/baddies/PiranhaPlant_0.png" );
-        //textures["piranhaPlant1R"] = LoadTexture( "resources/images/sprites/baddies/PiranhaPlant_1.png" );
-        loadTextureFromResource( "resources/images/sprites/baddies/PiranhaPlant_0.png", "piranhaPlant0R" );
-        loadTextureFromResource( "resources/images/sprites/baddies/PiranhaPlant_1.png", "piranhaPlant1R" );
-        textures["piranhaPlant0L"] = texture2DFlipHorizontal( textures["piranhaPlant0R"] );
-        textures["piranhaPlant1L"] = texture2DFlipHorizontal( textures["piranhaPlant1R"] );
+        //textures["piranhaPlant0"] = LoadTexture( "resources/images/sprites/baddies/PiranhaPlant_0.png" );
+        //textures["piranhaPlant1"] = LoadTexture( "resources/images/sprites/baddies/PiranhaPlant_1.png" );
+        loadTextureFromResource( "resources/images/sprites/baddies/PiranhaPlant_0.png", "piranhaPlant0" );
+        loadTextureFromResource( "resources/images/sprites/baddies/PiranhaPlant_1.png", "piranhaPlant1" );
 
         //textures["redKoopaTroopa0R"] = LoadTexture( "resources/images/sprites/baddies/RedKoopaTroopa_0.png" );
         //textures["redKoopaTroopa1R"] = LoadTexture( "resources/images/sprites/baddies/RedKoopaTroopa_1.png" );

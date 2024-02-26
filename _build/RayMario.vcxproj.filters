@@ -186,6 +186,12 @@
     <ClCompile Include="..\game\src\QuestionStarBlock.cpp">
       <Filter>Source Files\blocks</Filter>
     </ClCompile>
+    <ClCompile Include="..\game\src\Muncher.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\PiranhaPlant.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\game\src\GameWorld.h">
@@ -355,6 +361,12 @@
     </ClInclude>
     <ClInclude Include="..\game\src\rres-raylib.h">
       <Filter>Header Files\raylib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Muncher.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\PiranhaPlant.h">
+      <Filter>Header Files\baddies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

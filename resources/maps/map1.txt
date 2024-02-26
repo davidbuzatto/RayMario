@@ -46,6 +46,8 @@
 #     @: buzzy beetle
 #     $: mummy beetle
 #     %: rex
+#     &: muncher
+#     ~: piranha
 #
 # colors: 
 #     - 0xf8e0b0ff (beige)
@@ -99,11 +101,11 @@ h: Welcome to RayMario!\n\n\nProf. Dr. David Buzatto
 /D                                                 ssssss                                                                     ?f                                                                                             ssssssssss   [ ]   /
 /D                                                      sssssss                                                                                                                   iiii                                       ssssssssssEBBBBBBBB/
 /D                                                            sssssss                             o o o o o o o                                                                                         8                              CAAAAAAAA/
-/D                                                                                                                            IJ                                                                    8                                  CAAAAAAAA/
+/D                                                                                                                            IJ~                                       ~                           8                                  CAAAAAAAA/
 /D                                                             o o o o o o o    3         |          5      5         |      QKLIJ                                      MN                       8                                     CAAAAAAAA/
-/D                                                     iiiiiiiiiiiiiiiiiiiiiiiiiiii        sssssssssssssssssssssssssss       RKLKL    1   1                             OP                    8                                    m   CAAAAAAAA/
-/D                                                 iiiiiiii                                          o            sssssssssssssssssssssssssssss                      1  OP                                                   IJ o o o oCAAAAAAAA/
-/D                                            iiiiiiii                                              o o                                                           EBBBBBBBBBBF                                               KLIJo o o CAAAAAAAA/
+/D                                                     iiiiiiiiiiiiiiiiiiiiiiiiiiii        sssssssssssssssssssssssssss       RKLKL    1   1                             OP                    8                              ~     m   CAAAAAAAA/
+/D                                                 iiiiiiii                                          o            sssssssssssssssssssssssssssss                      1  OP                                                   IJ~  o o oCAAAAAAAA/
+/D                                            iiiiiiii                  ~                           o o                                                           EBBBBBBBBBBF                                               KLIJo o o CAAAAAAAA/
 /D                          iiiiiiiiimiiiiiiiiiiiii                     MN                         o o o                                2                      o  CAAAAAAAAAAD                                              QKLKL o o oCAAAAAAAA/
 /D   h                                                                  OPIJ                        o o                              o o o o                  o o CAAAAAAAAAAHBBBBBF                                        RKLKLQ o o CAAAAAAAA/
 /D                                                     o o o            OPKL                         o                                                      EBBBBBGAAAAAAAAAAAAAAAAHBBBBBBF                                 RKLKLRQ o oCAAAAAAAA/
