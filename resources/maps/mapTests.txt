@@ -105,15 +105,15 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/                            {=}                                         C/
-/                            [ ]                                         C/
-/                            [ ]                                         C/
-/                            [ ]                                         C/
-/                            [ ]                                         C/
-/                            [ ]                                         C/
-/                            [ ]                                         C/
-/    mf*    ~&~&~&~&~&~&~&~  [ ]                                         C/
-/           MNMNMNMNMNMNMNMNMNMNMNMNMNMNMNMNMN                           C/
-/    p      OPOPOPOPOPOPOPOPOPOPOPOPOPOPOPOPOP                           C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/    p      1                                                            C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

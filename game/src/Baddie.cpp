@@ -23,7 +23,7 @@ Baddie::Baddie( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxF
 }
 
 Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) : 
-    Baddie( pos, dim,vel, color, 0, 0, 0 ) {
+    Baddie( pos, dim, vel, color, 0, 0, 0 ) {
 }
 
 Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames ) :
