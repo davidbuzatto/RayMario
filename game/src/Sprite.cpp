@@ -73,10 +73,12 @@ Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
     currentFrame( 0 ),
     maxFrames( maxFrames ),
     facingDirection( facingDirection ) {
+
     cpN.setColor( color );
     cpS.setColor( color );
     cpE.setColor( color );
     cpW.setColor( color );
+
 }
 
 Sprite::~Sprite() = default;

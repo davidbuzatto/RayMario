@@ -13,7 +13,7 @@
 #include "Item.h"
 #include "Map.h"
 
-class QuestionThreeUpMoonBlock : public virtual Block {
+class QuestionThreeUpMoonBlock : public Block {
 
 private:
     Item* item;

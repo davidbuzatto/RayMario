@@ -5,6 +5,7 @@
  *
  * @copyright Copyright (c) 2024
  */
+#include "Block.h"
 #include "GameWorld.h"
 #include "Mushroom.h"
 #include "QuestionMushroomBlock.h"
@@ -17,7 +18,7 @@ QuestionMushroomBlock::QuestionMushroomBlock( Vector2 pos, Vector2 dim, Color co
     QuestionMushroomBlock( pos, dim, color, 0.1, 4 ) {}
 
 QuestionMushroomBlock::QuestionMushroomBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ),
+    Block( pos, dim, color, frameTime, maxFrames ),
     item( nullptr ),
     itemVelY( -80 ),
     itemMinY( 0 ),

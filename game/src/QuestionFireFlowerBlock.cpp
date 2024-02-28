@@ -5,6 +5,7 @@
  *
  * @copyright Copyright (c) 2024
  */
+#include "Block.h"
 #include "FireFlower.h"
 #include "GameWorld.h"
 #include "QuestionFireFlowerBlock.h"
@@ -17,7 +18,7 @@ QuestionFireFlowerBlock::QuestionFireFlowerBlock( Vector2 pos, Vector2 dim, Colo
     QuestionFireFlowerBlock( pos, dim, color, 0.1, 4 ) {}
 
 QuestionFireFlowerBlock::QuestionFireFlowerBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ),
+    Block( pos, dim, color, frameTime, maxFrames ),
     item( nullptr ),
     itemVelY( -80 ),
     itemMinY( 0 ),

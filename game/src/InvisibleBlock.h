@@ -12,7 +12,7 @@
 #include "Mario.h"
 #include "Map.h"
 
-class InvisibleBlock : public virtual Block {
+class InvisibleBlock : public Block {
 
 private:
     float coinAnimationTime;

@@ -11,7 +11,7 @@
 #include "Sprite.h"
 #include <string>
 
-class Tile : public virtual Sprite {
+class Tile : public Sprite {
 
 protected:
     std::string key;

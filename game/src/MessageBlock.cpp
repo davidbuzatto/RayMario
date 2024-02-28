@@ -5,6 +5,7 @@
  *
  * @copyright Copyright (c) 2024
  */
+#include "Block.h"
 #include "GameWorld.h"
 #include "MessageBlock.h"
 #include "raylib.h"
@@ -18,7 +19,7 @@ MessageBlock::MessageBlock( Vector2 pos, Vector2 dim, Color color, std::string m
 }
 
 MessageBlock::MessageBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, std::string message ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ), message( std::move(message) ),
+    Block( pos, dim, color, frameTime, maxFrames ), message( std::move(message) ),
     moveAnimationTime( 0.1 ),
     moveAnimationAcum( 0 ),
     moveAnimationStarted( false ),

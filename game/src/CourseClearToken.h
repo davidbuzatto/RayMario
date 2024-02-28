@@ -11,7 +11,7 @@
 #include "Mario.h"
 #include "raylib.h"
 
-class CourseClearToken : public virtual Item {
+class CourseClearToken : public Item {
 
 private:
     float minY;

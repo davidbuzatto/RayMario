@@ -11,7 +11,7 @@
 #include "raylib.h"
 #include "Sprite.h"
 
-class Item : public virtual Sprite {
+class Item : public Sprite {
     
 public:
 

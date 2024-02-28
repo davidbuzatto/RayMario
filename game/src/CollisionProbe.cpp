@@ -7,7 +7,6 @@
  */
 #include "CollisionProbe.h"
 #include "raylib.h"
-#include "Sprite.h"
 
 CollisionProbe::CollisionProbe() :
     CollisionProbe( Vector2( 0, 0 ), Vector2( 5, 5 ), Color( 255, 255, 255, 255 ) ) {

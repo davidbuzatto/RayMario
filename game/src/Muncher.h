@@ -10,7 +10,7 @@
 #include "Baddie.h"
 #include "raylib.h"
 
-class Muncher : public virtual Baddie {
+class Muncher : public Baddie {
     
 public:
 

@@ -5,6 +5,7 @@
  *
  * @copyright Copyright (c) 2024
  */
+#include "Block.h"
 #include "GameWorld.h"
 #include "raylib.h"
 #include "ResourceManager.h"
@@ -15,7 +16,7 @@ StoneBlock::StoneBlock( Vector2 pos, Vector2 dim, Color color ) :
     StoneBlock( pos, dim, color, 0, 1 ) {}
 
 StoneBlock::StoneBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ) {}
+    Block( pos, dim, color, frameTime, maxFrames ) {}
 
 StoneBlock::~StoneBlock() = default;
 

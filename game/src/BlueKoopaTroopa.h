@@ -10,7 +10,7 @@
 #include "Baddie.h"
 #include "raylib.h"
 
-class BlueKoopaTroopa : public virtual Baddie {
+class BlueKoopaTroopa : public Baddie {
     
 public:
 

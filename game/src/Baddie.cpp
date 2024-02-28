@@ -31,7 +31,14 @@ Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
 }
 
 Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int hitsToDie ) :
-    Sprite( pos, dim, vel, color, frameTime, maxFrames, hitsToDie ) {
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, DIRECTION_LEFT, hitsToDie ) {
+
+    Color c = ColorFromHSV( GetRandomValue( 0, 360 ), 1, 0.9 );
+    cpN.setColor( c );
+    cpS.setColor( c );
+    cpE.setColor( c );
+    cpW.setColor( c );
+
 }
 
 Baddie::~Baddie() = default;

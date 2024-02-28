@@ -7,14 +7,14 @@
  */
 #include "FireFlower.h"
 #include "GameWorld.h"
+#include "Item.h"
 #include "Mario.h"
 #include "raylib.h"
 #include "ResourceManager.h"
-#include "Sprite.h"
 #include <string>
 
 FireFlower::FireFlower( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, dim, color, 0.2, 2 ) {
+    Item( pos, dim, color, 0.2, 2 ) {
 }
 
 FireFlower::~FireFlower() = default;

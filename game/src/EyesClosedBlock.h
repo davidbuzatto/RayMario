@@ -10,7 +10,7 @@
 #include "raylib.h"
 #include "Block.h"
 
-class EyesClosedBlock : public virtual Block {
+class EyesClosedBlock : public Block {
 
 public:
 

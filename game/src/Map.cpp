@@ -512,7 +512,7 @@ void Map::parseMap() {
 
                     // items
                     case 'o':
-                        if ( parseItems ) staticItems.push_back( new Coin( Vector2( x + 4, y ), Vector2( 25, 32 ), YELLOW ) );
+                        if ( parseItems ) staticItems.push_back( new Coin( Vector2( x + 4, y ), Vector2( 24, 32 ), YELLOW ) );
                         break;
                     case '=':
                         if ( parseItems ) staticItems.push_back( new CourseClearToken( Vector2( x - TILE_WIDTH, y ), Vector2( 64, 32 ), LIGHTGRAY ) );

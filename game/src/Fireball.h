@@ -11,7 +11,7 @@
 #include "raylib.h"
 #include "Sprite.h"
 
-class Fireball : public virtual Sprite {
+class Fireball : public Sprite {
     
     float timeSpan;
     float timeSpanAcum;

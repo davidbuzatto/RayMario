@@ -13,7 +13,7 @@ class Map;
 #include "Sprite.h"
 #include "Mario.h"
 
-class Block : public virtual Sprite {
+class Block : public Sprite {
 
 protected:
     bool hit;

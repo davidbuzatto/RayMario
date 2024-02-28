@@ -10,7 +10,7 @@
 #include "raylib.h"
 #include "Block.h"
 
-class StoneBlock : public virtual Block {
+class StoneBlock : public Block {
 
 public:
 

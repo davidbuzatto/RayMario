@@ -12,7 +12,7 @@
 #include "Mario.h"
 #include <string>
 
-class MessageBlock : public virtual Block {
+class MessageBlock : public Block {
 
 private:
     std::string message;

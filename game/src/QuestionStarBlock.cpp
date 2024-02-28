@@ -5,6 +5,7 @@
  *
  * @copyright Copyright (c) 2024
  */
+#include "Block.h"
 #include "GameWorld.h"
 #include "QuestionStarBlock.h"
 #include "raylib.h"
@@ -17,7 +18,7 @@ QuestionStarBlock::QuestionStarBlock( Vector2 pos, Vector2 dim, Color color ) :
     QuestionStarBlock( pos, dim, color, 0.1, 4 ) {}
 
 QuestionStarBlock::QuestionStarBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ),
+    Block( pos, dim, color, frameTime, maxFrames ),
     item( nullptr ),
     itemVelY( -80 ),
     itemMinY( 0 ),

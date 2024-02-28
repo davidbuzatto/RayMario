@@ -6,16 +6,16 @@
  * @copyright Copyright (c) 2024
  */
 #include "GameWorld.h"
+#include "Item.h"
 #include "Mario.h"
 #include "raylib.h"
 #include "ResourceManager.h"
-#include "Sprite.h"
 #include "Star.h"
 #include <map>
 #include <string>
 
 Star::Star( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Sprite( pos, dim, vel, color, 0, 0 ) {}
+    Item( pos, dim, vel, color, 0, 0 ) {}
 
 Star::~Star() = default;
 

@@ -11,7 +11,7 @@
 #include "Block.h"
 #include "Mario.h"
 
-class ExclamationBlock : public virtual Block {
+class ExclamationBlock : public Block {
 
 private:
     float coinAnimationTime;

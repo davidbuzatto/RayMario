@@ -4,8 +4,6 @@ para versão final:
     
     - criar mais fases
     
-    - chamar construtores um nível acima
-    
     - transformação/transição
         small->super;
         small->flower;

@@ -10,7 +10,7 @@
 #include "Baddie.h"
 #include "raylib.h"
 
-class MummyBeetle : public virtual Baddie {
+class MummyBeetle : public Baddie {
     
 public:
 

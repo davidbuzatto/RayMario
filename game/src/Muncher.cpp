@@ -5,8 +5,8 @@
  * 
  * @copyright Copyright (c) 2024
  */
+#include "Baddie.h"
 #include "CollisionProbe.h"
-#include "Direction.h"
 #include "GameWorld.h"
 #include "Muncher.h"
 #include "raylib.h"
@@ -17,15 +17,9 @@
 #include <map>
 
 Muncher::Muncher( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0.2, 2, 1 ) {
+    Baddie( pos, dim, Vector2( 0, 0 ), color, 0.2, 2, 1 ) {
 
     auxiliaryState = SPRITE_STATE_INVULNERABLE;
-
-    Color c = ColorFromHSV( GetRandomValue( 0, 360 ), 1, 0.9 );
-    cpN.setColor( c );
-    cpS.setColor( c );
-    cpE.setColor( c );
-    cpW.setColor( c );
     
 }
 

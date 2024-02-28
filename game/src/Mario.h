@@ -15,7 +15,7 @@
 #include "Sprite.h"
 #include <vector>
 
-class Mario : public virtual Sprite {
+class Mario : public Sprite {
 
     float speedX;
     float maxSpeedX;

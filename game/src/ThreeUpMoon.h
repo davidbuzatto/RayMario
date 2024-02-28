@@ -11,7 +11,7 @@
 #include "Mario.h"
 #include "raylib.h"
 
-class ThreeUpMoon : public virtual Item {
+class ThreeUpMoon : public Item {
     
 public:
 

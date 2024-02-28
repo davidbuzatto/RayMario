@@ -10,7 +10,7 @@
 #include "Baddie.h"
 #include "raylib.h"
 
-class PiranhaPlant : public virtual Baddie {
+class PiranhaPlant : public Baddie {
 
 private:
     float minY;

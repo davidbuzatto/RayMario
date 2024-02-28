@@ -5,6 +5,7 @@
  *
  * @copyright Copyright (c) 2024
  */
+#include "Block.h"
 #include "GameWorld.h"
 #include "QuestionBlock.h"
 #include "raylib.h"
@@ -16,7 +17,7 @@ QuestionBlock::QuestionBlock( Vector2 pos, Vector2 dim, Color color ) :
     QuestionBlock( pos, dim, color, 0.1, 4 ) {}
 
 QuestionBlock::QuestionBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ),
+    Block( pos, dim, color, frameTime, maxFrames ),
     coinAnimationTime( 0.5 ),
     coinAnimationAcum( 0 ),
     coinFrameAcum( 0 ),

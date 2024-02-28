@@ -11,7 +11,7 @@
 #include "Mario.h"
 #include "raylib.h"
 
-class FireFlower : public virtual Item {
+class FireFlower : public Item {
     
 public:
 

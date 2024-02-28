@@ -5,6 +5,7 @@
  *
  * @copyright Copyright (c) 2024
  */
+#include "Block.h"
 #include "EyesOpenedBlock.h"
 #include "GameWorld.h"
 #include "raylib.h"
@@ -16,7 +17,7 @@ EyesOpenedBlock::EyesOpenedBlock( Vector2 pos, Vector2 dim, Color color ) :
     EyesOpenedBlock( pos, dim, color, 0.1, 4 ) {}
 
 EyesOpenedBlock::EyesOpenedBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ), animationTime( 3 ), animationAcum( 0 ) {}
+    Block( pos, dim, color, frameTime, maxFrames ), animationTime( 3 ), animationAcum( 0 ) {}
 
 EyesOpenedBlock::~EyesOpenedBlock() = default;
 

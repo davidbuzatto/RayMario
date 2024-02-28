@@ -18,16 +18,7 @@
 #include <map>
 
 Rex::Rex( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Sprite( pos, dim, vel, color, 0.2, 2, 2 ) {
-
-    facingDirection = DIRECTION_LEFT;
-    
-    Color c = ColorFromHSV( GetRandomValue( 0, 360 ), 1, 0.9 );
-    cpN.setColor( c );
-    cpS.setColor( c );
-    cpE.setColor( c );
-    cpW.setColor( c );
-    
+    Baddie( pos, dim, vel, color, 0.2, 2, 2 ) {
 }
 
 Rex::~Rex() = default;
