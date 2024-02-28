@@ -1,20 +1,11 @@
 para versão final:
     
-    - implementar item (moeda do yoshi)
-    - tiles não colidíveis
-    - tiles colidíveis apenas por cima
-    - tiles em camadas -> evita detecção de colisão!
+    - implementar item (moeda do yoshi) (assets ok)
     - implementar baddie (topeira)
-    
-    - conferir fases atuais
-    
-    - implementar p e mudança de moedas para blocos
-    
+    - implementar baddie (piranha voadora)
+    - implementar baddie (bill bala grande)
+    - implementar cipó -> texturas do cipó e do mário escalando
     - melhorar desenho da grade!
-    
-    - implementar cipó
-    
-    - criar mais fases
     
     - transformação/transição
         small->super;
@@ -22,6 +13,13 @@ para versão final:
         super->flower;
         super->small;
         flower->small.
+        
+    - tiles não colidíveis
+    - tiles colidíveis apenas por cima
+    - tiles em camadas -> evita detecção de colisão!
+    
+    - implementar p e mudança de moedas para blocos
+    - criar mais fases
             
 futuro:
     separar tiles de cenário, fundo etc
