@@ -31,11 +31,15 @@ void ResourceManager::loadTextureFromResource(
     const std::string& textureKey ) {
 
     const unsigned int id = rresGetResourceId( centralDir, fileName.c_str() );
-    const rresResourceChunk chunk = rresLoadResourceChunk( centralDirLocation.c_str(), id );
+    rresResourceChunk chunk = rresLoadResourceChunk( centralDirLocation.c_str(), id );
+    const int result = UnpackResourceChunk( &chunk );
 
-    const Image image = LoadImageFromResource( chunk );
-    textures[textureKey] = LoadTextureFromImage( image );
-    UnloadImage( image );
+    if ( result == 0 ) {
+        const Image image = LoadImageFromResource( chunk );
+        textures[textureKey] = LoadTextureFromImage( image );
+        UnloadImage( image );
+    }
+
     rresUnloadResourceChunk( chunk );
 
 }
@@ -46,10 +50,14 @@ void ResourceManager::loadSoundFromResource(
 
     const unsigned int id = rresGetResourceId( centralDir, fileName.c_str() );
     rresResourceChunk chunk = rresLoadResourceChunk( centralDirLocation.c_str(), id );
+    const int result = UnpackResourceChunk( &chunk );
 
-    const Wave wave = LoadWaveFromResource( chunk );
-    sounds[soundKey] = LoadSoundFromWave( wave );
-    UnloadWave( wave );
+    if ( result == 0 ) {
+        const Wave wave = LoadWaveFromResource( chunk );
+        sounds[soundKey] = LoadSoundFromWave( wave );
+        UnloadWave( wave );
+    }
+
     rresUnloadResourceChunk( chunk );
 
 }
@@ -59,13 +67,16 @@ void ResourceManager::loadMusicFromResource(
     const std::string& musicKey ) {
 
     const unsigned int id = rresGetResourceId( centralDir, fileName.c_str() );
-    const rresResourceChunk chunk = rresLoadResourceChunk( centralDirLocation.c_str(), id );
+    rresResourceChunk chunk = rresLoadResourceChunk( centralDirLocation.c_str(), id );
+    const int result = UnpackResourceChunk( &chunk );
 
-    unsigned int dataSize = 0;
-    void *data = LoadDataFromResource( chunk, &dataSize );
-    musics[musicKey] = LoadMusicStreamFromMemory( ".mp3", static_cast<unsigned char*>(data), static_cast<int>(dataSize) );
+    if ( result == 0 ) {
+        unsigned int dataSize = 0;
+        void* data = LoadDataFromResource( chunk, &dataSize );
+        musics[musicKey] = LoadMusicStreamFromMemory( ".mp3", static_cast<unsigned char*>( data ), static_cast<int>( dataSize ) );
+        musicDataStreamDataPointers.push_back( data );
+    }
 
-    musicDataStreamDataPointers.push_back( data );
     rresUnloadResourceChunk( chunk );
 
 }

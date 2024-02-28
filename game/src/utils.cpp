@@ -24,13 +24,17 @@ double toDegrees( double radians ) {
 Texture2D texture2DFlipHorizontal( Texture2D texture ) {
     Image img = LoadImageFromTexture( texture );
     ImageFlipHorizontal( &img );
-    return LoadTextureFromImage( img );
+    Texture2D newTexture = LoadTextureFromImage( img );
+    UnloadImage( img );
+    return newTexture;
 }
 
 Texture2D textureColorReplace( Texture2D texture, Color targetColor, Color newColor ) {
     Image img = LoadImageFromTexture( texture );
     ImageColorReplace( &img, targetColor, newColor );
-    return LoadTextureFromImage( img );
+    Texture2D newTexture = LoadTextureFromImage( img );
+    UnloadImage( img );
+    return newTexture;
 }
 
 Texture2D textureColorReplace( Texture2D texture, std::vector<Color> replacePallete ) {
@@ -38,7 +42,9 @@ Texture2D textureColorReplace( Texture2D texture, std::vector<Color> replacePall
     for ( size_t i = 0; i < replacePallete.size(); i += 2 ) {
         ImageColorReplace( &img, replacePallete[i], replacePallete[i + 1] );
     }
-    return LoadTextureFromImage( img );
+    Texture2D newTexture = LoadTextureFromImage( img );
+    UnloadImage( img );
+    return newTexture;
 }
 
 void drawWhiteSmallNumber( int number, int x, int y ) {
@@ -55,8 +61,8 @@ void drawSmallNumber( int number, int x, int y, std::string textureId ) {
     int h = 14;
     std::string str = std::to_string( number );
     int px = x;
-    for ( size_t i = 0; i < str.length(); i++ ) {
-        DrawTextureRec( texture, Rectangle( ( str[i] - '0' ) * w, 0, w, h ), Vector2( px, y ), WHITE );
+    for ( char i : str ) {
+        DrawTextureRec( texture, Rectangle( ( i - '0' ) * w, 0, w, h ), Vector2( px, y ), WHITE );
         px += w - 2;
     }
 }
@@ -67,8 +73,8 @@ void drawBigNumber( int number, int x, int y ) {
     int h = 28;
     std::string str = std::to_string( number );
     int px = x;
-    for ( size_t i = 0; i < str.length(); i++ ) {
-        DrawTextureRec( texture, Rectangle(( str[i] - '0' ) * w, 0, w, h), Vector2(px, y), WHITE);
+    for ( char i : str ) {
+        DrawTextureRec( texture, Rectangle(( i - '0' ) * w, 0, w, h), Vector2(px, y), WHITE);
         px += w - 2;
     }
 }
@@ -80,9 +86,9 @@ void drawString( std::string str, int x, int y ) {
     int h = 20;
     int px = x;
 
-    for ( size_t i = 0; i < str.length(); i++ ) {
+    for ( char i : str ) {
 
-        int code = std::toupper(str[i]);
+        int code = std::toupper( i );
         bool space = false;
         int textureY;
         bool undefined = false;
@@ -127,14 +133,12 @@ void drawString( std::string str, int x, int y ) {
 
 void drawString( std::wstring str, int x, int y ) {
 
-    Texture2D texture = ResourceManager::getTextures()["guiAlfa"];
+    const Texture2D texture = ResourceManager::getTextures()["guiAlfa"];
     int w = 18;
     int h = 20;
     int px = x;
 
-    for ( size_t i = 0; i < str.length(); i++ ) {
-
-        int code = str[i];
+    for ( int code : str ) {
         bool space = false;
         int textureY;
         bool undefined = false;
@@ -220,14 +224,12 @@ int getDrawStringHeight() {
 
 void drawMessageString( std::string str, int x, int y ) {
 
-    Texture2D texture = ResourceManager::getTextures()["guiAlfaLowerUpper"];
+    const Texture2D texture = ResourceManager::getTextures()["guiAlfaLowerUpper"];
     int w = 16;
     int h = 16;
     int px = x;
 
-    for ( size_t i = 0; i < str.length(); i++ ) {
-
-        int code = str[i];
+    for ( int code : str ) {
         bool space = false;
         int textureY;
         bool undefined = false;
@@ -288,14 +290,13 @@ std::vector<std::string> split( std::string s, std::string delimiter ) {
 
     size_t pos_start = 0;
     size_t pos_end;
-    size_t delim_len = delimiter.length();
+    size_t delimLen = delimiter.length();
 
-    std::string token;
     std::vector<std::string> res;
 
     while ( ( pos_end = s.find( delimiter, pos_start ) ) != std::string::npos ) {
-        token = s.substr( pos_start, pos_end - pos_start );
-        pos_start = pos_end + delim_len;
+        std::string token = s.substr( pos_start, pos_end - pos_start );
+        pos_start = pos_end + delimLen;
         res.push_back( token );
     }
 
