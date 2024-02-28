@@ -17,7 +17,7 @@
 CourseClearToken::CourseClearToken( Vector2 pos, Vector2 dim, Color color ) :
     Item( pos, dim, color, 0, 0 ), minY( 0 ), maxY( 0 ) {
     minY = pos.y;
-    maxY = minY + 7 * dim.y;
+    maxY = minY + 8 * dim.y;
     vel.y = 100;
 }
 

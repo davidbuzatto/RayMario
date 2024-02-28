@@ -1,6 +1,18 @@
 para versão final:
     
+    - implementar item (moeda do yoshi)
+    - tiles novos (fronteiras)
+    - tiles não colidíveis
+    - tiles em camada extra
+    - implementar baddie (topeira)
+    
     - conferir fases atuais
+    
+    - implementar p e mudança de moedas para blocos
+    
+    - melhorar desenho da grade!
+    
+    - implementar cipó
     
     - criar mais fases
     
