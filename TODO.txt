@@ -1,11 +1,10 @@
 para versão final:
     
     - implementar item (moeda do yoshi) (assets ok)
-    - implementar baddie (topeira)
-    - implementar baddie (piranha voadora)
-    - implementar baddie (bill bala grande)
+    - implementar baddie (topeira) (assets ok)
+    - implementar baddie (piranha voadora) (assets ok)
+    - implementar baddie (bill bala grande) (assets ok)
     - implementar cipó -> texturas do cipó e do mário escalando
-    - melhorar desenho da grade!
     
     - transformação/transição
         small->super;

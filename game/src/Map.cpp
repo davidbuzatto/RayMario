@@ -54,7 +54,7 @@
 Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies, GameWorld *gw ) :
 
     id( id ),
-    maxId( 3 ),
+    maxId( 4 ),
 
     maxWidth( 0 ),
     maxHeight( 0 ),
@@ -204,6 +204,17 @@ void Map::draw() {
             currentLine++;
         }
 
+    }
+
+    if ( GameWorld::debug ) {
+        int columns = maxWidth / TILE_WIDTH;
+        int lines = maxHeight / TILE_WIDTH;
+        for ( int i = 0; i < lines; i++ ) {
+            DrawLine( 0, i * TILE_WIDTH, maxWidth, i * TILE_WIDTH, GRAY );
+        }
+        for ( int i = 0; i < columns; i++ ) {
+            DrawLine( i * TILE_WIDTH, 0, i * TILE_WIDTH, maxHeight, GRAY );
+        }
     }
 
 }

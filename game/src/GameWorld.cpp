@@ -716,27 +716,12 @@ void GameWorld::draw() {
 
     BeginDrawing();
     ClearBackground( WHITE );
-
-    int columns = GetScreenWidth() / Map::TILE_WIDTH;
-    int lines = GetScreenHeight() / Map::TILE_WIDTH;
     std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
 
     if ( state != GAME_STATE_GAME_OVER && state != GAME_STATE_TITLE_SCREEN ) {
 
         BeginMode2D( *camera );
-
         map.draw();
-
-        // TODO: upgrade grid drawing
-        if ( debug ) {
-            for ( int i = -20; i <= lines + 20; i++ ) {
-                DrawLine( -2000, i * Map::TILE_WIDTH, 10000, i * Map::TILE_WIDTH, GRAY );
-            }
-            for ( int i = -20; i <= columns + 250; i++ ) {
-                DrawLine( i * Map::TILE_WIDTH, -2000, i * Map::TILE_WIDTH, 2000, GRAY );
-            }
-        }
-
         EndMode2D();
 
         mario.drawHud();
