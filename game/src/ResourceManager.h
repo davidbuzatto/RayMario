@@ -52,4 +52,6 @@ public:
     static std::map<std::string, Sound> &getSounds();
     static std::map<std::string, Music> &getMusics();
 
+    static bool loadFromRRES;
+
 };

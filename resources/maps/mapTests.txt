@@ -82,38 +82,38 @@
 #     - 8) koopa junior
 #     - 9) the evil koopa
 #
-c: 0xf8e0b0ff     # background color: [0xrrggbbaa]
-b: 2              # background id: [1-10]
+c: 0x0060b8ff     # background color: [0xrrggbbaa]
+b: 1              # background id: [1-10]
 t: 1              # tile set id: [1-4]
 m: 1              # music id: [1-9]
 f: 200            # time to finish the map
-h: message 1
-h: message 2
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/                                                                                                                                                                                                        i                                                                                                                       /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                                                                              o                                                                                                                 /
-/                                                                                                                                                                                                           oo o oo                                                                                                              /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                                                                         ccccccccccc                                                                                                            /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                                                                                                                                                                                                /
-/                                                                                                                                                  o                                                                        o                                                                                                    /
-/                                                                                                                                                ooo                                                                    ooo o                                                                                 {=}                /
-/                                                                                                                                               o                                                       yy                                                                                yyy                 [ ]                /
-/                                                                                                                                                                                                                                                                                         ygy                 [ ]                /
-/                                                                               o                            o                                                                                BBBBBBBB                          !                                                         yyy    oooooooooo   [ ]                /
-/                                                                              ooo                           o                                                                                AAAAAAAA               BBBBBBBBBB                                                                 o             [ ]                /
-/                           44444444   ?!?   BBBBBBB                          o   o                                               EBBBBBBBBBBBBF                            MN                AAAAAAAA               AAAAAAAAAA                                                   ~            o              [ ]                /
-/                   BBBBBBBBBBBBBBBB         AAAAAAA  ??         h                                                             EBBGAAAAAAAAAAAAD              h           MNOP     ???      BBBBBAAABBBBBB           AAAAAAAAAA                               MN                  MN          o               [ ]                /
-/                   AAAAAAAAAAAAAAAA         AAAAAAA                                                                       EBBBGAAAAAAAAAAAAAAAD                          OPOP              AAAAAAAAAAAAAA           AAAAAAEBBBBBBBBF              MN         OP               MN OP                          [ ]                /
-/   p               AAAAAAAAAAAAAAAA         AAAAAAA                               4                     3            EBBBBGAAAAAAAAAAAAAAAAAAAD                          OPOP              AAAAAAAAAAAAAA           AAAAAACAAAAAAAAD       1      OP   1     OP               OP OP                          [ ]                /
-/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAAD!!EBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB/
-/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD  CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
-/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD  CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
+h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"#()ááá
+///////////////////////////////////////////////////////////////////////////
+/                                                                         /
+/                                                                        E/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/                                                                        C/
+/    iyswgcvh!?mfu+*                                                     C/
+/                                                                        C/
+/                                                                        C/
+/    p      123456789@$%&~                                               C/
+/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

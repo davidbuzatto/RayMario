@@ -31,6 +31,7 @@
 #define ALLOW_ENABLE_CONTROLS false
 #define INITIAL_MAP_ID 1
 #define LOAD_TEST_MAP false
+#define LOAD_RESOURCES_FROM_RRES true
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
@@ -40,6 +41,7 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #define ALLOW_ENABLE_CONTROLS true
 #define INITIAL_MAP_ID 1
 #define LOAD_TEST_MAP true
+#define LOAD_RESOURCES_FROM_RRES false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
 #define PARSE_BADDIES true
@@ -49,6 +51,7 @@ GameState GameWorld::state = GAME_STATE_PLAYING;
 bool GameWorld::debug = ACTIVATE_DEBUG;
 bool GameWorld::showFPS = ACTIVATE_DEBUG;
 bool GameWorld::immortalMario = ACTIVATE_DEBUG;
+bool ResourceManager::loadFromRRES = LOAD_RESOURCES_FROM_RRES;
 float GameWorld::gravity = 20;
 
 /**

@@ -1,9 +1,9 @@
 para versão final:
     
     - implementar item (moeda do yoshi)
-    - tiles novos (fronteiras)
     - tiles não colidíveis
-    - tiles em camada extra
+    - tiles colidíveis apenas por cima
+    - tiles em camadas -> evita detecção de colisão!
     - implementar baddie (topeira)
     
     - conferir fases atuais
