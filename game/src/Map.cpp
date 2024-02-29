@@ -27,6 +27,8 @@
 #include "Map.h"
 #include "MessageBlock.h"
 #include "MummyBeetle.h"
+#include "Muncher.h"
+#include "PiranhaPlant.h"
 #include "QuestionBlock.h"
 #include "QuestionFireFlowerBlock.h"
 #include "QuestionMushroomBlock.h"
@@ -43,13 +45,15 @@
 #include "utils.h"
 #include "WoodBlock.h"
 #include "YellowKoopaTroopa.h"
+#include "YoshiCoin.h"
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
 
-#include "Muncher.h"
-#include "PiranhaPlant.h"
+#include "BanzaiBill.h"
+#include "JumpingPiranhaPlant.h"
+#include "MontyMole.h"
 
 Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies, GameWorld *gw ) :
 
@@ -210,10 +214,10 @@ void Map::draw() {
         int columns = maxWidth / TILE_WIDTH;
         int lines = maxHeight / TILE_WIDTH;
         for ( int i = 0; i < lines; i++ ) {
-            DrawLine( 0, i * TILE_WIDTH, maxWidth, i * TILE_WIDTH, GRAY );
+            DrawLine( 0, i * TILE_WIDTH, maxWidth, i * TILE_WIDTH, BLACK );
         }
         for ( int i = 0; i < columns; i++ ) {
-            DrawLine( i * TILE_WIDTH, 0, i * TILE_WIDTH, maxHeight, GRAY );
+            DrawLine( i * TILE_WIDTH, 0, i * TILE_WIDTH, maxHeight, BLACK );
         }
     }
 
@@ -525,6 +529,9 @@ void Map::parseMap() {
                     case 'o':
                         if ( parseItems ) staticItems.push_back( new Coin( Vector2( x + 4, y ), Vector2( 24, 32 ), YELLOW ) );
                         break;
+                    case ':':
+                        if ( parseItems ) staticItems.push_back( new YoshiCoin( Vector2( x, y + 5 ), Vector2( 32, 50 ), YELLOW ) );
+                        break;
                     case '=':
                         if ( parseItems ) staticItems.push_back( new CourseClearToken( Vector2( x - TILE_WIDTH, y ), Vector2( 64, 32 ), LIGHTGRAY ) );
                         break;
@@ -641,6 +648,27 @@ void Map::parseMap() {
                             newBaddie = new PiranhaPlant( Vector2( x + 16, y + 36 ), Vector2( 32, 66 ), RED );
                             baddies.push_back( newBaddie );
                             backBaddies.push_back( newBaddie );
+                        }
+                        break;
+                    case '^':
+                        if ( parseBaddies ) {
+                            newBaddie = new JumpingPiranhaPlant( Vector2( x + 16, y + 34 ), Vector2( 32, 42 ), RED );
+                            baddies.push_back( newBaddie );
+                            backBaddies.push_back( newBaddie );
+                        }
+                        break;
+                    case '<':
+                        if ( parseBaddies ) {
+                            newBaddie = new BanzaiBill( Vector2( x, y ), Vector2( 128, 128 ), Vector2( -200, 0 ), BLACK );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
+                        }
+                        break;
+                    case '.':
+                        if ( parseBaddies ) {
+                            newBaddie = new MontyMole( Vector2( x, y ), Vector2( 32, 30 ), Vector2( -200, 0 ), BROWN );
+                            baddies.push_back( newBaddie );
+                            frontBaddies.push_back( newBaddie );
                         }
                         break;
 

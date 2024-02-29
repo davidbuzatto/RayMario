@@ -34,6 +34,7 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     activationWidth( 0 ),
     lives( 5 ),
     coins( 0 ),
+    yoshiCoins( 0 ),
     points( 0 ),
     maxTime( 0 ),
     ellapsedTime( 0.0f ),
@@ -421,6 +422,10 @@ void Mario::drawHud() const {
     DrawTexture( textures["guiMario"], 34, 32, WHITE );
     DrawTexture( textures["guiX"], 54, 49, WHITE );
     drawWhiteSmallNumber( lives < 0 ? 0 : lives, 68, 49 );
+
+    for ( int i = 0; i < yoshiCoins; i++ ) {
+        DrawTexture( textures["guiCoin"], 34 + textures["guiMario"].width + 16 + i*textures["guiCoin"].width, 32, WHITE);
+    }
     
     DrawTexture( textures["guiCoin"], GetScreenWidth() - 115, 32, WHITE );
     DrawTexture( textures["guiX"], GetScreenWidth() - 97, 34, WHITE );
@@ -478,6 +483,10 @@ void Mario::setCoins( int coins ) {
     this->coins = coins;
 }
 
+void Mario::setYoshiCoins( int yoshiCoins ) {
+    this->yoshiCoins = yoshiCoins;
+}
+
 void Mario::setPoints( int points ) {
     this->points = points;
 }
@@ -498,6 +507,10 @@ int Mario::getCoins() const {
     return coins;
 }
 
+int Mario::getYoshiCoins() const {
+    return yoshiCoins;
+}
+
 int Mario::getPoints() const {
     return points;
 }
@@ -512,6 +525,10 @@ void Mario::removeLives( int lives ) {
 
 void Mario::addCoins( int coins ) {
     this->coins += coins;
+}
+
+void Mario::addYoshiCoins( int yoshiCoins ) {
+    this->yoshiCoins += yoshiCoins;
 }
 
 void Mario::removeCoins( int coins ) {
@@ -650,12 +667,14 @@ void Mario::reset( bool removePowerUps ) {
     invulnerable = false;
     invulnerableTimeAcum = 0;
     invulnerableBlink = false;
+    yoshiCoins = 0;
 
 }
 
 void Mario::resetAll() {
     lives = 5;
     coins = 0;
+    yoshiCoins = 0;
     points = 0;
     reset( true );
 }

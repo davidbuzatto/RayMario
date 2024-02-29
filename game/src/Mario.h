@@ -38,6 +38,7 @@ class Mario : public Sprite {
 
     int lives;
     int coins;
+    int yoshiCoins;
     int points;
     float maxTime;
     float ellapsedTime;
@@ -89,17 +90,20 @@ public:
 
     void setLives( int lives );
     void setCoins( int coins );
+    void setYoshiCoins( int yoshiCoins );
     void setPoints( int points );
     void setMaxTime( float maxTime );
     
     int getLives() const;
     int getCoins() const;
+    int getYoshiCoins() const;
     int getPoints() const;
     int getRemainingTime() const;
 
     void addLives( int lives );
     void removeLives( int lives );
     void addCoins( int coins );
+    void addYoshiCoins( int yoshiCoins );
     void removeCoins( int coins );
     void addPoints( int points );
     void removePoints( int points );

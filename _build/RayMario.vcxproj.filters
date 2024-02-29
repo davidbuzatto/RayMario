@@ -192,6 +192,18 @@
     <ClCompile Include="..\game\src\PiranhaPlant.cpp">
       <Filter>Source Files\baddies</Filter>
     </ClCompile>
+    <ClCompile Include="..\game\src\YoshiCoin.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\BanzaiBill.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\JumpingPiranhaPlant.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\MontyMole.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\game\src\GameWorld.h">
@@ -366,6 +378,18 @@
       <Filter>Header Files\baddies</Filter>
     </ClInclude>
     <ClInclude Include="..\game\src\PiranhaPlant.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\YoshiCoin.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\BanzaiBill.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\JumpingPiranhaPlant.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\MontyMole.h">
       <Filter>Header Files\baddies</Filter>
     </ClInclude>
   </ItemGroup>

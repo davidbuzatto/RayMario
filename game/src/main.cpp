@@ -10,7 +10,19 @@
 int main( void ) {
 
     //GameWindow gameWindow( 576, 448, "RayMario", true );
-    GameWindow gameWindow( 576, 448, "RayMario", 60, true, false, false, false, true, false, true );
+
+    GameWindow gameWindow( 
+        576, 448,     // dimensions
+        "RayMario",   // title
+        60,           // target FPS
+        false,        // antialiasing
+        true,         // resizable
+        false,        // fullscreen
+        false,        // undecorated
+        true,         // always on top
+        false,        // always run
+        true );       // init audio
+
     gameWindow.init();
 
     return 0;

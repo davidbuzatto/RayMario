@@ -403,6 +403,10 @@ void ResourceManager::loadTextures() {
             loadTextureFromResource( "resources/images/sprites/items/FireFlower_1.png", "fireFlower1" );
             loadTextureFromResource( "resources/images/sprites/items/Mushroom.png", "mushroom" );
             loadTextureFromResource( "resources/images/sprites/items/Star.png", "star" );
+            loadTextureFromResource( "resources/images/sprites/items/YoshiCoin_0.png", "yoshiCoin0" );
+            loadTextureFromResource( "resources/images/sprites/items/YoshiCoin_1.png", "yoshiCoin1" );
+            loadTextureFromResource( "resources/images/sprites/items/YoshiCoin_2.png", "yoshiCoin2" );
+            loadTextureFromResource( "resources/images/sprites/items/YoshiCoin_3.png", "yoshiCoin3" );
         } else {
             textures["coin0"] = LoadTexture( "resources/images/sprites/items/Coin_0.png" );
             textures["coin1"] = LoadTexture( "resources/images/sprites/items/Coin_1.png" );
@@ -415,6 +419,10 @@ void ResourceManager::loadTextures() {
             textures["fireFlower1"] = LoadTexture( "resources/images/sprites/items/FireFlower_1.png" );
             textures["mushroom"] = LoadTexture( "resources/images/sprites/items/Mushroom.png" );
             textures["star"] = LoadTexture( "resources/images/sprites/items/Star.png" );
+            textures["yoshiCoin0"] = LoadTexture( "resources/images/sprites/items/YoshiCoin_0.png" );
+            textures["yoshiCoin1"] = LoadTexture( "resources/images/sprites/items/YoshiCoin_1.png" );
+            textures["yoshiCoin2"] = LoadTexture( "resources/images/sprites/items/YoshiCoin_2.png" );
+            textures["yoshiCoin3"] = LoadTexture( "resources/images/sprites/items/YoshiCoin_3.png" );
         }
 
         // baddies
@@ -557,6 +565,35 @@ void ResourceManager::loadTextures() {
         textures["yellowKoopaTroopa0L"] = texture2DFlipHorizontal( textures["yellowKoopaTroopa0R"] );
         textures["yellowKoopaTroopa1L"] = texture2DFlipHorizontal( textures["yellowKoopaTroopa1R"] );
 
+        if ( loadFromRRES ) {
+            loadTextureFromResource( "resources/images/sprites/baddies/MontyMole_0.png", "montyMole0R" );
+            loadTextureFromResource( "resources/images/sprites/baddies/MontyMole_1.png", "montyMole1R" );
+        } else {
+            textures["montyMole0R"] = LoadTexture( "resources/images/sprites/baddies/MontyMole_0.png" );
+            textures["montyMole1R"] = LoadTexture( "resources/images/sprites/baddies/MontyMole_1.png" );
+        }
+        textures["montyMole0L"] = texture2DFlipHorizontal( textures["montyMole0R"] );
+        textures["montyMole1L"] = texture2DFlipHorizontal( textures["montyMole1R"] );
+
+        if ( loadFromRRES ) {
+            loadTextureFromResource( "resources/images/sprites/baddies/BanzaiBill_0.png", "banzaiBill0R" );
+        } else {
+            textures["banzaiBill0R"] = LoadTexture( "resources/images/sprites/baddies/BanzaiBill_0.png" );
+        }
+        textures["banzaiBill0L"] = texture2DFlipHorizontal( textures["banzaiBill0R"] );
+
+        if ( loadFromRRES ) {
+            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_Down_0.png", "jumpingPiranhaPlantDown0" );
+            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_Down_1.png", "jumpingPiranhaPlantDown1" );
+            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_Up_0.png", "jumpingPiranhaPlantUp0" );
+            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_Up_1.png", "jumpingPiranhaPlantUp1" );
+        } else {
+            textures["jumpingPiranhaPlantDown0"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_Down_0.png" );
+            textures["jumpingPiranhaPlantDown1"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_Down_1.png" );
+            textures["jumpingPiranhaPlantUp0"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_Up_0.png" );
+            textures["jumpingPiranhaPlantUp1"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_Up_1.png" );
+        }
+
         // gui
         if ( loadFromRRES ) {
             loadTextureFromResource( "resources/images/gui/guiAlfa.png", "guiAlfa" );
@@ -611,6 +648,7 @@ void ResourceManager::loadSounds() {
             loadSoundFromResource( "resources/sfx/smw_break_block.wav", "breakBlock" );
             loadSoundFromResource( "resources/sfx/smw_coin.wav", "coin" );
             loadSoundFromResource( "resources/sfx/smw_chuck_whistle.wav", "chuckWhistle" );
+            loadSoundFromResource( "resources/sfx/smw_dragon_coin.wav", "dragonCoin" );
             loadSoundFromResource( "resources/sfx/smw_fireball.wav", "fireball" );
             loadSoundFromResource( "resources/sfx/smw_goal_iris-out.wav", "goalIrisOut" );
             loadSoundFromResource( "resources/sfx/smw_jump.wav", "jump" );
@@ -631,6 +669,7 @@ void ResourceManager::loadSounds() {
             sounds["breakBlock"] = LoadSound( "resources/sfx/smw_break_block.wav" );
             sounds["coin"] = LoadSound( "resources/sfx/smw_coin.wav" );
             sounds["chuckWhistle"] = LoadSound( "resources/sfx/smw_chuck_whistle.wav" );
+            sounds["dragonCoin"] = LoadSound( "resources/sfx/smw_dragon_coin.wav" );
             sounds["fireball"] = LoadSound( "resources/sfx/smw_fireball.wav" );
             sounds["goalIrisOut"] = LoadSound( "resources/sfx/smw_goal_iris-out.wav" );
             sounds["jump"] = LoadSound( "resources/sfx/smw_jump.wav" );
@@ -673,8 +712,9 @@ void ResourceManager::loadMusics() {
             loadMusicFromResource( "resources/musics/playerDown.mp3", "playerDown" );
             loadMusicFromResource( "resources/musics/title.mp3", "title" );
         } else {
-            musics["title"]  = LoadMusicStream( "resources/musics/title.mp3" );
-            musics["ending"]  = LoadMusicStream( "resources/musics/ending.mp3" );
+            musics["courseClear"]  = LoadMusicStream( "resources/musics/courseClear.mp3" );
+            musics["ending"] = LoadMusicStream( "resources/musics/ending.mp3" );
+            musics["gameOver"] = LoadMusicStream( "resources/musics/gameOver.mp3" );
             musics["invincible"] = LoadMusicStream( "resources/musics/invincible.mp3" );
             musics["music1"] = LoadMusicStream( "resources/musics/music1.mp3" );
             musics["music2"] = LoadMusicStream( "resources/musics/music2.mp3" );
@@ -685,6 +725,8 @@ void ResourceManager::loadMusics() {
             musics["music7"] = LoadMusicStream( "resources/musics/music7.mp3" );
             musics["music8"] = LoadMusicStream( "resources/musics/music8.mp3" );
             musics["music9"] = LoadMusicStream( "resources/musics/music9.mp3" );
+            musics["playerDown"] = LoadMusicStream( "resources/musics/playerDown.mp3" );
+            musics["title"] = LoadMusicStream( "resources/musics/title.mp3" );
         }
 
     }

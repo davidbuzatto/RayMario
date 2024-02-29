@@ -31,6 +31,7 @@
 #
 # items:
 #     o: coin
+#     :: yoshi coin (dragon coin)
 #     =: course clear token
 #
 # baddies:
@@ -47,7 +48,10 @@
 #     $: mummy beetle
 #     %: rex
 #     &: muncher
-#     ~: piranha
+#     ~: piranha plant
+#     ^: jumping piranha plant
+#     <: banzai bill
+#     .: monty mole
 #
 # colors: 
 #     - 0xf8e0b0ff (beige)
@@ -91,7 +95,7 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 ///////////////////////////////////////////////////////////////////////////
 /                                                                         /
 /                                                                        E/
-/                                                                 p      C/
+/                                                                        C/
 /    iiiiiiiii                                              iiiiiiiii    C/
 /                                                                        C/
 /                                                                        C/
@@ -111,9 +115,9 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/    iyswgcvh!?mfu+*                                                     C/
-/                                                                        C/
-/                                                                        C/
-/           123456789@$%&~                                               C/
+/                                    iyswgcvh!?mfu+*                     C/
+/                        ^  ^                                            C/
+/                           MN                                           C/
+/   p     .                 OP                                           C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

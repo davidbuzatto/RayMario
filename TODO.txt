@@ -1,10 +1,13 @@
 para versão final:
     
-    - implementar item (moeda do yoshi) (assets ok)
-    - implementar baddie (topeira) (assets ok)
-    - implementar baddie (piranha voadora) (assets ok)
-    - implementar baddie (bill bala grande) (assets ok)
-    - implementar cipó -> texturas do cipó e do mário escalando
+    - texto ao pegar itens (pontos e vidas)
+    - efeitos ao pegar estrela
+    - implementar baddie (MontyMole) (assets ok) -> seguir o mario
+    - implementar baddie (Banzai Bill) (assets ok) -> passar pelo cenário (aplicar no bullet tbm?
+    - jumping piranha plant: ajustar movimentação (ver jogo)
+    - implementar cipó -> texturas do cipó (ok) e do mário escalando
+    
+    - gerar rres
     
     - transformação/transição
         small->super;

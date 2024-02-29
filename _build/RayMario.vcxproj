@@ -275,6 +275,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\game\src\Baddie.cpp" />
+    <ClCompile Include="..\game\src\BanzaiBill.cpp" />
     <ClCompile Include="..\game\src\BlueKoopaTroopa.cpp" />
     <ClCompile Include="..\game\src\BobOmb.cpp" />
     <ClCompile Include="..\game\src\Block.cpp" />
@@ -297,9 +298,11 @@
     <ClCompile Include="..\game\src\GreenKoopaTroopa.cpp" />
     <ClCompile Include="..\game\src\InvisibleBlock.cpp" />
     <ClCompile Include="..\game\src\Item.cpp" />
+    <ClCompile Include="..\game\src\JumpingPiranhaPlant.cpp" />
     <ClCompile Include="..\game\src\main.cpp" />
     <ClCompile Include="..\game\src\Map.cpp" />
     <ClCompile Include="..\game\src\MessageBlock.cpp" />
+    <ClCompile Include="..\game\src\MontyMole.cpp" />
     <ClCompile Include="..\game\src\MummyBeetle.cpp" />
     <ClCompile Include="..\game\src\Muncher.cpp" />
     <ClCompile Include="..\game\src\Mushroom.cpp" />
@@ -324,9 +327,11 @@
     <ClCompile Include="..\game\src\utils.cpp" />
     <ClCompile Include="..\game\src\WoodBlock.cpp" />
     <ClCompile Include="..\game\src\YellowKoopaTroopa.cpp" />
+    <ClCompile Include="..\game\src\YoshiCoin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\game\src\Baddie.h" />
+    <ClInclude Include="..\game\src\BanzaiBill.h" />
     <ClInclude Include="..\game\src\BlueKoopaTroopa.h" />
     <ClInclude Include="..\game\src\BobOmb.h" />
     <ClInclude Include="..\game\src\Block.h" />
@@ -353,9 +358,11 @@
     <ClInclude Include="..\game\src\GreenKoopaTroopa.h" />
     <ClInclude Include="..\game\src\InvisibleBlock.h" />
     <ClInclude Include="..\game\src\Item.h" />
+    <ClInclude Include="..\game\src\JumpingPiranhaPlant.h" />
     <ClInclude Include="..\game\src\Map.h" />
     <ClInclude Include="..\game\src\MarioType.h" />
     <ClInclude Include="..\game\src\MessageBlock.h" />
+    <ClInclude Include="..\game\src\MontyMole.h" />
     <ClInclude Include="..\game\src\MummyBeetle.h" />
     <ClInclude Include="..\game\src\Muncher.h" />
     <ClInclude Include="..\game\src\Mushroom.h" />
@@ -384,6 +391,7 @@
     <ClInclude Include="..\game\src\utils.h" />
     <ClInclude Include="..\game\src\WoodBlock.h" />
     <ClInclude Include="..\game\src\YellowKoopaTroopa.h" />
+    <ClInclude Include="..\game\src\YoshiCoin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
