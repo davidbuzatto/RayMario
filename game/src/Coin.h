@@ -12,7 +12,7 @@
 #include "raylib.h"
 
 class Coin : public Item {
-    
+
 public:
 
     Coin( Vector2 pos, Vector2 dim, Color color );

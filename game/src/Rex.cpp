@@ -63,6 +63,11 @@ void Rex::update() {
             }
         }
 
+        pointsFrameAcum += delta;
+        if ( pointsFrameAcum >= pointsFrameTime ) {
+            pointsFrameAcum = pointsFrameTime;
+        }
+
     } else if ( state == SPRITE_STATE_DYING ) {
 
         dyingFrameAcum += delta;
@@ -72,6 +77,11 @@ void Rex::update() {
             if ( currentDyingFrame == maxDyingFrames ) {
                 state = SPRITE_STATE_TO_BE_REMOVED;
             }
+        }
+
+        pointsFrameAcum += delta;
+        if ( pointsFrameAcum >= pointsFrameTime ) {
+            pointsFrameAcum = pointsFrameTime;
         }
 
     }
@@ -91,14 +101,20 @@ void Rex::draw() {
                         Rectangle( pos.x + dim.x / 2, pos.y + dim.y / 2, dim.x, dim.y ),
                         Vector2( dim.x / 2, dim.y / 2 ), angle, WHITE );
         if ( state == SPRITE_STATE_HIT ) {
-            DrawTexture( textures[std::string( TextFormat( "puft%d", currentDyingFrame ) )], pos.x, pos.y, WHITE );
-            std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
-            DrawTexture( textures[pointsStr], pos.x + dim.x / 2 - textures[pointsStr].width / 2, pos.y - textures[pointsStr].height - 5, WHITE );
+            DrawTexture( textures[std::string( TextFormat( "puft%d", currentDyingFrame ) )], posOnDying.x, posOnDying.y, WHITE );
+            const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
+            DrawTexture( textures[pointsStr],
+                         posOnDying.x + dim.x / 2 - textures[pointsStr].width / 2,
+                         posOnDying.y - textures[pointsStr].height - ( 50 * pointsFrameAcum / pointsFrameTime ),
+                         WHITE );
         }
     } else if ( state == SPRITE_STATE_DYING ) {
         DrawTexture( textures[std::string( TextFormat( "puft%d", currentDyingFrame ) )], pos.x, pos.y, WHITE );
-        std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
-        DrawTexture( textures[pointsStr], pos.x + dim.x / 2 - textures[pointsStr].width / 2, pos.y - textures[pointsStr].height - 5, WHITE );
+        const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
+        DrawTexture( textures[pointsStr],
+                     pos.x + dim.x / 2 - textures[pointsStr].width / 2,
+                     pos.y - textures[pointsStr].height - ( 50 * pointsFrameAcum / pointsFrameTime ),
+                     WHITE );
     }
 
     if ( GameWorld::debug ) {
@@ -111,10 +127,12 @@ void Rex::draw() {
 }
 
 void Rex::onHit() {
+    posOnDying = pos;
     if ( hitsToDie == 1 ) {
         hitsToDie = 0;
         dyingFrameAcum = 0;
         currentDyingFrame = 0;
+        pointsFrameAcum = 0;
         state = SPRITE_STATE_DYING;
         setAttributesOnDying();
     } else {
@@ -126,6 +144,7 @@ void Rex::onHit() {
         hitsToDie--;
         dyingFrameAcum = 0;
         currentDyingFrame = 0;
+        pointsFrameAcum = 0;
         state = SPRITE_STATE_HIT;
         updateCollisionProbes();
     }

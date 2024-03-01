@@ -15,7 +15,7 @@
 #include <string>
 
 Mushroom::Mushroom( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Item( pos, dim, vel, color, 0, 0 ) {
+    Item( pos, dim, vel, color, 0, 0, 1000 ) {
 }
 
 Mushroom::~Mushroom() = default;
@@ -36,6 +36,19 @@ void Mushroom::update() {
 
         vel.y += GameWorld::gravity;
 
+    } else if ( state == SPRITE_STATE_HIT ) {
+
+        onHitFrameAcum += delta;
+        if ( onHitFrameAcum >= onHitFrameTime ) {
+            onHitFrameAcum = 0;
+            state = SPRITE_STATE_TO_BE_REMOVED;
+        }
+
+        pointsFrameAcum += delta;
+        if ( pointsFrameAcum >= pointsFrameTime ) {
+            pointsFrameAcum = pointsFrameTime;
+        }
+
     }
 
     updateCollisionProbes();
@@ -44,7 +57,17 @@ void Mushroom::update() {
 
 void Mushroom::draw() {
 
-    DrawTexture( ResourceManager::getTextures()["mushroom"], pos.x, pos.y, WHITE );
+    std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
+
+    if ( state == SPRITE_STATE_ACTIVE || state == SPRITE_STATE_IDLE ) {
+        DrawTexture( textures["mushroom"], pos.x, pos.y, WHITE );
+    } else if ( state == SPRITE_STATE_HIT ) {
+        const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
+        DrawTexture( textures[pointsStr],
+                     pos.x + dim.x / 2 - textures[pointsStr].width / 2,
+                     pos.y - textures[pointsStr].height - ( 50 * pointsFrameAcum / pointsFrameTime ),
+                     WHITE );
+    }
 
     if ( GameWorld::debug ) {
         cpN.draw();
@@ -61,7 +84,7 @@ void Mushroom::playCollisionSound() {
 
 void Mushroom::updateMario( Mario& mario ) {
 
-    mario.addPoints( 1000 );
+    mario.addPoints( earnedPoints );
 
     switch ( mario.getType() ) {
         case MARIO_TYPE_SMALL:

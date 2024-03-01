@@ -58,6 +58,11 @@ void MontyMole::update() {
             }
         }
 
+        pointsFrameAcum += delta;
+        if ( pointsFrameAcum >= pointsFrameTime ) {
+            pointsFrameAcum = pointsFrameTime;
+        }
+
     }
 
     updateCollisionProbes();
@@ -76,8 +81,11 @@ void MontyMole::draw() {
                         Vector2( dim.x / 2, dim.y / 2 ), angle, WHITE );
     } else if ( state == SPRITE_STATE_DYING ) {
         DrawTexture( textures[std::string( TextFormat( "puft%d", currentDyingFrame ) )], pos.x, pos.y, WHITE );
-        std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
-        DrawTexture( textures[pointsStr], pos.x + dim.x / 2 - textures[pointsStr].width / 2, pos.y - textures[pointsStr].height - 5, WHITE );
+        const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
+        DrawTexture( textures[pointsStr],
+                     pos.x + dim.x / 2 - textures[pointsStr].width / 2,
+                     pos.y - textures[pointsStr].height - ( 50 * pointsFrameAcum / pointsFrameTime ),
+                     WHITE );
     }
 
     if ( GameWorld::debug ) {

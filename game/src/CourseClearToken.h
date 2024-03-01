@@ -13,9 +13,10 @@
 
 class CourseClearToken : public Item {
 
-private:
     float minY;
     float maxY;
+    float pointsFrameAcum;
+    float pointsFrameTime;
 
 public:
 

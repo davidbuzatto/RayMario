@@ -12,14 +12,23 @@
 #include "Sprite.h"
 
 class Item : public Sprite {
-    
+
+protected:
+    float onHitFrameAcum;
+    float onHitFrameTime;
+    int maxOnHitFrame;
+    int currentOnHitFrame;
+    float pointsFrameAcum;
+    float pointsFrameTime;
+
 public:
 
     Item();
-    Item( Vector2 pos, Vector2 dim, Color color );
-    Item( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
-    Item( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
+    Item( Vector2 pos, Vector2 dim, Color color, int earnedPoints );
+    Item( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, int earnedPoints );
+    Item( Vector2 pos, Vector2 dim, Vector2 vel, Color color, int earnedPoints );
     Item( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames );
+    Item( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int earnedPoints );
     ~Item() override;
 
     void update() override = 0;

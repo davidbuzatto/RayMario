@@ -62,6 +62,11 @@ void BulletBill::update() {
             }
         }
 
+        pointsFrameAcum += delta;
+        if ( pointsFrameAcum >= pointsFrameTime ) {
+            pointsFrameAcum = pointsFrameTime;
+        }
+
     }
 
     updateCollisionProbes();
@@ -80,8 +85,11 @@ void BulletBill::draw() {
 
     if ( state == SPRITE_STATE_DYING ) {
         DrawTexture( textures[std::string( TextFormat( "puft%d", currentDyingFrame ) )], posOnDying.x, posOnDying.y, WHITE );
-        std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
-        DrawTexture( textures[pointsStr], posOnDying.x + dim.x / 2 - textures[pointsStr].width / 2, posOnDying.y - textures[pointsStr].height - 5, WHITE );
+        const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
+        DrawTexture( textures[pointsStr],
+                     posOnDying.x + dim.x / 2 - textures[pointsStr].width / 2,
+                     posOnDying.y - textures[pointsStr].height - ( 50 * pointsFrameAcum / pointsFrameTime ),
+                     WHITE );
     }
 
     if ( GameWorld::debug ) {

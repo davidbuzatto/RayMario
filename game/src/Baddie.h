@@ -18,6 +18,8 @@ protected:
     float dyingFrameTime;
     int maxDyingFrames;
     int currentDyingFrame;
+    float pointsFrameAcum;
+    float pointsFrameTime;
     Vector2 posOnDying;
 
 public:

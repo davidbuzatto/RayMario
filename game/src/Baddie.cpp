@@ -36,6 +36,8 @@ Baddie::Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameT
     dyingFrameTime( 0.1 ),
     maxDyingFrames( 4 ),
     currentDyingFrame( 0 ),
+    pointsFrameAcum( 0 ),
+    pointsFrameTime( 1 ),
     posOnDying( Vector2( 0, 0 ) ){
 
     const Color c = ColorFromHSV( GetRandomValue( 0, 360 ), 1, 0.9 );

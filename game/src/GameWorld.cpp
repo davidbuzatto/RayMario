@@ -190,7 +190,8 @@ void GameWorld::inputAndUpdate() {
 
                 baddie->updateCollisionProbes();
 
-                if ( baddie->getState() != SPRITE_STATE_DYING && baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
+                if ( baddie->getState() != SPRITE_STATE_DYING && 
+                     baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
                     switch ( baddie->checkCollision( tile ) ) {
                         case COLLISION_TYPE_NORTH:
                             baddie->setY( tile->getY() + tile->getHeight() );
@@ -297,7 +298,8 @@ void GameWorld::inputAndUpdate() {
 
                 baddie->updateCollisionProbes();
 
-                if ( baddie->getState() != SPRITE_STATE_DYING && baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
+                if ( baddie->getState() != SPRITE_STATE_DYING && 
+                     baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
                     switch ( baddie->checkCollision( block ) ) {
                         case COLLISION_TYPE_NORTH:
                             baddie->setY( block->getY() + block->getHeight() );
@@ -365,11 +367,18 @@ void GameWorld::inputAndUpdate() {
 
             Item* item = items[i];
 
-            if ( item->checkCollision( &mario ) != COLLISION_TYPE_NONE ) {
-                collectedIndexes.push_back( static_cast<int>( i ) );
-                item->playCollisionSound();
-                item->updateMario( mario );
-            } else if ( item->getY() > map.getMaxHeight() ) {
+            if ( item->getState() != SPRITE_STATE_HIT &&
+                 item->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
+                if ( item->checkCollision( &mario ) != COLLISION_TYPE_NONE ) {
+                    item->setState( SPRITE_STATE_HIT );
+                    item->playCollisionSound();
+                    item->updateMario( mario );
+                } else if ( item->getY() > map.getMaxHeight() ) {
+                    item->setState( SPRITE_STATE_TO_BE_REMOVED );
+                }
+            }
+
+            if ( item->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
                 collectedIndexes.push_back( static_cast<int>( i ) );
             }
 
@@ -386,11 +395,19 @@ void GameWorld::inputAndUpdate() {
 
             Item* item = staticItems[i];
 
-            if ( mario.checkCollision( item ) != COLLISION_TYPE_NONE ) {
-                collectedIndexes.push_back( static_cast<int>( i ) );
-                item->playCollisionSound();
-                item->updateMario( mario );
-            } else if ( item->getY() > map.getMaxHeight() ) {
+            if ( item->getState() != SPRITE_STATE_HIT &&
+                 item->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
+                if ( mario.checkCollision( item ) != COLLISION_TYPE_NONE ) {
+                    item->setState( SPRITE_STATE_HIT );
+                    item->playCollisionSound();
+                    item->updateMario( mario );
+                } else if ( item->getY() > map.getMaxHeight() ) {
+                    item->setState( SPRITE_STATE_TO_BE_REMOVED );
+                }
+            }
+
+            if ( item->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
+                TraceLog( LOG_INFO, "coletado" );
                 collectedIndexes.push_back( static_cast<int>( i ) );
             }
 
@@ -418,7 +435,8 @@ void GameWorld::inputAndUpdate() {
                     baddie->activateWithMarioProximity( mario );
                 }
 
-                if ( baddie->getState() != SPRITE_STATE_DYING && baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
+                if ( baddie->getState() != SPRITE_STATE_DYING && 
+                     baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
 
                     const CollisionType col = mario.checkCollisionBaddie( baddie );
 
@@ -458,7 +476,9 @@ void GameWorld::inputAndUpdate() {
                                     }
                                     break;
                                 case COLLISION_TYPE_SOUTH:
-                                    if ( mario.getState() == SPRITE_STATE_FALLING && baddie->getState() != SPRITE_STATE_DYING && baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
+                                    if ( mario.getState() == SPRITE_STATE_FALLING && 
+                                         baddie->getState() != SPRITE_STATE_DYING && 
+                                         baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
                                         mario.setY( baddie->getY() - mario.getHeight() );
                                         if ( ( IsKeyDown( KEY_LEFT_CONTROL ) ||
                                                IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) ) {
@@ -547,7 +567,6 @@ void GameWorld::inputAndUpdate() {
                 }
 
                 if ( baddie->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
-                    TraceLog( LOG_INFO, "coletado" );
                     collectedIndexes.push_back( static_cast<int>( i ) );
                 }
 

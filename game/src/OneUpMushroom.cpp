@@ -15,7 +15,7 @@
 #include <string>
 
 OneUpMushroom::OneUpMushroom( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Item( pos, dim, vel, color, 0, 0 ) {
+    Item( pos, dim, vel, color, 0, 0, 1 ) {
 }
 
 OneUpMushroom::~OneUpMushroom() = default;
@@ -36,6 +36,19 @@ void OneUpMushroom::update() {
 
         vel.y += GameWorld::gravity;
 
+    } else if ( state == SPRITE_STATE_HIT ) {
+
+        onHitFrameAcum += delta;
+        if ( onHitFrameAcum >= onHitFrameTime ) {
+            onHitFrameAcum = 0;
+            state = SPRITE_STATE_TO_BE_REMOVED;
+        }
+
+        pointsFrameAcum += delta;
+        if ( pointsFrameAcum >= pointsFrameTime ) {
+            pointsFrameAcum = pointsFrameTime;
+        }
+
     }
 
     updateCollisionProbes();
@@ -44,7 +57,17 @@ void OneUpMushroom::update() {
 
 void OneUpMushroom::draw() {
 
-    DrawTexture( ResourceManager::getTextures()["1UpMushroom"], pos.x, pos.y, WHITE );
+    std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
+
+    if ( state == SPRITE_STATE_ACTIVE || state == SPRITE_STATE_IDLE ) {
+        DrawTexture( textures["1UpMushroom"], pos.x, pos.y, WHITE );
+    } else if ( state == SPRITE_STATE_HIT ) {
+        const std::string oneUpStr = "gui1Up";
+        DrawTexture( textures[oneUpStr],
+                     pos.x + dim.x / 2 - textures[oneUpStr].width / 2,
+                     pos.y - textures[oneUpStr].height - ( 50 * pointsFrameAcum / pointsFrameTime ),
+                     WHITE );
+    }
 
     if ( GameWorld::debug ) {
         cpN.draw();
@@ -60,5 +83,5 @@ void OneUpMushroom::playCollisionSound() {
 }
 
 void OneUpMushroom::updateMario( Mario& mario ) {
-    mario.addLives( 1 );
+    mario.addLives( earnedPoints );
 }

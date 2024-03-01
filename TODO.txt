@@ -1,11 +1,14 @@
 para versão final:
     
-    - texto ao pegar itens (pontos e vidas) e matar baddies
-    - efeitos ao pegar estrela
+    bug: foguinho colidindo com itens? (moeda yoshi é um exemplo)
+    - time up tem tela de finalização?
+    
+    - texto e efeitos ao pegar itens
+        - moedas caixas !, ? e invisível
+    - efeitos ao pegar estrela <- fácil
     - implementar baddie (MontyMole) (assets ok) -> seguir o mario
-    - implementar baddie (Banzai Bill) (assets ok) -> passar pelo cenário (aplicar no bullet tbm?
+    - implementar baddie (Banzai Bill) (assets ok) -> passar pelo cenário (aplicar no bullet tbm?)
     - jumping piranha plant: ajustar movimentação (ver jogo)
-    - implementar cipó -> texturas do cipó (ok) e do mário escalando
     
     - gerar rres
     

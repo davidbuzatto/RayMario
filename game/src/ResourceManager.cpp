@@ -613,6 +613,18 @@ void ResourceManager::loadTextures() {
             textures["puft3"] = LoadTexture( "resources/images/sprites/effects/Puft_3.png" );
         }
 
+        if ( loadFromRRES ) {
+            loadTextureFromResource( "resources/images/sprites/effects/StarDust_0.png", "starDust0" );
+            loadTextureFromResource( "resources/images/sprites/effects/StarDust_1.png", "starDust1" );
+            loadTextureFromResource( "resources/images/sprites/effects/StarDust_2.png", "starDust2" );
+            loadTextureFromResource( "resources/images/sprites/effects/StarDust_3.png", "starDust3" );
+        } else {
+            textures["starDust0"] = LoadTexture( "resources/images/sprites/effects/StarDust_0.png" );
+            textures["starDust1"] = LoadTexture( "resources/images/sprites/effects/StarDust_1.png" );
+            textures["starDust2"] = LoadTexture( "resources/images/sprites/effects/StarDust_2.png" );
+            textures["starDust3"] = LoadTexture( "resources/images/sprites/effects/StarDust_3.png" );
+        }
+
         // gui
         if ( loadFromRRES ) {
             loadTextureFromResource( "resources/images/gui/guiAlfa.png", "guiAlfa" );
@@ -679,9 +691,9 @@ void ResourceManager::loadTextures() {
             textures["guiPoints2000"] = LoadTexture( "resources/images/gui/guiThousandsPoints_2000.png" );
             textures["guiPoints4000"] = LoadTexture( "resources/images/gui/guiThousandsPoints_4000.png" );
             textures["guiPoints8000"] = LoadTexture( "resources/images/gui/guiThousandsPoints_8000.png" );
-            loadTextureFromResource( "resources/images/gui/gui1Up.png", "gui1Up" );
-            loadTextureFromResource( "resources/images/gui/gui2Up.png", "gui2Up" );
-            loadTextureFromResource( "resources/images/gui/gui3Up.png", "gui3Up" );
+            textures["gui1Up"] = LoadTexture( "resources/images/gui/gui1Up.png" );
+            textures["gui2Up"] = LoadTexture( "resources/images/gui/gui2Up.png" );
+            textures["gui3Up"] = LoadTexture( "resources/images/gui/gui3Up.png" );
         }
 
     }

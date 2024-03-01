@@ -15,25 +15,58 @@
 #include <string>
 
 Coin::Coin( Vector2 pos, Vector2 dim, Color color ) :
-    Item( pos, dim, color, 0.1, 4 ) {
+    Item( pos, dim, color, 0.1, 4, 200 ) {
+    onHitFrameTime = 0.1;
+    maxOnHitFrame = 4;
 }
 
 Coin::~Coin() = default;
 
 void Coin::update() {
     
-    frameAcum += GetFrameTime();
+    const float delta = GetFrameTime();
+
+    frameAcum += delta;
     if ( frameAcum >= frameTime ) {
         frameAcum = 0;
         currentFrame++;
         currentFrame %= maxFrames;
     }
 
+    if ( state == SPRITE_STATE_HIT ) {
+
+        onHitFrameAcum += delta;
+        if ( onHitFrameAcum >= onHitFrameTime ) {
+            onHitFrameAcum = 0;
+            currentOnHitFrame++;
+            if ( currentOnHitFrame == maxOnHitFrame ) {
+                state = SPRITE_STATE_TO_BE_REMOVED;
+            }
+        }
+
+        pointsFrameAcum += delta;
+        if ( pointsFrameAcum >= pointsFrameTime ) {
+            pointsFrameAcum = pointsFrameTime;
+        }
+
+    }
+
 }
 
 void Coin::draw() {
 
-    DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "coin%d", currentFrame ))], pos.x, pos.y, WHITE );
+    std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
+
+    if ( state == SPRITE_STATE_ACTIVE || state == SPRITE_STATE_IDLE ) {
+        DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "coin%d", currentFrame ) )], pos.x, pos.y, WHITE );
+    } else if ( state == SPRITE_STATE_HIT ) {
+        DrawTexture( textures[std::string( TextFormat( "starDust%d", currentOnHitFrame ) )], pos.x, pos.y, WHITE );
+        const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
+        DrawTexture( textures[pointsStr],
+                     pos.x + dim.x / 2 - textures[pointsStr].width / 2,
+                     pos.y - textures[pointsStr].height - ( 50 * pointsFrameAcum / pointsFrameTime ),
+                     WHITE );
+    }
 
     if ( GameWorld::debug ) {
         cpN.draw();
@@ -50,7 +83,7 @@ void Coin::playCollisionSound() {
 
 void Coin::updateMario( Mario& mario ) {
     mario.addCoins( 1 );
-    mario.addPoints( 200 );
+    mario.addPoints( earnedPoints );
     if ( mario.getCoins() >= 100 ) {
         mario.addLives( 1 );
         mario.setCoins( mario.getCoins() - 100 );

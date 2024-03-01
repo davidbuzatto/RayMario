@@ -15,7 +15,7 @@
 #include <string>
 
 ThreeUpMoon::ThreeUpMoon( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Item( pos, dim, vel, color, 0, 0 ) {
+    Item( pos, dim, vel, color, 0, 0, 3 ) {
 }
 
 ThreeUpMoon::~ThreeUpMoon() = default;
@@ -36,6 +36,19 @@ void ThreeUpMoon::update() {
 
         vel.y += GameWorld::gravity;
 
+    } else if ( state == SPRITE_STATE_HIT ) {
+
+        onHitFrameAcum += delta;
+        if ( onHitFrameAcum >= onHitFrameTime ) {
+            onHitFrameAcum = 0;
+            state = SPRITE_STATE_TO_BE_REMOVED;
+        }
+
+        pointsFrameAcum += delta;
+        if ( pointsFrameAcum >= pointsFrameTime ) {
+            pointsFrameAcum = pointsFrameTime;
+        }
+
     }
 
     updateCollisionProbes();
@@ -44,7 +57,17 @@ void ThreeUpMoon::update() {
 
 void ThreeUpMoon::draw() {
 
-    DrawTexture( ResourceManager::getTextures()["3UpMoon"], pos.x, pos.y, WHITE );
+    std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
+
+    if ( state == SPRITE_STATE_ACTIVE || state == SPRITE_STATE_IDLE ) {
+        DrawTexture( textures["3UpMoon"], pos.x, pos.y, WHITE );
+    } else if ( state == SPRITE_STATE_HIT ) {
+        const std::string threeUpStr = "gui3Up";
+        DrawTexture( textures[threeUpStr],
+                     pos.x + dim.x / 2 - textures[threeUpStr].width / 2,
+                     pos.y - textures[threeUpStr].height - ( 50 * pointsFrameAcum / pointsFrameTime ),
+                     WHITE );
+    }
 
     if ( GameWorld::debug ) {
         cpN.draw();
@@ -60,5 +83,5 @@ void ThreeUpMoon::playCollisionSound() {
 }
 
 void ThreeUpMoon::updateMario( Mario& mario ) {
-    mario.addLives( 3 );
+    mario.addLives( earnedPoints );
 }
