@@ -106,6 +106,7 @@ void Mario::update() {
         state = SPRITE_STATE_DYING;
         playPlayerDownMusicStream();
         removeLives( 1 );
+        changeToSmall();
         GameWorld::state = GAME_STATE_TIME_UP;
     }
 

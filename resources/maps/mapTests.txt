@@ -90,7 +90,7 @@ c: 0x0060b8ff     # background color: [0xrrggbbaa]
 b: 1              # background id: [1-10]
 t: 1              # tile set id: [1-4]
 m: 1              # music id: [1-9]
-f: 200            # time to finish the map
+f: 6              # time to finish the map
 h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"#()ááá
 ///////////////////////////////////////////////////////////////////////////
 /                                                                         /

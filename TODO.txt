@@ -1,7 +1,5 @@
 para versão final:
     
-    - time up tem tela de finalização?
-    
     - efeitos ao pegar estrela <- fácil
     
     - implementar baddie (MontyMole) (assets ok) -> seguir o mario

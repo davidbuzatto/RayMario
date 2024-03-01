@@ -748,6 +748,7 @@ void GameWorld::draw() {
 
         if ( state == GAME_STATE_TIME_UP ) {
 
+            DrawRectangle( 0, 0, GetScreenWidth(), GetScreenHeight(), BLACK );
             Texture2D* t = &textures["guiTimeUp"];
             DrawTexture( *t, GetScreenWidth() / 2 - t->width / 2, GetScreenHeight() / 2 - t->height / 2, WHITE );
 
