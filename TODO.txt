@@ -1,7 +1,6 @@
 para versão final:
     
-    - aumentar os frames dos flying goombas
-    - texto ao pegar itens (pontos e vidas)
+    - texto ao pegar itens (pontos e vidas) e matar baddies
     - efeitos ao pegar estrela
     - implementar baddie (MontyMole) (assets ok) -> seguir o mario
     - implementar baddie (Banzai Bill) (assets ok) -> passar pelo cenário (aplicar no bullet tbm?

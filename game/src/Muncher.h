@@ -20,5 +20,6 @@ public:
     void update() override;
     void draw() override;
     CollisionType checkCollision( Sprite* sprite ) override;
+    void onHit() override;
 
 };

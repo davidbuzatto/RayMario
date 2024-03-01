@@ -13,6 +13,13 @@
 
 class Baddie : public Sprite {
 
+protected:
+    float dyingFrameAcum;
+    float dyingFrameTime;
+    int maxDyingFrames;
+    int currentDyingFrame;
+    Vector2 posOnDying;
+
 public:
 
     Baddie();
@@ -20,7 +27,7 @@ public:
     Baddie( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
     Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
     Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames );
-    Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int hitsToDie );
+    Baddie( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int hitsToDie, int earnedPoints );
     ~Baddie() override;
 
     void update() override = 0;

@@ -89,5 +89,6 @@ void QuestionBlock::doHit( Mario& mario, Map *map ) {
         coinAnimationStarted = true;
         coinY = pos.y;
         mario.addCoins( 1 );
+        mario.addPoints( 10 );
     }
 }

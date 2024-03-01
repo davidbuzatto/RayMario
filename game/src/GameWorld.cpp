@@ -40,7 +40,7 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP false
+#define LOAD_TEST_MAP true
 #define LOAD_RESOURCES_FROM_RRES false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
@@ -190,7 +190,7 @@ void GameWorld::inputAndUpdate() {
 
                 baddie->updateCollisionProbes();
 
-                if ( baddie->getState() != SPRITE_STATE_DYING ) {
+                if ( baddie->getState() != SPRITE_STATE_DYING && baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
                     switch ( baddie->checkCollision( tile ) ) {
                         case COLLISION_TYPE_NORTH:
                             baddie->setY( tile->getY() + tile->getHeight() );
@@ -297,7 +297,7 @@ void GameWorld::inputAndUpdate() {
 
                 baddie->updateCollisionProbes();
 
-                if ( baddie->getState() != SPRITE_STATE_DYING ) {
+                if ( baddie->getState() != SPRITE_STATE_DYING && baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
                     switch ( baddie->checkCollision( block ) ) {
                         case COLLISION_TYPE_NORTH:
                             baddie->setY( block->getY() + block->getHeight() );
@@ -418,14 +418,14 @@ void GameWorld::inputAndUpdate() {
                     baddie->activateWithMarioProximity( mario );
                 }
 
-                if ( baddie->getState() != SPRITE_STATE_DYING ) {
+                if ( baddie->getState() != SPRITE_STATE_DYING && baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
 
                     const CollisionType col = mario.checkCollisionBaddie( baddie );
 
-                    if ( mario.isInvincible() && col && baddie->getState() != SPRITE_STATE_DYING ) {
+                    if ( mario.isInvincible() && col ) {
                         baddie->onHit();
                         PlaySound( sounds["stomp"] );
-                        mario.addPoints( 200 );
+                        mario.addPoints( baddie->getEarnedPoints() );
                     } else {
 
                         if ( baddie->getAuxiliaryState() != SPRITE_STATE_INVULNERABLE ) {
@@ -458,7 +458,7 @@ void GameWorld::inputAndUpdate() {
                                     }
                                     break;
                                 case COLLISION_TYPE_SOUTH:
-                                    if ( mario.getState() == SPRITE_STATE_FALLING && baddie->getState() != SPRITE_STATE_DYING ) {
+                                    if ( mario.getState() == SPRITE_STATE_FALLING && baddie->getState() != SPRITE_STATE_DYING && baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
                                         mario.setY( baddie->getY() - mario.getHeight() );
                                         if ( ( IsKeyDown( KEY_LEFT_CONTROL ) ||
                                                IsGamepadButtonDown( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) ) {
@@ -469,7 +469,7 @@ void GameWorld::inputAndUpdate() {
                                         mario.setState( SPRITE_STATE_JUMPING );
                                         baddie->onHit();
                                         PlaySound( sounds["stomp"] );
-                                        mario.addPoints( 200 );
+                                        mario.addPoints( baddie->getEarnedPoints() );
                                     } else {
                                         if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
                                             switch ( mario.getType() ) {
@@ -497,7 +497,7 @@ void GameWorld::inputAndUpdate() {
                                 case COLLISION_TYPE_FIREBALL:
                                     baddie->onHit();
                                     PlaySound( sounds["stomp"] );
-                                    mario.addPoints( 200 );
+                                    mario.addPoints( baddie->getEarnedPoints() );
                                     break;
                                 default:
                                     break;
@@ -510,7 +510,7 @@ void GameWorld::inputAndUpdate() {
                                 if ( col == COLLISION_TYPE_FIREBALL ) {
                                     baddie->onHit();
                                     PlaySound( sounds["stomp"] );
-                                    mario.addPoints( 200 );
+                                    mario.addPoints( baddie->getEarnedPoints() );
                                 } else {
                                     if ( !mario.isImmortal() && !mario.isInvulnerable() ) {
                                         switch ( mario.getType() ) {
@@ -544,9 +544,11 @@ void GameWorld::inputAndUpdate() {
                     if ( baddie->getY() > map.getMaxHeight() ) {
                         baddie->setState( SPRITE_STATE_TO_BE_REMOVED );
                     }
-                    if ( baddie->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
-                        collectedIndexes.push_back( static_cast<int>( i ) );
-                    }
+                }
+
+                if ( baddie->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
+                    TraceLog( LOG_INFO, "coletado" );
+                    collectedIndexes.push_back( static_cast<int>( i ) );
                 }
 
                 mario.updateCollisionProbes();

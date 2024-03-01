@@ -466,12 +466,18 @@ void ResourceManager::loadTextures() {
         if ( loadFromRRES ) {
             loadTextureFromResource( "resources/images/sprites/baddies/FlyingGoomba_0.png", "flyingGoomba0R" );
             loadTextureFromResource( "resources/images/sprites/baddies/FlyingGoomba_1.png", "flyingGoomba1R" );
+            loadTextureFromResource( "resources/images/sprites/baddies/FlyingGoomba_2.png", "flyingGoomba2R" );
+            loadTextureFromResource( "resources/images/sprites/baddies/FlyingGoomba_3.png", "flyingGoomba3R" );
         } else {
             textures["flyingGoomba0R"] = LoadTexture( "resources/images/sprites/baddies/FlyingGoomba_0.png" );
             textures["flyingGoomba1R"] = LoadTexture( "resources/images/sprites/baddies/FlyingGoomba_1.png" );
+            textures["flyingGoomba2R"] = LoadTexture( "resources/images/sprites/baddies/FlyingGoomba_2.png" );
+            textures["flyingGoomba3R"] = LoadTexture( "resources/images/sprites/baddies/FlyingGoomba_3.png" );
         }
         textures["flyingGoomba0L"] = texture2DFlipHorizontal( textures["flyingGoomba0R"] );
         textures["flyingGoomba1L"] = texture2DFlipHorizontal( textures["flyingGoomba1R"] );
+        textures["flyingGoomba2L"] = texture2DFlipHorizontal( textures["flyingGoomba2R"] );
+        textures["flyingGoomba3L"] = texture2DFlipHorizontal( textures["flyingGoomba3R"] );
 
         if ( loadFromRRES ) {
             loadTextureFromResource( "resources/images/sprites/baddies/Goomba_0.png", "goomba0R" );
@@ -594,6 +600,19 @@ void ResourceManager::loadTextures() {
             textures["jumpingPiranhaPlantUp1"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_Up_1.png" );
         }
 
+        // effects
+        if ( loadFromRRES ) {
+            loadTextureFromResource( "resources/images/sprites/effects/Puft_0.png", "puft0" );
+            loadTextureFromResource( "resources/images/sprites/effects/Puft_1.png", "puft1" );
+            loadTextureFromResource( "resources/images/sprites/effects/Puft_2.png", "puft2" );
+            loadTextureFromResource( "resources/images/sprites/effects/Puft_3.png", "puft3" );
+        } else {
+            textures["puft0"] = LoadTexture( "resources/images/sprites/effects/Puft_0.png" );
+            textures["puft1"] = LoadTexture( "resources/images/sprites/effects/Puft_1.png" );
+            textures["puft2"] = LoadTexture( "resources/images/sprites/effects/Puft_2.png" );
+            textures["puft3"] = LoadTexture( "resources/images/sprites/effects/Puft_3.png" );
+        }
+
         // gui
         if ( loadFromRRES ) {
             loadTextureFromResource( "resources/images/gui/guiAlfa.png", "guiAlfa" );
@@ -614,6 +633,21 @@ void ResourceManager::loadTextures() {
             loadTextureFromResource( "resources/images/gui/guiTime.png", "guiTime" );
             loadTextureFromResource( "resources/images/gui/guiTimeUp.png", "guiTimeUp" );
             loadTextureFromResource( "resources/images/gui/guiX.png", "guiX" );
+            loadTextureFromResource( "resources/images/gui/guiTensPoints_10.png", "guiPoints10" );
+            loadTextureFromResource( "resources/images/gui/guiTensPoints_20.png", "guiPoints20" );
+            loadTextureFromResource( "resources/images/gui/guiTensPoints_40.png", "guiPoints40" );
+            loadTextureFromResource( "resources/images/gui/guiTensPoints_80.png", "guiPoints80" );
+            loadTextureFromResource( "resources/images/gui/guiHundredsPoints_100.png", "guiPoints100" );
+            loadTextureFromResource( "resources/images/gui/guiHundredsPoints_200.png", "guiPoints200" );
+            loadTextureFromResource( "resources/images/gui/guiHundredsPoints_400.png", "guiPoints400" );
+            loadTextureFromResource( "resources/images/gui/guiHundredsPoints_800.png", "guiPoints800" );
+            loadTextureFromResource( "resources/images/gui/guiThousandsPoints_1000.png", "guiPoints1000" );
+            loadTextureFromResource( "resources/images/gui/guiThousandsPoints_2000.png", "guiPoints2000" );
+            loadTextureFromResource( "resources/images/gui/guiThousandsPoints_4000.png", "guiPoints4000" );
+            loadTextureFromResource( "resources/images/gui/guiThousandsPoints_8000.png", "guiPoints8000" );
+            loadTextureFromResource( "resources/images/gui/gui1Up.png", "gui1Up" );
+            loadTextureFromResource( "resources/images/gui/gui2Up.png", "gui2Up" );
+            loadTextureFromResource( "resources/images/gui/gui3Up.png", "gui3Up" );
         } else {
             textures["guiAlfa"] = LoadTexture( "resources/images/gui/guiAlfa.png" );
             textures["guiAlfaLowerUpper"] = LoadTexture( "resources/images/gui/guiAlfaLowerUpper.png" );
@@ -633,6 +667,21 @@ void ResourceManager::loadTextures() {
             textures["guiTime"] = LoadTexture( "resources/images/gui/guiTime.png" );
             textures["guiTimeUp"] = LoadTexture( "resources/images/gui/guiTimeUp.png" );
             textures["guiX"] = LoadTexture( "resources/images/gui/guiX.png" );
+            textures["guiPoints10"] = LoadTexture( "resources/images/gui/guiTensPoints_10.png" );
+            textures["guiPoints20"] = LoadTexture( "resources/images/gui/guiTensPoints_20.png" );
+            textures["guiPoints40"] = LoadTexture( "resources/images/gui/guiTensPoints_40.png" );
+            textures["guiPoints80"] = LoadTexture( "resources/images/gui/guiTensPoints_80.png" );
+            textures["guiPoints100"] = LoadTexture( "resources/images/gui/guiHundredsPoints_100.png" );
+            textures["guiPoints200"] = LoadTexture( "resources/images/gui/guiHundredsPoints_200.png" );
+            textures["guiPoints400"] = LoadTexture( "resources/images/gui/guiHundredsPoints_400.png" );
+            textures["guiPoints800"] = LoadTexture( "resources/images/gui/guiHundredsPoints_800.png" );
+            textures["guiPoints1000"] = LoadTexture( "resources/images/gui/guiThousandsPoints_1000.png" );
+            textures["guiPoints2000"] = LoadTexture( "resources/images/gui/guiThousandsPoints_2000.png" );
+            textures["guiPoints4000"] = LoadTexture( "resources/images/gui/guiThousandsPoints_4000.png" );
+            textures["guiPoints8000"] = LoadTexture( "resources/images/gui/guiThousandsPoints_8000.png" );
+            loadTextureFromResource( "resources/images/gui/gui1Up.png", "gui1Up" );
+            loadTextureFromResource( "resources/images/gui/gui2Up.png", "gui2Up" );
+            loadTextureFromResource( "resources/images/gui/gui3Up.png", "gui3Up" );
         }
 
     }

@@ -17,7 +17,7 @@
 #include <map>
 
 PiranhaPlant::PiranhaPlant( Vector2 pos, Vector2 dim, Color color ) :
-    Baddie( pos, dim, Vector2( 0, 0 ), color, 0.2, 2, 1 ),
+    Baddie( pos, dim, Vector2( 0, 0 ), color, 0.2, 2, 1, 200 ),
     minY( pos.y - dim.y ),
     maxY( pos.y ),
     animVel( 80 ),
@@ -70,12 +70,14 @@ void PiranhaPlant::update() {
 
     } else if ( state == SPRITE_STATE_DYING ) {
 
-        angle += ( vel.x >= 0 ? 600 : -600 ) * delta;
-
-        pos.x = pos.x + vel.x * delta;
-        pos.y = pos.y + vel.y * delta;
-
-        vel.y += GameWorld::gravity;
+        dyingFrameAcum += delta;
+        if ( dyingFrameAcum >= dyingFrameTime ) {
+            dyingFrameAcum = 0;
+            currentDyingFrame++;
+            if ( currentDyingFrame == maxDyingFrames ) {
+                state = SPRITE_STATE_TO_BE_REMOVED;
+            }
+        }
 
     }
 
@@ -87,10 +89,16 @@ void PiranhaPlant::draw() {
 
     std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
 
-    DrawTexturePro( textures[std::string( TextFormat( "piranhaPlant%d", currentFrame ) )],
-                    Rectangle( 0, 0, dim.x, dim.y ),
-                    Rectangle( pos.x + dim.x / 2, pos.y + dim.y / 2, dim.x, dim.y ),
-                    Vector2( dim.x / 2, dim.y / 2 ), angle, WHITE );
+    if ( state == SPRITE_STATE_ACTIVE ) {
+        DrawTexturePro( textures[std::string( TextFormat( "piranhaPlant%d", currentFrame ) )],
+                        Rectangle( 0, 0, dim.x, dim.y ),
+                        Rectangle( pos.x + dim.x / 2, pos.y + dim.y / 2, dim.x, dim.y ),
+                        Vector2( dim.x / 2, dim.y / 2 ), angle, WHITE );
+    } else if ( state == SPRITE_STATE_DYING ) {
+        DrawTexture( textures[std::string( TextFormat( "puft%d", currentDyingFrame ) )], pos.x, pos.y, WHITE );
+        std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
+        DrawTexture( textures[pointsStr], pos.x + dim.x / 2 - textures[pointsStr].width / 2, pos.y - textures[pointsStr].height - 5, WHITE );
+    }
 
     if ( GameWorld::debug ) {
         cpN.draw();
@@ -112,5 +120,5 @@ void PiranhaPlant::setAttributesOnDying() {
 
 void PiranhaPlant::onHit() {
     state = SPRITE_STATE_DYING;
-    setAttributesOnDying();
+    //setAttributesOnDying();
 }

@@ -81,6 +81,7 @@ void InvisibleBlock::doHit( Mario& mario, Map *map ) {
         coinAnimationStarted = true;
         coinY = pos.y;
         mario.addCoins( 1 );
+        mario.addPoints( 10 );
         state = SPRITE_STATE_IDLE;
         auxiliaryState = SPRITE_STATE_NEITHER;
     }

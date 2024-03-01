@@ -12,59 +12,64 @@
 #include "SpriteState.h"
 
 Sprite::Sprite() :
-    Sprite( Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), BLACK, 0, 0, DIRECTION_RIGHT ) {
+    Sprite( Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), BLACK, 0, 0, DIRECTION_RIGHT, 0, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, 1 ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, 1, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, int hitsToDie ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, hitsToDie ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, hitsToDie, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, DIRECTION_RIGHT, 1 ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, DIRECTION_RIGHT, 1, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, int hitsToDie ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, DIRECTION_RIGHT, hitsToDie ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, DIRECTION_RIGHT, hitsToDie, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, Direction facingDirection ) : 
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, 1 ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, facingDirection, 1, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie ) :
-    Sprite( pos, dim, Vector2( 0, 0 ), color, 0, 0, DIRECTION_RIGHT, hitsToDie ) {
+    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, facingDirection, hitsToDie, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Sprite( pos, dim, vel, color, 0, 0, DIRECTION_RIGHT, 1 ) {
+    Sprite( pos, dim, vel, color, 0, 0, DIRECTION_RIGHT, 1, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, int hitsToDie ) :
-    Sprite( pos, dim, vel, color, 0, 0, DIRECTION_RIGHT, hitsToDie ) {
+    Sprite( pos, dim, vel, color, 0, 0, DIRECTION_RIGHT, hitsToDie, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, vel, color, frameTime, maxFrames, DIRECTION_RIGHT, 1 ) {
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, DIRECTION_RIGHT, 1, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int hitsToDie ) :
-    Sprite( pos, dim, vel, color, frameTime, maxFrames, DIRECTION_RIGHT, hitsToDie ) {
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, DIRECTION_RIGHT, hitsToDie, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection ) :
-    Sprite( pos, dim, vel, color, frameTime, maxFrames, facingDirection, 1 ) {
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, facingDirection, 1, 0 ) {
 }
 
 Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie ) :
+    Sprite( pos, dim, vel, color, frameTime, maxFrames, facingDirection, hitsToDie, 0 ) {
+}
+
+Sprite::Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie, int earnedPoints ) :
     pos( pos ),
     dim( dim ),
     vel( vel ),
     angle( 0 ),
     hitsToDie( hitsToDie ),
+    earnedPoints( earnedPoints ),
     color( color ),
     state( SPRITE_STATE_IDLE ),
     auxiliaryState( SPRITE_STATE_NEITHER ),
@@ -196,6 +201,10 @@ float Sprite::getVelY() const {
 
 float Sprite::getAngle() const {
     return angle;
+}
+
+int Sprite::getEarnedPoints() const {
+    return earnedPoints;
 }
 
 Color &Sprite::getColor() {

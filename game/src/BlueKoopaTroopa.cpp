@@ -18,7 +18,7 @@
 #include <map>
 
 BlueKoopaTroopa::BlueKoopaTroopa( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Baddie( pos, dim, vel, color, 0.2, 2, 1 ) {
+    Baddie( pos, dim, vel, color, 0.2, 2, 1, 200 ) {
 }
 
 BlueKoopaTroopa::~BlueKoopaTroopa() = default;
@@ -48,12 +48,14 @@ void BlueKoopaTroopa::update() {
 
     } else if ( state == SPRITE_STATE_DYING ) {
 
-        angle += ( vel.x >= 0 ? 600 : -600 ) * delta;
-
-        pos.x = pos.x + vel.x * delta;
-        pos.y = pos.y + vel.y * delta;
-
-        vel.y += GameWorld::gravity;
+        dyingFrameAcum += delta;
+        if ( dyingFrameAcum >= dyingFrameTime ) {
+            dyingFrameAcum = 0;
+            currentDyingFrame++;
+            if ( currentDyingFrame == maxDyingFrames ) {
+                state = SPRITE_STATE_TO_BE_REMOVED;
+            }
+        }
 
     }
 
@@ -63,13 +65,19 @@ void BlueKoopaTroopa::update() {
 
 void BlueKoopaTroopa::draw() {
 
-    std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();    
-    const char dir = facingDirection == DIRECTION_RIGHT ? 'R' : 'L';
+    std::map<std::string, Texture2D> &textures = ResourceManager::getTextures();
 
-    DrawTexturePro( textures[std::string( TextFormat( "blueKoopaTroopa%d%c", currentFrame, dir ) )],
-                    Rectangle( 0, 0, dim.x, dim.y ),
-                    Rectangle( pos.x + dim.x / 2, pos.y + dim.y / 2, dim.x, dim.y ),
-                    Vector2( dim.x / 2, dim.y / 2 ), angle, WHITE );
+    if ( state == SPRITE_STATE_ACTIVE ) {
+        const char dir = facingDirection == DIRECTION_RIGHT ? 'R' : 'L';
+        DrawTexturePro( textures[std::string( TextFormat( "blueKoopaTroopa%d%c", currentFrame, dir ) )],
+                        Rectangle( 0, 0, dim.x, dim.y ),
+                        Rectangle( pos.x + dim.x / 2, pos.y + dim.y / 2, dim.x, dim.y ),
+                        Vector2( dim.x / 2, dim.y / 2 ), angle, WHITE );
+    } else if ( state == SPRITE_STATE_DYING ) {
+        DrawTexture( textures[std::string( TextFormat( "puft%d", currentDyingFrame ) )], pos.x, pos.y, WHITE );
+        std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
+        DrawTexture( textures[pointsStr], pos.x + dim.x / 2 - textures[pointsStr].width / 2, pos.y - textures[pointsStr].height - 5, WHITE );
+    }
 
     if ( GameWorld::debug ) {
         cpN.draw();

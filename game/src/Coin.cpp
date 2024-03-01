@@ -50,6 +50,7 @@ void Coin::playCollisionSound() {
 
 void Coin::updateMario( Mario& mario ) {
     mario.addCoins( 1 );
+    mario.addPoints( 200 );
     if ( mario.getCoins() >= 100 ) {
         mario.addLives( 1 );
         mario.setCoins( mario.getCoins() - 100 );

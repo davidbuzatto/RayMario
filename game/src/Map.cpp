@@ -561,7 +561,7 @@ void Map::parseMap() {
                         break;
                     case '2':
                         if ( parseBaddies ) {
-                            newBaddie = new FlyingGoomba( Vector2( x, y ), Vector2( 66, 48 ), Vector2( -100, 0 ), MAROON );
+                            newBaddie = new FlyingGoomba( Vector2( x, y ), Vector2( 66, 50 ), Vector2( -100, 0 ), MAROON );
                             baddies.push_back( newBaddie );
                             frontBaddies.push_back( newBaddie );
                         }

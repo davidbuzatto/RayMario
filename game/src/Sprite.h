@@ -22,6 +22,7 @@ protected:
     Vector2 vel;
     float angle;
     int hitsToDie;
+    int earnedPoints;
     Color color;
     SpriteState state;
     SpriteState auxiliaryState;
@@ -52,6 +53,7 @@ public:
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, int hitsToDie );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection );
     Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie );
+    Sprite( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime, int maxFrames, Direction facingDirection, int hitsToDie, int earnedPoints );
     ~Sprite() override;   // virtual destructor enables polimorphism
 
     virtual void update() = 0;
@@ -96,6 +98,7 @@ public:
     
     float getAngle() const;
 
+    int getEarnedPoints() const;
     Color &getColor();
     SpriteState getState() const;
     SpriteState getAuxiliaryState() const;
