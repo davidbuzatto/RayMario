@@ -6,6 +6,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "Baddie.h"
+#include "BanzaiBill.h"
 #include "Block.h"
 #include "BlueKoopaTroopa.h"
 #include "BobOmb.h"
@@ -24,8 +25,10 @@
 #include "GreenKoopaTroopa.h"
 #include "InvisibleBlock.h"
 #include "Item.h"
+#include "JumpingPiranhaPlant.h"
 #include "Map.h"
 #include "MessageBlock.h"
+#include "MontyMole.h"
 #include "MummyBeetle.h"
 #include "Muncher.h"
 #include "PiranhaPlant.h"
@@ -51,14 +54,10 @@
 #include <string>
 #include <vector>
 
-#include "BanzaiBill.h"
-#include "JumpingPiranhaPlant.h"
-#include "MontyMole.h"
-
 Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseItems, bool parseBaddies, GameWorld *gw ) :
 
     id( id ),
-    maxId( 4 ),
+    maxId( 3 ),
 
     maxWidth( 0 ),
     maxHeight( 0 ),
@@ -603,7 +602,7 @@ void Map::parseMap() {
                         break;
                     case '8':
                         if ( parseBaddies ) {
-                            newBaddie = new BulletBill( Vector2( x, y ), Vector2( 32, 28 ), Vector2( -200, 0 ), BLACK );
+                            newBaddie = new BulletBill( Vector2( x, y + 2 ), Vector2( 32, 28 ), Vector2( -200, 0 ), BLACK );
                             baddies.push_back( newBaddie );
                             frontBaddies.push_back( newBaddie );
                         }

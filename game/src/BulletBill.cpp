@@ -19,6 +19,7 @@
 
 BulletBill::BulletBill( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
     Baddie( pos, dim, vel, color, 0.2, 1, 1, 200 ) {
+    setAuxiliaryState( SPRITE_STATE_NO_COLLIDABLE );
 }
 
 BulletBill::~BulletBill() = default;

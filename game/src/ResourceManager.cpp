@@ -589,15 +589,15 @@ void ResourceManager::loadTextures() {
         textures["banzaiBill0L"] = texture2DFlipHorizontal( textures["banzaiBill0R"] );
 
         if ( loadFromRRES ) {
-            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_Down_0.png", "jumpingPiranhaPlantDown0" );
-            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_Down_1.png", "jumpingPiranhaPlantDown1" );
-            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_Up_0.png", "jumpingPiranhaPlantUp0" );
-            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_Up_1.png", "jumpingPiranhaPlantUp1" );
+            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_0.png", "jumpingPiranhaPlant0" );
+            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_1.png", "jumpingPiranhaPlant1" );
+            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_2.png", "jumpingPiranhaPlant2" );
+            loadTextureFromResource( "resources/images/sprites/baddies/JumpingPiranhaPlant_3.png", "jumpingPiranhaPlant3" );
         } else {
-            textures["jumpingPiranhaPlantDown0"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_Down_0.png" );
-            textures["jumpingPiranhaPlantDown1"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_Down_1.png" );
-            textures["jumpingPiranhaPlantUp0"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_Up_0.png" );
-            textures["jumpingPiranhaPlantUp1"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_Up_1.png" );
+            textures["jumpingPiranhaPlant0"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_0.png" );
+            textures["jumpingPiranhaPlant1"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_1.png" );
+            textures["jumpingPiranhaPlant2"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_2.png" );
+            textures["jumpingPiranhaPlant3"] = LoadTexture( "resources/images/sprites/baddies/JumpingPiranhaPlant_3.png" );
         }
 
         // effects

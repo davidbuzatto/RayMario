@@ -39,8 +39,8 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #else
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
-#define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
+#define INITIAL_MAP_ID 2
+#define LOAD_TEST_MAP false
 #define LOAD_RESOURCES_FROM_RRES false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
@@ -79,7 +79,7 @@ GameWorld::GameWorld() :
     irisOutTime( 1 ),
     irisOutAcum( 0 ) {
     //mario.changeToSuper();
-    mario.changeToFlower();
+    //mario.changeToFlower();
 }
 
 /**
@@ -559,8 +559,16 @@ void GameWorld::inputAndUpdate() {
 
                     }
 
+                    if ( baddie->getX() + baddie->getWidth() < 0 ||
+                         baddie->getX() > map.getMaxWidth() ||
+                         baddie->getY() > map.getMaxHeight() ) {
+                        baddie->setState( SPRITE_STATE_TO_BE_REMOVED );
+                    }
+
                 } else {
-                    if ( baddie->getY() > map.getMaxHeight() ) {
+                    if ( baddie->getX() + baddie->getWidth() < 0 ||
+                         baddie->getX() > map.getMaxWidth() ||
+                         baddie->getY() > map.getMaxHeight() ) {
                         baddie->setState( SPRITE_STATE_TO_BE_REMOVED );
                     }
                 }

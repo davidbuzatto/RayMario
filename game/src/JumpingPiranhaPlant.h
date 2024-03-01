@@ -15,7 +15,10 @@ class JumpingPiranhaPlant : public Baddie {
 private:
     float minY;
     float maxY;
-    float animVel;
+    float animVelUp;
+    float currentAnimVelUp;
+    float animVelDown;
+    bool goingToUp;
     float waitAcum;
     float waitTime;
     bool waiting;

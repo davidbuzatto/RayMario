@@ -229,7 +229,10 @@ Rectangle Sprite::getRect() const {
 
 CollisionType Sprite::checkCollision( Sprite* sprite ) {
 
-    if ( sprite->getState() != SPRITE_STATE_NO_COLLIDABLE ) {
+    if ( state != SPRITE_STATE_NO_COLLIDABLE &&
+         auxiliaryState != SPRITE_STATE_NO_COLLIDABLE &&
+         sprite->getState() != SPRITE_STATE_NO_COLLIDABLE &&
+         sprite->getAuxiliaryState() != SPRITE_STATE_NO_COLLIDABLE ) {
         
         Rectangle rect = sprite->getRect();
 

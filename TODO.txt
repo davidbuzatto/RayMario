@@ -1,10 +1,9 @@
 para versão final:
     
-    - efeitos ao pegar estrela <- fácil
-    
     - implementar baddie (MontyMole) (assets ok) -> seguir o mario
-    - implementar baddie (Banzai Bill) (assets ok) -> passar pelo cenário (aplicar no bullet tbm?)
     - jumping piranha plant: ajustar movimentação (ver jogo)
+        -> sobe brecando
+        -> desce normal
     
     - gerar rres
     
@@ -14,17 +13,16 @@ para versão final:
         super->flower;
         super->small;
         flower->small.
-        
+            
+futuro:
+    - separar tiles de cenário, fundo etc
+    - editor de fases - salvar e carregar, usar formato binário?
     - tiles não colidíveis
     - tiles colidíveis apenas por cima
     - tiles em camadas -> evita detecção de colisão!
-    
-    - implementar p e mudança de moedas para blocos
+    - implementar P e mudança de moedas para blocos
+    - implementar cipó
     - criar mais fases
-            
-futuro:
-    separar tiles de cenário, fundo etc
-    editor de fases - salvar e carregar, usar formato binário?
     - otimizações:
         - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo
           que estiverem dentro de um raio ou retângulo de ação
