@@ -1,11 +1,7 @@
 para versão final:
     
-    - implementar baddie (MontyMole) (assets ok) -> seguir o mario
-    - jumping piranha plant: ajustar movimentação (ver jogo)
-        -> sobe brecando
-        -> desce normal
-    
-    - gerar rres
+    - goomba voador ao levar hit vira goomba normal
+    - implementar baddie (MontyMole) -> seguir o mario
     
     - transformação/transição
         small->super;
@@ -13,6 +9,8 @@ para versão final:
         super->flower;
         super->small;
         flower->small.
+        
+    - gerar rres
             
 futuro:
     - separar tiles de cenário, fundo etc
