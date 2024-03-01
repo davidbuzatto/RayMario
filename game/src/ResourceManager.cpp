@@ -614,15 +614,15 @@ void ResourceManager::loadTextures() {
         }
 
         if ( loadFromRRES ) {
-            loadTextureFromResource( "resources/images/sprites/effects/StarDust_0.png", "starDust0" );
-            loadTextureFromResource( "resources/images/sprites/effects/StarDust_1.png", "starDust1" );
-            loadTextureFromResource( "resources/images/sprites/effects/StarDust_2.png", "starDust2" );
-            loadTextureFromResource( "resources/images/sprites/effects/StarDust_3.png", "starDust3" );
+            loadTextureFromResource( "resources/images/sprites/effects/Stardust_0.png", "stardust0" );
+            loadTextureFromResource( "resources/images/sprites/effects/Stardust_1.png", "stardust1" );
+            loadTextureFromResource( "resources/images/sprites/effects/Stardust_2.png", "stardust2" );
+            loadTextureFromResource( "resources/images/sprites/effects/Stardust_3.png", "stardust3" );
         } else {
-            textures["starDust0"] = LoadTexture( "resources/images/sprites/effects/StarDust_0.png" );
-            textures["starDust1"] = LoadTexture( "resources/images/sprites/effects/StarDust_1.png" );
-            textures["starDust2"] = LoadTexture( "resources/images/sprites/effects/StarDust_2.png" );
-            textures["starDust3"] = LoadTexture( "resources/images/sprites/effects/StarDust_3.png" );
+            textures["stardust0"] = LoadTexture( "resources/images/sprites/effects/Stardust_0.png" );
+            textures["stardust1"] = LoadTexture( "resources/images/sprites/effects/Stardust_1.png" );
+            textures["stardust2"] = LoadTexture( "resources/images/sprites/effects/Stardust_2.png" );
+            textures["stardust3"] = LoadTexture( "resources/images/sprites/effects/Stardust_3.png" );
         }
 
         // gui

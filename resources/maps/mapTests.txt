@@ -112,12 +112,12 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
+/                                   =                                    C/
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/                                                                        C/
-/   mfu+*                                                                C/
-/                              :::::::::::::::::                         C/
-/   p      1111111111111  ooooooooooooooooo                                           C/
+/   !?vmfu+*                                                             C/
+/                      ::::::::::                                        C/
+/   p         ooooooooo                                                  C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

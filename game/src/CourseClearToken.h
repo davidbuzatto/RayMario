@@ -27,5 +27,6 @@ public:
     void draw() override;
     void playCollisionSound() override;
     void updateMario( Mario& mario ) override;
+    CollisionType checkCollision( Sprite* sprite ) override;
 
 };

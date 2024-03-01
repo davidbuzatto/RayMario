@@ -14,14 +14,23 @@
 
 class QuestionBlock : public Block {
 
-private:
     float coinAnimationTime;
     float coinAnimationAcum;
     float coinFrameAcum;
     int coinAnimationFrame;
-    bool coinAnimationStarted;
+    bool coinAnimationRunning;
     float coinY;
     float coinVelY;
+
+    float stardustAnimationTime;
+    float stardustAnimationAcum;
+    int stardustAnimationFrame;
+    int maxStartDustAnimationFrame;
+    bool stardustAnimationRunning;
+
+    float pointsFrameAcum;
+    float pointsFrameTime;
+    bool pointsAnimationRunning;
 
 public:
 

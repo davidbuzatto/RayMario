@@ -3,7 +3,7 @@
  * @author Prof. Dr. David Buzatto
  * @brief Block class implementation.
  *
- * @copyright Copyright (c) 2024doHit( Mario &mario, Map *map )
+ * @copyright Copyright (c) 2024
  */
 #include "Block.h"
 #include "GameWorld.h"
@@ -17,7 +17,11 @@ Block::Block( Vector2 pos, Vector2 dim, Color color ) :
     Block( pos, dim, color, 0, 1 ) {}
 
 Block::Block( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Sprite( pos, dim, color, frameTime, maxFrames ), hit( false ) {
+    Block( pos, dim, color, frameTime, maxFrames, 0 ) {
+}
+
+Block::Block( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, int earnedPoints ) :
+    Sprite( pos, dim, Vector2( 0, 0 ), color, frameTime, maxFrames, DIRECTION_RIGHT, 0, earnedPoints ), hit( false ) {
 }
 
 Block::~Block() = default;

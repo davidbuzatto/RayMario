@@ -79,7 +79,7 @@ GameWorld::GameWorld() :
     irisOutTime( 1 ),
     irisOutAcum( 0 ) {
     //mario.changeToSuper();
-    //mario.changeToFlower();
+    mario.changeToFlower();
 }
 
 /**
@@ -397,7 +397,7 @@ void GameWorld::inputAndUpdate() {
 
             if ( item->getState() != SPRITE_STATE_HIT &&
                  item->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
-                if ( mario.checkCollision( item ) != COLLISION_TYPE_NONE ) {
+                if ( item->checkCollision( &mario ) != COLLISION_TYPE_NONE ) {
                     item->setState( SPRITE_STATE_HIT );
                     item->playCollisionSound();
                     item->updateMario( mario );
@@ -407,7 +407,6 @@ void GameWorld::inputAndUpdate() {
             }
 
             if ( item->getState() == SPRITE_STATE_TO_BE_REMOVED ) {
-                TraceLog( LOG_INFO, "coletado" );
                 collectedIndexes.push_back( static_cast<int>( i ) );
             }
 

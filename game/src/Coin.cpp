@@ -60,7 +60,7 @@ void Coin::draw() {
     if ( state == SPRITE_STATE_ACTIVE || state == SPRITE_STATE_IDLE ) {
         DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "coin%d", currentFrame ) )], pos.x, pos.y, WHITE );
     } else if ( state == SPRITE_STATE_HIT ) {
-        DrawTexture( textures[std::string( TextFormat( "starDust%d", currentOnHitFrame ) )], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "stardust%d", currentOnHitFrame ) )], pos.x, pos.y, WHITE );
         const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
         DrawTexture( textures[pointsStr],
                      pos.x + dim.x / 2 - textures[pointsStr].width / 2,
@@ -89,4 +89,8 @@ void Coin::updateMario( Mario& mario ) {
         mario.setCoins( mario.getCoins() - 100 );
         PlaySound( ResourceManager::getSounds()["1up"] );
     }
+}
+
+CollisionType Coin::checkCollision( Sprite* sprite ) {
+    return CheckCollisionRecs( getRect(), sprite->getRect() ) ? COLLISION_TYPE_COLLIDED : COLLISION_TYPE_NONE;
 }

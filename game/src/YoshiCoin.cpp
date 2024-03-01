@@ -74,8 +74,8 @@ void YoshiCoin::draw() {
     if ( state == SPRITE_STATE_ACTIVE || state == SPRITE_STATE_IDLE ) {
         DrawTexture( textures[std::string( TextFormat( "yoshiCoin%d", currentFrame ) )], pos.x, pos.y, WHITE );
     } else if ( state == SPRITE_STATE_HIT ) {
-        DrawTexture( textures[std::string( TextFormat( "starDust%d", currentOnHitFrame ) )], pos.x, pos.y, WHITE );
-        DrawTexture( textures[std::string( TextFormat( "starDust%d", currentOnHitFrame ) )], pos.x, pos.y + 20, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "stardust%d", currentOnHitFrame ) )], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "stardust%d", currentOnHitFrame ) )], pos.x, pos.y + 20, WHITE );
         const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
         DrawTexture( textures[pointsStr],
                      pos.x + dim.x / 2 - textures[pointsStr].width / 2,
@@ -104,4 +104,8 @@ void YoshiCoin::updateMario( Mario& mario ) {
         mario.setYoshiCoins( 0 );
         PlaySound( ResourceManager::getSounds()["1up"] );
     }
+}
+
+CollisionType YoshiCoin::checkCollision( Sprite* sprite ) {
+    return CheckCollisionRecs( getRect(), sprite->getRect() ) ? COLLISION_TYPE_COLLIDED : COLLISION_TYPE_NONE;
 }

@@ -23,6 +23,7 @@ public:
     Block();
     Block( Vector2 pos, Vector2 dim, Color color );
     Block( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames );
+    Block( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames, int earnedPoints );
     ~Block() override;
 
     void update() override = 0;

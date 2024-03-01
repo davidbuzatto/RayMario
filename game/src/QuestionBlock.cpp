@@ -17,14 +17,22 @@ QuestionBlock::QuestionBlock( Vector2 pos, Vector2 dim, Color color ) :
     QuestionBlock( pos, dim, color, 0.1, 4 ) {}
 
 QuestionBlock::QuestionBlock( Vector2 pos, Vector2 dim, Color color, float frameTime, int maxFrames ) :
-    Block( pos, dim, color, frameTime, maxFrames ),
-    coinAnimationTime( 0.5 ),
+    Block( pos, dim, color, frameTime, maxFrames, 10 ),
+    coinAnimationTime( 0.6 ),
     coinAnimationAcum( 0 ),
     coinFrameAcum( 0 ),
     coinAnimationFrame( 0 ),
-    coinAnimationStarted( false ),
+    coinAnimationRunning( false ),
     coinY( 0 ),
-    coinVelY( -400 ) {}
+    coinVelY( -400 ),
+    stardustAnimationTime( 0.1 ),
+    stardustAnimationAcum( 0 ),
+    stardustAnimationFrame( 0 ),
+    maxStartDustAnimationFrame( 4 ),
+    stardustAnimationRunning( false ),
+    pointsFrameAcum( 0 ),
+    pointsFrameTime( 0.5 ),
+    pointsAnimationRunning( false ) {}
 
 QuestionBlock::~QuestionBlock() = default;
 
@@ -32,11 +40,13 @@ void QuestionBlock::update() {
 
     const float delta = GetFrameTime();
 
-    if ( hit && coinAnimationStarted ) {
+    if ( hit && coinAnimationRunning ) {
 
         coinAnimationAcum += delta;
         if ( coinAnimationAcum >= coinAnimationTime ) {
-            coinAnimationStarted = false;
+            coinAnimationRunning = false;
+            stardustAnimationRunning = true;
+            pointsAnimationRunning = true;
             coinAnimationFrame++;
             coinAnimationFrame %= maxFrames;
         }
@@ -62,18 +72,54 @@ void QuestionBlock::update() {
         }
     }
 
+    if ( stardustAnimationRunning ) {
+
+        stardustAnimationAcum += delta;
+        if ( stardustAnimationAcum >= stardustAnimationTime ) {
+            stardustAnimationAcum = 0;
+            stardustAnimationFrame++;
+            if ( stardustAnimationFrame == maxStartDustAnimationFrame ) {
+                stardustAnimationRunning = false;
+            }
+        }
+
+    }
+
+    if ( pointsAnimationRunning ) {
+
+        pointsFrameAcum += delta;
+        if ( pointsFrameAcum >= pointsFrameTime ) {
+            pointsAnimationRunning = false;
+        }
+
+    }
+
 }
 
 void QuestionBlock::draw() {
 
-    if ( coinAnimationStarted ) {
-        DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "coin%d", coinAnimationFrame ) )], pos.x + 4, coinY, WHITE );
+    std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
+
+    if ( coinAnimationRunning ) {
+        DrawTexture( textures[std::string( TextFormat( "coin%d", coinAnimationFrame ) )], pos.x + 4, coinY, WHITE );
+    }
+
+    if ( stardustAnimationRunning ) {
+        DrawTexture( textures[std::string( TextFormat( "stardust%d", stardustAnimationFrame ) )], pos.x, pos.y - dim.y, WHITE );
+    }
+
+    if ( pointsAnimationRunning ) {
+        const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
+        DrawTexture( textures[pointsStr],
+                     pos.x + dim.x / 2 - textures[pointsStr].width / 2,
+                     pos.y - dim.y / 2 - textures[pointsStr].height - ( 20 * pointsFrameAcum / pointsFrameTime ),
+                     WHITE );
     }
 
     if ( hit ) {
-        DrawTexture( ResourceManager::getTextures()["blockEyesClosed"], pos.x, pos.y, WHITE );
+        DrawTexture( textures["blockEyesClosed"], pos.x, pos.y, WHITE );
     } else {
-        DrawTexture( ResourceManager::getTextures()[std::string( TextFormat( "blockQuestion%d", currentFrame ) )], pos.x, pos.y, WHITE );
+        DrawTexture( textures[std::string( TextFormat( "blockQuestion%d", currentFrame ) )], pos.x, pos.y, WHITE );
     }
 
     if ( GameWorld::debug && color.a != 0 ) {
@@ -86,9 +132,9 @@ void QuestionBlock::doHit( Mario& mario, Map *map ) {
     if ( !hit ) {
         PlaySound( ResourceManager::getSounds()["coin"] );
         hit = true;
-        coinAnimationStarted = true;
+        coinAnimationRunning = true;
         coinY = pos.y;
         mario.addCoins( 1 );
-        mario.addPoints( 10 );
+        mario.addPoints( earnedPoints );
     }
 }
