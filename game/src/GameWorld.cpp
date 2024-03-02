@@ -462,15 +462,15 @@ void GameWorld::inputAndUpdate() {
                                                 break;
                                             case MARIO_TYPE_SUPER:
                                                 PlaySound( sounds["pipe"] );
-                                                mario.changeToSmall();
+                                                mario.setLastStateBeforeTransition( mario.getState() );
+                                                mario.setState( SPRITE_STATE_TRANSITIONING_SUPER_TO_SMALL );
                                                 mario.setInvulnerable( true );
-                                                mario.consumeReservedPowerUp();
                                                 break;
                                             case MARIO_TYPE_FLOWER:
                                                 PlaySound( sounds["pipe"] );
-                                                mario.changeToSmall();
+                                                mario.setLastStateBeforeTransition( mario.getState() );
+                                                mario.setState( SPRITE_STATE_TRANSITIONING_FLOWER_TO_SMALL );
                                                 mario.setInvulnerable( true );
-                                                mario.consumeReservedPowerUp();
                                                 break;
                                         }
                                     }
@@ -500,15 +500,15 @@ void GameWorld::inputAndUpdate() {
                                                     break;
                                                 case MARIO_TYPE_SUPER:
                                                     PlaySound( sounds["pipe"] );
-                                                    mario.changeToSmall();
+                                                    mario.setLastStateBeforeTransition( mario.getState() );
+                                                    mario.setState( SPRITE_STATE_TRANSITIONING_SUPER_TO_SMALL );
                                                     mario.setInvulnerable( true );
-                                                    mario.consumeReservedPowerUp();
                                                     break;
                                                 case MARIO_TYPE_FLOWER:
                                                     PlaySound( sounds["pipe"] );
-                                                    mario.changeToSmall();
+                                                    mario.setLastStateBeforeTransition( mario.getState() );
+                                                    mario.setState( SPRITE_STATE_TRANSITIONING_FLOWER_TO_SMALL );
                                                     mario.setInvulnerable( true );
-                                                    mario.consumeReservedPowerUp();
                                                     break;
                                             }
                                         }
@@ -541,15 +541,15 @@ void GameWorld::inputAndUpdate() {
                                                 break;
                                             case MARIO_TYPE_SUPER:
                                                 PlaySound( sounds["pipe"] );
-                                                mario.changeToSmall();
+                                                mario.setLastStateBeforeTransition( mario.getState() );
+                                                mario.setState( SPRITE_STATE_TRANSITIONING_SUPER_TO_SMALL );
                                                 mario.setInvulnerable( true );
-                                                mario.consumeReservedPowerUp();
                                                 break;
                                             case MARIO_TYPE_FLOWER:
                                                 PlaySound( sounds["pipe"] );
-                                                mario.changeToSmall();
+                                                mario.setLastStateBeforeTransition( mario.getState() );
+                                                mario.setState( SPRITE_STATE_TRANSITIONING_FLOWER_TO_SMALL );
                                                 mario.setInvulnerable( true );
-                                                mario.consumeReservedPowerUp();
                                                 break;
                                         }
                                     }

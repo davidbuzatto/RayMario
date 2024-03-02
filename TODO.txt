@@ -1,13 +1,12 @@
 para versão final:
     
-    - ao morrer, subir e descer
-    
-    - transformação/transição
+    - transformação/transição -> parece estar ok. 
         small->super;
         small->flower;
         super->flower;
         super->small;
         flower->small.
+    - implementar o release do power up!
         
     - gerar rres
             

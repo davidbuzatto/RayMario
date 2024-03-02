@@ -88,7 +88,9 @@ void Mushroom::updateMario( Mario& mario ) {
 
     switch ( mario.getType() ) {
         case MARIO_TYPE_SMALL:
-            mario.changeToSuper();
+            mario.setY( mario.getY() - 16 );
+            mario.setLastStateBeforeTransition( mario.getState() );
+            mario.setState( SPRITE_STATE_TRANSITIONING_SMALL_TO_SUPER );
             break;
         case MARIO_TYPE_SUPER:
             switch ( mario.getReservedPowerUp() ) {

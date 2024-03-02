@@ -20,6 +20,7 @@ class Mario : public Sprite {
     float speedX;
     float maxSpeedX;
     float jumpSpeed;
+    float dyingVelY;
     bool immortal;
     bool invulnerable;
     float invulnerableTime;
@@ -58,6 +59,16 @@ class Mario : public Sprite {
 
     float movingAcum;
 
+    float transitioningFrameTime;
+    float transitioningFrameAcum;
+    int transitionSteps;
+    int superToFlowerTransitionSteps;
+    int transitionCurrentFrame;
+    int transitionCurrentFramePos;
+    const int transitionFrameOrder[11] = { 0, 1, 0, 1, 0, 1, 2, 1, 2, 1, 2 };
+    const int reverseTransitionFrameOrder[11] = { 2, 1, 2, 1, 2, 1, 0, 1, 0, 1, 0 };
+    const int superToFlowerTransitionFrameOrder[11] = { 0, 1, 0, 1, 0, 1, 0, 1 };
+
     float invincibleTime;
     float invincibleAcum;
 
@@ -65,6 +76,7 @@ class Mario : public Sprite {
     bool gameOverMusicStreamPlaying;
 
     Vector2 lastPos;
+    SpriteState lastStateBeforeTransition;
     
 public:
 
@@ -93,6 +105,7 @@ public:
     void setYoshiCoins( int yoshiCoins );
     void setPoints( int points );
     void setMaxTime( float maxTime );
+    void setLastStateBeforeTransition( SpriteState lastStateBeforeTransition );
     
     int getLives() const;
     int getCoins() const;
@@ -113,7 +126,7 @@ public:
     void changeToFlower();
     void setReservedPowerUp( MarioType reservedPowerUp );
     MarioType getReservedPowerUp() const;
-    void consumeReservedPowerUp();
+    void releaseReservedPowerUp();
 
     MarioType getType() const;
     void setInvulnerable( bool invulnerable );

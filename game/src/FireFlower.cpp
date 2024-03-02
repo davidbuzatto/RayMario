@@ -80,10 +80,13 @@ void FireFlower::updateMario( Mario& mario ) {
 
     switch ( mario.getType() ) {
         case MARIO_TYPE_SMALL:
-            mario.changeToFlower();
+            mario.setY( mario.getY() - 16 );
+            mario.setLastStateBeforeTransition( mario.getState() );
+            mario.setState( SPRITE_STATE_TRANSITIONING_SMALL_TO_FLOWER );
             break;
         case MARIO_TYPE_SUPER:
-            mario.changeToFlower();
+            mario.setLastStateBeforeTransition( mario.getState() );
+            mario.setState( SPRITE_STATE_TRANSITIONING_SUPER_TO_FLOWER );
             switch ( mario.getReservedPowerUp() ) {
                 case MARIO_TYPE_SMALL:
                     mario.setReservedPowerUp( MARIO_TYPE_SUPER );

@@ -20,6 +20,7 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     speedX( speedX ),
     maxSpeedX( maxSpeedX ),
     jumpSpeed( jumpSpeed ),
+    dyingVelY( -600 ),
     immortal( immortal ),
     invulnerable( false ),
     invulnerableTime( 2 ),
@@ -44,11 +45,20 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     runningTime( 0.5 ),
     drawRunningFrames( false ),
     movingAcum( 0 ),
+
+    transitioningFrameTime( 0.06 ),
+    transitioningFrameAcum( 0 ),
+    transitionSteps( 11 ),
+    superToFlowerTransitionSteps( 8 ),
+    transitionCurrentFrame( 0 ),
+    transitionCurrentFramePos( 0 ),
+
     invincibleTime( 8 ),
     invincibleAcum( 0 ),
     playerDownMusicStreamPlaying( false ),
     gameOverMusicStreamPlaying( false ),
-    lastPos( pos ) {
+    lastPos( pos ),
+    lastStateBeforeTransition( SPRITE_STATE_ACTIVE ) {
 
     setState( SPRITE_STATE_ON_GROUND );
 
@@ -116,9 +126,15 @@ void Mario::update() {
             frameAcum = 0;
             currentFrame++;
             currentFrame %= maxFrames;
-        }
+        };
     } else {
         currentFrame = 0;
+    }
+
+    if ( state == SPRITE_STATE_DYING ) {
+        pos.y = pos.y + dyingVelY * delta;
+        updateCollisionProbes();
+        dyingVelY += GameWorld::gravity;
     }
 
     if ( invulnerable ) {
@@ -135,81 +151,147 @@ void Mario::update() {
          state != SPRITE_STATE_VICTORY &&
          state != SPRITE_STATE_WAITING_TO_NEXT_MAP ) {
 
-        if ( IsKeyDown( KEY_RIGHT ) ||
-             IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT ) ||
-             GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) > 0 ) {
-            facingDirection = DIRECTION_RIGHT;
-            movingAcum += delta * 2;
-            vel.x = currentSpeedX * ( movingAcum < 1 ? movingAcum : 1);
-        } else if ( IsKeyDown( KEY_LEFT ) ||
-                    IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_LEFT ) ||
-                    GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) < 0 ) {
-            facingDirection = DIRECTION_LEFT;
-            movingAcum += delta * 2;
-            vel.x = -currentSpeedX * ( movingAcum < 1 ? movingAcum : 1 );
+        if ( state == SPRITE_STATE_TRANSITIONING_SMALL_TO_SUPER ) {
+
+            transitioningFrameAcum += delta;
+            if ( transitioningFrameAcum >= transitioningFrameTime ) {
+                transitioningFrameAcum = 0;
+                transitionCurrentFramePos++;
+                if ( transitionCurrentFramePos <= transitionSteps ) {
+                    transitionCurrentFrame = transitionFrameOrder[transitionCurrentFramePos];
+                } else {
+                    transitionCurrentFramePos = 0;
+                    state = lastStateBeforeTransition;
+                    changeToSuper();
+                }
+            }
+
+        } else if ( state == SPRITE_STATE_TRANSITIONING_SMALL_TO_FLOWER ) {
+
+            transitioningFrameAcum += delta;
+            if ( transitioningFrameAcum >= transitioningFrameTime ) {
+                transitioningFrameAcum = 0;
+                transitionCurrentFramePos++;
+                if ( transitionCurrentFramePos <= transitionSteps ) {
+                    transitionCurrentFrame = transitionFrameOrder[transitionCurrentFramePos];
+                } else {
+                    transitionCurrentFramePos = 0;
+                    state = lastStateBeforeTransition;
+                    changeToFlower();
+                }
+            }
+
+        } else if ( state == SPRITE_STATE_TRANSITIONING_SUPER_TO_FLOWER ) {
+
+            transitioningFrameAcum += delta;
+            if ( transitioningFrameAcum >= transitioningFrameTime ) {
+                transitioningFrameAcum = 0;
+                transitionCurrentFramePos++;
+                if ( transitionCurrentFramePos <= superToFlowerTransitionSteps ) {
+                    transitionCurrentFrame = superToFlowerTransitionFrameOrder[transitionCurrentFramePos];
+                } else {
+                    transitionCurrentFramePos = 0;
+                    state = lastStateBeforeTransition;
+                    changeToFlower();
+                }
+            }
+
+        } else if ( state == SPRITE_STATE_TRANSITIONING_SUPER_TO_SMALL ||
+                    state == SPRITE_STATE_TRANSITIONING_FLOWER_TO_SMALL ) {
+            
+            transitioningFrameAcum += delta;
+            if ( transitioningFrameAcum >= transitioningFrameTime ) {
+                transitioningFrameAcum = 0;
+                transitionCurrentFramePos++;
+                if ( transitionCurrentFramePos <= transitionSteps ) {
+                    transitionCurrentFrame = reverseTransitionFrameOrder[transitionCurrentFramePos];
+                } else {
+                    transitionCurrentFramePos = 0;
+                    state = lastStateBeforeTransition;
+                    changeToSmall();
+                    releaseReservedPowerUp();
+                }
+            }
+
         } else {
-            movingAcum = 0;
-            if ( vel.x >= -10 && vel.x <= 10 ) {
-                vel.x = 0;
-            } else {
-                vel.x = vel.x * 0.9;
-            }
-        }
 
-        if ( state == SPRITE_STATE_ON_GROUND ) {
-            if ( IsKeyDown( KEY_DOWN ) ||
-                 IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
-                 GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
-                ducking = true;
-                vel.x = 0;
+            if ( IsKeyDown( KEY_RIGHT ) ||
+                 IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_RIGHT ) ||
+                 GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) > 0 ) {
+                facingDirection = DIRECTION_RIGHT;
+                movingAcum += delta * 2;
+                vel.x = currentSpeedX * ( movingAcum < 1 ? movingAcum : 1 );
+            } else if ( IsKeyDown( KEY_LEFT ) ||
+                        IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_LEFT ) ||
+                        GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_X ) < 0 ) {
+                facingDirection = DIRECTION_LEFT;
+                movingAcum += delta * 2;
+                vel.x = -currentSpeedX * ( movingAcum < 1 ? movingAcum : 1 );
             } else {
-                ducking = false;
+                movingAcum = 0;
+                if ( vel.x >= -10 && vel.x <= 10 ) {
+                    vel.x = 0;
+                } else {
+                    vel.x = vel.x * 0.9;
+                }
             }
-        }
 
-        if ( ( IsKeyPressed( KEY_SPACE ) ||
-               IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN ) ) && 
-               state != SPRITE_STATE_JUMPING ) {
             if ( state == SPRITE_STATE_ON_GROUND ) {
-                vel.y = jumpSpeed;
-                state = SPRITE_STATE_JUMPING;
-                PlaySound( sounds["jump"] );
+                if ( IsKeyDown( KEY_DOWN ) ||
+                     IsGamepadButtonDown( 0, GAMEPAD_BUTTON_LEFT_FACE_DOWN ) ||
+                     GetGamepadAxisMovement( 0, GAMEPAD_AXIS_LEFT_Y ) > 0 ) {
+                    ducking = true;
+                    vel.x = 0;
+                } else {
+                    ducking = false;
+                }
             }
-        }
 
-        if ( ( IsKeyPressed( KEY_LEFT_CONTROL ) ||
-               IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) &&
-             type == MARIO_TYPE_FLOWER ) {
-
-            if ( facingDirection == DIRECTION_RIGHT ) {
-                fireballs.push_back( Fireball( Vector2( pos.x + dim.x / 2, pos.y + dim.y / 2 - 3 ), Vector2( 16, 16 ), Vector2( 400, 100 ), RED, DIRECTION_RIGHT, 2 ) );
-            } else {
-                fireballs.push_back( Fireball( Vector2( pos.x, pos.y + dim.y / 2 - 3 ), Vector2( 16, 16 ), Vector2( -400, 100 ), RED, DIRECTION_LEFT, 2 ) );
+            if ( ( IsKeyPressed( KEY_SPACE ) ||
+                   IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN ) ) &&
+                 state != SPRITE_STATE_JUMPING ) {
+                if ( state == SPRITE_STATE_ON_GROUND ) {
+                    vel.y = jumpSpeed;
+                    state = SPRITE_STATE_JUMPING;
+                    PlaySound( sounds["jump"] );
+                }
             }
-            PlaySound( sounds["fireball"] );
 
-        }
+            if ( ( IsKeyPressed( KEY_LEFT_CONTROL ) ||
+                   IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT ) ) &&
+                 type == MARIO_TYPE_FLOWER ) {
 
-        std::vector<int> collectedIndexes;
-        for ( size_t i = 0; i < fireballs.size(); i++ ) {
-            fireballs[i].update();
-            if ( fireballs[i].getState() == SPRITE_STATE_TO_BE_REMOVED ) {
-                collectedIndexes.push_back(i);
+                if ( facingDirection == DIRECTION_RIGHT ) {
+                    fireballs.push_back( Fireball( Vector2( pos.x + dim.x / 2, pos.y + dim.y / 2 - 3 ), Vector2( 16, 16 ), Vector2( 400, 100 ), RED, DIRECTION_RIGHT, 2 ) );
+                } else {
+                    fireballs.push_back( Fireball( Vector2( pos.x, pos.y + dim.y / 2 - 3 ), Vector2( 16, 16 ), Vector2( -400, 100 ), RED, DIRECTION_LEFT, 2 ) );
+                }
+                PlaySound( sounds["fireball"] );
+
             }
-        }
-        for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
-            fireballs.erase( fireballs.begin() + collectedIndexes[i] );
-        }
 
-        pos.x = pos.x + vel.x * delta;
-        pos.y = pos.y + vel.y * delta;
+            std::vector<int> collectedIndexes;
+            for ( size_t i = 0; i < fireballs.size(); i++ ) {
+                fireballs[i].update();
+                if ( fireballs[i].getState() == SPRITE_STATE_TO_BE_REMOVED ) {
+                    collectedIndexes.push_back( i );
+                }
+            }
+            for ( int i = collectedIndexes.size() - 1; i >= 0; i-- ) {
+                fireballs.erase( fireballs.begin() + collectedIndexes[i] );
+            }
 
-        vel.y += GameWorld::gravity;
+            pos.x = pos.x + vel.x * delta;
+            pos.y = pos.y + vel.y * delta;
 
-        if ( static_cast<int>(lastPos.y) < static_cast<int>(pos.y) ) {
-            state = SPRITE_STATE_FALLING;
+            vel.y += GameWorld::gravity;
+
+            if ( static_cast<int>( lastPos.y ) < static_cast<int>( pos.y ) ) {
+                state = SPRITE_STATE_FALLING;
+            }
+            lastPos = pos;
+
         }
-        lastPos = pos;
 
     }
 
@@ -233,8 +315,22 @@ void Mario::draw() {
             break;
     }
 
+    const char dir = facingDirection == DIRECTION_RIGHT ? 'R' : 'L';
+
     if ( state == SPRITE_STATE_DYING ) {
         DrawTexture( textures[std::string( TextFormat( "smallMario%dDy", currentFrame))], pos.x, pos.y, WHITE);
+    } else if ( state == SPRITE_STATE_TRANSITIONING_SMALL_TO_SUPER || 
+                state == SPRITE_STATE_TRANSITIONING_SUPER_TO_SMALL ) {
+        DrawTexture( textures[std::string( TextFormat( "transitioningMarioSS%d%c", transitionCurrentFrame, dir ) )], pos.x, pos.y, WHITE );
+    } else if ( state == SPRITE_STATE_TRANSITIONING_SMALL_TO_FLOWER ||
+                state == SPRITE_STATE_TRANSITIONING_FLOWER_TO_SMALL ) {
+        DrawTexture( textures[std::string( TextFormat( "transitioningMarioSF%d%c", transitionCurrentFrame, dir ) )], pos.x, pos.y, WHITE );
+    } else if ( state == SPRITE_STATE_TRANSITIONING_SUPER_TO_FLOWER ) {
+        if ( transitionCurrentFrame == 0 ) {
+            DrawTexture( textures[std::string( TextFormat( "superMario0%c", dir ) )], pos.x, pos.y, WHITE );
+        } else {
+            DrawTexture( textures[std::string( TextFormat( "flowerMario0%c", dir ) )], pos.x, pos.y, WHITE );
+        }
     } else {
 
         Color tint = WHITE;
@@ -242,8 +338,6 @@ void Mario::draw() {
         if ( invincible ) {
             tint = ColorFromHSV( 360 * ( invincibleAcum / invincibleTime * 20 ), 0.3, 1 );
         }
-
-        const char dir = facingDirection == DIRECTION_RIGHT ? 'R' : 'L';
 
         if ( !invulnerableBlink ) {
 
@@ -500,6 +594,10 @@ void Mario::setMaxTime( float maxTime ) {
     this->maxTime = maxTime;
 }
 
+void Mario::setLastStateBeforeTransition( SpriteState lastStateBeforeTransition ) {
+    this->lastStateBeforeTransition = lastStateBeforeTransition;
+}
+
 int Mario::getLives() const {
     return lives;
 }
@@ -571,15 +669,18 @@ MarioType Mario::getReservedPowerUp() const {
     return reservedPowerUp;
 }
 
-void Mario::consumeReservedPowerUp() {
-    if ( reservedPowerUp == MARIO_TYPE_SUPER ) {
-        changeToSuper();
+void Mario::releaseReservedPowerUp() {
+    /*if ( reservedPowerUp == MARIO_TYPE_SUPER ) {
+        lastStateBeforeTransition = state;
+        state = SPRITE_STATE_TRANSITIONING_SMALL_TO_SUPER;
         PlaySound( ResourceManager::getSounds()["reserveItemRelease"] );
     } else if ( reservedPowerUp == MARIO_TYPE_FLOWER ) {
-        changeToFlower();
+        lastStateBeforeTransition = state;
+        state = SPRITE_STATE_TRANSITIONING_SMALL_TO_FLOWER;
         PlaySound( ResourceManager::getSounds()["reserveItemRelease"] );
     }
-    reservedPowerUp = MARIO_TYPE_SMALL;
+    reservedPowerUp = MARIO_TYPE_SMALL;*/
+    TraceLog( LOG_INFO, "releasing reserved power up" );
 }
 
 MarioType Mario::getType() const {
@@ -659,6 +760,7 @@ void Mario::reset( bool removePowerUps ) {
     }
     vel.x = 0;
     vel.y = 0;
+    dyingVelY = -600;
     state = SPRITE_STATE_ON_GROUND;
     facingDirection = DIRECTION_RIGHT;
     ducking = false;
