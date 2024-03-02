@@ -38,5 +38,6 @@ public:
     virtual void setAttributesOnDying();
     virtual void onSouthCollision();
     virtual void onHit();
+    virtual void followTheLeader( Sprite *sprite );
 
 };

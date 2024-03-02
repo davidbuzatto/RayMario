@@ -21,5 +21,6 @@ public:
     void draw() override;
     void updateCollisionProbes() override;
     void onSouthCollision() override;
+    void onHit() override;
 
 };

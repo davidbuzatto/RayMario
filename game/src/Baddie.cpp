@@ -75,3 +75,6 @@ void Baddie::onHit() {
     posOnDying = pos;
     //setAttributesOnDying();
 }
+
+void Baddie::followTheLeader( Sprite* sprite ) {
+}

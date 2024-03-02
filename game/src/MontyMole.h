@@ -11,7 +11,11 @@
 #include "raylib.h"
 
 class MontyMole : public Baddie {
-    
+
+    float maxJumpTime;
+    float jumpTime;
+    float jumpTimeAcum;
+
 public:
 
     MontyMole( Vector2 pos, Vector2 dim, Vector2 vel, Color color );
@@ -19,5 +23,6 @@ public:
 
     void update() override;
     void draw() override;
+    void followTheLeader( Sprite* sprite ) override;
 
 };

@@ -16,9 +16,14 @@
 #include "SpriteState.h"
 #include <iostream>
 #include <map>
+#include <miniaudio.h>
+#include <valarray>
 
 MontyMole::MontyMole( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Baddie( pos, dim, vel, color, 0.2, 2, 1, 200 ) {
+    Baddie( pos, dim, vel, color, 0.1, 2, 1, 200 ),
+    maxJumpTime( 6 ),
+    jumpTime( GetRandomValue( 2, maxJumpTime ) ),
+    jumpTimeAcum( 0 ) {
 }
 
 MontyMole::~MontyMole() = default;
@@ -40,6 +45,13 @@ void MontyMole::update() {
             facingDirection = DIRECTION_RIGHT;
         } else {
             facingDirection = DIRECTION_LEFT;
+        }
+
+        jumpTimeAcum += delta;
+        if ( jumpTimeAcum >= jumpTime ) {
+            jumpTimeAcum = 0;
+            vel.y = -200;
+            jumpTime = GetRandomValue( 2, maxJumpTime );
         }
 
         pos.x = pos.x + vel.x * delta;
@@ -93,6 +105,16 @@ void MontyMole::draw() {
         cpS.draw();
         cpE.draw();
         cpW.draw();
+    }
+
+}
+
+void MontyMole::followTheLeader( Sprite* sprite ) {
+
+    if ( pos.x < sprite->getX() - 60 ) {
+        vel.x = std::abs( vel.x );
+    } else if ( pos.x > sprite->getX() + 60 ) {
+        vel.x = -std::abs( vel.x );
     }
 
 }

@@ -1,7 +1,6 @@
 para versão final:
     
-    - goomba voador ao levar hit vira goomba normal
-    - implementar baddie (MontyMole) -> seguir o mario
+    - ao morrer, subir e descer
     
     - transformação/transição
         small->super;

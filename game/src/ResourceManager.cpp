@@ -176,6 +176,20 @@ void ResourceManager::loadTextures() {
         }
         textures["smallMario1Dy"] = texture2DFlipHorizontal( textures["smallMario0Dy"] );
 
+        // transitioning mario
+        if ( loadFromRRES ) {
+            loadTextureFromResource( "resources/images/sprites/mario/TransitioningMario_0.png", "transitioningMario0R" );
+            loadTextureFromResource( "resources/images/sprites/mario/TransitioningMario_1.png", "transitioningMario1R" );
+            loadTextureFromResource( "resources/images/sprites/mario/TransitioningMario_2.png", "transitioningMario2R" );
+        } else {
+            textures["transitioningMario0R"] = LoadTexture( "resources/images/sprites/mario/TransitioningMario_0.png" );
+            textures["transitioningMario1R"] = LoadTexture( "resources/images/sprites/mario/TransitioningMario_1.png" );
+            textures["transitioningMario2R"] = LoadTexture( "resources/images/sprites/mario/TransitioningMario_2.png" );
+        }
+        textures["transitioningMario0L"] = texture2DFlipHorizontal( textures["transitioningMario0R"] );
+        textures["transitioningMario1L"] = texture2DFlipHorizontal( textures["transitioningMario1R"] );
+        textures["transitioningMario2L"] = texture2DFlipHorizontal( textures["transitioningMario2R"] );
+
         // super mario
         if ( loadFromRRES ) {
             loadTextureFromResource( "resources/images/sprites/mario/SuperMario_0.png", "superMario0R" );
