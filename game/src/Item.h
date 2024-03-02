@@ -20,6 +20,7 @@ protected:
     int currentOnHitFrame;
     float pointsFrameAcum;
     float pointsFrameTime;
+    bool pauseGameOnHit;
 
 public:
 
@@ -35,6 +36,7 @@ public:
     void draw() override = 0;
     virtual void playCollisionSound() = 0;
     virtual void updateMario( Mario &mario ) = 0;
-    virtual void onSouthCollision();
+    virtual void onSouthCollision( Mario& mario );
+    virtual bool isPauseGameOnHit();
 
 };

@@ -14,7 +14,17 @@
 #include <string>
 
 FireFlower::FireFlower( Vector2 pos, Vector2 dim, Color color ) :
-    Item( pos, dim, color, 0.2, 2, 1000 ) {
+    FireFlower( pos, dim, Vector2( 0, 0 ), color, false, false ) {
+}
+
+FireFlower::FireFlower( Vector2 pos, Vector2 dim, Vector2 vel, Color color, bool doCollisionOnGround, bool blinking ) :
+    Item( pos, dim, vel, color, 0.2, 2, 1000 ),
+    doCollisionOnGround( doCollisionOnGround ),
+    blinking( blinking ),
+    blinkingAcum( 0 ),
+    blinkingTime( 0.1 ),
+    doBlink( false ) {
+    pauseGameOnHit = true;
 }
 
 FireFlower::~FireFlower() = default;
@@ -30,7 +40,19 @@ void FireFlower::update() {
         currentFrame %= maxFrames;
     }
 
-    if ( state == SPRITE_STATE_HIT ) {
+    if ( state == SPRITE_STATE_ACTIVE ) {
+
+        pos.y += vel.y * delta;
+
+        if ( blinking ) {
+            blinkingAcum += delta;
+            if ( blinkingAcum >= blinkingTime ) {
+                blinkingAcum = 0;
+                doBlink = !doBlink;
+            }
+        }
+
+    } else if ( state == SPRITE_STATE_HIT ) {
 
         onHitFrameAcum += delta;
         if ( onHitFrameAcum >= onHitFrameTime ) {
@@ -52,7 +74,9 @@ void FireFlower::draw() {
     std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
 
     if ( state == SPRITE_STATE_ACTIVE || state == SPRITE_STATE_IDLE ) {
-        DrawTexture( textures[std::string( TextFormat( "fireFlower%d", currentFrame ) )], pos.x, pos.y, WHITE );
+        if ( !doBlink ) {
+            DrawTexture( textures[std::string( TextFormat( "fireFlower%d", currentFrame ) )], pos.x, pos.y, WHITE );
+        }
     } else if ( state == SPRITE_STATE_HIT ) {
         const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
         DrawTexture( textures[pointsStr],
@@ -111,7 +135,16 @@ void FireFlower::updateMario( Mario& mario ) {
                 case MARIO_TYPE_FLOWER:
                     break;
             }
+            mario.getGameWorld()->unpauseGame();
             break;
     }
 
+}
+
+void FireFlower::onSouthCollision( Mario& mario ) {
+    if ( doCollisionOnGround ) {
+        blinking = false;
+        doBlink = false;
+        doCollisionOnGround = false;
+    }
 }

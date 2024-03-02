@@ -31,6 +31,7 @@
 #
 # items:
 #     o: coin
+#     :: yoshi coin (dragon coin)
 #     =: course clear token
 #
 # baddies:
@@ -47,7 +48,10 @@
 #     $: mummy beetle
 #     %: rex
 #     &: muncher
-#     ~: piranha
+#     ~: piranha plant
+#     ^: jumping piranha plant
+#     <: banzai bill
+#     .: monty mole
 #
 # colors: 
 #     - 0xf8e0b0ff (beige)

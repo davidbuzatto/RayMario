@@ -8,6 +8,8 @@
  */
 #pragma once
 
+class Mario;
+
 #include "Drawable.h"
 #include "GameState.h"
 #include "Map.h"
@@ -24,6 +26,7 @@ class GameWorld : public virtual Drawable {
     int remainingTimePointCount;
 
     bool pauseMusic;
+    bool pauseMarioUpdate;
     bool showOverlayOnPause;
 
     bool irisOutFinished;
@@ -72,11 +75,13 @@ public:
     static void unloadResources();
 
     void setCamera( Camera2D *camera );
+    Camera2D* getCamera() const;
 
     void resetMap();
     void resetGame();
     void nextMap();
-    void pauseGame( bool playPauseSFX, bool pauseMusic, bool showOverlay );
+    void pauseGame( bool playPauseSFX, bool pauseMusic, bool showOverlay, bool pauseMarioUpdate );
+    void unpauseGame();
 
     bool isPauseMusicOnPause() const;
     bool isShowOverlayOnPause() const;

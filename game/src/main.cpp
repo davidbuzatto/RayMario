@@ -16,10 +16,10 @@ int main( void ) {
         "RayMario",   // title
         60,           // target FPS
         false,        // antialiasing
-        true,         // resizable
+        false,        // resizable
         false,        // fullscreen
         false,        // undecorated
-        true,         // always on top
+        false,        // always on top
         false,        // always run
         true );       // init audio
 

@@ -15,7 +15,18 @@
 #include <string>
 
 Mushroom::Mushroom( Vector2 pos, Vector2 dim, Vector2 vel, Color color ) :
-    Item( pos, dim, vel, color, 0, 0, 1000 ) {
+    Mushroom( pos, dim, vel, color, true, false, false ) {
+}
+
+Mushroom::Mushroom( Vector2 pos, Vector2 dim, Vector2 vel, Color color, bool applyGravity, bool doCollisionOnGround, bool blinking ) :
+    Item( pos, dim, vel, color, 0, 0, 1000 ),
+    applyGravity( applyGravity ),
+    doCollisionOnGround( doCollisionOnGround ),
+    blinking( blinking ),
+    blinkingAcum( 0 ),
+    blinkingTime( 0.1 ),
+    doBlink( false ) {
+    pauseGameOnHit = true;
 }
 
 Mushroom::~Mushroom() = default;
@@ -34,7 +45,17 @@ void Mushroom::update() {
 
         pos.y += vel.y * delta;
 
-        vel.y += GameWorld::gravity;
+        if ( applyGravity ) {
+            vel.y += GameWorld::gravity;
+        }
+
+        if ( blinking ) {
+            blinkingAcum += delta;
+            if ( blinkingAcum >= blinkingTime ) {
+                blinkingAcum = 0;
+                doBlink = !doBlink;
+            }
+        }
 
     } else if ( state == SPRITE_STATE_HIT ) {
 
@@ -60,7 +81,9 @@ void Mushroom::draw() {
     std::map<std::string, Texture2D>& textures = ResourceManager::getTextures();
 
     if ( state == SPRITE_STATE_ACTIVE || state == SPRITE_STATE_IDLE ) {
-        DrawTexture( textures["mushroom"], pos.x, pos.y, WHITE );
+        if ( !doBlink ) {
+            DrawTexture( textures["mushroom"], pos.x, pos.y, WHITE );
+        }
     } else if ( state == SPRITE_STATE_HIT ) {
         const std::string pointsStr = TextFormat( "guiPoints%d", earnedPoints );
         DrawTexture( textures[pointsStr],
@@ -103,6 +126,7 @@ void Mushroom::updateMario( Mario& mario ) {
                 case MARIO_TYPE_FLOWER:
                     break;
             }
+            mario.getGameWorld()->unpauseGame();
             break;
         case MARIO_TYPE_FLOWER:
             switch ( mario.getReservedPowerUp() ) {
@@ -115,7 +139,18 @@ void Mushroom::updateMario( Mario& mario ) {
                 case MARIO_TYPE_FLOWER:
                     break;
             }
+            mario.getGameWorld()->unpauseGame();
             break;
     }
 
+}
+
+void Mushroom::onSouthCollision( Mario& mario ) {
+    if ( doCollisionOnGround ) {
+        vel.x = 200;
+        facingDirection = mario.getFacingDirection();
+        blinking = false;
+        doBlink = false;
+        doCollisionOnGround = false;
+    }
 }

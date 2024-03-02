@@ -31,6 +31,7 @@
 #
 # items:
 #     o: coin
+#     :: yoshi coin (dragon coin)
 #     =: course clear token
 #
 # baddies:
@@ -47,7 +48,10 @@
 #     $: mummy beetle
 #     %: rex
 #     &: muncher
-#     ~: piranha
+#     ~: piranha plant
+#     ^: jumping piranha plant
+#     <: banzai bill
+#     .: monty mole
 #
 # colors: 
 #     - 0xf8e0b0ff (beige)
@@ -97,8 +101,8 @@ h: Welcome to RayMario!\n\n\nProf. Dr. David Buzatto
 /F                                                                                                                                                                                                                                        [ ]   /
 /D       ss    ss                                                                                                                                                                                                                         [ ]   /
 /D                        ssssssss                                                                                                                                     2                     ss          ssssssssssssssss                 [ ]   /
-/D                                          ssssssss                                                                                                                                                                   ssssssss           [ ]   /
-/D                                                 ssssss                                                                     ?f                                                                                             ssssssssss   [ ]   /
+/D                                          ssssssss                                                                          ?f                                                                                       ssssssss           [ ]   /
+/D                                                 ssssss                                                                                                                                                                    ssssssssss   [ ]   /
 /D                                                      sssssss                                                                                                                   iiii                                       ssssssssssEBBBBBBBB/
 /D                                                            sssssss                             o o o o o o o                                                                                         8                              CAAAAAAAA/
 /D                                                                                                                            MN~                                       ~                           8                                  CAAAAAAAA/

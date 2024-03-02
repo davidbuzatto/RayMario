@@ -24,7 +24,7 @@
 #include "raygui.h"
 #undef RAYGUI_IMPLEMENTATION
 
-//#define RELEASE
+#define RELEASE
 
 #ifdef RELEASE
 #define ACTIVATE_DEBUG false
@@ -74,12 +74,17 @@ GameWorld::GameWorld() :
     stateBeforePause( GAME_STATE_TITLE_SCREEN ),
     remainingTimePointCount( 0 ),
     pauseMusic( false ),
+    pauseMarioUpdate( false ),
     showOverlayOnPause( true ),
     irisOutFinished( false ),
     irisOutTime( 1 ),
     irisOutAcum( 0 ) {
+
+    mario.setGameWorld( this );
+    mario.setMap( &map );
     //mario.changeToSuper();
     //mario.changeToFlower();
+
 }
 
 /**
@@ -121,6 +126,8 @@ void GameWorld::inputAndUpdate() {
          state != GAME_STATE_PAUSED ) {
         mario.setActivationWidth( GetScreenWidth() * 2 );
         mario.update();
+    } else if ( !pauseMarioUpdate && state != GAME_STATE_TITLE_SCREEN ) {
+        mario.update();
     }
 
     if ( mario.getState() != SPRITE_STATE_DYING && 
@@ -133,7 +140,7 @@ void GameWorld::inputAndUpdate() {
         std::vector<int> collectedIndexes;
 
         if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
-            pauseGame( true, true, true );
+            pauseGame( true, true, true, true );
         }
 
         for ( const auto block : blocks ) {
@@ -238,7 +245,7 @@ void GameWorld::inputAndUpdate() {
                         case COLLISION_TYPE_SOUTH:
                             item->setY( tile->getY() - item->getHeight() );
                             item->setVelY( 0 );
-                            item->onSouthCollision();
+                            item->onSouthCollision( mario );
                             item->updateCollisionProbes();
                             break;
                         case COLLISION_TYPE_EAST:
@@ -344,7 +351,7 @@ void GameWorld::inputAndUpdate() {
                     case COLLISION_TYPE_SOUTH:
                         item->setY( block->getY() - item->getHeight() );
                         item->setVelY( 0 );
-                        item->onSouthCollision();
+                        item->onSouthCollision( mario );
                         item->updateCollisionProbes();
                         break;
                     case COLLISION_TYPE_EAST:
@@ -371,9 +378,14 @@ void GameWorld::inputAndUpdate() {
             if ( item->getState() != SPRITE_STATE_HIT &&
                  item->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
                 if ( item->checkCollision( &mario ) != COLLISION_TYPE_NONE ) {
-                    item->setState( SPRITE_STATE_HIT );
-                    item->playCollisionSound();
-                    item->updateMario( mario );
+                    if ( !mario.isTransitioning() ) {
+                        item->setState( SPRITE_STATE_HIT );
+                        item->playCollisionSound();
+                        if ( item->isPauseGameOnHit() ) {
+                            pauseGame( false, false, false, false );
+                        }
+                        item->updateMario( mario );
+                    }
                 } else if ( item->getY() > map.getMaxHeight() ) {
                     item->setState( SPRITE_STATE_TO_BE_REMOVED );
                 }
@@ -670,9 +682,7 @@ void GameWorld::inputAndUpdate() {
 
     } else if ( state == GAME_STATE_PAUSED ) {
         if ( IsKeyPressed( KEY_ENTER ) || IsGamepadButtonPressed( 0, GAMEPAD_BUTTON_MIDDLE_RIGHT ) ) {
-            state = stateBeforePause;
-            map.setDrawMessage( false );
-            pauseMusic = false;
+            unpauseGame();
         }
     }
 
@@ -893,6 +903,10 @@ void GameWorld::setCamera( Camera2D *camera ) {
     this->map.setCamera( camera );
 }
 
+Camera2D* GameWorld::getCamera() const {
+    return camera;
+}
+
 void GameWorld::resetMap() {
     mario.reset( true );
     map.reset();
@@ -915,14 +929,22 @@ void GameWorld::nextMap() {
     }
 }
 
-void GameWorld::pauseGame( bool playPauseSFX, bool pauseMusic, bool showOverlay ) {
+void GameWorld::pauseGame( bool playPauseSFX, bool pauseMusic, bool showOverlay, bool pauseMarioUpdate ) {
     if ( playPauseSFX ) {
         PlaySound( ResourceManager::getSounds()["pause"] );
     }
     this->pauseMusic = pauseMusic;
     showOverlayOnPause = showOverlay;
+    this->pauseMarioUpdate = pauseMarioUpdate;
     stateBeforePause = state;
     state = GAME_STATE_PAUSED;
+}
+
+void GameWorld::unpauseGame() {
+    state = stateBeforePause;
+    map.setDrawMessage( false );
+    pauseMusic = false;
+    pauseMarioUpdate = false;
 }
 
 bool GameWorld::isPauseMusicOnPause() const {

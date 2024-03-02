@@ -36,11 +36,15 @@ Item::Item( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float frameTime,
     maxOnHitFrame( 1 ),
     currentOnHitFrame( 0 ),
     pointsFrameAcum( 0 ),
-    pointsFrameTime( 1 ) {
+    pointsFrameTime( 1 ),
+    pauseGameOnHit( false ) {
 }
 
 Item::~Item() = default;
 
-void Item::onSouthCollision() {
+void Item::onSouthCollision( Mario& mario  ) {
+}
 
+bool Item::isPauseGameOnHit() {
+    return pauseGameOnHit;
 }

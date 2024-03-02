@@ -8,12 +8,16 @@
 #include "Direction.h"
 #include "GameState.h"
 #include "GameWorld.h"
+#include "Map.h"
 #include "Mario.h"
 #include "MarioType.h"
 #include "raylib.h"
 #include "ResourceManager.h"
 #include <iostream>
 #include <utils.h>
+
+#include "FireFlower.h"
+#include "Mushroom.h"
 
 Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, float maxSpeedX, float jumpSpeed, bool immortal ) :
     Sprite( pos, dim, vel, color, 0, 2 ),
@@ -58,7 +62,9 @@ Mario::Mario( Vector2 pos, Vector2 dim, Vector2 vel, Color color, float speedX, 
     playerDownMusicStreamPlaying( false ),
     gameOverMusicStreamPlaying( false ),
     lastPos( pos ),
-    lastStateBeforeTransition( SPRITE_STATE_ACTIVE ) {
+    lastStateBeforeTransition( SPRITE_STATE_ACTIVE ),
+    gw( nullptr ),
+    map( nullptr ) {
 
     setState( SPRITE_STATE_ON_GROUND );
 
@@ -163,6 +169,7 @@ void Mario::update() {
                     transitionCurrentFramePos = 0;
                     state = lastStateBeforeTransition;
                     changeToSuper();
+                    gw->unpauseGame();
                 }
             }
 
@@ -178,6 +185,7 @@ void Mario::update() {
                     transitionCurrentFramePos = 0;
                     state = lastStateBeforeTransition;
                     changeToFlower();
+                    gw->unpauseGame();
                 }
             }
 
@@ -193,6 +201,7 @@ void Mario::update() {
                     transitionCurrentFramePos = 0;
                     state = lastStateBeforeTransition;
                     changeToFlower();
+                    gw->unpauseGame();
                 }
             }
 
@@ -210,6 +219,7 @@ void Mario::update() {
                     state = lastStateBeforeTransition;
                     changeToSmall();
                     releaseReservedPowerUp();
+                    gw->unpauseGame();
                 }
             }
 
@@ -598,6 +608,22 @@ void Mario::setLastStateBeforeTransition( SpriteState lastStateBeforeTransition 
     this->lastStateBeforeTransition = lastStateBeforeTransition;
 }
 
+void Mario::setGameWorld( GameWorld* gw ) {
+    this->gw = gw;
+}
+
+void Mario::setMap( Map* map ) {
+    this->map = map;
+}
+
+GameWorld* Mario::getGameWorld() const {
+    return gw;
+}
+
+Map* Mario::getMap() const {
+    return map;
+}
+
 int Mario::getLives() const {
     return lives;
 }
@@ -670,17 +696,26 @@ MarioType Mario::getReservedPowerUp() const {
 }
 
 void Mario::releaseReservedPowerUp() {
-    /*if ( reservedPowerUp == MARIO_TYPE_SUPER ) {
-        lastStateBeforeTransition = state;
-        state = SPRITE_STATE_TRANSITIONING_SMALL_TO_SUPER;
-        PlaySound( ResourceManager::getSounds()["reserveItemRelease"] );
+
+    Item *item = nullptr;
+    Vector2 itemPos = GetScreenToWorld2D( Vector2( GetScreenWidth() / 2, 32 ), *(gw->getCamera()) );
+    itemPos.x -= 16;
+
+    if ( reservedPowerUp == MARIO_TYPE_SUPER ) {
+        item = new Mushroom( itemPos, Vector2( 32, 32 ), Vector2( 0, 150 ), RED, false, true, true );
     } else if ( reservedPowerUp == MARIO_TYPE_FLOWER ) {
-        lastStateBeforeTransition = state;
-        state = SPRITE_STATE_TRANSITIONING_SMALL_TO_FLOWER;
+        item = new FireFlower( itemPos, Vector2( 32, 32 ), Vector2( 0, 150 ), RED, true, true );
+    }
+
+    if ( item != nullptr ) {
+        item->setState( SPRITE_STATE_ACTIVE );
+        item->setFacingDirection( facingDirection );
+        map->getItems().push_back( item );
         PlaySound( ResourceManager::getSounds()["reserveItemRelease"] );
     }
-    reservedPowerUp = MARIO_TYPE_SMALL;*/
-    TraceLog( LOG_INFO, "releasing reserved power up" );
+
+    reservedPowerUp = MARIO_TYPE_SMALL;
+
 }
 
 MarioType Mario::getType() const {
@@ -701,6 +736,14 @@ void Mario::setInvincible( bool invincible ) {
 
 bool Mario::isInvincible() const {
     return invincible;
+}
+
+bool Mario::isTransitioning() const {
+    return state == SPRITE_STATE_TRANSITIONING_SMALL_TO_SUPER ||
+           state == SPRITE_STATE_TRANSITIONING_SMALL_TO_FLOWER ||
+           state == SPRITE_STATE_TRANSITIONING_SUPER_TO_FLOWER ||
+           state == SPRITE_STATE_TRANSITIONING_SUPER_TO_SMALL ||
+           state == SPRITE_STATE_TRANSITIONING_FLOWER_TO_SMALL;
 }
 
 void Mario::updateCollisionProbes() {

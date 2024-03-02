@@ -1,15 +1,3 @@
-para versão final:
-    
-    - transformação/transição -> parece estar ok. 
-        small->super;
-        small->flower;
-        super->flower;
-        super->small;
-        flower->small.
-    - implementar o release do power up!
-        
-    - gerar rres
-            
 futuro:
     - separar tiles de cenário, fundo etc
     - editor de fases - salvar e carregar, usar formato binário?

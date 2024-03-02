@@ -7,6 +7,9 @@
  */
 #pragma once
 
+class GameWorld;
+class Map;
+
 #include "CollisionProbe.h"
 #include "CollisionType.h"
 #include "Fireball.h"
@@ -77,6 +80,8 @@ class Mario : public Sprite {
 
     Vector2 lastPos;
     SpriteState lastStateBeforeTransition;
+    GameWorld *gw;
+    Map *map;
     
 public:
 
@@ -106,7 +111,13 @@ public:
     void setPoints( int points );
     void setMaxTime( float maxTime );
     void setLastStateBeforeTransition( SpriteState lastStateBeforeTransition );
-    
+
+    void setGameWorld( GameWorld *gw );
+    void setMap( Map *map );
+
+    GameWorld* getGameWorld() const;
+    Map* getMap() const;
+
     int getLives() const;
     int getCoins() const;
     int getYoshiCoins() const;
@@ -124,6 +135,7 @@ public:
     void changeToSmall();
     void changeToSuper();
     void changeToFlower();
+
     void setReservedPowerUp( MarioType reservedPowerUp );
     MarioType getReservedPowerUp() const;
     void releaseReservedPowerUp();
@@ -134,6 +146,8 @@ public:
 
     void setInvincible( bool invincible );
     bool isInvincible() const;
+
+    bool isTransitioning() const;
 
     void reset( bool removePowerUps );
     void resetAll();

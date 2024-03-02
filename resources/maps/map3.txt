@@ -31,6 +31,7 @@
 #
 # items:
 #     o: coin
+#     :: yoshi coin (dragon coin)
 #     =: course clear token
 #
 # baddies:
@@ -47,7 +48,10 @@
 #     $: mummy beetle
 #     %: rex
 #     &: muncher
-#     ~: piranha
+#     ~: piranha plant
+#     ^: jumping piranha plant
+#     <: banzai bill
+#     .: monty mole
 #
 # colors: 
 #     - 0xf8e0b0ff (beige)
@@ -87,7 +91,7 @@ b: 3              # background id: [1-10]
 t: 4              # tile set id: [1-4]
 m: 3              # music id: [1-3]
 f: 200            # time to finish the map
-h: map 3 message
+h: Last map!!!
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /                                                                                                                                                                                                                                      {=}     /
 /                                                                                                                                                                                                                                      [ ]     /
@@ -110,7 +114,7 @@ h: map 3 message
 /AD           o                                oo                                     CAAD                o o                                                                           9                     ~ CAAAAAAAAAAAAAAD       1     CA/
 /ADv         o o             EBBBF            iiii                         u          CAAD              ~ ~o~                                               EBBBBBBF                                          MNCAAAAAAAAAAAAAAHF   ???+???  CA/
 /AD   h     o o o            CAAAD                                                   iCAAD o            MNMNMNQ                    o o o        EBBBBF      CAAAAAAD   @    @       !?!?!?!?!?!?!?!?!?!?      OPCAAAAAAAAAAAAAAAD    o o o   CA/
-/AD                          CAAAD         o        o         o                       CAAD o MN         OPOPOPRQ                 EBBBBBBBF      CAAAAD      CAAAAAAHBBBBBBBBBBBBF                             OPCAAAAAAAAAAAAAAAHF  o o1o o  CA/
-/AD   p          |     1     CAAAD        iii      iii       iii          iii         CAAD o OPQ  7  7  OPOPOPRRQ     %    %     CAAAAAAAD      CAAAAD      CAAAAAAAAAAAAAAAAAAAD      %     %     %       sssssCAAAAAAAAAAAAAAAAD   o o o   CA/
-/AHBBBBBBBF       EBBBBBBBBBBGAAAD                                                    CAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAD      CAAAAD      CAAAAAAAAAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAAHBBBBBBBBBBBGA/
-/AAAAAAAAAD       CAAAAAAAAAAAAAAD                                                    CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAD      CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
+/AD                          CAAAD         o        o        o                        CAAD o MN         OPOPOPRQ                 EBBBBBBBF      CAAAAD      CAAAAAAHBBBBBBBBBBBBF                             OPCAAAAAAAAAAAAAAAHF  o o1o o  CA/
+/AD   p          |     1     CAAAD       UVVVW    UVVVW    UVVVW         UVVVW        CAAD o OPQ  .  .  OPOPOPRRQ     .    .     CAAAAAAAD      CAAAAD      CAAAAAAAAAAAAAAAAAAAD      .     .     .       sssssCAAAAAAAAAAAAAAAAD   o o o   CA/
+/AHBBBBBBBF       EBBBBBBBBBBGAAAD        XYZ      XYZ      XYZ           XYZ         CAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAD      CAAAAD      CAAAAAAAAAAAAAAAAAAAHBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGAAAAAAAAAAAAAAAAHBBBBBBBBBBBGA/
+/AAAAAAAAAD       CAAAAAAAAAAAAAAD        XYZ      XYZ      XYZ           XYZ         CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD      CAAAAD      CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

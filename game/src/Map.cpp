@@ -815,7 +815,7 @@ void Map::first() {
 }
 
 void Map::pauseGameToShowMessage() const {
-    gw->pauseGame( false, false, false );
+    gw->pauseGame( false, false, false, true );
 }
 
 void Map::eraseBaddieFromDrawingVectors( Baddie* baddie ) {

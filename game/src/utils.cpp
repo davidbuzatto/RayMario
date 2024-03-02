@@ -279,7 +279,7 @@ void drawMessageString( std::string str, int x, int y ) {
 }
 
 int getDrawMessageStringWidth( std::string str ) {
-    return 16 * str.length();
+    return 14 * str.length();
 }
 
 int getDrawMessageStringHeight() {

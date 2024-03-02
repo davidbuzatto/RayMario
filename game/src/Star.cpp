@@ -84,6 +84,6 @@ void Star::updateMario( Mario& mario ) {
     mario.setInvincible( true );
 }
 
-void Star::onSouthCollision() {
+void Star::onSouthCollision( Mario& mario ) {
     vel.y = -400;
 }
