@@ -388,6 +388,7 @@
     <ClInclude Include="..\game\src\Swooper.h" />
     <ClInclude Include="..\game\src\ThreeUpMoon.h" />
     <ClInclude Include="..\game\src\Tile.h" />
+    <ClInclude Include="..\game\src\TileType.h" />
     <ClInclude Include="..\game\src\utils.h" />
     <ClInclude Include="..\game\src\WoodBlock.h" />
     <ClInclude Include="..\game\src\YellowKoopaTroopa.h" />

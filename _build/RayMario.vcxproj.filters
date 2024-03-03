@@ -392,5 +392,8 @@
     <ClInclude Include="..\game\src\MontyMole.h">
       <Filter>Header Files\baddies</Filter>
     </ClInclude>
+    <ClInclude Include="..\game\src\TileType.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

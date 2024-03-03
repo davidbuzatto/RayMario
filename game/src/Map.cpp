@@ -428,10 +428,13 @@ void Map::parseMap() {
 
                     // test tiles
                     case 'a':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), GREEN, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), GREEN, "", true, TILE_TYPE_SOLID_FROM_ABOVE ) );
                         break;
                     case 'b':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), BLUE, "", true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), BLUE, "", true, TILE_TYPE_SLOPE_DOWN_LEFT_UP_RIGHT ) );
+                        break;
+                    case 'd':
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), ORANGE, "", true, TILE_TYPE_SLOPE_UP_LEFT_DOWN_RIGHT ) );
                         break;
                     /*case 'c':
                         tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), RED, "", true ) );
