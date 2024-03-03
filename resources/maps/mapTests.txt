@@ -86,8 +86,8 @@
 #     - 8) koopa junior
 #     - 9) the evil koopa
 #
-c: 0x0060b8ff     # background color: [0xrrggbbaa]
-b: 1              # background id: [1-10]
+c: 0xeeeeeeff     # background color: [0xrrggbbaa]
+b: 0              # background id: [0-10]
 t: 1              # tile set id: [1-4]
 m: 1              # music id: [1-9]
 f: 10000          # time to finish the map
@@ -113,11 +113,11 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
+/                 b                                                      C/
+/                b                                                       C/
+/               b                                                        C/
+/      aaaa    b                                                         C/
 /                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/   hmmmfffu*+                                                               C/
-/                                                                        C/
-/   p          1  1  1                                                   C/
+/   p                                                                    C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

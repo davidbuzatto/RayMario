@@ -65,7 +65,7 @@ Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseIt
     mario( mario ),
     marioOffset( 0 ),
     
-    backgroundId( 1 ),
+    backgroundId( 0 ),
     maxBackgroundId( 10 ),
     backgroundColor( WHITE ),
     backgroundTexture( Texture() ),
@@ -128,12 +128,14 @@ void Map::draw() {
     const int repeats = maxWidth / backgroundTexture.width + 2;
     DrawRectangle( 0, 0, maxWidth, maxHeight, backgroundColor );
 
-    for ( int i = 0; i <= repeats; i++ ) {
-        DrawTexture(
-            backgroundTexture,
-            -backgroundTexture.width + i * backgroundTexture.width - marioOffset * 0.06,
-            0,
-            WHITE );
+    if ( backgroundId > 0 ) {
+        for ( int i = 0; i <= repeats; i++ ) {
+            DrawTexture(
+                backgroundTexture,
+                -backgroundTexture.width + i * backgroundTexture.width - marioOffset * 0.06,
+                0,
+                WHITE );
+        }
     }
 
     for ( const auto& backScenarioTile : backScenarioTiles ) {
@@ -324,13 +326,15 @@ void Map::parseMap() {
                         mapData++;
                     }
                     backgroundId = std::stoi( number );
-                    if ( backgroundId <= 0 ) {
-                        backgroundId = 1;
+                    if ( backgroundId < 0 ) {
+                        backgroundId = 0;
                     } else if ( backgroundId > maxBackgroundId ) {
                         backgroundId = maxBackgroundId;
                     }
 
-                    backgroundTexture = textures[TextFormat( "background%d", backgroundId )];
+                    if ( backgroundId > 0 ) {
+                        backgroundTexture = textures[TextFormat( "background%d", backgroundId )];
+                    }
                     currentColumn = 1;
 
                 } else if ( *mapData == 't' ) {     // parse tile set id
@@ -423,13 +427,13 @@ void Map::parseMap() {
                 switch ( *mapData ) {
 
                     // test tiles
-                    /*case 'a':
+                    case 'a':
                         tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), GREEN, "", true ) );
                         break;
                     case 'b':
                         tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), BLUE, "", true ) );
                         break;
-                    case 'c':
+                    /*case 'c':
                         tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), RED, "", true ) );
                         break;
                     case 'd':

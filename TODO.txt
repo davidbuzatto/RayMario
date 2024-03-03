@@ -4,6 +4,8 @@ futuro:
     - tiles não colidíveis
     - tiles colidíveis apenas por cima
     - tiles em camadas -> evita detecção de colisão!
+    
+    - yoshi
     - implementar P e mudança de moedas para blocos
     - implementar cipó
     - criar mais fases
