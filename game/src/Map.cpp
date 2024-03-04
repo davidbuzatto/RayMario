@@ -76,7 +76,7 @@ Map::Map( Mario &mario, int id, bool loadTestMap, bool parseBlocks, bool parseIt
     tileSetId( 1 ),
     maxTileSetId( 4 ),
 
-    musicId( 1 ),
+    musicId( 0 ),
     maxMusicId( 9 ),
 
     parseBlocks( parseBlocks ),
@@ -133,7 +133,7 @@ void Map::draw() {
             DrawTexture(
                 backgroundTexture,
                 -backgroundTexture.width + i * backgroundTexture.width - marioOffset * 0.06,
-                0,
+                maxHeight - backgroundTexture.height,
                 WHITE );
         }
     }
