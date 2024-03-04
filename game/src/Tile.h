@@ -34,5 +34,6 @@ public:
     void draw() override;
 
     bool isOnlyBaddies() const;
+    TileType getType() const;
 
 };

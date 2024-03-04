@@ -76,3 +76,7 @@ void Tile::draw() {
 bool Tile::isOnlyBaddies() const {
     return onlyBaddies;
 }
+
+TileType Tile::getType() const {
+    return type;
+}

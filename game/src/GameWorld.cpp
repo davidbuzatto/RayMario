@@ -40,7 +40,7 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP true
+#define LOAD_TEST_MAP false
 #define LOAD_RESOURCES_FROM_RRES false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
@@ -166,30 +166,40 @@ void GameWorld::inputAndUpdate() {
 
             // mario x tiles
             if ( !tile->isOnlyBaddies() ) {
-                switch ( mario.checkCollision( tile ) ) {
-                    case COLLISION_TYPE_NORTH:
-                        mario.setY( tile->getY() + tile->getHeight() );
-                        mario.setVelY( 0 );
-                        mario.updateCollisionProbes();
-                        break;
-                    case COLLISION_TYPE_SOUTH:
+                CollisionType col = mario.checkCollision( tile );
+                if ( tile->getType() == TILE_TYPE_SOLID ) {
+                    switch ( col ) {
+                        case COLLISION_TYPE_NORTH:
+                            mario.setY( tile->getY() + tile->getHeight() );
+                            mario.setVelY( 0 );
+                            mario.updateCollisionProbes();
+                            break;
+                        case COLLISION_TYPE_SOUTH:
+                            mario.setY( tile->getY() - mario.getHeight() );
+                            mario.setVelY( 0 );
+                            mario.setState( SPRITE_STATE_ON_GROUND );
+                            mario.updateCollisionProbes();
+                            break;
+                        case COLLISION_TYPE_EAST:
+                            mario.setX( tile->getX() - mario.getWidth() );
+                            mario.setVelX( 0 );
+                            mario.updateCollisionProbes();
+                            break;
+                        case COLLISION_TYPE_WEST:
+                            mario.setX( tile->getX() + tile->getWidth() );
+                            mario.setVelX( 0 );
+                            mario.updateCollisionProbes();
+                            break;
+                        default:
+                            break;
+                    }
+                } else if ( tile->getType() == TILE_TYPE_SOLID_FROM_ABOVE ) {
+                    if ( col == COLLISION_TYPE_SOUTH && mario.getState() == SPRITE_STATE_FALLING ) {
                         mario.setY( tile->getY() - mario.getHeight() );
                         mario.setVelY( 0 );
                         mario.setState( SPRITE_STATE_ON_GROUND );
                         mario.updateCollisionProbes();
-                        break;
-                    case COLLISION_TYPE_EAST:
-                        mario.setX( tile->getX() - mario.getWidth() );
-                        mario.setVelX( 0 );
-                        mario.updateCollisionProbes();
-                        break;
-                    case COLLISION_TYPE_WEST:
-                        mario.setX( tile->getX() + tile->getWidth() );
-                        mario.setVelX( 0 );
-                        mario.updateCollisionProbes();
-                        break;
-                    default: 
-                        break;
+                    }
                 }
             }
 
