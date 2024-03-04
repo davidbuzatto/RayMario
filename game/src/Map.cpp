@@ -246,26 +246,30 @@ std::vector<Baddie*> &Map::getBaddies() {
 
 void Map::playMusic() const {
 
-    std::map<std::string, Music> musics = ResourceManager::getMusics();
-    const std::string key(TextFormat( "music%d", musicId ));
+    if ( musicId != 0 ) {
 
-    if ( mario.isInvincible() ) {
-        if ( IsMusicStreamPlaying( musics[key] ) ) {
-            StopMusicStream( musics[key] );
-        }
-        if ( !IsMusicStreamPlaying( musics["invincible"] ) ) {
-            PlayMusicStream( musics["invincible"] );
-            SeekMusicStream( musics["invincible"], 1 );
+        std::map<std::string, Music> musics = ResourceManager::getMusics();
+        const std::string key( TextFormat( "music%d", musicId ) );
+
+        if ( mario.isInvincible() ) {
+            if ( IsMusicStreamPlaying( musics[key] ) ) {
+                StopMusicStream( musics[key] );
+            }
+            if ( !IsMusicStreamPlaying( musics["invincible"] ) ) {
+                PlayMusicStream( musics["invincible"] );
+                SeekMusicStream( musics["invincible"], 1 );
+            } else {
+                UpdateMusicStream( musics["invincible"] );
+            }
         } else {
-            UpdateMusicStream( musics["invincible"] );
+            if ( !IsMusicStreamPlaying( musics[key] ) ) {
+                StopMusicStream( musics["invincible"] );
+                PlayMusicStream( musics[key] );
+            } else {
+                UpdateMusicStream( musics[key] );
+            }
         }
-    } else {
-        if ( !IsMusicStreamPlaying( musics[key] ) ) {
-            StopMusicStream( musics["invincible"] );
-            PlayMusicStream( musics[key] );
-        } else {
-            UpdateMusicStream( musics[key] );
-        }
+
     }
 
 }
@@ -367,8 +371,8 @@ void Map::parseMap() {
                         mapData++;
                     }
                     musicId = std::stoi( number );
-                    if ( musicId <= 0 ) {
-                        musicId = 1;
+                    if ( musicId < 0 ) {
+                        musicId = 0;
                     } else if ( musicId > maxMusicId ) {
                         musicId = maxMusicId;
                     }

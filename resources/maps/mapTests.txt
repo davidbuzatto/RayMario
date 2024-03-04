@@ -89,7 +89,7 @@
 c: 0xeeeeeeff     # background color: [0xrrggbbaa]
 b: 0              # background id: [0-10]
 t: 1              # tile set id: [1-4]
-m: 1              # music id: [1-9]
+m: 0              # music id: [0-9]
 f: 10000          # time to finish the map
 h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"#()ááá
 ///////////////////////////////////////////////////////////////////////////
