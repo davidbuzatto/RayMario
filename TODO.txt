@@ -1,14 +1,11 @@
-futuro:
-    - separar tiles de cenário, fundo etc
-    - editor de fases - salvar e carregar, usar formato binário?
-    - tiles não colidíveis
-    - tiles colidíveis apenas por cima
-    - tiles em camadas -> evita detecção de colisão!
-    
-    - yoshi
-    - implementar P e mudança de moedas para blocos
-    - implementar cipó
-    - criar mais fases
-    - otimizações:
-        - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo
-          que estiverem dentro de um raio ou retângulo de ação
+- editor de fases - salvar e carregar, usar formato binário?
+- separar tiles de cenário, fundo etc
+- tiles não colidíveis
+- tiles em camadas -> evita detecção de colisão!
+- yoshi
+- implementar P e mudança de moedas para blocos
+- implementar cipó
+- criar mais fases
+- otimizações:
+    - ideal é tratar tudo em um esquema matricial e ativar apenas as entidades do jogo
+      que estiverem dentro de um raio ou retângulo de ação
