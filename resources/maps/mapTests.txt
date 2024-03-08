@@ -113,11 +113,11 @@ h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"
 /                                                                        C/
 /                                                                        C/
 /                                                                        C/
-/                 b  d                                                   C/
-/                b    d                                                  C/
-/               b      d                                                 C/
-/      aaaa    b        d                                                C/
+/        m                                                               C/
 /                                                                        C/
-/   p                                                                    C/
+/     |      1                                                           C/
+/      aaaaaaaa                                                          C/
+/                                                                        C/
+/   p               eeeeeeeee                                            C/
 /BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
 /AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

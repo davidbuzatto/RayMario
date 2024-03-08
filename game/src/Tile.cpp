@@ -16,22 +16,13 @@
 #include <utility>
 
 Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible ) :
-    Tile( pos, dim, color, std::move(key), visible, false, TILE_TYPE_SOLID ) {
+    Tile( pos, dim, color, key, visible, TILE_TYPE_SOLID ) {
 }
 
 Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, TileType type ) :
-    Tile( pos, dim, color, std::move(key), visible, false, type ) {
-}
-
-Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, bool onlyBaddies ) :
-    Tile( pos, dim, color, key, visible, onlyBaddies, TILE_TYPE_SOLID ) {
-}
-
-Tile::Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, bool onlyBaddies, TileType type ) :
     Sprite( pos, dim, color ),
     key( std::move( key ) ),
     visible( visible ),
-    onlyBaddies( onlyBaddies ),
     type( type ) {
 }
 
@@ -55,10 +46,10 @@ void Tile::draw() {
                 case TILE_TYPE_SOLID_FROM_ABOVE:
                     DrawRectangle( pos.x, pos.y, dim.x, dim.y, color );
                     break;
-                case TILE_TYPE_SLOPE_DOWN_LEFT_UP_RIGHT:
+                case TILE_TYPE_SLOPE_UP:
                     DrawTriangle( Vector2( pos.x + dim.x, pos.y + dim.y ), Vector2( pos.x + dim.x, pos.y ), Vector2( pos.x, pos.y + dim.y ), color );
                     break;
-                case TILE_TYPE_SLOPE_UP_LEFT_DOWN_RIGHT:
+                case TILE_TYPE_SLOPE_DOWN:
                     DrawTriangle( Vector2( pos.x + dim.x, pos.y + dim.y ), Vector2( pos.x, pos.y ), Vector2( pos.x, pos.y + dim.y ), color );
                     break;
             }
@@ -71,10 +62,6 @@ void Tile::draw() {
         DrawRectangle( pos.x, pos.y, dim.x, dim.y, Fade( color, 0.5 ) );
     }
 
-}
-
-bool Tile::isOnlyBaddies() const {
-    return onlyBaddies;
 }
 
 TileType Tile::getType() const {

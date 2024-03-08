@@ -40,7 +40,7 @@ GameState GameWorld::state = GAME_STATE_TITLE_SCREEN;
 #define ACTIVATE_DEBUG true
 #define ALLOW_ENABLE_CONTROLS true
 #define INITIAL_MAP_ID 1
-#define LOAD_TEST_MAP false
+#define LOAD_TEST_MAP true
 #define LOAD_RESOURCES_FROM_RRES false
 #define PARSE_BLOCKS true
 #define PARSE_ITEMS true
@@ -165,43 +165,83 @@ void GameWorld::inputAndUpdate() {
         for ( const auto tile : tiles ) {
 
             // mario x tiles
-            if ( !tile->isOnlyBaddies() ) {
-                CollisionType col = mario.checkCollision( tile );
-                if ( tile->getType() == TILE_TYPE_SOLID ) {
-                    switch ( col ) {
-                        case COLLISION_TYPE_NORTH:
-                            mario.setY( tile->getY() + tile->getHeight() );
-                            mario.setVelY( 0 );
-                            mario.updateCollisionProbes();
-                            break;
-                        case COLLISION_TYPE_SOUTH:
-                            mario.setY( tile->getY() - mario.getHeight() );
-                            mario.setVelY( 0 );
-                            mario.setState( SPRITE_STATE_ON_GROUND );
-                            mario.updateCollisionProbes();
-                            break;
-                        case COLLISION_TYPE_EAST:
-                            mario.setX( tile->getX() - mario.getWidth() );
-                            mario.setVelX( 0 );
-                            mario.updateCollisionProbes();
-                            break;
-                        case COLLISION_TYPE_WEST:
-                            mario.setX( tile->getX() + tile->getWidth() );
-                            mario.setVelX( 0 );
-                            mario.updateCollisionProbes();
-                            break;
-                        default:
-                            break;
-                    }
-                } else if ( tile->getType() == TILE_TYPE_SOLID_FROM_ABOVE ) {
-                    if ( col == COLLISION_TYPE_SOUTH && mario.getState() == SPRITE_STATE_FALLING ) {
+            CollisionType col = mario.checkCollision( tile );
+
+            if ( tile->getType() == TILE_TYPE_SOLID ) {
+                switch ( col ) {
+                    case COLLISION_TYPE_NORTH:
+                        mario.setY( tile->getY() + tile->getHeight() );
+                        mario.setVelY( 0 );
+                        mario.updateCollisionProbes();
+                        break;
+                    case COLLISION_TYPE_SOUTH:
                         mario.setY( tile->getY() - mario.getHeight() );
                         mario.setVelY( 0 );
                         mario.setState( SPRITE_STATE_ON_GROUND );
                         mario.updateCollisionProbes();
-                    }
+                        break;
+                    case COLLISION_TYPE_EAST:
+                        mario.setX( tile->getX() - mario.getWidth() );
+                        mario.setVelX( 0 );
+                        mario.updateCollisionProbes();
+                        break;
+                    case COLLISION_TYPE_WEST:
+                        mario.setX( tile->getX() + tile->getWidth() );
+                        mario.setVelX( 0 );
+                        mario.updateCollisionProbes();
+                        break;
+                    default:
+                        break;
                 }
-            }
+            } else if ( tile->getType() == TILE_TYPE_SOLID_FROM_ABOVE ) {
+                if ( col == COLLISION_TYPE_SOUTH && mario.getState() == SPRITE_STATE_FALLING ) {
+                    mario.setY( tile->getY() - mario.getHeight() );
+                    mario.setVelY( 0 );
+                    mario.setState( SPRITE_STATE_ON_GROUND );
+                    mario.updateCollisionProbes();
+                }
+            }/* else if ( tile->getType() == TILE_TYPE_SLOPE_UP || tile->getType() == TILE_TYPE_SLOPE_DOWN ) {
+
+                if ( mario.getState() == SPRITE_STATE_FALLING ) {
+
+                    const float width = tile->getWidth();
+                    const float height = tile->getHeight();
+                    const float xStart = tile->getX();
+                    const float xEnd = xStart + width;
+                    const float yStart = tile->getY();
+                    const float yEnd = yStart + height;
+
+                    Vector2 pos = mario.getSouthCollisionProbePos();
+
+                    if ( pos.x >= xStart &&
+                         pos.x <= xEnd &&
+                         pos.y >= yStart &&
+                         pos.y <= yEnd ) {
+
+                        const float adjPosX = pos.x - xStart;
+                        const float adjPosY = pos.y - yStart;
+                        const float ratio = height / width;
+                        float projectionY = 0;
+
+                        if ( tile->getType() == TILE_TYPE_SLOPE_UP ) {
+                            projectionY = height - adjPosX * ratio;
+                        } else if ( tile->getType() == TILE_TYPE_SLOPE_DOWN ) {
+                            projectionY = adjPosX * ratio;
+                        }
+
+                        if ( adjPosY <= projectionY - 10 ) {
+                            
+                        } else {
+                            mario.setY( static_cast<int>(projectionY + tile->getY() - mario.getHeight() - 5 ) );
+                            mario.setVelY( 0 );
+                            mario.setState( SPRITE_STATE_ON_GROUND );
+                            mario.updateCollisionProbes();
+                        }
+
+                    }
+
+                }
+            }*/
 
             // baddies x tiles
             for ( const auto baddie : baddies ) {
@@ -209,7 +249,10 @@ void GameWorld::inputAndUpdate() {
                 baddie->updateCollisionProbes();
 
                 if ( baddie->getState() != SPRITE_STATE_DYING && 
-                     baddie->getState() != SPRITE_STATE_TO_BE_REMOVED ) {
+                     baddie->getState() != SPRITE_STATE_TO_BE_REMOVED &&
+                     ( tile->getType() == TILE_TYPE_SOLID || 
+                       tile->getType() == TILE_TYPE_SOLID_ONLY_FOR_BADDIES ||
+                       tile->getType() == TILE_TYPE_SOLID_FROM_ABOVE ) ) {
                     switch ( baddie->checkCollision( tile ) ) {
                         case COLLISION_TYPE_NORTH:
                             baddie->setY( tile->getY() + tile->getHeight() );
@@ -242,7 +285,7 @@ void GameWorld::inputAndUpdate() {
             // items x tiles
             for ( const auto item : items ) {
 
-                if ( !tile->isOnlyBaddies() ) {
+                if ( tile->getType() == TILE_TYPE_SOLID || tile->getType() == TILE_TYPE_SOLID_FROM_ABOVE ) {
 
                     item->updateCollisionProbes();
 

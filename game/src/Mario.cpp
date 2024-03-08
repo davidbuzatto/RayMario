@@ -873,3 +873,7 @@ bool Mario::isPlayerDownMusicStreamPlaying() const {
 bool Mario::isGameOverMusicStreamPlaying() const {
     return gameOverMusicStreamPlaying;
 }
+
+Vector2 Mario::getSouthCollisionProbePos() const {
+    return Vector2( cpS.getX(), cpS.getY() );
+}

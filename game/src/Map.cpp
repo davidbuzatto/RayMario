@@ -435,10 +435,13 @@ void Map::parseMap() {
                         tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), GREEN, "", true, TILE_TYPE_SOLID_FROM_ABOVE ) );
                         break;
                     case 'b':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), BLUE, "", true, TILE_TYPE_SLOPE_DOWN_LEFT_UP_RIGHT ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH * 4, TILE_WIDTH * 4 ), BLUE, "", true, TILE_TYPE_SLOPE_UP ) );
                         break;
                     case 'd':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), ORANGE, "", true, TILE_TYPE_SLOPE_UP_LEFT_DOWN_RIGHT ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH * 4, TILE_WIDTH * 4 ), ORANGE, "", true, TILE_TYPE_SLOPE_DOWN ) );
+                        break;
+                    case 'e':
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), PURPLE, "", true, TILE_TYPE_NON_SOLID ) );
                         break;
                     /*case 'c':
                         tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), RED, "", true ) );
@@ -513,7 +516,7 @@ void Map::parseMap() {
                         tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), WHITE, "", false ) );
                         break;
                     case '|':
-                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), WHITE, "", false, true ) );
+                        tiles.push_back( new Tile( Vector2( x, y ), Vector2( TILE_WIDTH, TILE_WIDTH ), BLACK, "", false, TILE_TYPE_SOLID_ONLY_FOR_BADDIES ) );
                         break;
 
                     // scenario tiles

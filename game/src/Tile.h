@@ -26,8 +26,6 @@ public:
 
     Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible );
     Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, TileType type );
-    Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, bool onlyBaddies );
-    Tile( Vector2 pos, Vector2 dim, Color color, std::string key, bool visible, bool onlyBaddies, TileType type );
     ~Tile() override;
 
     void update() override;

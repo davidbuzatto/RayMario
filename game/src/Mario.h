@@ -157,4 +157,6 @@ public:
     bool isPlayerDownMusicStreamPlaying() const;
     bool isGameOverMusicStreamPlaying() const;
 
+    Vector2 getSouthCollisionProbePos() const;
+
 };
