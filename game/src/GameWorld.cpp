@@ -245,7 +245,7 @@ void GameWorld::inputAndUpdate() {
 
             // baddies x tiles
             for ( const auto baddie : baddies ) {
-
+                
                 baddie->updateCollisionProbes();
 
                 if ( baddie->getState() != SPRITE_STATE_DYING && 
