@@ -92,32 +92,32 @@ t: 1              # tile set id: [1-4]
 m: 0              # music id: [0-9]
 f: 10000          # time to finish the map
 h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"#()ááá
-///////////////////////////////////////////////////////////////////////////
-/                                                                         /
-/                                                                        E/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/                                                                        C/
-/        m                                                               C/
-/                                                                        C/
-/     |      1                                                           C/
-/      aaaaaaaa                                                          C/
-/                                                                        C/
-/   p               eeeeeeeee                                            C/
-/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
-/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/
+//////////////////////////////////////////////////////////////////////////////////////////////
+/                                                                                            /
+/                                                                                           E/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                           m                                                               C/
+/                                                                                           C/
+/                        |      1                                                           C/
+/                         aaaaaaaa                                                          C/
+/                                                                                           C/
+/   p        %                         eeeeeeeee                                            C/
+/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

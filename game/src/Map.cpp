@@ -166,6 +166,9 @@ void Map::draw() {
         baddie->draw();
     }
 
+    // for future implementation -> optimize rendering and input processing components that are only inside some boundary
+    // needs to change the components storage to a 2D structure or an optimized symtable.
+    DrawRectangle( mario.getPos().x - TILE_WIDTH * 2, mario.getPos().y - TILE_WIDTH * 2, TILE_WIDTH * 4, TILE_WIDTH * 4, Fade( BLACK, .5 ) );
     mario.draw();
 
     for ( const auto& frontScenarioTile : frontScenarioTiles ) {
