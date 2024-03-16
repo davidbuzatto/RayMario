@@ -54,6 +54,13 @@ void Rex::update() {
 
         vel.y += GameWorld::gravity;
 
+        frameAcum += delta;
+        if ( frameAcum >= frameTime ) {
+            frameAcum = 0;
+            currentFrame++;
+            currentFrame %= maxFrames;
+        }
+
         dyingFrameAcum += delta;
         if ( dyingFrameAcum >= dyingFrameTime ) {
             dyingFrameAcum = 0;
