@@ -918,9 +918,9 @@ void GameWorld::draw() {
         int compMargin = 10;
         Rectangle guiPanelRect( GetScreenWidth() - 120, GetScreenHeight() - 140, 100, 120 );
         GuiPanel( guiPanelRect, "Controls" );
-        GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 30, 20, 20 ), "debug", &debug );
-        GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "fps", &showFPS );
-        GuiCheckBlock( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 90, 20, 20 ), "immortal", &immortalMario );
+        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 30, 20, 20 ), "debug", &debug );
+        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 60, 20, 20 ), "fps", &showFPS );
+        GuiCheckBox( Rectangle( guiPanelRect.x + compMargin, guiPanelRect.y + 90, 20, 20 ), "immortal", &immortalMario );
         mario.setImmortal( immortalMario );
 
         if ( showFPS ) {
