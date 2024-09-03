@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C9358373-B502-DE7E-DE1B-CC26CA47130D}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>RayMario</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\_bin\Debug\</OutDir>
+    <IntDir>obj\x64\Debug\RayMario\</IntDir>
+    <TargetName>RayMario</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\_bin\Debug\</OutDir>
+    <IntDir>obj\x86\Debug\RayMario\</IntDir>
+    <TargetName>RayMario</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\_bin\Debug\</OutDir>
+    <IntDir>obj\ARM64\Debug\RayMario\</IntDir>
+    <TargetName>RayMario</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\_bin\Release\</OutDir>
+    <IntDir>obj\x64\Release\RayMario\</IntDir>
+    <TargetName>RayMario</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\_bin\Release\</OutDir>
+    <IntDir>obj\x86\Release\RayMario\</IntDir>
+    <TargetName>RayMario</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\_bin\Release\</OutDir>
+    <IntDir>obj\ARM64\Release\RayMario\</IntDir>
+    <TargetName>RayMario</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>DEBUG;PLATFORM_DESKTOP;GRAPHICS_API_OPENGL_33;_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\game;..\game\src;..\game\include;..\raylib-master\src;..\raylib-master\src\external;..\raylib-master\src\external\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>raylib.lib;winmm.lib;kernel32.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\_bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>DEBUG;PLATFORM_DESKTOP;GRAPHICS_API_OPENGL_33;_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\game;..\game\src;..\game\include;..\raylib-master\src;..\raylib-master\src\external;..\raylib-master\src\external\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>raylib.lib;winmm.lib;kernel32.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\_bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>DEBUG;PLATFORM_DESKTOP;GRAPHICS_API_OPENGL_33;_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\game;..\game\src;..\game\include;..\raylib-master\src;..\raylib-master\src\external;..\raylib-master\src\external\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <MinimalRebuild>false</MinimalRebuild>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>raylib.lib;winmm.lib;kernel32.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\_bin\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>NDEBUG;PLATFORM_DESKTOP;GRAPHICS_API_OPENGL_33;_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\game;..\game\src;..\game\include;..\raylib-master\src;..\raylib-master\src\external;..\raylib-master\src\external\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>raylib.lib;winmm.lib;kernel32.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\_bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>NDEBUG;PLATFORM_DESKTOP;GRAPHICS_API_OPENGL_33;_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\game;..\game\src;..\game\include;..\raylib-master\src;..\raylib-master\src\external;..\raylib-master\src\external\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>raylib.lib;winmm.lib;kernel32.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\_bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level1</WarningLevel>
+      <PreprocessorDefinitions>NDEBUG;PLATFORM_DESKTOP;GRAPHICS_API_OPENGL_33;_WINSOCK_DEPRECATED_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\game;..\game\src;..\game\include;..\raylib-master\src;..\raylib-master\src\external;..\raylib-master\src\external\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>raylib.lib;winmm.lib;kernel32.lib;opengl32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\_bin\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="raylib.vcxproj">
+      <Project>{8898EA18-743A-15EF-5DF5-284349369C3F}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\game\src\Baddie.cpp" />
+    <ClCompile Include="..\game\src\BanzaiBill.cpp" />
+    <ClCompile Include="..\game\src\BlueKoopaTroopa.cpp" />
+    <ClCompile Include="..\game\src\BobOmb.cpp" />
+    <ClCompile Include="..\game\src\Block.cpp" />
+    <ClCompile Include="..\game\src\BulletBill.cpp" />
+    <ClCompile Include="..\game\src\BuzzyBeetle.cpp" />
+    <ClCompile Include="..\game\src\CloudBlock.cpp" />
+    <ClCompile Include="..\game\src\Coin.cpp" />
+    <ClCompile Include="..\game\src\CollisionProbe.cpp" />
+    <ClCompile Include="..\game\src\CourseClearToken.cpp" />
+    <ClCompile Include="..\game\src\ExclamationBlock.cpp" />
+    <ClCompile Include="..\game\src\EyesClosedBlock.cpp" />
+    <ClCompile Include="..\game\src\EyesOpenedBlock.cpp" />
+    <ClCompile Include="..\game\src\Fireball.cpp" />
+    <ClCompile Include="..\game\src\FireFlower.cpp" />
+    <ClCompile Include="..\game\src\FlyingGoomba.cpp" />
+    <ClCompile Include="..\game\src\GameWindow.cpp" />
+    <ClCompile Include="..\game\src\GameWorld.cpp" />
+    <ClCompile Include="..\game\src\GlassBlock.cpp" />
+    <ClCompile Include="..\game\src\Goomba.cpp" />
+    <ClCompile Include="..\game\src\GreenKoopaTroopa.cpp" />
+    <ClCompile Include="..\game\src\InvisibleBlock.cpp" />
+    <ClCompile Include="..\game\src\Item.cpp" />
+    <ClCompile Include="..\game\src\JumpingPiranhaPlant.cpp" />
+    <ClCompile Include="..\game\src\main.cpp" />
+    <ClCompile Include="..\game\src\Map.cpp" />
+    <ClCompile Include="..\game\src\MessageBlock.cpp" />
+    <ClCompile Include="..\game\src\MontyMole.cpp" />
+    <ClCompile Include="..\game\src\MummyBeetle.cpp" />
+    <ClCompile Include="..\game\src\Muncher.cpp" />
+    <ClCompile Include="..\game\src\Mushroom.cpp" />
+    <ClCompile Include="..\game\src\OneUpMushroom.cpp" />
+    <ClCompile Include="..\game\src\Mario.cpp" />
+    <ClCompile Include="..\game\src\PiranhaPlant.cpp" />
+    <ClCompile Include="..\game\src\QuestionBlock.cpp" />
+    <ClCompile Include="..\game\src\QuestionFireFlowerBlock.cpp" />
+    <ClCompile Include="..\game\src\QuestionMushroomBlock.cpp" />
+    <ClCompile Include="..\game\src\QuestionOneUpMushroomBlock.cpp" />
+    <ClCompile Include="..\game\src\QuestionStarBlock.cpp" />
+    <ClCompile Include="..\game\src\QuestionThreeUpMoonBlock.cpp" />
+    <ClCompile Include="..\game\src\RedKoopaTroopa.cpp" />
+    <ClCompile Include="..\game\src\ResourceManager.cpp" />
+    <ClCompile Include="..\game\src\Rex.cpp" />
+    <ClCompile Include="..\game\src\Sprite.cpp" />
+    <ClCompile Include="..\game\src\Star.cpp" />
+    <ClCompile Include="..\game\src\StoneBlock.cpp" />
+    <ClCompile Include="..\game\src\Swooper.cpp" />
+    <ClCompile Include="..\game\src\ThreeUpMoon.cpp" />
+    <ClCompile Include="..\game\src\Tile.cpp" />
+    <ClCompile Include="..\game\src\utils.cpp" />
+    <ClCompile Include="..\game\src\WoodBlock.cpp" />
+    <ClCompile Include="..\game\src\YellowKoopaTroopa.cpp" />
+    <ClCompile Include="..\game\src\YoshiCoin.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\game\src\Baddie.h" />
+    <ClInclude Include="..\game\src\BanzaiBill.h" />
+    <ClInclude Include="..\game\src\BlueKoopaTroopa.h" />
+    <ClInclude Include="..\game\src\BobOmb.h" />
+    <ClInclude Include="..\game\src\Block.h" />
+    <ClInclude Include="..\game\src\BulletBill.h" />
+    <ClInclude Include="..\game\src\BuzzyBeetle.h" />
+    <ClInclude Include="..\game\src\CloudBlock.h" />
+    <ClInclude Include="..\game\src\Coin.h" />
+    <ClInclude Include="..\game\src\CollisionProbe.h" />
+    <ClInclude Include="..\game\src\CollisionType.h" />
+    <ClInclude Include="..\game\src\CourseClearToken.h" />
+    <ClInclude Include="..\game\src\Direction.h" />
+    <ClInclude Include="..\game\src\Drawable.h" />
+    <ClInclude Include="..\game\src\ExclamationBlock.h" />
+    <ClInclude Include="..\game\src\EyesClosedBlock.h" />
+    <ClInclude Include="..\game\src\EyesOpenedBlock.h" />
+    <ClInclude Include="..\game\src\Fireball.h" />
+    <ClInclude Include="..\game\src\FireFlower.h" />
+    <ClInclude Include="..\game\src\FlyingGoomba.h" />
+    <ClInclude Include="..\game\src\GameState.h" />
+    <ClInclude Include="..\game\src\GameWindow.h" />
+    <ClInclude Include="..\game\src\GameWorld.h" />
+    <ClInclude Include="..\game\src\GlassBlock.h" />
+    <ClInclude Include="..\game\src\Goomba.h" />
+    <ClInclude Include="..\game\src\GreenKoopaTroopa.h" />
+    <ClInclude Include="..\game\src\InvisibleBlock.h" />
+    <ClInclude Include="..\game\src\Item.h" />
+    <ClInclude Include="..\game\src\JumpingPiranhaPlant.h" />
+    <ClInclude Include="..\game\src\Map.h" />
+    <ClInclude Include="..\game\src\MarioType.h" />
+    <ClInclude Include="..\game\src\MessageBlock.h" />
+    <ClInclude Include="..\game\src\MontyMole.h" />
+    <ClInclude Include="..\game\src\MummyBeetle.h" />
+    <ClInclude Include="..\game\src\Muncher.h" />
+    <ClInclude Include="..\game\src\Mushroom.h" />
+    <ClInclude Include="..\game\src\OneUpMushroom.h" />
+    <ClInclude Include="..\game\src\Mario.h" />
+    <ClInclude Include="..\game\src\PiranhaPlant.h" />
+    <ClInclude Include="..\game\src\QuestionBlock.h" />
+    <ClInclude Include="..\game\src\QuestionFireFlowerBlock.h" />
+    <ClInclude Include="..\game\src\QuestionMushroomBlock.h" />
+    <ClInclude Include="..\game\src\QuestionOneUpMushroomBlock.h" />
+    <ClInclude Include="..\game\src\QuestionStarBlock.h" />
+    <ClInclude Include="..\game\src\QuestionThreeUpMoonBlock.h" />
+    <ClInclude Include="..\game\src\RedKoopaTroopa.h" />
+    <ClInclude Include="..\game\src\Rex.h" />
+    <ClInclude Include="..\game\src\rres-raylib.h" />
+    <ClInclude Include="..\game\src\rres.h" />
+    <ClInclude Include="..\game\src\SpriteState.h" />
+    <ClInclude Include="..\game\src\raygui.h" />
+    <ClInclude Include="..\game\src\ResourceManager.h" />
+    <ClInclude Include="..\game\src\Sprite.h" />
+    <ClInclude Include="..\game\src\Star.h" />
+    <ClInclude Include="..\game\src\StoneBlock.h" />
+    <ClInclude Include="..\game\src\Swooper.h" />
+    <ClInclude Include="..\game\src\ThreeUpMoon.h" />
+    <ClInclude Include="..\game\src\Tile.h" />
+    <ClInclude Include="..\game\src\TileType.h" />
+    <ClInclude Include="..\game\src\utils.h" />
+    <ClInclude Include="..\game\src\WoodBlock.h" />
+    <ClInclude Include="..\game\src\YellowKoopaTroopa.h" />
+    <ClInclude Include="..\game\src\YoshiCoin.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

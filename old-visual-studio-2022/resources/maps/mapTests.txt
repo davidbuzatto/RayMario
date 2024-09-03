@@ -1,0 +1,123 @@
+# map file
+# lines that start with '#' are comments.
+#
+# tiles:
+#               <space>: empty tile
+#                     /: invisible tile               (used for map/player/boundaries boundaries)
+#                     |: baddie invisible tile        (used only for baddies boundaries)
+#                  A..Z: tiles A through Z            (depends on the selected map)
+#     course clear pole:
+#                        {: back top
+#                        [: back body
+#                        }: front top
+#                        ]: front body
+# 
+# boxes:
+#     i: eyes closed
+#     y: eyes opened          (interactive)
+#     s: stone
+#     w: wood
+#     g: glass
+#     c: cloud
+#     v: invisible/visible    (interactive)
+#     h: message              (interactive)
+#     !: ! with coin          (interactive)
+#     ?: ? with coin          (interactive)
+#     m: ? with mushroom      (interactive)
+#     f: ? with fire flower   (interactive)
+#     u: ? with 1-up mushroom (interactive)
+#     +: ? with 3-up moon     (interactive)
+#     *: ? with star          (interactive)
+#
+# items:
+#     o: coin
+#     :: yoshi coin (dragon coin)
+#     =: course clear token
+#
+# baddies:
+#     1: goomba
+#     2: flying goomba
+#     3: green koopa troopa
+#     4: red koopa troopa
+#     5: blue koopa troopa
+#     6: yellow koopa troopa
+#     7: bob-omb
+#     8: bullet bill
+#     9: swooper
+#     @: buzzy beetle
+#     $: mummy beetle
+#     %: rex
+#     &: muncher
+#     ~: piranha plant
+#     ^: jumping piranha plant
+#     <: banzai bill
+#     .: monty mole
+#
+# colors: 
+#     - 0xf8e0b0ff (beige)
+#     - 0xd8f8d8ff (light green)
+#     - 0x0060b8ff (blue)
+#     - 0x000000ff (black)
+#     - 0x104838ff (dark green)
+#     - 0x183048ff (dark blue)
+#     - 0x98e0e0ff (light blue)
+#     - 0xf8f8f8ff (white)
+#
+# backgrounds:
+#     -  1) mountains and clouds
+#     -  2) forest
+#     -  3) rocky mountains
+#     -  4) clouds
+#     -  5) sharp rocky mountains
+#     -  6) fields of grass
+#     -  7) desert mountains
+#     -  8) sea
+#     -  9) wrecked ship
+#     - 10) castle
+#
+# musics:
+#     - 1) overworld
+#     - 2) athletic
+#     - 3) bonus
+#     - 4) underground
+#     - 5) swimming
+#     - 6) haunted house
+#     - 7) sub castle
+#     - 8) koopa junior
+#     - 9) the evil koopa
+#
+c: 0xeeeeeeff     # background color: [0xrrggbbaa]
+b: 0              # background id: [0-10]
+t: 1              # tile set id: [1-4]
+m: 0              # music id: [0-9]
+f: 10000          # time to finish the map
+h: 0123456789\nABCDEFGHIJKLMNOPQRSTUVWXYZ\nabcdefghijklmnopqrstuvwxyz\n.,-!?=:'"#()ááá
+//////////////////////////////////////////////////////////////////////////////////////////////
+/                                                                                            /
+/                                                                                           E/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                                                                                           C/
+/                           m                                                               C/
+/                                                                                           C/
+/                        |      1                                                           C/
+/                         aaaaaaaa                                                          C/
+/                                                                                           C/
+/   p        %                         eeeeeeeee                                            C/
+/BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBG/
+/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/

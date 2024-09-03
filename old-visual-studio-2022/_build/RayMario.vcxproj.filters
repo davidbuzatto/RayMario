@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{21EB8090-0D4E-1035-B6D3-48EBA215DCB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E9C7FDCE-D52A-8D73-7EB0-C5296AF258F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\raylib">
+      <UniqueIdentifier>{df6b3998-f6c5-42a4-b40f-9c6049a5ec48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\baddies">
+      <UniqueIdentifier>{1d08d023-a399-48ee-af8c-7e76de851bf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{d667e95d-040d-40a6-b024-fe0bafcfb95e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\items">
+      <UniqueIdentifier>{422c591d-4bdb-44b6-ae51-3c4052b6c02e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\baddies">
+      <UniqueIdentifier>{8eea325a-fa9c-41bb-bad4-5ae13d8e26aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\core">
+      <UniqueIdentifier>{23ea403c-1baa-4e34-8d53-8561f3314e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\items">
+      <UniqueIdentifier>{f138db41-1ab5-49d8-918d-8f53a375f837}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\blocks">
+      <UniqueIdentifier>{742a6b87-9230-4492-8b53-d6f022f7bb7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\blocks">
+      <UniqueIdentifier>{c85efaf5-2b02-45a6-ba01-cfa93858f86c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mario">
+      <UniqueIdentifier>{8d7db89c-c21e-4382-9270-cb421c8a6d45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\mario">
+      <UniqueIdentifier>{da4b7a79-3be0-415b-a9cd-9eb11c629b5d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\game\src\GameWorld.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Baddie.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\BlueKoopaTroopa.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\BobOmb.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\BulletBill.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\BuzzyBeetle.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\FlyingGoomba.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Goomba.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\GreenKoopaTroopa.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\MummyBeetle.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\RedKoopaTroopa.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Rex.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Swooper.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\YellowKoopaTroopa.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Coin.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\FireFlower.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Mushroom.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\OneUpMushroom.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Star.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\CollisionProbe.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\GameWindow.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\ResourceManager.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Sprite.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Tile.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\utils.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\ThreeUpMoon.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Item.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Block.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\EyesClosedBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\CloudBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\ExclamationBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\EyesOpenedBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\GlassBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\MessageBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\QuestionBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\QuestionFireFlowerBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\QuestionMushroomBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\QuestionOneUpMushroomBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\QuestionThreeUpMoonBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\StoneBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\WoodBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\InvisibleBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\CourseClearToken.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Mario.cpp">
+      <Filter>Source Files\mario</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Fireball.cpp">
+      <Filter>Source Files\mario</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\QuestionStarBlock.cpp">
+      <Filter>Source Files\blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\Muncher.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\PiranhaPlant.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\YoshiCoin.cpp">
+      <Filter>Source Files\items</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\BanzaiBill.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\JumpingPiranhaPlant.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\src\MontyMole.cpp">
+      <Filter>Source Files\baddies</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\game\src\GameWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Baddie.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\BlueKoopaTroopa.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\BobOmb.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\BulletBill.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\BuzzyBeetle.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\FlyingGoomba.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\GreenKoopaTroopa.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\MummyBeetle.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\RedKoopaTroopa.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Rex.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Swooper.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\YellowKoopaTroopa.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Coin.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\FireFlower.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Mushroom.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\OneUpMushroom.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Star.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Goomba.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\raygui.h">
+      <Filter>Header Files\raylib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\CollisionProbe.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\CollisionType.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Direction.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Drawable.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\ResourceManager.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Sprite.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\SpriteState.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Tile.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\GameWindow.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\utils.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\ThreeUpMoon.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Item.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\MarioType.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\GameState.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Block.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\CloudBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\ExclamationBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\EyesClosedBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\EyesOpenedBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\GlassBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\MessageBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\QuestionBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\QuestionFireFlowerBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\QuestionMushroomBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\QuestionOneUpMushroomBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\QuestionThreeUpMoonBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\StoneBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\WoodBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\InvisibleBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\CourseClearToken.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Mario.h">
+      <Filter>Header Files\mario</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Fireball.h">
+      <Filter>Header Files\mario</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\QuestionStarBlock.h">
+      <Filter>Header Files\blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\rres.h">
+      <Filter>Header Files\raylib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\rres-raylib.h">
+      <Filter>Header Files\raylib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\Muncher.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\PiranhaPlant.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\YoshiCoin.h">
+      <Filter>Header Files\items</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\BanzaiBill.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\JumpingPiranhaPlant.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\MontyMole.h">
+      <Filter>Header Files\baddies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\src\TileType.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

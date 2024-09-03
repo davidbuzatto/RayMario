@@ -1,4 +1,1 @@
-_build/obj
-_bin
-.vs
-releases
+/build/
