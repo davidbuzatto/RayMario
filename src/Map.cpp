@@ -211,7 +211,7 @@ void Map::draw() {
         for ( const auto& m : messages ) {
             drawMessageString( m, 
                                xStart, 
-                               yStart + currentLine * getDrawMessageStringHeight() + ( currentLine < messages.size() ? currentLine * vSpacing : 0 ) );
+                               yStart + currentLine * getDrawMessageStringHeight() + ( currentLine < (int) messages.size() ? currentLine * vSpacing : 0 ) );
             currentLine++;
         }
 
@@ -480,7 +480,7 @@ void Map::parseMap() {
                         break;
                     case 'h':
 
-                        if ( messagePosition >= 0 && messagePosition < blockMessages.size() ){
+                        if ( messagePosition >= 0 && messagePosition < (int) blockMessages.size() ){
                             blockMessage = blockMessages[messagePosition];
                         }
 

@@ -15,32 +15,32 @@
  * @brief Construct a new GameWindow object
  */
 GameWindow::GameWindow() : 
-    GameWindow( false ) {
+    GameWindow( false, LOG_ALL ) {
 }
 
-GameWindow::GameWindow( bool initAudio ) : 
-    GameWindow( 800, 450, "Window Title", 60, true, false, false, false, false, false, initAudio ) {
+GameWindow::GameWindow( bool initAudio, TraceLogLevel logLevel ) : 
+    GameWindow( 800, 450, "Window Title", 60, true, false, false, false, false, false, initAudio, logLevel ) {
 }
 
-GameWindow::GameWindow( int width, int height, std::string title, bool initAudio ) : 
-    GameWindow( width, height, std::move(title), 60, true, false, false, false, false, false, initAudio ) {
+GameWindow::GameWindow( int width, int height, std::string title, bool initAudio, TraceLogLevel logLevel ) : 
+    GameWindow( width, height, std::move(title), 60, true, false, false, false, false, false, initAudio, logLevel ) {
 }
 
-GameWindow::GameWindow( int width, int height, std::string title, int targetFPS, bool initAudio ) : 
-    GameWindow( width, height, std::move(title), targetFPS, true, false, false, false, false, false, initAudio ) {
+GameWindow::GameWindow( int width, int height, std::string title, int targetFPS, bool initAudio, TraceLogLevel logLevel ) : 
+    GameWindow( width, height, std::move(title), targetFPS, true, false, false, false, false, false, initAudio, logLevel ) {
 }
 
-GameWindow::GameWindow( int width, int height, std::string title, bool antialiasing, bool initAudio ) : 
-    GameWindow( width, height, std::move(title), 60, antialiasing, false, false, false, false, false, initAudio ) {
+GameWindow::GameWindow( int width, int height, std::string title, bool antialiasing, bool initAudio, TraceLogLevel logLevel ) : 
+    GameWindow( width, height, std::move(title), 60, antialiasing, false, false, false, false, false, initAudio, logLevel ) {
 }
 
-GameWindow::GameWindow( int width, int height, std::string title, int targetFPS, bool antialiasing, bool initAudio ) : 
-    GameWindow( width, height, std::move(title), targetFPS, antialiasing, false, false, false, false, false, initAudio ) {
+GameWindow::GameWindow( int width, int height, std::string title, int targetFPS, bool antialiasing, bool initAudio, TraceLogLevel logLevel ) : 
+    GameWindow( width, height, std::move(title), targetFPS, antialiasing, false, false, false, false, false, initAudio, logLevel ) {
 }
 
 GameWindow::GameWindow( int width, int height, std::string title, int targetFPS,
                         bool antialiasing, bool resizable, bool fullScreen,
-                        bool undecorated, bool alwaysOnTop, bool alwaysRun, bool initAudio ) :
+                        bool undecorated, bool alwaysOnTop, bool alwaysRun, bool initAudio, TraceLogLevel logLevel ) :
                         width( width ),
                         height( height ),
                         title( std::move(title)),
@@ -52,6 +52,7 @@ GameWindow::GameWindow( int width, int height, std::string title, int targetFPS,
                         alwaysOnTop( alwaysOnTop ),
                         alwaysRun( alwaysRun ),
                         initAudio( initAudio ),
+                        logLevel( logLevel ),
                         camera( Camera2D() ),
                         initialized( false ) {
 }
@@ -93,6 +94,8 @@ void GameWindow::init() {
         if ( alwaysRun ) {
             SetConfigFlags( FLAG_WINDOW_ALWAYS_RUN );
         }
+
+        SetTraceLogLevel( logLevel );
 
         InitWindow( width, height, title.c_str() );
         SetWindowIcon( LoadImage( "resources/icon.png" ) );
