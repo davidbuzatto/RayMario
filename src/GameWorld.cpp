@@ -417,6 +417,8 @@ void GameWorld::inputAndUpdate() {
                         item->setVelX( -item->getVelX() );
                         item->updateCollisionProbes();
                         break;
+                    default:
+                        break;
                 }
 
             }

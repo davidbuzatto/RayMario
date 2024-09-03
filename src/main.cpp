@@ -6,6 +6,7 @@
  * @copyright Copyright (c) 2024
  */
 #include "GameWindow.h"
+#include "raylib.h"
 
 int main( void ) {
 
@@ -21,7 +22,9 @@ int main( void ) {
         false,        // undecorated
         false,        // always on top
         false,        // always run
-        true );       // init audio
+        true,         // init audio
+        LOG_NONE      // raylib log level
+    );       
 
     gameWindow.init();
 

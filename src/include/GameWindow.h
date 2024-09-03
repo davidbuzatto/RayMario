@@ -27,6 +27,7 @@ class GameWindow {
     bool alwaysOnTop;
     bool alwaysRun;
     bool initAudio;
+    TraceLogLevel logLevel;
 
     GameWorld gw;
     Camera2D camera;
@@ -39,14 +40,14 @@ public:
      * @brief Construct a new GameWindow object.
      */
     GameWindow();
-    GameWindow( bool initAudio );
-    GameWindow( int width, int height, std::string title, bool initAudio );
-    GameWindow( int width, int height, std::string title, int targetFPS, bool initAudio );
-    GameWindow( int width, int height, std::string title, bool antialiasing, bool initAudio );
-    GameWindow( int width, int height, std::string title, int targetFPS, bool antialiasing, bool initAudio );
+    GameWindow( bool initAudio, TraceLogLevel logLevel );
+    GameWindow( int width, int height, std::string title, bool initAudio, TraceLogLevel logLevel );
+    GameWindow( int width, int height, std::string title, int targetFPS, bool initAudio, TraceLogLevel logLevel );
+    GameWindow( int width, int height, std::string title, bool antialiasing, bool initAudio, TraceLogLevel logLevel );
+    GameWindow( int width, int height, std::string title, int targetFPS, bool antialiasing, bool initAudio, TraceLogLevel logLevel );
     GameWindow( int width, int height, std::string title, int targetFPS,
                 bool antialiasing, bool resizable, bool fullScreen,
-                bool undecorated, bool alwaysOnTop, bool alwaysRun, bool initAudio );
+                bool undecorated, bool alwaysOnTop, bool alwaysRun, bool initAudio, TraceLogLevel logLevel );
 
     /**
      * @brief Destroy the GameWindow object.
