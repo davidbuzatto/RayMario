@@ -24,7 +24,7 @@
 #include "raygui.h"
 #undef RAYGUI_IMPLEMENTATION
 
-//#define RELEASE
+#define RELEASE
 
 #ifdef RELEASE
 #define ACTIVATE_DEBUG false
